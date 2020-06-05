@@ -1,14 +1,13 @@
 import asyncio
 
-from pyrogram import Filters, Message
+from pyrogram import Client, Filters
+from pyrobot import COMMAND_HAND_LER
+from pyrobot.helper_functions.cust_p_filters import sudo_filter
 from pyrogram.client.methods.chats.get_chat_members import Filters as ChatMemberFilters
 
-from userbot import UserBot
-from userbot.plugins.help import add_command_help
 
-
-@UserBot.on_message(Filters.command('pin', '.') & Filters.me)
-async def pin_message(bot: UserBot, message: Message):
+@Client.on_message(Filters.command("promote", COMMAND_HAND_LER) & sudo_filter)
+async def pin_message(client, message):
     # First of all check if its a group or not
     if message.chat.type in ['group', 'supergroup']:
         # Here lies the sanity checks

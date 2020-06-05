@@ -11,31 +11,29 @@ async def promote_usr(client, message):
 
     if user_type == "member":
         message.reply_text("I don't have proper permission to do that! (* ￣︿￣)")
-    if user_type == "administrator":
-        add_adminperm = check_user.can_promote_members
-        if add_adminperm:
-            msg_promote = await message.reply_text("`Trying to Promote User.. Hang on!! ⏳`")
-            if message.reply_to_message:
-                user_id = message.reply_to_message.from_user.id
+    if user_type == "administrator" or user_type == "creator":
+        rm = await message.reply_text("`Trying to Promote User.. Hang on!! ⏳`")
+        if message.reply_to_message:
+            user_id = message.reply_to_message.from_user.id
+        else:
+            args = message.input_str.split(maxsplit=1)
+            if len(args) == 1:
+                user_id = args[0]
             else:
-                args = message.input_str.split(maxsplit=1)
-                if len(args) == 1:
-                    user_id = args[0]
-                else:
-                    await message.edit(
-                        text="`no valid user_id or message specified,`"
-                        "`do .help promote for more info`", del_in=0)
-            if user_id:
-                try:
-                    await client.promote_chat_member(chat_id, user_id,
-                                                     can_change_info=False,
-                                                     can_delete_messages=True,
-                                                     can_restrict_members=True,
-                                                     can_invite_users=True,
-                                                     can_pin_messages=True)
-                    await asyncio.sleep(2)
-                    await msg_promote.edit("`👑 Promoted Successfully..`")
-                except Exception as ef:
-                    await msg_promote.edit(
-                        text="`something went wrong! 🤔`\n\n"
-                        f"**ERROR:** `{ef}`")
+                await message.edit(
+                    text="`no valid user_id or message specified,`"
+                    "`do .help promote for more info`")
+        if user_id:
+            try:
+                await client.promote_chat_member(chat_id, user_id,
+                                                can_change_info=False,
+                                                can_delete_messages=True,
+                                                can_restrict_members=True,
+                                                can_invite_users=True,
+                                                can_pin_messages=True)
+                await asyncio.sleep(2)
+                await rm.edit("`👑 Promoted Successfully..`")
+            except Exception as ef:
+                await rm.edit(
+                    text="`something went wrong! 🤔`\n\n"
+                    f"**ERROR:** `{ef}`")

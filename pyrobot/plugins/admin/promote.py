@@ -18,7 +18,7 @@ async def promote_usr(client, message):
             if message.reply_to_message:
                 user_id = message.reply_to_message.from_user.id
             else:
-                args = message.input_str.split
+                args = message.input_str.split(maxsplit=1)
                 if len(args) == 1:
                     user_id = args[0]
                 else:

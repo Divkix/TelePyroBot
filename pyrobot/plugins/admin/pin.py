@@ -6,7 +6,7 @@ from pyrobot.helper_functions.cust_p_filters import sudo_filter
 from pyrogram.client.methods.chats.get_chat_members import Filters as ChatMemberFilters
 
 
-@Client.on_message(Filters.command("promote", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("pin", COMMAND_HAND_LER) & sudo_filter)
 async def pin_message(client, message):
     # First of all check if its a group or not
     if message.chat.type in ['group', 'supergroup']:

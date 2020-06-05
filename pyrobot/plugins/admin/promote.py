@@ -3,7 +3,7 @@ from pyrobot import COMMAND_HAND_LER
 from pyrobot.helper_functions.cust_p_filters import sudo_filter
 
 
-async def is_admin(client, message):
+async def is_admin(message: Message):
     check_user = await client.get_chat_member(message.chat.id, message.from_user.id)
     user_type = check_user.status
     if user_type == "member":
@@ -15,7 +15,7 @@ async def is_admin(client, message):
         return False
     return True
 
-async def is_sudoadmin(client, message):
+async def is_sudoadmin(message: Message):
     check_user = await client.get_chat_member(message.chat.id, message.from_user.id)
     user_type = check_user.status
     if user_type == "member":

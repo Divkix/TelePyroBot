@@ -2,8 +2,7 @@ from pyrogram import Client, Filters
 
 from pyrobot import COMMAND_HAND_LER
 from pyrobot.helper_functions.cust_p_filters import sudo_filter
-
-from pyrobot.helper_functions.parser import mention_html, mention_markdown
+from pyrobot.helper_functions.misc.parser import mention_html, mention_markdown
 
 @Client.on_message(Filters.command(["adminlist", "admins"], COMMAND_HAND_LER) & sudo_filter)
 async def adminlist(client, message):

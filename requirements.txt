@@ -21,3 +21,4 @@ oauth2client
 speedtest-cli
 prettytable
 gtts
+telegraph

@@ -86,7 +86,7 @@ async def getvar(client, message):
         getmsg = await message.reply_text("`[HEROKU]:"
                               "\nPlease setup your` **HEROKU_APP_NAME**", parse_mode="md")
     heroku_var = app.config()
-    await getmsg.edit("`Getting information...`")
+    getmsg = await message.reply_text("`Getting information...`", parse_mode="md")
     await asyncio.sleep(1.5)
     try:
         if variable in heroku_var:

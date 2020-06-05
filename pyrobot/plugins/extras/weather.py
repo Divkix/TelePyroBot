@@ -20,7 +20,7 @@ async def weather(client, message):
         return
     location = message.text.split(None, 1)[1]
     h = {'user-agent': 'httpie'}
-    a = requests.get(f"https://wttr.in/{location}?mnTC0&lang={en}", headers=h)
+    a = requests.get(f"https://wttr.in/{location}?mnTC0&lang=en", headers=h)
     if "Sorry, we processed more than 1M requests today and we ran out of our datasource capacity." in a.text:
         await message.edit("Sorry, location not found!")
         return

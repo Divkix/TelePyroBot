@@ -5,16 +5,15 @@ from pyrobot.helper_functions.cust_p_filters import sudo_filter
 
 @Client.on_message(Filters.command("promote", COMMAND_HAND_LER) & sudo_filter)
 async def promote_usr(client, message):
+    rm = await message.reply_text("`Trying to Promote User.. Hang on!! ⏳`")
     chat_id = message.chat.id
     check_user = await client.get_chat_member(chat_id, message.from_user.id)
     user_type = check_user.status
 
     if user_type == "member":
-        await message.edit("I don't have proper permission to do that! (* ￣︿￣)")
+        await rm.edit("I don't have proper permission to do that! (* ￣︿￣)")
 
     if user_type == "administrator" or user_type == "creator":
-        await message.edit("`Trying to Promote User.. Hang on!! ⏳`")
-
         if message.reply_to_message:
             user_id = message.reply_to_message.from_user.id
         else:

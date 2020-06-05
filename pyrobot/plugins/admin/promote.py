@@ -40,7 +40,7 @@ async def promote_usr(client, message):
                         text="`no valid user_id or message specified,`"
                         "`do .help promote for more info`", del_in=0)
                 return
-
+                
             if user_id:
                 try:
                     get_mem = await client.get_chat_member(chat_id, user_id)

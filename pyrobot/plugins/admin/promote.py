@@ -10,9 +10,11 @@ async def promote_usr(client, message):
     user_type = check_user.status
 
     if user_type == "member":
-        message.reply_text("I don't have proper permission to do that! (* ￣︿￣)")
+        message.edit("I don't have proper permission to do that! (* ￣︿￣)")
+
     if user_type == "administrator" or user_type == "creator":
-        rm = await message.reply_text("`Trying to Promote User.. Hang on!! ⏳`")
+        rm = await message.edit("`Trying to Promote User.. Hang on!! ⏳`")
+
         if message.reply_to_message:
             user_id = message.reply_to_message.from_user.id
         else:
@@ -23,7 +25,8 @@ async def promote_usr(client, message):
                 await message.edit(
                     text="`no valid user_id or message specified,`"
                     "`do .help promote for more info`")
-        if user_id:
+
+        if user_id && chat_id:
             try:
                 await client.promote_chat_member(chat_id, user_id,
                                                 can_change_info=False,

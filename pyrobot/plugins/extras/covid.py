@@ -1,3 +1,10 @@
+"""
+Check info of cases corona virus disease 2019
+──「 **Info Covid** 」──
+-> `corona - for Global Stats`
+-> `corona (country) - for a Country Stats`
+"""
+
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
 from pyrobot.helper_functions.cust_p_filters import sudo_filter

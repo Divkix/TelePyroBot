@@ -11,7 +11,6 @@ from pyrobot import (
 )
 
 from pyrobot.helper_functions.admin_check import admin_check
-
 from pyrobot.helper_functions.cust_p_filters import sudo_filter
 
 @Client.on_message(Filters.command("purge", COMMAND_HAND_LER) & sudo_filter)
@@ -51,7 +50,7 @@ async def purge(client, message):
             count_del_etion_s += len(message_ids)
 
     await status_message.edit_text(
-        f"deleted {count_del_etion_s} messages"
+        f"Deleted `{count_del_etion_s}` messages"
     )
     await asyncio.sleep(5)
     await status_message.delete()

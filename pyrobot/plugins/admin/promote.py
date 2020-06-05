@@ -3,19 +3,6 @@ from pyrobot import COMMAND_HAND_LER
 from pyrobot.helper_functions.cust_p_filters import sudo_filter
 
 
-async def is_admin(message: Message):
-    check_user = await client.get_chat_member(message.chat.id, message.from_user.id)
-    user_type = check_user.status
-    if user_type == "member":
-        return False
-    if user_type == "administrator":
-        rm_perm = check_user.can_restrict_members
-        if rm_perm:
-            return True
-        return False
-    return True
-
-
 @Client.on_message(Filters.command("promote", COMMAND_HAND_LER) & sudo_filter)
 async def promote_usr(client, message):
     chat_id = message.chat.id
@@ -40,7 +27,7 @@ async def promote_usr(client, message):
                         text="`no valid user_id or message specified,`"
                         "`do .help promote for more info`", del_in=0)
                 return
-                
+
             if user_id:
                 try:
                     get_mem = await client.get_chat_member(chat_id, user_id)

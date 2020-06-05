@@ -25,7 +25,7 @@ async def purge(client, message):
     if not is_admin:
         return
 
-    status_message = await message.reply_text("...", quote=True)
+    status_message = await message.reply_text("Oof", quote=True)
     await message.delete()
     message_ids = []
     count_del_etion_s = 0

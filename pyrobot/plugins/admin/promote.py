@@ -36,9 +36,9 @@ async def promote_usr(client, message):
                 if len(args) == 1:
                     user_id = args[0]
                 else:
-                await message.edit(
-                    text="`no valid user_id or message specified,`"
-                    "`do .help promote for more info`", del_in=0)
+                    await message.edit(
+                        text="`no valid user_id or message specified,`"
+                        "`do .help promote for more info`", del_in=0)
                 return
 
             if user_id:

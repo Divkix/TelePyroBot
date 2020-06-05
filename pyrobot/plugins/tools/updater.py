@@ -45,7 +45,7 @@ RESTARTING_APP = "re-starting heroku application"
 
 @Client.on_message(Filters.command("update", COMMAND_HAND_LER) & owner_filter)
 async def updater(client, message):
-    status_message = await message.reply_text("🤔😳😳🙄")
+    status_message = await message.reply_text("Checking for update....")
     try:
         repo = git.Repo()
     except git.exc.InvalidGitRepositoryError as error_one:

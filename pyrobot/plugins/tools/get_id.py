@@ -36,8 +36,8 @@ async def get_id(client, message):
             user_id = rep.from_user.id
 
     if user_id:
-        await message.edit(user_id)
+        await message.edit("This User's ID: {}".format(user_id))
     elif file_id:
-        await message.edit(file_id)
+        await message.edit("This File's ID: {}".format(file_id))
     else:
         await message.edit("This chat's ID:\n`{}`".format(message.chat.id))

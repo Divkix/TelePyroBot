@@ -82,8 +82,8 @@ async def updater(client, message):
     LOGGER.info(changelog)
 
     if not changelog:
-        await status_message.edit(BOT_IS_UP_TO_DATE)
-        return False
+        await status_message.edit("Updating Please Wait...")
+        await asyncio.sleep(8)
 
     message_one = NEW_BOT_UP_DATE_FOUND.format(
         branch_name=active_branch_name,

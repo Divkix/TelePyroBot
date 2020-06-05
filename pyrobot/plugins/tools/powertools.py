@@ -1,7 +1,7 @@
 import asyncio
-
+from pyrobot import COMMAND_HAND_LER
 from pyrogram import Client, Filters
-from pyrobot.helper_functions.cust_p_filters import owner_filter
+from pyrobot.helper_functions.cust_p_filters import sudo_filter
 
 @Client.on_message(Filters.command("restart", COMMAND_HAND_LER) & sudo_filter)
 async def updater(client, message):

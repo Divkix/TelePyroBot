@@ -12,20 +12,19 @@ CARBON_LANG = "Auto"
 
 @Client.on_message(Filters.command("carbon", COMMAND_HAND_LER) & sudo_filter)
 async def carbon_api(client, message):
-    rep_mesg_id = message.message_id
-    if message.reply_to_message:
-        rep_mesg_id = message.reply_to_message.message_id
     json = {
         "backgroundColor": "rgba(0, 255, 230, 100)",
         "theme": "Dracula",
         "exportSize": "4x"
     }
+    rep_mesg_id = message.message_id
     if message.reply_to_message:
+        rep_mesg_id = message.reply_to_message.message_id
         r = message.reply_to_message
         json["code"] = r.text
         await message.edit_text("Carbonizing code...")
     else:
-        await message.edit("Usage: `carbon` (reply to a code or text)")
+        await message.edit("Usage: `.carbon` (reply to a code or text)")
     json["language"] = CARBON_LANG
     apiUrl = "http://carbonnowsh.herokuapp.com"
     r = post(apiUrl,json=json,stream=True)

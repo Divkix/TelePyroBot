@@ -82,8 +82,9 @@ async def updater(client, message):
     LOGGER.info(changelog)
 
     if not changelog:
-        await status_message.edit("Updating Please Wait...")
+        updatenochange = await status_message.edit("Updating Please Wait...")
         await asyncio.sleep(8)
+        await updatenochange.delete()
 
     message_one = NEW_BOT_UP_DATE_FOUND.format(
         branch_name=active_branch_name,
@@ -114,9 +115,6 @@ async def updater(client, message):
         heroku = heroku3.from_key(HEROKU_API_KEY)
         heroku_applications = heroku.apps()
         if len(heroku_applications) >= 1:
-            # assuming there will be only one heroku application
-            # created per account 🙃
-            # possibly, ignore premium Heroku users
             heroku_app = heroku_applications[0]
             heroku_git_url = heroku_app.git_url.replace(
                 "https://",
@@ -132,7 +130,6 @@ async def updater(client, message):
             await message.reply(NO_HEROKU_APP_CFGD)
 
     await status_message.edit(RESTARTING_APP)
-    # https://t.me/c/1387666944/94908
     asyncio.get_event_loop().create_task(restart(client, status_message))
 
 

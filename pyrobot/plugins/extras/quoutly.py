@@ -16,7 +16,7 @@ async def quotly(client, message):
     progress = 0
     while not is_sticker:
         try:
-            msg = await Client.get_history("@QuotLyBot", 1)
+            msg = await client.get_history("@QuotLyBot", 1)
             check = msg[0]["sticker"]["file_id"]
             is_sticker = True
         except:
@@ -30,4 +30,4 @@ async def quotly(client, message):
                 await message.edit("ERROR SUUUU")
     await message.edit("```Complete !```")
     msg_id = msg[0]["message_id"]
-    await Client.forward_messages(message.chat.id, "@QuotLyBot", msg_id)
+    await client.forward_messages(message.chat.id, "@QuotLyBot", msg_id)

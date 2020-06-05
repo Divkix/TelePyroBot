@@ -10,7 +10,7 @@ async def quotly(client, message):
     if not message.reply_to_message:
         await message.edit("Reply to any users text message")
         return
-    await message.edit("```Making a Quote```")
+    await message.edit("```Making a Quote```", parse_mode="md")
     await message.reply_to_message.forward("@QuotLyBot")
     is_sticker = False
     progress = 0
@@ -23,11 +23,11 @@ async def quotly(client, message):
             time.sleep(0.5)
             progress += random.randint(0, 10)
             try:
-                await message.edit("```Making a Quote```\nProcessing {}%".format(progress))
+                await message.edit("```Making a Quote```\nProcessing {}%".format(progress), parse_mode="md")
                 if progress >= 100:
                     pass
             except:
-                await message.edit("ERROR SUUUU")
-    await message.edit("```Complete !```")
+                await message.edit("__ERROR SUUUU__", parse_mode="md")
+    await message.edit("```Complete !```", parse_mode="md")
     msg_id = msg[0]["message_id"]
     await client.forward_messages(message.chat.id, "@QuotLyBot", msg_id)

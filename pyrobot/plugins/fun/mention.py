@@ -21,5 +21,5 @@ async def mention(_, message):
             parse_mode="html"
         )
     else:
-        await message.edit("Usage: `mention (username without @) (custom text)`")
+        await message.edit("Usage: `mention (username without @) (custom text)`", parse_mode="md")
         return

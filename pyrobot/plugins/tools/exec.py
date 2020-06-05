@@ -17,15 +17,11 @@ from pyrobot.helper_functions.cust_p_filters import sudo_filter
 
 @Client.on_message(Filters.command("exec", COMMAND_HAND_LER) & sudo_filter)
 async def execution(_, message):
-    # DELAY_BETWEEN_EDITS = 0.3
-    # PROCESS_RUN_TIME = 100
     cmd = message.text.split(" ", maxsplit=1)[1]
 
     reply_to_id = message.message_id
     if message.reply_to_message:
         reply_to_id = message.reply_to_message.message_id
-
-    # start_time = time.time() + PROCESS_RUN_TIME
     process = await asyncio.create_subprocess_shell(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )

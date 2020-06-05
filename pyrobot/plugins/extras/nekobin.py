@@ -27,5 +27,6 @@ async def paste(client, message):
         reply_text = f'`Successfully pasted on` Nekobin - https://nekobin.com/{key}'
         await message.edit_text(
             reply_text,
+            parse_mode="md",
             disable_web_page_preview=True,
         )

@@ -18,7 +18,7 @@ import requests
 
 @Client.on_message(Filters.command("covid", COMMAND_HAND_LER) & sudo_filter)
 async def covid(client, message):
-    await message.edit("`Processing...`")
+    await message.edit("`Processing...`", parse_mode="md")
     args = message.text.split(None, 1)
     if len(args) == 1:
         r = requests.get("https://corona.lmao.ninja/v2/all?yesterday=true").json()
@@ -40,11 +40,11 @@ async def covid(client, message):
         ac.add_row(["Tests/Million", f"{r['testsPerOneMillion']:,}"])
         ac.align = "l"
 
-        await message.edit(f"```{str(ac)}```\nLast updated on: {last_updated}")
+        await message.edit(f"`{str(ac)}`\nLast updated on: {last_updated}", parse_mode="md")
     country = args[1]
     r = requests.get(f"https://corona.lmao.ninja/v2/countries/{country}").json()
     if "cases" not in r:
-        await message.edit("```The country could not be found!```")
+        await message.edit("`The country could not be found!`", parse_mode="md")
         await asyncio.sleep(3)
         await message.delete()
     else:
@@ -66,7 +66,7 @@ async def covid(client, message):
         cc.add_row(["Tests", f"{r['tests']:,}"])
         cc.add_row(["Tests/Million", f"{r['testsPerOneMillion']:,}"])
         cc.align = "l"
-        await message.edit(f"```{str(cc)}```\nLast updated on: {last_updated}")
+        await message.edit(f"`{str(cc)}`\nLast updated on: {last_updated}", parse_mode="md")
 
 
 def get_country_data(country, world):

@@ -25,7 +25,6 @@ async def reverseimage(client, message):
         if message_.animation:
             await message.edit("Converting this Gif to Image")
             img_file = os.path.join("/root/pyrobot/", "grs.jpg")
-            # await take_screen_shot(dis_loc, 0, img_file)
             if not os.path.lexists(img_file):
                 await message.edit("Something went wrong in Conversion")
             dis_loc = img_file

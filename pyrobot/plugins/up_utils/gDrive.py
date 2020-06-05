@@ -89,12 +89,12 @@ async def g_drive_commands(client, message):
                     await status_message.edit_text(
                         "invalid credentials, supplied??!\n"
                         f"use <code>{COMMAND_HAND_LER}gdrive reset</code> "
-                        "to clear saved credentials"
+                        "to clear saved credentials", parse_mode="html"
                     )
                     return
             else:
                 await status_message.edit_text(
-                    text=f"please run <code>{COMMAND_HAND_LER}gdrive setup</code> first"
+                    text=f"please run <code>{COMMAND_HAND_LER}gdrive setup</code> first", parse_mode="html"
                 )
         elif current_recvd_command == "upload":
             # The gDrive table stores the user's access and refresh tokens, and is
@@ -228,7 +228,7 @@ async def AskUserToVisitLinkAndGiveCode(message, code):
     global flow
     if flow is None:
         await message.edit_text(
-            text=f"run <code>{COMMAND_HAND_LER}gdrive setup</code> first."
+            text=f"run <code>{COMMAND_HAND_LER}gdrive setup</code> first.", parse_mode="html"
         )
         return
     await message.edit_text(text="checking received code ...")

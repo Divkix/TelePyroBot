@@ -30,4 +30,4 @@ async def cas(client, message):
         reply_text = f'`User ID: `{user}\n`Offenses: `{results["result"]["offenses"]}\n`Messages: `\n{results["result"]["messages"]}\n`Time Added: `{results["result"]["time_added"]}'
     except:
         reply_text = "`Record not found.`"
-    await message.edit(replace_text(reply_text))
+    await message.edit(replace_text(reply_text), parse_mode="md")

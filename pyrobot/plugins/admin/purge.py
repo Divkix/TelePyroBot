@@ -17,7 +17,6 @@ from pyrobot.helper_functions.cust_p_filters import sudo_filter
 async def purge(client, message):
     """ purge upto the replied message """
     if message.chat.type not in (("supergroup", "channel")):
-        # https://t.me/c/1312712379/84174
         return
 
     is_admin = await admin_check(message)
@@ -50,7 +49,7 @@ async def purge(client, message):
             count_del_etion_s += len(message_ids)
 
     await status_message.edit_text(
-        f"Deleted `{count_del_etion_s}` messages"
+        f"Deleted `{count_del_etion_s}` messages", parse_mode="md"
     )
     await asyncio.sleep(5)
     await status_message.delete()

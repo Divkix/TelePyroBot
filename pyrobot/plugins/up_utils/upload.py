@@ -38,7 +38,7 @@ async def upload_as_document(client, message):
                 reply_to_message_id=message.message_id,
                 progress=progress_for_pyrogram,
                 progress_args=(
-                    "trying to upload", status_message, c_time
+                    "Trying to upload", status_message, c_time
                 )
             )
             end_t = datetime.now()
@@ -47,7 +47,7 @@ async def upload_as_document(client, message):
         else:
             await status_message.edit("404: media not found")
     else:
-        await status_message.edit(f"<code>{COMMAND_HAND_LER}uploadasdoc FILE_PATH</code> to upload to current Telegram chat")
+        await status_message.edit(f"<code>{COMMAND_HAND_LER}uploadasdoc FILE_PATH</code> to upload to current Telegram chat", parse_mode="html")
 
 
 

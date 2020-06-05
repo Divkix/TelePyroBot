@@ -51,7 +51,7 @@ async def list_note(_, message):
         msg += note_name
 
     if msg == msg_p:
-        await status_message.edit_text("ഇൗ ചാറ്റിൽ കുറിപ്പുകളൊന്നുമില്ല.")
+        await status_message.edit_text("Try Saving some Notes first....")
 
     elif len(msg) != 0:
         await message.reply_text(msg)

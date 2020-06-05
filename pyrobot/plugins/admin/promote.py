@@ -6,7 +6,7 @@ from pyrobot.helper_functions.cust_p_filters import sudo_filter
 
 @Client.on_message(Filters.command("promote", COMMAND_HAND_LER) & sudo_filter)
 async def promote_usr(client, message):
-    rm = await message.reply_text("`Trying to Promote User.. Hang on!! ⏳`")
+    rm = await message.reply_text("`Trying to Promote User.. Hang on!! ⏳`", parse_mode="md")
     chat_id = message.chat.id
     check_user = await client.get_chat_member(chat_id, message.from_user.id)
     user_type = check_user.status
@@ -24,7 +24,7 @@ async def promote_usr(client, message):
             else:
                 await message.edit(
                     text="`no valid user_id or message specified,`"
-                    "`do .help promote for more info`")
+                    "`do .help promote for more info`", parse_mode="md")
 
         if user_id and chat_id:
             try:
@@ -35,8 +35,8 @@ async def promote_usr(client, message):
                                                 can_invite_users=True,
                                                 can_pin_messages=True)
                 await asyncio.sleep(2)
-                await rm.edit("`👑 Promoted Successfully..`")
+                await rm.edit("`👑 Promoted Successfully..`", parse_mode="md")
             except Exception as ef:
                 await rm.edit(
                     text="`something went wrong! 🤔`\n\n"
-                    f"**ERROR:** `{ef}`")
+                    f"**ERROR:** `{ef}`", parse_mode="md")

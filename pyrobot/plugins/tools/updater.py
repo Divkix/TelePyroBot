@@ -45,7 +45,7 @@ RESTARTING_APP = "re-starting heroku application"
 
 @Client.on_message(Filters.command("update", COMMAND_HAND_LER) & owner_filter)
 async def updater(client, message):
-    status_message = await message.reply_text("Checking for update....")
+    status_message = await message.reply_text("__Checking for update....__", parse_mode="md")
     try:
         repo = git.Repo()
     except git.exc.InvalidGitRepositoryError as error_one:
@@ -82,7 +82,7 @@ async def updater(client, message):
     LOGGER.info(changelog)
 
     if not changelog:
-        updatenochange = await status_message.edit("Updating Please Wait...")
+        updatenochange = await status_message.edit("`Updating Please Wait...`", parse_mode="md")
         await asyncio.sleep(8)
         await updatenochange.delete()
 
@@ -145,6 +145,6 @@ def generate_change_log(git_repo, diff_marker):
 async def restart(client, message):
     await client.restart()
     await message.edit(
-        "restarted! "
-        f"do `{COMMAND_HAND_LER}alive` to check if I am online?"
+        "**Restarted!** "
+        f"Do `{COMMAND_HAND_LER}alive` or `{COMMAND_HAND_LER}start` to check if I am online?", parse_mode="md"
     )

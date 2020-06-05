@@ -39,9 +39,9 @@ async def mute_user(_, message):
             await message.reply_text(
                 "👍🏻 "
                 f"<a href='tg://user?id={user_id}'>"
-                "Lavanne"
+                "This Person"
                 "</a>"
-                "I've put a duct tape on your mouth! 🤐"
+                "I've put a duct tape on his mouth! 🤐"
             )
 
 
@@ -87,8 +87,8 @@ async def temp_mute_user(_, message):
             await message.reply_text(
                 "Keep quiet for a while! 😠"
                 f"<a href='tg://user?id={user_id}'>"
-                "Lavanne"
+                f"This"
                 "</a>"
-                " Mouth "
+                " Person "
                 f" muted for {message.command[1]}!"
             )

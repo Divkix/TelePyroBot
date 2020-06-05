@@ -14,14 +14,14 @@ async def tts(client, message):
     await client.send_chat_action(message.chat.id, "record_audio")
     text = message.text.split(None, 1)[1]
     tts = gTTS(text, lang=lang)
-    tts.save('nana/cache/voice.mp3')
+    tts.save('pyrobot/cache/voice.mp3')
     if message.reply_to_message:
-        await client.send_voice(message.chat.id, voice="nana/cache/voice.mp3",
+        await client.send_voice(message.chat.id, voice="pyrobot/cache/voice.mp3",
                                 reply_to_message_id=message.reply_to_message.message_id)
     else:
-        await client.send_voice(message.chat.id, voice="nana/cache/voice.mp3")
+        await client.send_voice(message.chat.id, voice="pyrobot/cache/voice.mp3")
     await client.send_chat_action(message.chat.id, action="cancel")
-    os.remove("nana/cache/voice.mp3")
+    os.remove("pyrobot/cache/voice.mp3")
 
 
 @Client.on_message(Filters.command("ttslang", COMMAND_HAND_LER) & sudo_filter)

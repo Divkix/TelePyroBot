@@ -24,7 +24,7 @@ async def listbots(client, message):
                        f"{result['ping']} \n"
                        "ISP "
                        f"{result['client']['isp']}"
-                       "`")
+                       "`", parse_mode="md")
 
 
 def speed_convert(size):

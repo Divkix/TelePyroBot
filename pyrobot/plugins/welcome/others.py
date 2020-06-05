@@ -21,10 +21,10 @@ async def clear_note(_, message):
     if not is_admin:
         return
     status_message = await message.reply_text(
-        "checking 🤔🙄🙄",
+        "Checking....",
         quote=True
     )
     sql.rm_welcome_setting(message.chat.id)
     await status_message.edit_text(
-        "welcome message cleared from current chat."
+        "Welcome message cleared from current chat."
     )

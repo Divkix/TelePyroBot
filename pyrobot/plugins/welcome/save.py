@@ -26,7 +26,7 @@ async def save_note(client, message):
     if not is_admin:
         return
     status_message = await message.reply_text(
-        "checking 🤔🙄🙄",
+        "Checking...",
         quote=True
     )
     if len(message.command) == 2:
@@ -39,7 +39,7 @@ async def save_note(client, message):
             note_message_id
         )
         await status_message.edit_text(
-            "welcome message saved"
+            "**Welcome message saved!**", parse_mode="md"
         )
     elif message.reply_to_message and message.reply_to_message.reply_markup is not None:
         fwded_mesg = await message.reply_to_message.forward(
@@ -61,7 +61,7 @@ async def save_note(client, message):
         note_name, text, data_type, content, buttons = get_note_type(message, 1)
 
         if data_type is None:
-            await status_message.edit_text("🤔 maybe welcome text is empty")
+            await status_message.edit_text("Maybe welcome text is **EMPTY**\nCheck Again", parse_mode="md")
             return
 
         # construct message using the above parameters
@@ -101,7 +101,7 @@ async def save_note(client, message):
                 note_message_id
             )
             await status_message.edit_text(
-                "welcome message saved"
+                "Welcome message saved"
             )
         else:
-            await status_message.edit_text("🥺 this might be an error 🤔")
+            await status_message.edit_text("Error Occured")

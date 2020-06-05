@@ -42,28 +42,28 @@ async def adminlist(client, message):
     for x in creator:
         teks += "│ • {}\n".format(x)
         if len(teks) >= 4096:
-            await message.reply(message.chat.id, teks, reply_to_message_id=replyid)
+            await message.reply(message.chat.id, teks, reply_to_message_id=replyid, parse_mode="md")
             teks = ""
             toolong = True
     teks += "╞══「 {} Human Administrator 」\n".format(len(admin))
     for x in admin:
         teks += "│ • {}\n".format(x)
         if len(teks) >= 4096:
-            await message.reply(message.chat.id, teks, reply_to_message_id=replyid)
+            await message.reply(message.chat.id, teks, reply_to_message_id=replyid, parse_mode="md")
             teks = ""
             toolong = True
     teks += "╞══「 {} Bot Administrator 」\n".format(len(badmin))
     for x in badmin:
         teks += "│ • {}\n".format(x)
         if len(teks) >= 4096:
-            await message.reply(message.chat.id, teks, reply_to_message_id=replyid)
+            await message.reply(message.chat.id, teks, reply_to_message_id=replyid, parse_mode="md")
             teks = ""
             toolong = True
     teks += "╘══「 Total {} Admins 」".format(totaladmins)
     if toolong:
-        await message.reply(message.chat.id, teks, reply_to_message_id=replyid)
+        await message.reply(message.chat.id, teks, reply_to_message_id=replyid, parse_mode="md")
     else:
-        await message.edit(teks)
+        await message.edit(teks, parse_mode="md")
 
 
 @Client.on_message(Filters.command(["everyone", "all"], COMMAND_HAND_LER) & sudo_filter)
@@ -111,6 +111,6 @@ async def listbots(client, message):
         teks += "│ • {}\n".format(x)
     teks += "╘══「 Total {} Bots 」".format(len(bots))
     if replyid:
-        await client.send_message(message.chat.id, teks, reply_to_message_id=replyid)
+        await client.send_message(message.chat.id, teks, reply_to_message_id=replyid, parse_mode="md")
     else:
-        await message.edit(teks)
+        await message.edit(teks, parse_mode="md")

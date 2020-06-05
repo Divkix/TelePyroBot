@@ -19,15 +19,15 @@ async def telegraph(client, message):
                 and replied.document.file_name.endswith(
                     ('.jpg', '.jpeg', '.png', '.gif', '.mp4'))
                 and replied.document.file_size <= 5242880)):
-        await message.edit("not supported!")
+        await message.edit("**Not supported!**", parse_mode="md")
         return
     download_location = await client.download_media(message=message.reply_to_message,file_name='root/nana/')
-    await message.edit("`passing to telegraph...`")
+    await message.edit("`Passing to telegraph...`", parse_mode="md")
     try:
         response = upload_file(download_location)
     except Exception as document:
         await message.edit(document)
     else:
-        await message.edit(f"**Document passed to: [Telegra.ph](https://telegra.ph{response[0]})**")
+        await message.edit(f"**Document passed to: [Telegra.ph](https://telegra.ph{response[0]})**", parse_mode="md")
     finally:
         os.remove(download_location)

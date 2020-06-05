@@ -25,7 +25,9 @@ async def ban_user(_, message):
         if str(user_id).lower().startswith("@"):
             await message.reply_text(
                 "No other person rocks the dust..! "
+                f"<a href='tg://user?id={user_id}'>"
                 f"{user_first_name}"
+                "</a>"
                 " Prohibited."
             )
         else:

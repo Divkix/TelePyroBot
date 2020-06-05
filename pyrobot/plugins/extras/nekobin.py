@@ -14,7 +14,7 @@ async def paste(client, message):
     elif message.reply_to_message and len(cmd) == 1:
         text = message.reply_to_message.text
     elif not message.reply_to_message and len(cmd) == 1:
-        await message.edit("Usage: `neko (reply to a text)`")
+        await message.edit("Usage: `paste (reply to a text)`")
         await asyncio.sleep(2)
         await message.delete()
         return
@@ -24,7 +24,7 @@ async def paste(client, message):
         await asyncio.sleep(2)
         await message.delete()
     else:
-        reply_text = f'`Successfully pasted on` [Nekobin](https://nekobin.com/{key})'
+        reply_text = f'`Successfully pasted on` Nekobin - https://nekobin.com/{key}'
         await message.edit_text(
             reply_text,
             disable_web_page_preview=True,

@@ -40,7 +40,7 @@ G_DRIVE_DIR_MIME_TYPE = "application/vnd.google-apps.folder"
 flow = None
 
 
-@Client.on_message(Filters.command("gdrive", COMMAND_HAND_LER)  & sudo_filter)
+@Client.on_message(Filters.command("gdrive", COMMAND_HAND_LER) & sudo_filter)
 async def g_drive_commands(client, message):
     status_message = await message.reply_text("...")
     if len(message.command) > 1:

@@ -14,8 +14,8 @@ from pyrobot import (
     MAX_MESSAGE_LENGTH,
     OFFICIAL_UPSTREAM_REPO
 )
-from pyrobot.helper_functions.cust_p_filters import sudo_filter
 
+from pyrobot.helper_functions.cust_p_filters import owner_filter
 
 # -- Constants -- #
 IS_SELECTED_DIFFERENT_BRANCH = (
@@ -43,7 +43,7 @@ RESTARTING_APP = "re-starting heroku application"
 # -- Constants End -- #
 
 
-@Client.on_message(Filters.command("update", COMMAND_HAND_LER)  & sudo_filter)
+@Client.on_message(Filters.command("update", COMMAND_HAND_LER) & owner_filter)
 async def updater(client, message):
     status_message = await message.reply_text("🤔😳😳🙄")
     try:

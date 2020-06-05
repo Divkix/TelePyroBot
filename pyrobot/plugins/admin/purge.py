@@ -12,8 +12,9 @@ from pyrobot import (
 
 from pyrobot.helper_functions.admin_check import admin_check
 
+from pyrobot.helper_functions.cust_p_filters import sudo_filter
 
-@Client.on_message(Filters.command("purge", COMMAND_HAND_LER))
+@Client.on_message(Filters.command("purge", COMMAND_HAND_LER) & sudo_filter)
 async def purge(client, message):
     """ purge upto the replied message """
     if message.chat.type not in (("supergroup", "channel")):

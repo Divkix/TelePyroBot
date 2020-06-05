@@ -8,8 +8,9 @@ from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
 from pyrobot.helper_functions.extract_user import extract_user
 
+from pyrobot.helper_functions.cust_p_filters import sudo_filter
 
-@Client.on_message(Filters.command(["whois", "info", "id"], COMMAND_HAND_LER))
+@Client.on_message(Filters.command(["whois", "info", "id"], COMMAND_HAND_LER) & sudo_filter)
 async def who_is(client, message):
     """ extract user information """
     status_message = await message.reply_text(

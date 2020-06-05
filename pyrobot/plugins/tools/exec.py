@@ -15,7 +15,7 @@ from pyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
 from pyrobot.helper_functions.cust_p_filters import sudo_filter
 
 
-@Client.on_message(Filters.command("exec", COMMAND_HAND_LER)  & sudo_filter)
+@Client.on_message(Filters.command("exec", COMMAND_HAND_LER) & sudo_filter)
 async def execution(_, message):
     # DELAY_BETWEEN_EDITS = 0.3
     # PROCESS_RUN_TIME = 100
@@ -36,7 +36,7 @@ async def execution(_, message):
     o = stdout.decode()
     if not o:
         o = "No Output"
-    
+
     OUTPUT = ""
     OUTPUT += f"<b>QUERY:</b>\n<u>Command:</u>\n<code>{cmd}</code> \n"
     OUTPUT += f"<u>PID</u>: <code>{process.pid}</code>\n\n"

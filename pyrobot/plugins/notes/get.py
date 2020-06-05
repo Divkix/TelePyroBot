@@ -14,7 +14,7 @@ from pyrobot.helper_functions.msg_types import (
 )
 if DB_URI is not None:
     import pyrobot.helper_functions.sql_helpers.notes_sql as sql
-
+from pyrobot.helper_functions.cust_p_filters import sudo_filter
 
 async def get_note_with_command(message, note_name):
     note_d = sql.get_note(message.chat.id, note_name)
@@ -56,7 +56,7 @@ async def get_note_with_command(message, note_name):
         )
 
 
-@Client.on_message(Filters.command(["getnote", "get"], COMMAND_HAND_LER))
+@Client.on_message(Filters.command(["getnote", "get"], COMMAND_HAND_LER) & sudo_filter)
 async def get_note(_, message):
     note_name = " ".join(message.command[1:])
     await get_note_with_command(message, note_name)

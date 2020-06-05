@@ -10,7 +10,7 @@ from pyrobot import COMMAND_HAND_LER
 from pyrobot.helper_functions.cust_p_filters import sudo_filter
 
 
-@Client.on_message(Filters.command("json", COMMAND_HAND_LER)  & sudo_filter)
+@Client.on_message(Filters.command("json", COMMAND_HAND_LER) & sudo_filter)
 async def jsonify(_, message):
     the_real_message = None
     reply_to_id = None

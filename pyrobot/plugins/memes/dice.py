@@ -1,13 +1,13 @@
 from pyrogram import Client, Filters
 
 from pyrobot import COMMAND_HAND_LER
-
+from pyrobot.helper_functions.cust_p_filters import sudo_filter
 # EMOJI CONSTANTS
 DICE_E_MOJI = "🎲"
 # EMOJI CONSTANTS
 
 
-@Client.on_message(Filters.command(["roll", "dice"], COMMAND_HAND_LER))
+@Client.on_message(Filters.command(["roll", "dice"], COMMAND_HAND_LER) & sudo_filter)
 async def roll_dice(client, message):
     """ @RollADie """
     rep_mesg_id = message.message_id

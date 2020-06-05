@@ -19,7 +19,7 @@ from pyrobot.helper_functions.display_progress_dl_up import progress_for_pyrogra
 thumb_image_path = TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 
 
-@Client.on_message(Filters.command("savethumbnail", COMMAND_HAND_LER)  & sudo_filter)
+@Client.on_message(Filters.command("savethumbnail", COMMAND_HAND_LER) & sudo_filter)
 async def save_thumb_nail(client, message):
     status_message = await message.reply_text("...")
     if message.reply_to_message is not None:

@@ -20,11 +20,11 @@ async def reverseimage(client, message):
             await message.edit('Reverse search for Animated stickers are yet not implemented')
             return
         if message_.photo or message_.animation or message_.sticker:
-            dis = await client.download_media(message=message_,file_name="/root/nana/")
-            dis_loc = os.path.join("/root/nana/", os.path.basename(dis))
+            dis = await client.download_media(message=message_,file_name="/root/pyrobot/")
+            dis_loc = os.path.join("/root/pyrobot/", os.path.basename(dis))
         if message_.animation:
             await message.edit("Converting this Gif to Image")
-            img_file = os.path.join("/root/nana/", "grs.jpg")
+            img_file = os.path.join("/root/pyrobot/", "grs.jpg")
             # await take_screen_shot(dis_loc, 0, img_file)
             if not os.path.lexists(img_file):
                 await message.edit("Something went wrong in Conversion")

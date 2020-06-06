@@ -1,6 +1,6 @@
 import asyncio
 from pyrogram import Client, Filters
-from pyrobot import COMMAND_HAND_LER, app
+from pyrobot import COMMAND_HAND_LER
 from pyrobot.helper_functions.cust_p_filters import sudo_filter
 from pyrobot.helper_functions.admin_check import admin_check
 

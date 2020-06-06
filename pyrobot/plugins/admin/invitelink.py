@@ -8,6 +8,6 @@ async def invitelink(client, message):
     is_admin = await admin_check(message)
     if not is_admin:
         return
-    chat_id = messsage.chat.id
+    chat_id = message.chat.id
     link = client.export_chat_invite_link(chat_id)
     await message.reply_text(link)

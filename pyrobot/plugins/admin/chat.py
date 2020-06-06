@@ -19,7 +19,7 @@ async def invitelink(client, message):
     is_admin = await admin_check(message)
     if not is_admin:
         return
-    chat_id = messsage.chat.id
+    chat_id = message.chat.id
     link = client.export_chat_invite_link(chat_id)
     await message.reply_text(f"**Link for Chat:**\n{link}", parse_mode="md")
 
@@ -29,7 +29,7 @@ async def delchatpic(client, message):
     is_admin = await admin_check(message)
     if not is_admin:
         return
-    chat_id = messsage.chat.id
+    chat_id = message.chat.id
     try:
         await client.delete_chat_photo(chat_id)
         await message.reply_text("Deleted Chat Pic!")
@@ -42,7 +42,7 @@ async def setchatname(client, message):
     is_admin = await admin_check(message)
     if not is_admin:
         return
-    chat_id = messsage.chat.id
+    chat_id = message.chat.id
     args = message.input_str.split(maxsplit=1)
     if len(args) >= 2:
         chat_title = args[0:]

@@ -1,60 +1,32 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-# (c) Shrimadhav U K
-
+import logging
 from pyrogram import Client
-from pyrogram import __version__
-from pyrogram.api.all import layer
 
 from pyrobot import (
     APP_ID,
     API_HASH,
     HU_STRING_SESSION,
     LOGGER,
-    TG_COMPANION_BOT,
-    TMP_DOWNLOAD_DIRECTORY
-)
-
+    TMP_DOWNLOAD_DIRECTORY)
 
 class PyroBot(Client):
-
     def __init__(self):
         name = self.__class__.__name__.lower()
-
-        if HU_STRING_SESSION is None:
-            super().__init__(
-                name,
-                plugins=dict(root=f"{name}/plugins"),
-                workdir=TMP_DOWNLOAD_DIRECTORY,
-                api_id=APP_ID,
-                api_hash=API_HASH,
-                bot_token=TG_COMPANION_BOT
-            )
-        else:
+        if HU_STRING_SESSION is not None:
             super().__init__(
                 HU_STRING_SESSION,
                 plugins=dict(root=f"{name}/plugins"),
                 workdir=TMP_DOWNLOAD_DIRECTORY,
                 api_id=APP_ID,
-                api_hash=API_HASH,
-            )
-
+                api_hash=API_HASH)
+        else:
+            logging.error("You need to set HU_STRING_SESSION Var first!")
+            quit(1)
 
     async def start(self):
         await super().start()
-
         usr_bot_me = await self.get_me()
-        if usr_bot_me.username is None:
-            name = usr_bot_me.username
-        else:
-            name = usr_bot_me.name
         self.set_parse_mode("html")
-        LOGGER.info(
-            f"TelePyroBot based on Pyrogram v{__version__} "
-            f"(Layer - {layer}) started on @{name}. "
-            "Hi."
-        )
-
+        LOGGER.info(f"TelePyroBot based on Pyrogram started Successfully! Hello {name}.")
 
     async def stop(self, *args):
         await super().stop()

@@ -1,36 +1,24 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-# (c) Shrimadhav U K
-
-# needed to appropriately, select ENV vars / Config vars
 import os
-
-# the logging things
 import logging
+from pyrobot.pyrobot import PyroBot
+
 logging.basicConfig(
     level=logging.DEBUG,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
-
-# the secret configuration specific things
 if bool(os.environ.get("ENV", False)):
     from pyrobot.sample_config import Config
 else:
     from pyrobot.config import Development as Config
 
-
-# TODO: is there a better way?
 LOGGER = logging.getLogger(__name__)
 APP_ID = Config.APP_ID
 API_HASH = Config.API_HASH
 HU_STRING_SESSION = Config.HU_STRING_SESSION
-TG_COMPANION_BOT = Config.TG_COMPANION_BOT
 COMMAND_HAND_LER = Config.COMMAND_HAND_LER
 MAX_MESSAGE_LENGTH = Config.MAX_MESSAGE_LENGTH
 TMP_DOWNLOAD_DIRECTORY = Config.TMP_DOWNLOAD_DIRECTORY
-# create download directory, if not exist
 if not os.path.isdir(TMP_DOWNLOAD_DIRECTORY):
     os.makedirs(TMP_DOWNLOAD_DIRECTORY)
 HEROKU_API_KEY = Config.HEROKU_API_KEY

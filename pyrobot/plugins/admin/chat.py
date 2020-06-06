@@ -32,7 +32,7 @@ async def delchatpic(client, message):
     chat_id = message.chat.id
     try:
         await client.delete_chat_photo(chat_id)
-        await message.reply_text(`"Deleted Chat Pic!"`, parse_mode="md")
+        await message.reply_text("`Deleted Chat Pic!`", parse_mode="md")
     except Exception as ef:
         await message.reply_text(f"Error deleting Chat Pic due to:\n`{ef}`", parse_mode="md")
 

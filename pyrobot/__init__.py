@@ -1,6 +1,5 @@
 import os
 import logging
-from pyrobot.pyrobot import PyroBot
 
 logging.basicConfig(
     level=logging.DEBUG,

@@ -130,7 +130,7 @@ async def pin_message(client, message):
         try:
             rm = await message.edit("`Trying to pin message...`")
         except:
-            rm = await.reply_text("`Trying to pin message...`")
+            rm = await message.reply_text("`Trying to pin message...`")
         is_admin = await admin_check(message)
         if not is_admin:
             return
@@ -156,7 +156,7 @@ async def unpin_message(client, message):
         try:
             rm = await message.edit("`Trying to unpin message...`")
         except:
-            rm = await.reply_text("`Trying to unpin message...`")
+            rm = await message.reply_text("`Trying to unpin message...`")
         chat_id = message.chat.id
         is_admin = await admin_check(message)
         if not is_admin:

@@ -25,7 +25,7 @@ class PyroBot(Client):
     async def start(self):
         await super().start()
         usr_bot_me = await self.get_me()
-        LOGGER.info(f"TelePyroBot based on Pyrogram started Successfully! Hello {usr_bot_me}.")
+        LOGGER.info(f"TelePyroBot based on Pyrogram started Successfully! Hello User.")
 
     async def stop(self, *args):
         await super().stop()

@@ -12,8 +12,7 @@ class Config():
     # set this to your fork on GitHub (if you want)
     OFFICIAL_UPSTREAM_REPO = os.environ.get(
         "OFFICIAL_UPSTREAM_REPO",
-        "https://github.com/SkuzzyxD/TelePyroBot"
-    )
+        "https://github.com/SkuzzyxD/TelePyroBot")
     DB_URI = os.environ.get("DATABASE_URL", None)
     TG_URI = os.environ.get("TELEGRAM_URL", "-100")
     G_DRIVE_CLIENT_ID = os.environ.get("G_DRIVE_CLIENT_ID", None)
@@ -21,7 +20,7 @@ class Config():
     OWNER_ID = int(os.environ.get("OWNER_ID", "716243352"))
     SUDO_USERS = set(int(x) for x in os.environ.get("SUDO_USERS", "").split())
     TG_MAX_SELECT_LEN = int(os.environ.get("TG_MAX_SELECT_LEN", "100"))
-
+    HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
 class Production(Config):
     LOGGER = False
 

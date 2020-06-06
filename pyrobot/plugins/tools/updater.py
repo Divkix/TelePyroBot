@@ -81,31 +81,8 @@ async def updater(client, message):
     )
     LOGGER.info(changelog)
 
-    if not changelog:
-        updatenochange = await status_message.edit("`Updating Please Wait...`", parse_mode="md")
-        await asyncio.sleep(8)
-        await updatenochange.delete()
-
-    message_one = NEW_BOT_UP_DATE_FOUND.format(
-        branch_name=active_branch_name,
-        changelog=changelog
-    )
-    message_two = NEW_UP_DATE_FOUND.format(
-        branch_name=active_branch_name
-    )
-
-    if len(message_one) > MAX_MESSAGE_LENGTH:
-        with open("change.log", "w+", encoding="utf8") as out_file:
-            out_file.write(str(message_one))
-        await message.reply_document(
-            document="change.log",
-            caption=message_two,
-            disable_notification=True,
-            reply_to_message_id=message.message_id
-        )
-        os.remove("change.log")
-    else:
-        await message.reply(message_one)
+    updatenochange = await status_message.edit("`Updating Please Wait...`", parse_mode="md")
+    await asyncio.sleep(8)
 
     tmp_upstream_remote.fetch(active_branch_name)
     repo.git.reset("--hard", "FETCH_HEAD")
@@ -144,7 +121,5 @@ def generate_change_log(git_repo, diff_marker):
 
 async def restart(client, message):
     await client.restart()
-    await message.edit(
-        "**Restarted!** "
-        f"Do `{COMMAND_HAND_LER}alive` or `{COMMAND_HAND_LER}start` to check if I am online?", parse_mode="md"
-    )
+    await updatenochange.edit("**Updated!**\nPLease wait upto 5 minutes to let the session start!\n\n "
+        f"Do `{COMMAND_HAND_LER}alive` or `{COMMAND_HAND_LER}start` to check if I am online?", parse_mode="md")

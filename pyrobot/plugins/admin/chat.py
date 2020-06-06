@@ -30,12 +30,16 @@ async def set_picture(client, message):
         is_admin = await admin_check(message)
         if not is_admin:
             return
+        rm = await message.reply_text("`Tring to Change Group Picture....`", parse_mode="md")
         chat_id = message.chat.id
-        if message.reply_to_message and message.reply_to_message.media:
-            file_id = message.reply_to_message.photo.file_id
-            file_ref = message.reply_to_message.photo.file_ref
-            await bot.set_chat_photo(chat_id, file_id, file_ref=file_ref)
-            await message.edit(f"`{message.chat.type.title()} picture has been set.`")
+        try:
+            if message.reply_to_message and message.reply_to_message.media:
+                file_id = message.reply_to_message.photo.file_id
+                file_ref = message.reply_to_message.photo.file_ref
+                await client.set_chat_photo(chat_id, file_id, file_ref=file_ref)
+                await rm.edit(f"`{message.chat.type.title()} picture has been set.`")
+        except Exception as ef:
+            await rm.edit(f"**Could not Change Chat Pic due to:**\n`{ef}`")
 
 
 @Client.on_message(Filters.command("delchatpic", COMMAND_HAND_LER) & sudo_filter)

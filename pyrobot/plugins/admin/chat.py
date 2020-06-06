@@ -37,7 +37,9 @@ async def set_picture(client, message):
                 file_id = message.reply_to_message.photo.file_id
                 file_ref = message.reply_to_message.photo.file_ref
                 await client.set_chat_photo(chat_id, file_id, file_ref=file_ref)
-                await rm.edit(f"`{message.chat.type.title()} picture has been set.`")
+                await rm.edit(f"`{message.chat.type.title()} picture has been set.`", parse_mode="md")
+            else:
+                await rm.edit("`Reply to an image to set that as group pic`", parse_mode="md")
         except Exception as ef:
             await rm.edit(f"**Could not Change Chat Pic due to:**\n`{ef}`")
 

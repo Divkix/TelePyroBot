@@ -25,7 +25,6 @@ class PyroBot(Client):
     async def start(self):
         await super().start()
         usr_bot_me = await self.get_me()
-        self.set_parse_mode("html")
         LOGGER.info(f"TelePyroBot based on Pyrogram started Successfully! Hello {name}.")
 
     async def stop(self, *args):

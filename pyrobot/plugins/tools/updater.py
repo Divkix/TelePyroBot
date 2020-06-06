@@ -39,7 +39,7 @@ IFFUCI_ACTIVE_BRANCH_NAME = "master"
 DIFF_MARKER = "HEAD..{remote_name}/{branch_name}"
 NO_HEROKU_APP_CFGD = "no heroku application found, but a key given? 😕 "
 HEROKU_GIT_REF_SPEC = "HEAD:refs/heads/master"
-RESTARTING_APP = "re-starting heroku application"
+UPDATE_IN_PROGRESS = f"**Updating Application!** __Please wait upto 5 minutes....__\n\nDo `{COMMAND_HAND_LER}alive` or `{COMMAND_HAND_LER}start` to check if I'm alive"
 # -- Constants End -- #
 
 
@@ -81,11 +81,13 @@ async def updater(client, message):
     )
     LOGGER.info(changelog)
 
-    updatenochange = await status_message.edit("`Updating Please Wait...`", parse_mode="md")
+    status_message = await status_message.edit("`Updating Please Wait...`", parse_mode="md")
     await asyncio.sleep(8)
 
     tmp_upstream_remote.fetch(active_branch_name)
     repo.git.reset("--hard", "FETCH_HEAD")
+
+    await status_message.edit(UPDATE_IN_PROGRESS)
 
     if HEROKU_API_KEY is not None:
         import heroku3
@@ -104,22 +106,4 @@ async def updater(client, message):
                 remote = repo.create_remote("heroku", heroku_git_url)
             remote.push(refspec=HEROKU_GIT_REF_SPEC)
         else:
-            await message.reply(NO_HEROKU_APP_CFGD)
-
-    await status_message.edit(RESTARTING_APP)
-    asyncio.get_event_loop().create_task(restart(client, status_message))
-
-
-def generate_change_log(git_repo, diff_marker):
-    out_put_str = ""
-    d_form = "%d/%m/%y"
-    for repo_change in git_repo.iter_commits(diff_marker):
-        out_put_str += f"•[{repo_change.committed_datetime.strftime(d_form)}]: "
-        out_put_str += f"{repo_change.summary} <{repo_change.author}>\n"
-    return out_put_str
-
-
-async def restart(client, message):
-    await client.restart()
-    await updatenochange.edit("**Updated!**\nPLease wait upto 5 minutes to let the session start!\n\n "
-        f"Do `{COMMAND_HAND_LER}alive` or `{COMMAND_HAND_LER}start` to check if I am online?", parse_mode="md")
+            await status_message.edit(NO_HEROKU_APP_CFGD)

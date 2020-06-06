@@ -39,4 +39,4 @@ TG_MAX_SELECT_LEN = Config.TG_MAX_SELECT_LEN
 
 #Trying new thing
 APP_SESSION=HU_STRING_SESSION
-app = Client(APP_SESSION, api_id=APP_ID, api_hash=API_HASH, workers=8)
+app = Client(APP_SESSION, api_id=APP_ID, api_hash=API_HASH, workers=4)

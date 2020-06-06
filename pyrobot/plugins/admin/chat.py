@@ -24,6 +24,20 @@ async def invitelink(client, message):
     await message.reply_text(f"**Link for Chat:**\n`{link}`", parse_mode="md")
 
 
+@Client.on_message(Filters.command("setchatpic", COMMAND_HAND_LER) & sudo_filter)
+async def set_picture(client, message):
+    if message.chat.type in ['group', 'supergroup']:
+        is_admin = await admin_check(message)
+        if not is_admin:
+            return
+        chat_id = message.chat.id
+        if message.reply_to_message and message.reply_to_message.media:
+            file_id = message.reply_to_message.photo.file_id
+            file_ref = message.reply_to_message.photo.file_ref
+            await bot.set_chat_photo(chat_id, file_id, file_ref=file_ref)
+            await message.edit(f"`{message.chat.type.title()} picture has been set.`")
+
+
 @Client.on_message(Filters.command("delchatpic", COMMAND_HAND_LER) & sudo_filter)
 async def delchatpic(client, message):
     is_admin = await admin_check(message)
@@ -32,7 +46,7 @@ async def delchatpic(client, message):
     chat_id = message.chat.id
     try:
         await client.delete_chat_photo(chat_id)
-        await message.reply_text("`Deleted Chat Pic!`", parse_mode="md")
+        await message.reply_text(f"`Deleted Chat Picture for {message.chat.type.title()}`", parse_mode="md")
     except Exception as ef:
         await message.reply_text(f"Error deleting Chat Pic due to:\n`{ef}`", parse_mode="md")
 

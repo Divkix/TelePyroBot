@@ -11,8 +11,6 @@ from pyrobot import (
     API_HASH,
     HU_STRING_SESSION,
     LOGGER,
-    # OWNER_ID,
-    # SUDO_USERS,
     TG_COMPANION_BOT,
     TMP_DOWNLOAD_DIRECTORY
 )
@@ -46,10 +44,14 @@ class PyroBot(Client):
         await super().start()
 
         usr_bot_me = await self.get_me()
+        if usr_bot_me.username is None:
+            name = usr_bot_me.username
+        else:
+            name = usr_bot_me.name
         self.set_parse_mode("html")
         LOGGER.info(
             f"TelePyroBot based on Pyrogram v{__version__} "
-            f"(Layer {layer}) started on @{usr_bot_me.username}. "
+            f"(Layer - {layer}) started on @{name}. "
             "Hi."
         )
 

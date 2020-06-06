@@ -21,7 +21,7 @@ async def invitelink(client, message):
         return
     chat_id = message.chat.id
     link = client.export_chat_invite_link(chat_id)
-    await message.reply_text(f"**Link for Chat:**\n{link}", parse_mode="md")
+    await message.reply_text(f"**Link for Chat:**\n`{link}`", parse_mode="md")
 
 
 @Client.on_message(Filters.command("delchatpic", COMMAND_HAND_LER) & sudo_filter)
@@ -32,7 +32,7 @@ async def delchatpic(client, message):
     chat_id = message.chat.id
     try:
         await client.delete_chat_photo(chat_id)
-        await message.reply_text("Deleted Chat Pic!")
+        await message.reply_text(`"Deleted Chat Pic!"`, parse_mode="md")
     except Exception as ef:
         await message.reply_text(f"Error deleting Chat Pic due to:\n`{ef}`", parse_mode="md")
 
@@ -52,7 +52,7 @@ async def setchatname(client, message):
     try:
         await client.set_chat_title(chat_id, chat_title)
     except Exception as ef:
-        await client.reply_text(f"**Could not Change Chat Title due to:**\n`{ef}`")
+        await client.reply_text(f"**Could not Change Chat Title due to:**\n`{ef}`", parse_mode="md")
 
 
 @Client.on_message(Filters.command("setchatdesc", COMMAND_HAND_LER) & sudo_filter)
@@ -70,4 +70,4 @@ async def setchatdesc(client, message):
     try:
         await client.set_chat_description(chat_id, chat_desc)
     except Exception as ef:
-        await client.reply_text(f"**Could not Change Chat Title due to:**\n`{ef}`")
+        await client.reply_text(f"**Could not Change Chat Title due to:**\n`{ef}`", parse_mode="md")

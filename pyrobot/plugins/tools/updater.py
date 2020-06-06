@@ -72,15 +72,6 @@ async def updater(client, message):
     tmp_upstream_remote = repo.remote(REPO_REMOTE_NAME)
     tmp_upstream_remote.fetch(active_branch_name)
 
-    changelog = generate_change_log(
-        repo,
-        DIFF_MARKER.format(
-            remote_name=REPO_REMOTE_NAME,
-            branch_name=active_branch_name
-        )
-    )
-    LOGGER.info(changelog)
-
     status_message = await status_message.edit("`Updating Please Wait...`", parse_mode="md")
     await asyncio.sleep(8)
 

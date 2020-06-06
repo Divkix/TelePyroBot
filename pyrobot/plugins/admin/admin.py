@@ -4,7 +4,7 @@ from pyrobot import COMMAND_HAND_LER, PyroBot
 from pyrobot.helper_functions.cust_p_filters import sudo_filter
 from pyrobot.helper_functions.admin_check import admin_check
 
-@PyroBot.on_message(Filters.command("promote", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("promote", COMMAND_HAND_LER) & sudo_filter)
 async def promote_usr(client, message):
     rm = await message.reply_text("`Trying to Promote User.. Hang on!! ⏳`", parse_mode="md")
     is_admin = await admin_check(message)

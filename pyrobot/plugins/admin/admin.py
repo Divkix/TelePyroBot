@@ -52,7 +52,7 @@ async def demote_usr(client, message):
         if len(args) == 1:
             user_id = args[0]
         else:
-            await rm.edit(`no valid user_id or message specified,`", parse_mode="md")
+            await rm.edit("`no valid user_id or message specified`", parse_mode="md")
 
     if user_id and chat_id:
         try:

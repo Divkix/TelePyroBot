@@ -20,7 +20,8 @@ class Config():
     TG_MAX_SELECT_LEN = int(os.environ.get("TG_MAX_SELECT_LEN", "100"))
     USERBOT_LOAD = set(int(x) for x in os.environ.get("USERBOT_LOAD", "").split())
     USERBOT_NOLOAD = set(int(x) for x in os.environ.get("USERBOT_NOLOAD", "").split())
-
+    HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
+    HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
 
 class Production(Config):
     LOGGER = False

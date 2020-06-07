@@ -11,7 +11,7 @@ from pyrobot import (
     LOGGER)
 
 
-class PyroBot(Client):
+class PyroUser(Client):
 
     def __init__(self):
         name = self.__class__.__name__.lower()
@@ -42,7 +42,7 @@ class PyroBot(Client):
             OWNER_NAME = usr_bot_me.first_name
         OWNER_USERNAME = usr_bot_me.username
         LOGGER.info(f"Hello {OWNER_NAME} ({OWNER_USERNAME} - {OWNER_ID})")
-        LOGGER.info("Bot run successfully!")
+        LOGGER.info("Bot Run successfully!")
 
 
     async def stop(self, *args):

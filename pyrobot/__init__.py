@@ -36,19 +36,4 @@ USERBOT_LOAD = Config.USERBOT_LOAD
 USERBOT_NOLOAD = Config.USERBOT_NOLOAD
 HEROKU_APP_NAME = Config.HEROKU_APP_NAME
 HEROKU_API_KEY = Config.HEROKU_API_KEY
-
-OWNER_ID = 0
-OWNER_NAME = ""
-OWNER_USERNAME = ""
-
-"""async def get_self():
-    global OWNER_ID, OWNER_NAME, OWNER_USERNAME, SUDO_USERS
-    getself = await Client.get_me()
-    OWNER_ID = getself.id
-    if getself.last_name:
-        OWNER_NAME = getself.first_name + " " + getself.last_name
-    else:
-        OWNER_NAME = getself.first_name
-    OWNER_USERNAME = getself.username
-    if OWNER_ID not in SUDO_USERS:
-        SUDO_USERS.append(OWNER_ID)"""
+OWNER_ID = Config.OWNER_ID

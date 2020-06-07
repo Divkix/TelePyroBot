@@ -37,10 +37,10 @@ class PyroBot(Client):
         LOGGER.info("Bot run successfully!")
         usr_bot_me = await self.get_me()
         OWNER_ID = usr_bot_me.id
-        if getself.last_name:
-            OWNER_NAME = getself.first_name + " " + getself.last_name
+        if usr_bot_me.last_name:
+            OWNER_NAME = usr_bot_me.first_name + " " + usr_bot_me.last_name
         else:
-            OWNER_NAME = getself.first_name
+            OWNER_NAME = usr_bot_me.first_name
         OWNER_USERNAME = usr_bot_me.username
         LOGGER.info(f"Hello {OWNER_NAME} ({OWNER_USERNAME} - {OWNER_ID})")
 

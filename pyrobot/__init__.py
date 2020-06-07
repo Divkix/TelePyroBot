@@ -42,7 +42,7 @@ OWNER_USERNAME = ""
 
 async def get_self():
     global OWNER_ID, OWNER_NAME, OWNER_USERNAME, SUDO_USERS
-    getself = await app.get_me()
+    getself = await client.get_me()
     OWNER_ID = getself.id
     if getself.last_name:
         OWNER_NAME = getself.first_name + " " + getself.last_name

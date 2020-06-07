@@ -5,6 +5,8 @@ from pyrobot.utils.cust_p_filters import sudo_filter
 import random
 import time
 
+p = 0
+
 @Client.on_message(Filters.command("qbot", COMMAND_HAND_LER) & sudo_filter)
 async def quotly(client, message):
     if not message.reply_to_message:
@@ -28,6 +30,9 @@ async def quotly(client, message):
                     pass
             except:
                 await message.edit("__ERROR SUUUU__", parse_mode="md")
+                p += 1
+                if p == 3:
+                    break
     await message.edit("```Complete !```", parse_mode="md")
     msg_id = msg[0]["message_id"]
     await client.forward_messages(message.chat.id, "@QuotLyBot", msg_id)

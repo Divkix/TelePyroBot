@@ -6,14 +6,17 @@ from speedtest import Speedtest
 
 @Client.on_message(Filters.command("speedtest", COMMAND_HAND_LER) & sudo_filter)
 async def listbots(client, message):
-    await message.edit("`Running speed test . . .`")
+    try:
+        rm = await message.edit("`Running speed test . . .`")
+    except:
+        rm = await message.reply_text("`Running speed test . . .`")
     test = Speedtest()
     test.get_best_server()
     test.download()
     test.upload()
     test.results.share()
     result = test.results.dict()
-    await message.edit("`"
+    await rm.edit("`"
                        "Started at "
                        f"{result['timestamp']} \n\n"
                        "Download "

@@ -23,6 +23,9 @@ async def carbon_api(client, message):
         r = message.reply_to_message
         json["code"] = r.text
         await message.edit_text("Carbonizing code...")
+    if len(message.command) >= 2:
+        r = message.command[1:]
+        json["code"] = r.text
     else:
         await message.edit("Usage: `.carbon` (reply to a code or text)")
     json["language"] = CARBON_LANG

@@ -8,8 +8,7 @@ from pyrobot import (
     APP_ID,
     API_HASH,
     HU_STRING_SESSION,
-    LOGGER,
-    get_self)
+    LOGGER)
 
 
 class PyroBot(Client):

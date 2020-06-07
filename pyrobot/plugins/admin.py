@@ -221,6 +221,10 @@ async def delchatpic(client, message):
 
 @Client.on_message(Filters.command("setchatname", COMMAND_HAND_LER) & sudo_filter)
 async def setchatname(client, message):
+    try:
+        rm = await message.edit("__Trying to Change Chat Name!__")
+    except:
+        rm = await message.reply_text("__Trying to Change Chat Name!__")
     is_admin = await admin_check(message)
     if not is_admin:
         return
@@ -231,12 +235,17 @@ async def setchatname(client, message):
         chat_title = listToString(message.command[1:])
     try:
         await client.set_chat_title(chat_id, chat_title)
+        await rm.edit(f"<b>Changed Chat Name to:</b> <code>{chat_title}</code>")
     except Exception as ef:
-        await message.reply_text(f"**Could not Change Chat Title due to:**\n`{ef}`", parse_mode="md")
+        await rm.edit(f"**Could not Change Chat Title due to:**\n`{ef}`", parse_mode="md")
 
 
 @Client.on_message(Filters.command("setchatdesc", COMMAND_HAND_LER) & sudo_filter)
 async def setchatdesc(client, message):
+    try:
+        rm = await message.edit("__Trying to Change Chat Desciption!__")
+    except:
+        rm = await message.reply_text("__Trying to Change Chat Desciption!__")
     is_admin = await admin_check(message)
     if not is_admin:
         return
@@ -247,8 +256,9 @@ async def setchatdesc(client, message):
         chat_desc = listToString(message.command[1:])
     try:
         await client.set_chat_description(chat_id, chat_desc)
+        await rm.edit(f"<b>Changed Chat Name to:</b> <code>{chat_title}</code>")
     except Exception as ef:
-        await message.reply_text(f"**Could not Change Chat Desciption due to:**\n`{ef}`", parse_mode="md")
+        await rm.edit(f"**Could not Change Chat Desciption due to:**\n`{ef}`", parse_mode="md")
 
 
 @Client.on_message(Filters.command("purge", COMMAND_HAND_LER) & sudo_filter)

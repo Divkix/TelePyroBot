@@ -1,6 +1,6 @@
 import os
 import logging
-from pyrogram import Client
+
 logging.basicConfig(
     level=logging.DEBUG,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
@@ -41,7 +41,7 @@ OWNER_ID = 0
 OWNER_NAME = ""
 OWNER_USERNAME = ""
 
-async def get_self():
+"""async def get_self():
     global OWNER_ID, OWNER_NAME, OWNER_USERNAME, SUDO_USERS
     getself = await Client.get_me()
     OWNER_ID = getself.id
@@ -51,4 +51,4 @@ async def get_self():
         OWNER_NAME = getself.first_name
     OWNER_USERNAME = getself.username
     if OWNER_ID not in SUDO_USERS:
-        SUDO_USERS.append(OWNER_ID)
+        SUDO_USERS.append(OWNER_ID)"""

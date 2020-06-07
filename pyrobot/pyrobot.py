@@ -37,6 +37,13 @@ class PyroBot(Client):
         LOGGER.info("Userbot Plugins: " + str(ALL_MODULES))
         LOGGER.info(f"PyroGramBot based on Pyrogram v{__version__} (Layer {layer}) started.")
         LOGGER.info("Bot run successfully!")
+        usr_bot_me = await self.get_me()
+        OWNER_ID = usr_bot_me.id
+        if getself.last_name:
+            OWNER_NAME = getself.first_name + " " + getself.last_name
+        else:
+            OWNER_NAME = getself.first_name
+        OWNER_USERNAME = usr_bot_me.username
         LOGGER.info(f"Hello {OWNER_NAME} ({OWNER_USERNAME} - {OWNER_ID})")
 
 

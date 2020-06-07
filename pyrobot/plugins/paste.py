@@ -51,8 +51,8 @@ async def paste_bin(_, message):
     # a dictionary to store different pastebin URIs
     paste_bin_store_s = {
         "deldog": "https://del.dog/documents",
-        "nekobin": "https://nekobin.com/api/documents"
-        "dogbin": "https://del.dog/documents",
+        "nekobin": "https://nekobin.com/api/documents",
+        "dogbin": "https://del.dog/documents"
         }
 
     chosen_store = "nekobin"

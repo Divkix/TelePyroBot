@@ -22,7 +22,7 @@ class Config():
     USERBOT_NOLOAD = set(int(x) for x in os.environ.get("USERBOT_NOLOAD", "").split())
     HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
     HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
-
+    OWNER_ID = os.environ.get("OWNER_ID", None)
 class Production(Config):
     LOGGER = False
 

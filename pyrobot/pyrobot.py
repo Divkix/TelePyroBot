@@ -18,7 +18,7 @@ class PyroUser(Client):
 
         super().__init__(
             HU_STRING_SESSION,
-            plugins=dict(root=f"{name}/plugins"),
+            plugins=dict(root="pyrobot/plugins"),
             workdir="./pyrobot/session",
             api_id=APP_ID,
             api_hash=API_HASH,

@@ -1,5 +1,6 @@
 import os
 import logging
+from pyrogram import Client
 logging.basicConfig(
     level=logging.DEBUG,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'

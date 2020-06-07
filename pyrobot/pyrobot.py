@@ -34,7 +34,6 @@ class PyroBot(Client):
         LOGGER.info("-----------------------")
         LOGGER.info("Userbot Plugins: " + str(ALL_MODULES))
         LOGGER.info(f"PyroGramBot based on Pyrogram v{__version__} (Layer {layer}) started.")
-        LOGGER.info("Bot run successfully!")
         usr_bot_me = await self.get_me()
         OWNER_ID = usr_bot_me.id
         if usr_bot_me.last_name:
@@ -43,6 +42,8 @@ class PyroBot(Client):
             OWNER_NAME = usr_bot_me.first_name
         OWNER_USERNAME = usr_bot_me.username
         LOGGER.info(f"Hello {OWNER_NAME} ({OWNER_USERNAME} - {OWNER_ID})")
+        global OWNER_NAME OWNER_ID OWNER_USERNAME
+        LOGGER.info("Bot run successfully!")
 
 
     async def stop(self, *args):

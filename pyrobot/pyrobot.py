@@ -42,7 +42,6 @@ class PyroBot(Client):
             OWNER_NAME = usr_bot_me.first_name
         OWNER_USERNAME = usr_bot_me.username
         LOGGER.info(f"Hello {OWNER_NAME} ({OWNER_USERNAME} - {OWNER_ID})")
-        global OWNER_NAME, OWNER_ID, OWNER_USERNAME
         LOGGER.info("Bot run successfully!")
 
 

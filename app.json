@@ -1,20 +1,17 @@
 {
   "name": "TelePyroBot",
-  "description": "PyroGram UserBot. Powered by @UserBotTalk",
+  "description": "TelePyroBot UserBot. Powered by @Pyrogram",
   "keywords": [
     "telegram",
-    "best",
-    "indian",
     "pyrogram",
+    "heroku",
     "userbot",
-    "3",
-    "plugin",
-    "modular",
-    "productivity"
+    "mtproto",
+    ""
   ],
   "repository": "https://github.com/SkuzzyxD/TelePyroBot",
-  "success_url": "https://telegram.dog/UserBotTalk",
-  "website": "https://github.com/SkuzzyxD/TelePyroBot",
+  "success_url": "https://t.me/DraXRobots",
+  "website": "https://www.skuzzers.xyz",
   "env": {
     "ENV": {
       "description": "Setting this to ANYTHING will enable webhooks when in env mode",
@@ -36,24 +33,16 @@
       "description": "specify command handler that should be used for the plugins",
       "required": false
     },
-    "TMP_DOWNLOAD_DIRECTORY": {
-      "description": "This is required for the plugins involving the file system.",
-      "required": false
-    },
     "HEROKU_API_KEY": {
       "description": "get a Heroku API key from http://dashboard.heroku.com/account",
       "required": false
     },
-    "OFFICIAL_UPSTREAM_REPO": {
-      "description": "set this to your fork link on GitHub, not setting anything is RECOMMENDED, nevertheless, keeping this in the hope that it 'might' be useful",
+    "USERBOT_LOAD": {
+      "description": "Userbot Modules to Load.",
       "required": false
     },
-    "G_DRIVE_CLIENT_ID": {
-      "description": "Get your credentials from https://da.gd/so63O",
-      "required": false
-    },
-    "G_DRIVE_CLIENT_SECRET": {
-      "description": "Get your credentials from https://da.gd/so63O",
+    "USERBOT_NOLOAD": {
+      "description": "Userbot Modules to Not Load.",
       "required": false
     }
   },

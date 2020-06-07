@@ -1,6 +1,7 @@
+# For Pyrobot
 venv
-config.py
+**/config.py
 __pycache__
 pyrogrambot/__pycache__
-pyrogrambot/plugins/__pycache__
+pyrogrambot/modules/__pycache__
 **/*.session

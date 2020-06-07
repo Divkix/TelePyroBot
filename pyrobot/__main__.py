@@ -29,7 +29,7 @@ class PyroBot(Client):
 
     async def stop(self, *args):
         await super().stop()
-        print("TelePyroBot stopped. Bye.")
+        LOGGER.info("TelePyroBot stopped. Bye.")
 
 
 if __name__ == "__main__":

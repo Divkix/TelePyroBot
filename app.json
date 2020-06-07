@@ -55,6 +55,10 @@
     "G_DRIVE_CLIENT_SECRET": {
       "description": "Get your credentials from https://da.gd/so63O",
       "required": false
+    },
+    "OWNER_ID": {
+      "description": "Goto @Alita_Robot on Telegram and send /id to get your ID and fill it here.",
+      "required": true
     }
   },
   "addons": [{

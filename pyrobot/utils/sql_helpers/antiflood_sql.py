@@ -2,7 +2,7 @@ import threading
 
 from sqlalchemy import Column, Integer, String
 
-from pyrobot.helper_functions.sql_helpers import BASE, SESSION
+from pyrobot.utils.sql_helpers import BASE, SESSION
 
 
 DEF_COUNT = 0

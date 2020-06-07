@@ -1,7 +1,7 @@
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
-from pyrobot.helper_functions.cust_p_filters import sudo_filter
-from pyrobot.helper_functions.admin_check import admin_check
+from pyrobot.utils.cust_p_filters import sudo_filter
+from pyrobot.utils.admin_check import admin_check
 
 
 @Client.on_message(Filters.command("leavechat", COMMAND_HAND_LER) & sudo_filter)

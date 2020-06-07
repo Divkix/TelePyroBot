@@ -3,7 +3,7 @@ import threading
 
 from sqlalchemy import Column, Integer, String, LargeBinary
 
-from pyrobot.helper_functions.sql_helpers import BASE, SESSION
+from pyrobot.utils.sql_helpers import BASE, SESSION
 
 
 class gDriveCreds(BASE):

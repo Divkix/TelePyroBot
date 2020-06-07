@@ -3,7 +3,7 @@ import time
 from telegraph import upload_file
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
-from pyrobot.helper_functions.cust_p_filters import sudo_filter
+from pyrobot.utils.cust_p_filters import sudo_filter
 
 @Client.on_message(Filters.command("telegraph", COMMAND_HAND_LER) & sudo_filter)
 async def telegraph(client, message):

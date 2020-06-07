@@ -15,7 +15,7 @@ from pyrobot import (
     OFFICIAL_UPSTREAM_REPO
 )
 
-from pyrobot.helper_functions.cust_p_filters import owner_filter
+from pyrobot.utils.cust_p_filters import owner_filter
 
 # -- Constants -- #
 IS_SELECTED_DIFFERENT_BRANCH = (

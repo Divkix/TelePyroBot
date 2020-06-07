@@ -2,7 +2,7 @@ import os
 from pyrogram import Client, Filters
 
 from pyrobot import COMMAND_HAND_LER
-from pyrobot.helper_functions.cust_p_filters import sudo_filter
+from pyrobot.utils.cust_p_filters import sudo_filter
 
 from datetime import datetime
 import requests

@@ -4,7 +4,7 @@ import asyncio
 import math
 from pyrobot import COMMAND_HAND_LER, HEROKU_API_KEY, HEROKU_APP_NAME
 from pyrogram import Client, Filters
-from pyrobot.helper_functions.cust_p_filters import sudo_filter
+from pyrobot.utils.cust_p_filters import sudo_filter
 
 heroku_api = "https://api.heroku.com"
 Heroku = heroku3.from_key(HEROKU_API_KEY)

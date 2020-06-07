@@ -11,7 +11,7 @@ from hachoir.parser import createParser
 from PIL import Image
 
 from pyrobot import TMP_DOWNLOAD_DIRECTORY
-from pyrobot.helper_functions.run_shell_cmnd import run_command
+from pyrobot.utils.run_shell_cmnd import run_command
 
 
 async def is_thumb_image_exists(file_name: str):

@@ -11,7 +11,7 @@ from pyrogram import (
     InlineKeyboardButton,
     InlineKeyboardMarkup
 )
-from pyrobot.helper_functions.display_progress_dl_up import humanbytes
+from pyrobot.utils.display_progress_dl_up import humanbytes
 
 from pyrobot import (
     LOGGER

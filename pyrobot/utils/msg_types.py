@@ -2,7 +2,7 @@ from enum import IntEnum, unique
 
 from pyrogram import Message
 
-from pyrobot.helper_functions.string_handling import button_markdown_parser
+from pyrobot.utils.string_handling import button_markdown_parser
 
 
 @unique

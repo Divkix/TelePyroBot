@@ -14,11 +14,11 @@ from pyrobot import (
     LOGGER,
     TMP_DOWNLOAD_DIRECTORY
 )
-from pyrobot.helper_functions.display_progress_dl_up import (
+from pyrobot.utils.display_progress_dl_up import (
     progress_for_pyrogram,
     humanbytes
 )
-from pyrobot.helper_functions.cust_p_filters import sudo_filter
+from pyrobot.utils.cust_p_filters import sudo_filter
 
 
 @Client.on_message(Filters.command("download", COMMAND_HAND_LER) & sudo_filter)

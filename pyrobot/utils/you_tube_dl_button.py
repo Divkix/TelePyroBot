@@ -20,9 +20,9 @@ from pyrobot import (
     LOGGER,
     TMP_DOWNLOAD_DIRECTORY
 )
-from pyrobot.helper_functions.check_if_thumb_exists import is_thumb_image_exists
-from pyrobot.helper_functions.display_progress_dl_up import progress_for_pyrogram
-from pyrobot.helper_functions.run_shell_cmnd import run_command
+from pyrobot.utils.check_if_thumb_exists import is_thumb_image_exists
+from pyrobot.utils.display_progress_dl_up import progress_for_pyrogram
+from pyrobot.utils.run_shell_cmnd import run_command
 
 
 async def youtube_dl_call_back(bot, update, cb_data):

@@ -10,8 +10,8 @@ from pyrobot import (
     TG_MAX_SELECT_LEN
 )
 
-from pyrobot.helper_functions.admin_check import admin_check
-from pyrobot.helper_functions.cust_p_filters import sudo_filter
+from pyrobot.utils.admin_check import admin_check
+from pyrobot.utils.cust_p_filters import sudo_filter
 
 @Client.on_message(Filters.command("purge", COMMAND_HAND_LER) & sudo_filter)
 async def purge(client, message):

@@ -7,7 +7,7 @@ Check info of cases corona virus disease 2019
 
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
-from pyrobot.helper_functions.cust_p_filters import sudo_filter
+from pyrobot.utils.cust_p_filters import sudo_filter
 
 import os
 import shutil

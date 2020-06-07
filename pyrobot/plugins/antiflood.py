@@ -13,12 +13,12 @@ from pyrobot import (
     DB_URI
 )
 
-from pyrobot.helper_functions.admin_check import admin_check
+from pyrobot.utils.admin_check import admin_check
 if DB_URI is not None:
-    import pyrobot.helper_functions.sql_helpers.antiflood_sql as sql
+    import pyrobot.utils.sql_helpers.antiflood_sql as sql
     CHAT_FLOOD = sql.__load_flood_settings()
 
-from pyrobot.helper_functions.cust_p_filters import sudo_filter
+from pyrobot.utils.cust_p_filters import sudo_filter
 
 @Client.on_message(group=1)
 async def check_flood(client, message):

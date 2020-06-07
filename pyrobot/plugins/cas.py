@@ -2,12 +2,12 @@ import requests
 from time import sleep
 import asyncio
 
-from pyrobot.helper_functions.misc.PyroHelpers import ReplyCheck
-from pyrobot.helper_functions.misc.string import replace_text
+from pyrobot.utils.misc.PyroHelpers import ReplyCheck
+from pyrobot.utils.misc.string import replace_text
 
 from pyrogram import Client, Filters, Message, User
 from pyrobot import COMMAND_HAND_LER
-from pyrobot.helper_functions.cust_p_filters import sudo_filter
+from pyrobot.utils.cust_p_filters import sudo_filter
 
 from pyrogram.api import functions
 from pyrogram.errors import PeerIdInvalid

@@ -24,11 +24,11 @@ from pyrobot import (
     TMP_DOWNLOAD_DIRECTORY
 )
 
-from pyrobot.helper_functions.display_progress_dl_up import progress_for_pyrogram
-from pyrobot.helper_functions.cust_p_filters import sudo_filter
+from pyrobot.utils.display_progress_dl_up import progress_for_pyrogram
+from pyrobot.utils.cust_p_filters import sudo_filter
 
 if DB_URI is not None:
-    import pyrobot.helper_functions.sql_helpers.gDrive_sql as sql
+    import pyrobot.utils.sql_helpers.gDrive_sql as sql
 
 # Check https://developers.google.com/drive/scopes for all available scopes
 OAUTH_SCOPE = "https://www.googleapis.com/auth/drive"

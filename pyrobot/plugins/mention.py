@@ -6,7 +6,7 @@ Generate a  hyperlink username you refer with a custom single text.
 
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
-from pyrobot.helper_functions.cust_p_filters import sudo_filter
+from pyrobot.utils.cust_p_filters import sudo_filter
 
 @Client.on_message(Filters.command("mention", COMMAND_HAND_LER) & sudo_filter)
 async def mention(_, message):

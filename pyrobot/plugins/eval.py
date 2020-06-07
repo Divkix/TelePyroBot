@@ -12,7 +12,7 @@ import traceback
 from pyrogram import Client, Filters
 
 from pyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
-from pyrobot.helper_functions.cust_p_filters import sudo_filter
+from pyrobot.utils.cust_p_filters import sudo_filter
 
 
 @Client.on_message(Filters.command("eval", COMMAND_HAND_LER) & sudo_filter)

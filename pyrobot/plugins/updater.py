@@ -43,7 +43,7 @@ UPDATE_IN_PROGRESS = f"**Updating Application!** __Please wait upto 5 minutes...
 # -- Constants End -- #
 
 
-@Client.on_message(Filters.command("update", COMMAND_HAND_LER) & owner_filter)
+@Client.on_message(Filters.command("update", COMMAND_HAND_LER) & Filters.me)
 async def updater(client, message):
     status_message = await message.reply_text("__Checking for update....__", parse_mode="md")
     try:

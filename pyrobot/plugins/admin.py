@@ -4,6 +4,7 @@ from pyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN
 from pyrobot.utils.cust_p_filters import sudo_filter
 from pyrobot.utils.extract_user import extract_user
 from pyrobot.utils.admin_check import admin_check
+from pyrobot.utils.list_to_string import listToString
 
 
 @Client.on_message(Filters.command("promote", COMMAND_HAND_LER) & sudo_filter)
@@ -227,11 +228,11 @@ async def setchatname(client, message):
     if message.reply_to_message:
         chat_title = message.reply_to_message.text
     else:
-        chat_title = message.command[1:]
+        chat_title = listToString(message.command[1:])
     try:
         await client.set_chat_title(chat_id, chat_title)
     except Exception as ef:
-        await client.reply_text(f"**Could not Change Chat Title due to:**\n`{ef}`", parse_mode="md")
+        await message.reply_text(f"**Could not Change Chat Title due to:**\n`{ef}`", parse_mode="md")
 
 
 @Client.on_message(Filters.command("setchatdesc", COMMAND_HAND_LER) & sudo_filter)
@@ -243,11 +244,11 @@ async def setchatdesc(client, message):
     if message.reply_to_message:
         chat_desc = message.reply_to_message.text
     else:
-        chat_desc = message.command[1:]
+        chat_desc = listToString(message.command[1:])
     try:
         await client.set_chat_description(chat_id, chat_desc)
     except Exception as ef:
-        await client.reply_text(f"**Could not Change Chat Title due to:**\n`{ef}`", parse_mode="md")
+        await message.reply_text(f"**Could not Change Chat Desciption due to:**\n`{ef}`", parse_mode="md")
 
 
 @Client.on_message(Filters.command("purge", COMMAND_HAND_LER) & sudo_filter)

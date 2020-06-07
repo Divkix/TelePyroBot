@@ -2,7 +2,7 @@ from pyrogram import Client, Filters
 
 from pyrobot import COMMAND_HAND_LER
 from pyrobot.utils.cust_p_filters import sudo_filter
-
+from pyrobot.utils.list_to_string import listToString
 from requests import post
 import shutil
 import os
@@ -16,7 +16,7 @@ async def carbon_api(client, message):
         "backgroundColor": "rgba(0, 255, 230, 100)",
         "theme": "Dracula",
         "exportSize": "4x"
-    }
+        }
     rep_mesg_id = message.message_id
     if message.reply_to_message:
         rep_mesg_id = message.reply_to_message.message_id
@@ -25,7 +25,7 @@ async def carbon_api(client, message):
         await message.edit_text("Carbonizing code...")
     if len(message.command) >= 2:
         r = message.command[1:]
-        json["code"] = r.text
+        json["code"] = listToString(r)
     else:
         await message.edit("Usage: `.carbon` (reply to a code or text)")
     json["language"] = CARBON_LANG

@@ -1,5 +1,4 @@
-#https://github.com/pyrogram/pyrogram/archive/asyncio.zip
-pyrogram
+https://github.com/pyrogram/pyrogram/archive/asyncio.zip
 tgcrypto
 asyncio
 aiohttp

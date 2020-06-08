@@ -36,8 +36,8 @@
       "description": "specify command handler that should be used for the plugins",
       "required": false
     },
-    "TMP_DOWNLOAD_DIRECTORY": {
-      "description": "This is required for the plugins involving the file system.",
+    "HEROKU_APP_NAME": {
+      "description": "Your App name of heroku",
       "required": false
     },
     "HEROKU_API_KEY": {

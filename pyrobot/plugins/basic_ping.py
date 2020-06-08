@@ -2,13 +2,16 @@
 
 import time
 import os
-from pyrogram import Client, Filters
+from pyrogram import Client, Filters, __version__
 from pyrobot import COMMAND_HAND_LER
 from pyrobot.utils.cust_p_filters import sudo_filter
 from pyrobot.utils.extract_user import extract_user
 
 # -- Constants -- #
-ALIVE = "`I'm Alive :3`"
+ALIVE = "`I'm Alive :3`\n"
+        "<b>My Owner:</b> `Skuzzy xD`\n"
+        "<b>Python Version:</b> `3.6.10`\n"
+        "<b>Pyrogram Version:</b> `__version__`"
 HELP = "CAADAgAD6AkAAowucAABsFGHedLEzeUWBA"
 REPO = ("User / Bot is available on GitHub:\n"
         "https://github.com/SkuzzyxD/TelePyroBot")

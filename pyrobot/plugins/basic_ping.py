@@ -31,7 +31,7 @@ async def ping(client, message):
     rm = await message.edit("Pinging...")
     end_t = time.time()
     time_taken_s = (end_t - start_t) * 1000
-    await rm.edit(f"Pong!\n`{time_taken_s:.3f}` ms")
+    await message.edit(f"Pong!\n`{time_taken_s:.3f}` ms")
 
 
 @Client.on_message(Filters.command("repo", COMMAND_HAND_LER) & Filters.me)

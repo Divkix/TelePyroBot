@@ -30,7 +30,7 @@ UPDATE_IN_PROGRESS = f"**Updating Application!** __Please wait upto 5 minutes...
 
 @Client.on_message(Filters.command("update", COMMAND_HAND_LER) & Filters.me)
 async def updater(client, message):
-    await message.reply_text("__Checking for update....__")
+    await message.edit("`Updating Please Wait...`"))
     try:
         repo = git.Repo()
     except git.exc.InvalidGitRepositoryError as error_one:
@@ -57,13 +57,11 @@ async def updater(client, message):
     tmp_upstream_remote = repo.remote(REPO_REMOTE_NAME)
     tmp_upstream_remote.fetch(active_branch_name)
 
-    await message.edit("`Updating Please Wait...`")
-    await asyncio.sleep(8)
 
+    await asyncio.sleep(8)
+    await message.edit(UPDATE_IN_PROGRESS)
     tmp_upstream_remote.fetch(active_branch_name)
     repo.git.reset("--hard", "FETCH_HEAD")
-
-    await message.edit(UPDATE_IN_PROGRESS)
 
     if HEROKU_API_KEY is not None:
         import heroku3

@@ -6,7 +6,6 @@ from pyrobot.utils.extract_user import extract_user
 from pyrobot.utils.admin_check import admin_check
 from pyrobot.utils.list_to_string import listToString
 
-
 @Client.on_message(Filters.command("promote", COMMAND_HAND_LER) & Filters.me)
 async def promote_usr(client, message):
     await message.edit("`Trying to Promote User.. Hang on!! ⏳`")
@@ -271,3 +270,26 @@ async def del_msg(client, message):
         await message.delete()
     else:
         await message.edit("`Reply to a message to delete it!`")
+
+
+@Client.on_message(Filters.command("invite", COMMAND_HAND_LER) & Filters.me)
+async def del_msg(client, message):
+    chat_id = message.chat.id
+    cmd = message.command
+    if len(cmd)==2:
+        if not cmd[1].startswith("@"):
+            user_id = int(cmd[1])
+        elif cmd[1].startswith("@"):
+            user_id = str(cmd[1])
+    try:
+        await client.get_users(user_id)
+    except Exception as ef:
+        if ef == "list index out of range":
+            await message.edit("`User Not Found`")
+        else:
+            await message.edit(f"**Error while getting user:**\n`{ef}`")
+    try:
+        await client.add_chat_members(chat_id, user_id)
+        await message.reply_text("`Invited User Successfully`")
+    except Exception as ef:
+        await message.reply_text(f"Could not invite user due to:\n`{ef}`")

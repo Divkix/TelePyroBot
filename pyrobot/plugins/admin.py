@@ -9,7 +9,7 @@ from pyrobot.utils.list_to_string import listToString
 
 @Client.on_message(Filters.command("promote", COMMAND_HAND_LER) & Filters.me)
 async def promote_usr(client, message):
-    await message.edit("`Trying to Promote User.. Hang on!! ⏳`", parse_mode="md")
+    await message.edit("`Trying to Promote User.. Hang on!! ⏳`")
     is_admin = await admin_check(message)
 
     if not is_admin:
@@ -25,14 +25,14 @@ async def promote_usr(client, message):
                                         can_invite_users=True,
                                         can_pin_messages=True)
         await asyncio.sleep(2)
-        await message.edit(f"`👑 Promoted` [{user_first_name}](tg://user?id={user_id}) `Successfully...`", parse_mode="md")
+        await message.edit(f"`👑 Promoted` [{user_first_name}](tg://user?id={user_id}) `Successfully...`")
     except Exception as ef:
         await message.edit(f"**Error:**\n\n`{ef}`")
 
 
 @Client.on_message(Filters.command("demote", COMMAND_HAND_LER) & Filters.me)
 async def demote_usr(client, message):
-    await message.edit("`Trying to Demote User.. Hang on!! ⏳`", parse_mode="md")
+    await message.edit("`Trying to Demote User.. Hang on!! ⏳`")
     is_admin = await admin_check(message)
     if not is_admin:
         return
@@ -47,14 +47,14 @@ async def demote_usr(client, message):
                                         can_invite_users=False,
                                         can_pin_messages=False)
         await asyncio.sleep(2)
-        await message.edit(f"`Demoted` [{user_first_name}](tg://user?id={user_id}) `Successfully...`", parse_mode="md")
+        await message.edit(f"`Demoted` [{user_first_name}](tg://user?id={user_id}) `Successfully...`")
     except Exception as ef:
         await message.edit(f"**Error:**\n\n`{ef}`")
 
 
 @Client.on_message(Filters.command("ban", COMMAND_HAND_LER) & Filters.me)
 async def ban_usr(client, message):
-    await message.edit("`Trying to Ban User.. Hang on!! ⏳`", parse_mode="md")
+    await message.edit("`Trying to Ban User.. Hang on!! ⏳`")
     is_admin = await admin_check(message)
     if not is_admin:
         return
@@ -62,14 +62,14 @@ async def ban_usr(client, message):
     user_id, user_first_name = extract_user(message)
     try:
         await message.chat.kick_member(user_id)
-        await message.edit(f"`Banned` [{user_first_name}](tg://user?id={user_id}) `Successfully...`", parse_mode="md")
+        await message.edit(f"`Banned` [{user_first_name}](tg://user?id={user_id}) `Successfully...`")
     except Exception as ef:
         await message.edit(f"**Error:**\n\n`{ef}`")
 
 
 @Client.on_message(Filters.command("mute", COMMAND_HAND_LER) & Filters.me)
 async def ban_usr(client, message):
-    await message.edit("`Trying to Mute User.. Hang on!! ⏳`", parse_mode="md")
+    await message.edit("`Trying to Mute User.. Hang on!! ⏳`")
     is_admin = await admin_check(message)
     if not is_admin:
         return
@@ -79,14 +79,14 @@ async def ban_usr(client, message):
         await message.chat.restrict_member(
             user_id=user_id,
             permissions=ChatPermissions())
-        await message.edit(f"`Muted` [{user_first_name}](tg://user?id={user_id}) `Successfully...`", parse_mode="md")
+        await message.edit(f"`Muted` [{user_first_name}](tg://user?id={user_id}) `Successfully...`")
     except Exception as ef:
         await message.edit(f"**Error:**\n\n`{ef}`")
 
 
 @Client.on_message(Filters.command(["unmute", "unban"], COMMAND_HAND_LER) & Filters.me)
 async def ban_usr(client, message):
-    await message.edit("`Trying to Unrestrict User.. Hang on!! ⏳`", parse_mode="md")
+    await message.edit("`Trying to Unrestrict User.. Hang on!! ⏳`")
     is_admin = await admin_check(message)
     if not is_admin:
         return
@@ -95,7 +95,7 @@ async def ban_usr(client, message):
     try:
         await message.chat.unban_member(
             user_id=user_id)
-        await message.edit(f"`Unrestrict` [{user_first_name}](tg://user?id={user_id}) `Successfully...`", parse_mode="md")
+        await message.edit(f"`Unrestrict` [{user_first_name}](tg://user?id={user_id}) `Successfully...`")
     except Exception as ef:
         await message.edit(f"**Error:**\n\n`{ef}`")
 
@@ -118,9 +118,9 @@ async def pin_message(client, message):
                 message.chat.id,
                 message.reply_to_message.message_id,
                 disable_notification=disable_notification)
-            await message.edit("`Pinned message!`", parse_mode="md")
+            await message.edit("`Pinned message!`")
         else:
-            await message.edit("`Reply to a message to which you want to pin...`", parse_mode="md")
+            await message.edit("`Reply to a message to which you want to pin...`")
 
 
 @Client.on_message(Filters.command("unpin", COMMAND_HAND_LER) & Filters.me)
@@ -132,7 +132,7 @@ async def unpin_message(client, message):
         if not is_admin:
             return
         await client.unpin_chat_message(chat_id)
-        await message.edit("`Unpinned message!`", parse_mode="md")
+        await message.edit("`Unpinned message!`")
 
 
 @Client.on_message(Filters.command("leavechat", COMMAND_HAND_LER) & Filters.me)
@@ -152,7 +152,7 @@ async def invitelink(client, message):
         return
     chat_id = message.chat.id
     link = client.export_chat_invite_link(chat_id)
-    await message.edit(f"**Link for Chat:**\n`{link}`", parse_mode="md")
+    await message.edit(f"**Link for Chat:**\n`{link}`")
 
 
 @Client.on_message(Filters.command("setchatpic", COMMAND_HAND_LER) & Filters.me)
@@ -161,16 +161,16 @@ async def set_picture(client, message):
         is_admin = await admin_check(message)
         if not is_admin:
             return
-        await message.edit("`Tring to Change Group Picture....`", parse_mode="md")
+        await message.edit("`Tring to Change Group Picture....`")
         chat_id = message.chat.id
         try:
             if message.reply_to_message and message.reply_to_message.media:
                 file_id = message.reply_to_message.photo.file_id
                 file_ref = message.reply_to_message.photo.file_ref
                 await client.set_chat_photo(chat_id, file_id, file_ref=file_ref)
-                await message.edit(f"`{message.chat.type.title()} picture has been set.`", parse_mode="md")
+                await message.edit(f"`{message.chat.type.title()} picture has been set.`")
             else:
-                await message.edit("`Reply to an image to set that as group pic`", parse_mode="md")
+                await message.edit("`Reply to an image to set that as group pic`")
         except Exception as ef:
             await message.edit(f"**Could not Change Chat Pic due to:**\n`{ef}`")
 
@@ -183,9 +183,9 @@ async def delchatpic(client, message):
     chat_id = message.chat.id
     try:
         await client.delete_chat_photo(chat_id)
-        await message.edit(f"`Deleted Chat Picture for {message.chat.type.title()}`", parse_mode="md")
+        await message.edit(f"`Deleted Chat Picture for {message.chat.type.title()}`")
     except Exception as ef:
-        await message.edit(f"Error deleting Chat Pic due to:\n`{ef}`", parse_mode="md")
+        await message.edit(f"Error deleting Chat Pic due to:\n`{ef}`")
 
 
 @Client.on_message(Filters.command("setchatname", COMMAND_HAND_LER) & Filters.me)
@@ -203,7 +203,7 @@ async def setchatname(client, message):
         await client.set_chat_title(chat_id, chat_title)
         await message.edit(f"<b>Changed Chat Name to:</b> <code>{chat_title}</code>")
     except Exception as ef:
-        await message.edit(f"**Could not Change Chat Title due to:**\n`{ef}`", parse_mode="md")
+        await message.edit(f"**Could not Change Chat Title due to:**\n`{ef}`")
 
 
 @Client.on_message(Filters.command("setchatdesc", COMMAND_HAND_LER) & Filters.me)
@@ -221,7 +221,7 @@ async def setchatdesc(client, message):
         await client.set_chat_description(chat_id, chat_desc)
         await message.edit(f"<b>Changed Chat Name to:</b> <code>{chat_title}</code>")
     except Exception as ef:
-        await message.edit(f"**Could not Change Chat Desciption due to:**\n`{ef}`", parse_mode="md")
+        await message.edit(f"**Could not Change Chat Desciption due to:**\n`{ef}`")
 
 
 @Client.on_message(Filters.command("purge", COMMAND_HAND_LER) & Filters.me)
@@ -258,6 +258,6 @@ async def purge(client, message):
             count_del_etion_s += len(message_ids)
 
     await message.edit(
-        f"Deleted `{count_del_etion_s}` messages", parse_mode="md")
+        f"Deleted `{count_del_etion_s}` messages")
     await asyncio.sleep(5)
     await message.delete()

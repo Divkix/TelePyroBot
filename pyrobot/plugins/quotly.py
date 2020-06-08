@@ -36,3 +36,4 @@ async def quotly(client, message):
     await message.edit("```Complete !```", parse_mode="md")
     msg_id = msg[0]["message_id"]
     await client.forward_messages(message.chat.id, "@QuotLyBot", msg_id)
+    await client.read_history("@QuotLyBot")

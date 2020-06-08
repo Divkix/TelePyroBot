@@ -1,6 +1,7 @@
 import os
-import logging
 
+# the logging things
+import logging
 logging.basicConfig(
     level=logging.DEBUG,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
@@ -8,6 +9,7 @@ logging.basicConfig(
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 
+# the secret configuration specific things
 if bool(os.environ.get("ENV", False)):
     from pyrobot.sample_config import Config
 else:
@@ -32,8 +34,6 @@ SUDO_USERS = list(Config.SUDO_USERS)
 SUDO_USERS.append(716243352)
 SUDO_USERS = list(set(SUDO_USERS))
 TG_MAX_SELECT_LEN = Config.TG_MAX_SELECT_LEN
-USERBOT_LOAD = Config.USERBOT_LOAD
-USERBOT_NOLOAD = Config.USERBOT_NOLOAD
 HEROKU_APP_NAME = Config.HEROKU_APP_NAME
 HEROKU_API_KEY = Config.HEROKU_API_KEY
 OWNER_ID = Config.OWNER_ID

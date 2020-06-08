@@ -29,7 +29,7 @@ class PyroBot(Client):
         LOGGER.info(
             f"PyroGramBot based on Pyrogram v{__version__} "
             "(Layer {layer}) started..."
-            f"Hey {@usr_bot_me.first_name}"
+            f"Hey {usr_bot_me.first_name}"
         )
 
 

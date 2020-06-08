@@ -3,13 +3,13 @@
 import time
 import os
 from pyrogram import Client, Filters, __version__
-from pyrobot import COMMAND_HAND_LER
+from pyrobot import COMMAND_HAND_LER, OWNER_NAME
 from pyrobot.utils.cust_p_filters import sudo_filter
 from pyrobot.utils.extract_user import extract_user
 
 # -- Constants -- #
 ALIVE = "`I'm Alive :3`\n"
-        "<b>My Owner:</b> `Skuzzy xD`\n"
+        f"<b>My Owner:</b> `{OWNER_NAME}`\n"
         "<b>Python Version:</b> `3.6.10`\n"
         "<b>Pyrogram Version:</b> `__version__`"
 HELP = "CAADAgAD6AkAAowucAABsFGHedLEzeUWBA"

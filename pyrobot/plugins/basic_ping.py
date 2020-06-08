@@ -96,9 +96,7 @@ async def who_is(client, message):
     else:
         msg = ""
         msg += f"ID: <code>{from_user.id}</code>\n"
-        msg += f"First Name: <a href='tg://user?id={from_user.id}'>"
-        msg += from_user.first_name
-        msg += "</a>\n"
+        msg += f"First Name: <a href='tg://user?id={from_user.id}'>{from_user.first_name}</a>"
         msg += f"Last Name: {from_user.last_name}\n"
         await message.edit(text=msg, disable_notification=True)
         await message.delete()

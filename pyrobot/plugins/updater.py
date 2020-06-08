@@ -30,7 +30,7 @@ UPDATE_IN_PROGRESS = f"**Updating Application!** __Please wait upto 5 minutes...
 
 @Client.on_message(Filters.command("update", COMMAND_HAND_LER) & Filters.me)
 async def updater(client, message):
-    await message.edit("`Updating Please Wait...`"))
+    await message.edit("`Updating Please Wait...`")
     try:
         repo = git.Repo()
     except git.exc.InvalidGitRepositoryError as error_one:

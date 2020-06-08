@@ -1,4 +1,4 @@
-from .pyrobot import PyroUser
+from .pyrobot import PyroBot
 
 if __name__ == "__main__":
-    PyroUser().run()
+    PyroBot().run()

@@ -1,10 +1,10 @@
 from pyrogram import Client, Filters
 
 from pyrobot import COMMAND_HAND_LER
-from pyrobot.utils.cust_p_filters import sudo_filter
+
 from pyrobot.utils.misc.parser import mention_html, mention_markdown
 
-@Client.on_message(Filters.command(["adminlist", "admins"], COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command(["adminlist", "admins"], COMMAND_HAND_LER) & Filters.me)
 async def adminlist(client, message):
     replyid = None
     toolong = False
@@ -66,7 +66,7 @@ async def adminlist(client, message):
         await message.edit(teks, parse_mode="md")
 
 
-@Client.on_message(Filters.command(["everyone", "all"], COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command(["everyone", "all"], COMMAND_HAND_LER) & Filters.me)
 async def everyone(client, message):
     await message.delete()
     if len(message.text.split()) >= 2:
@@ -83,7 +83,7 @@ async def everyone(client, message):
     else:
         await client.send_message(message.chat.id, text, parse_mode="html")
 
-@Client.on_message(Filters.command(["bots", "listbots"], COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command(["bots", "listbots"], COMMAND_HAND_LER) & Filters.me)
 async def listbots(client, message):
     replyid = None
     if len(message.text.split()) >= 2:

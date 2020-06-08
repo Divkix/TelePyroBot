@@ -28,9 +28,8 @@ class PyroBot(Client):
         usr_bot_me = await self.get_me()
         LOGGER.info(
             f"PyroGramBot based on Pyrogram v{__version__} "
-            "(Layer {layer}) started..."
-            f"Hey {usr_bot_me.first_name}"
-        )
+            f"(Layer {layer}) started..."
+            f"Hey {usr_bot_me.first_name}")
 
 
     async def stop(self, *args):

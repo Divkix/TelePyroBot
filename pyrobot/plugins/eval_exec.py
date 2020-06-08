@@ -14,10 +14,10 @@ import asyncio
 from pyrogram import Client, Filters
 
 from pyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
-from pyrobot.utils.cust_p_filters import sudo_filter
 
 
-@Client.on_message(Filters.command("eval", COMMAND_HAND_LER) & sudo_filter)
+
+@Client.on_message(Filters.command("eval", COMMAND_HAND_LER) & Filters.me)
 async def eval(client, message):
     status_message = await message.reply_text("Processing ...")
     cmd = message.text.split(" ", maxsplit=1)[1]
@@ -80,7 +80,7 @@ async def aexec(code, client, message):
     return await locals()['__aexec'](client, message)
 
 
-@Client.on_message(Filters.command("exec", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("exec", COMMAND_HAND_LER) & Filters.me)
 async def execution(_, message):
     cmd = message.text.split(" ", maxsplit=1)[1]
 

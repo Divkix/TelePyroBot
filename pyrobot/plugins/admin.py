@@ -1,13 +1,13 @@
 import asyncio
 from pyrogram import Client, Filters, ChatPermissions
 from pyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN
-from pyrobot.utils.cust_p_filters import sudo_filter
+
 from pyrobot.utils.extract_user import extract_user
 from pyrobot.utils.admin_check import admin_check
 from pyrobot.utils.list_to_string import listToString
 
 
-@Client.on_message(Filters.command("promote", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("promote", COMMAND_HAND_LER) & Filters.me)
 async def promote_usr(client, message):
     try:
         rm = await message.edit("`Trying to Promote User.. Hang on!! ⏳`", parse_mode="md")
@@ -34,7 +34,7 @@ async def promote_usr(client, message):
             await rm.edit(f"**Error:**\n\n`{ef}`")
 
 
-@Client.on_message(Filters.command("demote", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("demote", COMMAND_HAND_LER) & Filters.me)
 async def demote_usr(client, message):
     try:
         rm = await message.edit("`Trying to Demote User.. Hang on!! ⏳`", parse_mode="md")
@@ -62,7 +62,7 @@ async def demote_usr(client, message):
             await rm.edit(f"**Error:**\n\n`{ef}`")
 
 
-@Client.on_message(Filters.command("ban", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("ban", COMMAND_HAND_LER) & Filters.me)
 async def ban_usr(client, message):
     try:
         rm = await message.edit("`Trying to Ban User.. Hang on!! ⏳`", parse_mode="md")
@@ -82,7 +82,7 @@ async def ban_usr(client, message):
         await rm.edit(f"**Error:**\n\n`{ef}`")
 
 
-@Client.on_message(Filters.command("mute", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("mute", COMMAND_HAND_LER) & Filters.me)
 async def ban_usr(client, message):
     try:
         rm = await message.edit("`Trying to Mute User.. Hang on!! ⏳`", parse_mode="md")
@@ -104,7 +104,7 @@ async def ban_usr(client, message):
         await rm.edit(f"**Error:**\n\n`{ef}`")
 
 
-@Client.on_message(Filters.command(["unmute", "unban"], COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command(["unmute", "unban"], COMMAND_HAND_LER) & Filters.me)
 async def ban_usr(client, message):
     try:
         rm = await message.edit("`Trying to Unrestrict User.. Hang on!! ⏳`", parse_mode="md")
@@ -125,7 +125,7 @@ async def ban_usr(client, message):
         await rm.edit(f"**Error:**\n\n`{ef}`")
 
 
-@Client.on_message(Filters.command("pin", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("pin", COMMAND_HAND_LER) & Filters.me)
 async def pin_message(client, message):
     if message.chat.type in ['group', 'supergroup']:
         try:
@@ -151,7 +151,7 @@ async def pin_message(client, message):
             await rm.edit("`Reply to a message to which you want to pin...`", parse_mode="md")
 
 
-@Client.on_message(Filters.command("unpin", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("unpin", COMMAND_HAND_LER) & Filters.me)
 async def unpin_message(client, message):
     if message.chat.type in ['group', 'supergroup']:
         try:
@@ -166,7 +166,7 @@ async def unpin_message(client, message):
         await rm.edit("`Unpinned message!`", parse_mode="md")
 
 
-@Client.on_message(Filters.command("leavechat", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("leavechat", COMMAND_HAND_LER) & Filters.me)
 async def leavechat(client, message):
     if message.chat.type in ['group', 'supergroup']:
         chat_id = message.chat.id
@@ -176,7 +176,7 @@ async def leavechat(client, message):
         await client.leave_chat(chat_id, delete=True)
 
 
-@Client.on_message(Filters.command("invitelink", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("invitelink", COMMAND_HAND_LER) & Filters.me)
 async def invitelink(client, message):
     is_admin = await admin_check(message)
     if not is_admin:
@@ -186,7 +186,7 @@ async def invitelink(client, message):
     await message.reply_text(f"**Link for Chat:**\n`{link}`", parse_mode="md")
 
 
-@Client.on_message(Filters.command("setchatpic", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("setchatpic", COMMAND_HAND_LER) & Filters.me)
 async def set_picture(client, message):
     if message.chat.type in ['group', 'supergroup']:
         is_admin = await admin_check(message)
@@ -206,7 +206,7 @@ async def set_picture(client, message):
             await rm.edit(f"**Could not Change Chat Pic due to:**\n`{ef}`")
 
 
-@Client.on_message(Filters.command("delchatpic", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("delchatpic", COMMAND_HAND_LER) & Filters.me)
 async def delchatpic(client, message):
     is_admin = await admin_check(message)
     if not is_admin:
@@ -219,7 +219,7 @@ async def delchatpic(client, message):
         await message.reply_text(f"Error deleting Chat Pic due to:\n`{ef}`", parse_mode="md")
 
 
-@Client.on_message(Filters.command("setchatname", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("setchatname", COMMAND_HAND_LER) & Filters.me)
 async def setchatname(client, message):
     try:
         rm = await message.edit("__Trying to Change Chat Name!__")
@@ -240,7 +240,7 @@ async def setchatname(client, message):
         await rm.edit(f"**Could not Change Chat Title due to:**\n`{ef}`", parse_mode="md")
 
 
-@Client.on_message(Filters.command("setchatdesc", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("setchatdesc", COMMAND_HAND_LER) & Filters.me)
 async def setchatdesc(client, message):
     try:
         rm = await message.edit("__Trying to Change Chat Desciption!__")
@@ -261,7 +261,7 @@ async def setchatdesc(client, message):
         await rm.edit(f"**Could not Change Chat Desciption due to:**\n`{ef}`", parse_mode="md")
 
 
-@Client.on_message(Filters.command("purge", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("purge", COMMAND_HAND_LER) & Filters.me)
 async def purge(client, message):
     """ purge upto the replied message """
     if message.chat.type not in (("supergroup", "channel")):

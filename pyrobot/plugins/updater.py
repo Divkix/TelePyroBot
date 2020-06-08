@@ -12,10 +12,7 @@ from pyrobot import (
     HEROKU_API_KEY,
     LOGGER,
     MAX_MESSAGE_LENGTH,
-    OFFICIAL_UPSTREAM_REPO
-)
-
-from pyrobot.utils.cust_p_filters import owner_filter
+    OFFICIAL_UPSTREAM_REPO)
 
 # -- Constants -- #
 IS_SELECTED_DIFFERENT_BRANCH = (
@@ -45,7 +42,7 @@ UPDATE_IN_PROGRESS = f"**Updating Application!** __Please wait upto 5 minutes...
 
 @Client.on_message(Filters.command("update", COMMAND_HAND_LER) & Filters.me)
 async def updater(client, message):
-    status_message = await message.reply_text("__Checking for update....__", parse_mode="md")
+    await message.reply_text("__Checking for update....__", parse_mode="md")
     try:
         repo = git.Repo()
     except git.exc.InvalidGitRepositoryError as error_one:
@@ -59,7 +56,7 @@ async def updater(client, message):
     active_branch_name = repo.active_branch.name
     LOGGER.info(active_branch_name)
     if active_branch_name != IFFUCI_ACTIVE_BRANCH_NAME:
-        await status_message.edit(IS_SELECTED_DIFFERENT_BRANCH.format(
+        await message.edit(IS_SELECTED_DIFFERENT_BRANCH.format(
             branch_name=active_branch_name
         ))
         return False
@@ -72,13 +69,13 @@ async def updater(client, message):
     tmp_upstream_remote = repo.remote(REPO_REMOTE_NAME)
     tmp_upstream_remote.fetch(active_branch_name)
 
-    status_message = await status_message.edit("`Updating Please Wait...`", parse_mode="md")
+    await message.edit("`Updating Please Wait...`", parse_mode="md")
     await asyncio.sleep(8)
 
     tmp_upstream_remote.fetch(active_branch_name)
     repo.git.reset("--hard", "FETCH_HEAD")
 
-    await status_message.edit(UPDATE_IN_PROGRESS)
+    await message.edit(UPDATE_IN_PROGRESS)
 
     if HEROKU_API_KEY is not None:
         import heroku3
@@ -97,4 +94,4 @@ async def updater(client, message):
                 remote = repo.create_remote("heroku", heroku_git_url)
             remote.push(refspec=HEROKU_GIT_REF_SPEC)
         else:
-            await status_message.edit(NO_HEROKU_APP_CFGD)
+            await message.edit(NO_HEROKU_APP_CFGD)

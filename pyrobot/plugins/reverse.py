@@ -2,13 +2,13 @@ import os
 from pyrogram import Client, Filters
 
 from pyrobot import COMMAND_HAND_LER
-from pyrobot.utils.cust_p_filters import sudo_filter
+
 
 from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 
-@Client.on_message(Filters.command("reverse", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("reverse", COMMAND_HAND_LER) & Filters.me)
 async def reverseimage(client, message):
     start = datetime.now()
     dis_loc = ''

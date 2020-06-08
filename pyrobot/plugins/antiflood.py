@@ -18,7 +18,7 @@ if DB_URI is not None:
     import pyrobot.utils.sql_helpers.antiflood_sql as sql
     CHAT_FLOOD = sql.__load_flood_settings()
 
-from pyrobot.utils.cust_p_filters import sudo_filter
+
 
 @Client.on_message(group=1)
 async def check_flood(client, message):
@@ -69,7 +69,7 @@ because he reached the defined flood limit.
         )
 
 
-@Client.on_message(Filters.command("setflood", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("setflood", COMMAND_HAND_LER) & Filters.me)
 async def set_flood(client, message):
     """ /setflood command """
     is_admin = await admin_check(message)

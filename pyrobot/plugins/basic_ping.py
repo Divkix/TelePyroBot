@@ -4,7 +4,7 @@ import time
 import os
 from pyrogram import Client, Filters, __version__
 from pyrobot import COMMAND_HAND_LER, OWNER_NAME
-from pyrobot.utils.cust_p_filters import sudo_filter
+
 from pyrobot.utils.extract_user import extract_user
 
 # -- Constants -- #
@@ -15,17 +15,17 @@ REPO = ("<b>User / Bot is available on GitHub:</b>\n"
 # -- Constants End -- #
 
 
-@Client.on_message(Filters.command(["alive", "start"], COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command(["alive", "start"], COMMAND_HAND_LER) & Filters.me)
 async def check_alive(client, message):
     await message.edit_text(ALIVE)
 
 
-@Client.on_message(Filters.command("help", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("help", COMMAND_HAND_LER) & Filters.me)
 async def help_me(client, message):
     await message.reply_sticker(HELP)
 
 
-@Client.on_message(Filters.command("ping", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("ping", COMMAND_HAND_LER) & Filters.me)
 async def ping(client, message):
     start_t = time.time()
     rm = await message.edit("Pinging...")
@@ -34,11 +34,11 @@ async def ping(client, message):
     await rm.edit(f"Pong!\n`{time_taken_s:.3f}` ms")
 
 
-@Client.on_message(Filters.command("repo", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("repo", COMMAND_HAND_LER) & Filters.me)
 async def repo(client, message):
     await message.edit(REPO)
 
-@Client.on_message(Filters.command("id", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("id", COMMAND_HAND_LER) & Filters.me)
 async def get_id(client, message):
     file_id = None
     user_id = None
@@ -78,7 +78,7 @@ async def get_id(client, message):
         await message.edit("This Chat's ID:\n`{}`".format(message.chat.id))
 
 
-@Client.on_message(Filters.command(["whois", "info"], COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command(["whois", "info"], COMMAND_HAND_LER) & Filters.me)
 async def who_is(client, message):
     await message.edit("Finding user....")
     from_user = None
@@ -104,7 +104,7 @@ async def who_is(client, message):
         await message.delete()
 
 
-@Client.on_message(Filters.command("json", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("json", COMMAND_HAND_LER) & Filters.me)
 async def jsonify(client, message):
     the_real_message = None
     reply_to_id = None

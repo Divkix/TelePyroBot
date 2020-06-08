@@ -25,7 +25,7 @@ from pyrobot import (
 )
 
 from pyrobot.utils.display_progress_dl_up import progress_for_pyrogram
-from pyrobot.utils.cust_p_filters import sudo_filter
+
 
 if DB_URI is not None:
     import pyrobot.utils.sql_helpers.gDrive_sql as sql
@@ -40,7 +40,7 @@ G_DRIVE_DIR_MIME_TYPE = "application/vnd.google-apps.folder"
 flow = None
 
 
-@Client.on_message(Filters.command("gdrive", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("gdrive", COMMAND_HAND_LER) & Filters.me)
 async def g_drive_commands(client, message):
     status_message = await message.reply_text("...")
     if len(message.command) > 1:

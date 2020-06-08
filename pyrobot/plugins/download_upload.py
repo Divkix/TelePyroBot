@@ -18,11 +18,11 @@ from pyrobot.utils.display_progress_dl_up import (
     progress_for_pyrogram,
     humanbytes
 )
-from pyrobot.utils.cust_p_filters import sudo_filter
+
 from pyrobot.utils.check_if_thumb_exists import is_thumb_image_exists
 from pyrobot.utils.display_progress_dl_up import progress_for_pyrogram
 
-@Client.on_message(Filters.command(["download", "dl"], COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command(["download", "dl"], COMMAND_HAND_LER) & Filters.me)
 async def down_load_media(client, sms):
     message = await sms.reply_text("...", quote=True)
     if not os.path.isdir(TMP_DOWNLOAD_DIRECTORY):
@@ -93,7 +93,7 @@ async def down_load_media(client, sms):
     else:
         await message.edit("Reply to a Telegram Media, to download it to local server.")
 
-@Client.on_message(Filters.command("uploadasdoc", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("uploadasdoc", COMMAND_HAND_LER) & Filters.me)
 async def upload_as_document(client, message):
     status_message = await message.reply_text("...")
     if " " in message.text:
@@ -125,7 +125,7 @@ async def upload_as_document(client, message):
 
 
 
-@Client.on_message(Filters.command("uploadasvideo", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("uploadasvideo", COMMAND_HAND_LER) & Filters.me)
 async def upload_as_video(client, message):
     status_message = await message.reply_text("...")
     if " " in message.text:
@@ -161,7 +161,7 @@ async def upload_as_video(client, message):
 
 
 
-@Client.on_message(Filters.command("uploadasphoto", COMMAND_HAND_LER) & sudo_filter)
+@Client.on_message(Filters.command("uploadasphoto", COMMAND_HAND_LER) & Filters.me)
 async def upload_as_photo(client, message):
     status_message = await message.reply_text("...")
     if " " in message.text:

@@ -3,9 +3,9 @@ import time
 from telegraph import upload_file
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
-from pyrobot.utils.cust_p_filters import sudo_filter
 
-@Client.on_message(Filters.command("telegraph", COMMAND_HAND_LER) & sudo_filter)
+
+@Client.on_message(Filters.command("telegraph", COMMAND_HAND_LER) & Filters.me)
 async def telegraph(client, message):
     replied = message.reply_to_message
     if not replied:

@@ -240,8 +240,6 @@ async def youtube_music(client, message):
 			pass
 		titletext = "**Done! 🤗**\n"
 		await message.edit(titletext + text, disable_web_page_preview=False)
-        await asyncio.sleep(2)
-        await message.delete()
 	except Exception as err:
 		if "command not found" in str(err) or "is not recognized" in str(err):
 			await message.edit("You need to install ffmpeg first!")

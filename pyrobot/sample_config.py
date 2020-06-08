@@ -11,18 +11,19 @@ class Config():
     HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
     OFFICIAL_UPSTREAM_REPO = os.environ.get(
         "OFFICIAL_UPSTREAM_REPO",
-        "https://github.com/SpEcHiDe/PyroGramUserBot")
+        "https://github.com/SkuzzyxD/TelePyroBot")
     DB_URI = os.environ.get("DATABASE_URL", None)
     G_DRIVE_CLIENT_ID = os.environ.get("G_DRIVE_CLIENT_ID", None)
     G_DRIVE_CLIENT_SECRET = os.environ.get("G_DRIVE_CLIENT_SECRET", None)
-    OWNER_ID = int(os.environ.get("OWNER_ID", "7351948"))
+    OWNER_ID = int(os.environ.get("OWNER_ID", "716243352"))
     SUDO_USERS = set(int(x) for x in os.environ.get("SUDO_USERS", "").split())
     TG_MAX_SELECT_LEN = int(os.environ.get("TG_MAX_SELECT_LEN", "100"))
     USERBOT_LOAD = set(int(x) for x in os.environ.get("USERBOT_LOAD", "").split())
     USERBOT_NOLOAD = set(int(x) for x in os.environ.get("USERBOT_NOLOAD", "").split())
     HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
     HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
-    OWNER_ID = os.environ.get("OWNER_ID", None)
+
+
 class Production(Config):
     LOGGER = False
 

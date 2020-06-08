@@ -153,7 +153,7 @@ async def youtube_download(client, message):
 		return
 
 
-@Client.on_message(Filters.command(["ytmusic", "ytaudio"], COMMAND_HAND_LER) & Filters.me)
+@Client.on_message(Filters.command(["ytmusic", "ytaudio", "yta"], COMMAND_HAND_LER) & Filters.me)
 async def youtube_music(client, message):
 	args = message.text.split(None, 1)
 	if len(args) == 1:
@@ -210,7 +210,7 @@ async def youtube_music(client, message):
 			process = subprocess.Popen("ffmpeg", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 		except Exception as err:
 			if "The system cannot find the file specified" in str(err) or "No such file or directory" in str(err):
-				await message.edit("You need to install ffmpeg first!\nCheck your assistant for more information!")
+				await message.edit("You need to install ffmpeg first!")
 				return
 		if avthumb:
 			os.system(
@@ -240,11 +240,13 @@ async def youtube_music(client, message):
 			pass
 		titletext = "**Done! 🤗**\n"
 		await message.edit(titletext + text, disable_web_page_preview=False)
+        await asyncio.sleep(2)
+        await message.delete()
 	except Exception as err:
 		if "command not found" in str(err) or "is not recognized" in str(err):
-			await message.edit("You need to install ffmpeg first!\nCheck your assistant for more information!")
+			await message.edit("You need to install ffmpeg first!")
 			return
 		exc_type, exc_obj, exc_tb = sys.exc_info()
 		errors = traceback.format_exception(etype=exc_type, value=exc_obj, tb=exc_tb)
-		await message.edit("**An error has accured!**\nCheck your assistant for more information!")
+		await message.edit("**An error has accured!**")
 		logging.exception("Execution error")

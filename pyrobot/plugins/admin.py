@@ -227,16 +227,11 @@ async def setchatdesc(client, message):
 @Client.on_message(Filters.command("purge", COMMAND_HAND_LER) & Filters.me)
 async def purge(client, message):
     """ purge upto the replied message """
-    if message.chat.type not in (("supergroup", "channel")):
-        return
+    if message.chat.type in (("supergroup", "channel")):
+        is_admin = await admin_check(message)
+        if not is_admin:
+            return
 
-    is_admin = await admin_check(message)
-
-    if not is_admin:
-        return
-
-    await message.edit("Purging messages...", quote=True)
-    await message.delete()
     message_ids = []
     count_del_etion_s = 0
 
@@ -261,3 +256,17 @@ async def purge(client, message):
         f"Deleted `{count_del_etion_s}` messages")
     await asyncio.sleep(5)
     await message.delete()
+
+@Client.on_message(Filters.command("del", COMMAND_HAND_LER) & Filters.me)
+async def del_msg(client, message):
+    """ Delete the replied message """
+    if message.chat.type in (("supergroup", "channel")):
+        is_admin = await admin_check(message)
+        if not is_admin:
+            return
+    chat_id = message.chat.id
+    if message.reply_to_message:
+        message_id = message.reply_to_message.message_id
+        await client.delete_messages(chat_id, message_id)
+    else:
+        await message.edit("`Reply to a message to delete it!`")

@@ -19,21 +19,9 @@ IS_SELECTED_DIFFERENT_BRANCH = (
     "looks like a custom branch {branch_name} "
     "is being used \n"
     "in this case, Updater is unable to identify the branch to be updated."
-    "please check out to an official branch, and re-start the updater."
-)
-BOT_IS_UP_TO_DATE = "the user / bot is up-to-date."
-NEW_BOT_UP_DATE_FOUND = (
-    "new update found for {branch_name}\n"
-    "chagelog: \n\n{changelog}\n"
-    "updating ..."
-)
-NEW_UP_DATE_FOUND = (
-    "new update found for {branch_name}\n"
-    "updating ..."
-)
+    "please check out to an official branch, and re-start the updater.")
 REPO_REMOTE_NAME = "tmp_upstream_remote"
 IFFUCI_ACTIVE_BRANCH_NAME = "master"
-DIFF_MARKER = "HEAD..{remote_name}/{branch_name}"
 NO_HEROKU_APP_CFGD = "no heroku application found, but a key given? 😕 "
 HEROKU_GIT_REF_SPEC = "HEAD:refs/heads/master"
 UPDATE_IN_PROGRESS = f"**Updating Application!** __Please wait upto 5 minutes....__\n\nDo `{COMMAND_HAND_LER}alive` or `{COMMAND_HAND_LER}start` to check if I'm alive"
@@ -42,7 +30,7 @@ UPDATE_IN_PROGRESS = f"**Updating Application!** __Please wait upto 5 minutes...
 
 @Client.on_message(Filters.command("update", COMMAND_HAND_LER) & Filters.me)
 async def updater(client, message):
-    await message.reply_text("__Checking for update....__", parse_mode="md")
+    await message.reply_text("__Checking for update....__")
     try:
         repo = git.Repo()
     except git.exc.InvalidGitRepositoryError as error_one:
@@ -69,7 +57,7 @@ async def updater(client, message):
     tmp_upstream_remote = repo.remote(REPO_REMOTE_NAME)
     tmp_upstream_remote.fetch(active_branch_name)
 
-    await message.edit("`Updating Please Wait...`", parse_mode="md")
+    await message.edit("`Updating Please Wait...`")
     await asyncio.sleep(8)
 
     tmp_upstream_remote.fetch(active_branch_name)

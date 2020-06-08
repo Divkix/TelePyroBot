@@ -1,4 +1,4 @@
-https://github.com/pyrogram/pyrogram/archive/asyncio.zip
+git+https://github.com/pyrogram/pyrogram@asyncio-dev
 tgcrypto
 asyncio
 aiohttp
@@ -23,3 +23,6 @@ prettytable
 gtts
 telegraph
 heroku3
+pafy
+git+https://github.com/pytube3/pytube3.git
+pyDownload

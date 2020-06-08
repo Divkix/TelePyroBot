@@ -4,3 +4,6 @@ __pycache__
 pyrobot/__pycache__
 pyrogrambot/plugins/__pycache__
 **/*.session
+videoplayback
+videoplayback.temp
+pyrobot/cache/thumb.jpg

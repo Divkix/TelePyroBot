@@ -20,7 +20,7 @@ class Config():
     TG_MAX_SELECT_LEN = int(os.environ.get("TG_MAX_SELECT_LEN", "100"))
     HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
     HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
-
+    OWNER_NAME = os.environ.get("OWNER_NAME", "Skuzzy xD")
 
 class Production(Config):
     LOGGER = False

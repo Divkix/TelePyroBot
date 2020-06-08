@@ -70,7 +70,7 @@ because he reached the defined flood limit.
 
 
 @Client.on_message(Filters.command("setflood", COMMAND_HAND_LER) & sudo_filter)
-async def set_flood(_, message):
+async def set_flood(client, message):
     """ /setflood command """
     is_admin = await admin_check(message)
     if not is_admin:

@@ -1,5 +1,3 @@
-import importlib
-from pyrobot.plugins import ALL_MODULES
 from pyrogram import Client
 from pyrogram import __version__
 from pyrogram.api.all import layer
@@ -11,38 +9,28 @@ from pyrobot import (
     LOGGER)
 
 
-class PyroUser(Client):
+class PyroBot(Client):
 
     def __init__(self):
         name = self.__class__.__name__.lower()
 
         super().__init__(
             HU_STRING_SESSION,
-            plugins=dict(root="pyrobot/plugins"),
-            workdir="./pyrobot/session",
+            plugins=dict(root=f"{name}/plugins"),
+            workdir=f"{name}/session",
             api_id=APP_ID,
-            api_hash=API_HASH,
-        )
+            api_hash=API_HASH)
 
 
     async def start(self):
         await super().start()
-        for modul in ALL_MODULES:
-            imported_module = importlib.import_module("pyrobot.plugins." + modul)
-            if hasattr(imported_module, "__MODULE__") and imported_module.__MODULE__:
-                imported_module.__MODULE__ = imported_module.__MODULE__
-        LOGGER.info("-----------------------")
-        LOGGER.info("Userbot Plugins: " + str(ALL_MODULES))
-        LOGGER.info(f"PyroGramBot based on Pyrogram v{__version__} (Layer {layer}) started.")
+
         usr_bot_me = await self.get_me()
-        OWNER_ID = usr_bot_me.id
-        if usr_bot_me.last_name:
-            OWNER_NAME = usr_bot_me.first_name + " " + usr_bot_me.last_name
-        else:
-            OWNER_NAME = usr_bot_me.first_name
-        OWNER_USERNAME = usr_bot_me.username
-        LOGGER.info(f"Hello {OWNER_NAME} ({OWNER_USERNAME} - {OWNER_ID})")
-        LOGGER.info("Bot Run successfully!")
+        LOGGER.info(
+            f"PyroGramBot based on Pyrogram v{__version__} "
+            "(Layer {layer}) started..."
+            f"Hey {@usr_bot_me.first_name}"
+        )
 
 
     async def stop(self, *args):

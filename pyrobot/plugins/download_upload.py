@@ -93,7 +93,7 @@ async def down_load_media(client, sms):
     else:
         await message.edit("Reply to a Telegram Media, to download it to local server.")
 
-@Client.on_message(Filters.command("uploadasdoc", COMMAND_HAND_LER) & Filters.me)
+@Client.on_message(Filters.command("upload", COMMAND_HAND_LER) & Filters.me)
 async def upload_as_document(client, message):
     status_message = await message.reply_text("...")
     if " " in message.text:
@@ -103,7 +103,7 @@ async def upload_as_document(client, message):
             start_t = datetime.now()
             c_time = time.time()
             doc_caption = os.path.basename(local_file_name)
-            await message.reply_document(
+            await client.send_document(
                 document=local_file_name,
                 thumb=thumb_image_path,
                 caption=doc_caption,

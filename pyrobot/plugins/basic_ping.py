@@ -24,7 +24,7 @@ async def check_alive(client, message):
     if me.username:
         username = me.username
     #await message.edit_text(ALIVE.format(name, username, __version__, layer))
-    await message.edit_text("`I'm Alive :3`\n<b>My Owner:</b> `{}`({})\n<b>Python Version:</b> `3.6.10`\n<b>Pyrogram Version:</b> `{} (Layer {})`"format(name, username, __version__, layer))
+    await message.edit_text("`I'm Alive :3`\n<b>My Owner:</b> `{}`({})\n<b>Python Version:</b> `3.6.10`\n<b>Pyrogram Version:</b> `{} (Layer {})`".format(name, username, __version__, layer))
 
 
 @Client.on_message(Filters.command("help", COMMAND_HAND_LER) & Filters.me)

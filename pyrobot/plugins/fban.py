@@ -14,7 +14,10 @@ __help__ = f"""
 
 @Client.on_message(Filters.command("fban", COMMAND_HAND_LER) & Filters.me)
 async def fban_user(client, message):
-    fban_user = message.text.split(" ",2)[1]
+    if len(message.command) == 2:
+        fban_user = message.text.split(" ",2)[1]
+    elif message.reply_to_message and len(message.command) == 1:
+        fban_user = message.reply_to_message.from_user.id
     fban_reason = message.text.split(" ",2)[2]
     await client.send_message("@MissRose_bot", f"/fban {fban_user} {fban_reason}")
     time.sleep(1)
@@ -27,7 +30,10 @@ async def fban_user(client, message):
 
 @Client.on_message(Filters.command("unfban", COMMAND_HAND_LER) & Filters.me)
 async def unfban_user(client, message):
-    unfban_user = message.text.split(" ",1)[1]
+    if len(message.command) == 2:
+        unfban_user = message.text.split(" ",2)[1]
+    elif message.reply_to_message and len(message.command) == 1:
+        unfban_user = message.reply_to_message.from_user.id
     await client.send_message("@MissRose_bot", f"/unfban {unfban_user}")
     time.sleep(1)
     msg = await client.get_history("@MissRose_bot", 1)
@@ -42,7 +48,7 @@ async def fstat_user(client, message):
     if len(message.command)==2:
         fstat_user = message.text.split(" ",1)[1]
         await client.send_message("@MissRose_bot", f"/fstat {fstat_user}")
-    elif message.reply_to_message:
+    elif message.reply_to_message and len(message.command) == 1:
         fstat_user = message.reply_to_message.from_user.id
         await client.send_message("@MissRose_bot", f"/fstat {fstat_user}")
     else:

@@ -8,9 +8,7 @@ from pyrogram.api.all import layer
 from pyrobot.utils.extract_user import extract_user
 
 # -- Constants -- #
-ALIVE = f"`I'm Alive :3`\n<b>My Owner:</b> `{OWNER_NAME}`\n"
-        "<b>Python Version:</b> `3.6.10`\n"
-        f"<b>Pyrogram Version:</b> `{__version__} (Layer {layer})`"
+ALIVE = f"`I'm Alive :3`\n<b>My Owner:</b> `{OWNER_NAME}`\n<b>Python Version:</b> `3.6.10`\n<b>Pyrogram Version:</b> `{__version__} (Layer {layer})`"
 HELP = "CAADAgAD6AkAAowucAABsFGHedLEzeUWBA"
 REPO = ("<b>UserBot is available on GitHub:</b>\n"
         "https://github.com/SkuzzyxD/TelePyroBot")

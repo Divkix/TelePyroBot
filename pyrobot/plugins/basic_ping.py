@@ -8,7 +8,9 @@ from pyrogram.api.all import layer
 from pyrobot.utils.extract_user import extract_user
 
 # -- Constants -- #
-ALIVE = "`I'm Alive :3`\n<b>My Owner:</b> `{}`({})\n<b>Python Version:</b> `3.6.10`\n<b>Pyrogram Version:</b> `{} (Layer {})`"
+ALIVE = f"`I'm Alive :3`\n<b>My Owner:</b> `{OWNER_NAME}`\n"
+        "<b>Python Version:</b> `3.6.10`\n"
+        f"<b>Pyrogram Version:</b> `{__version__} (Layer {layer})`"
 HELP = "CAADAgAD6AkAAowucAABsFGHedLEzeUWBA"
 REPO = ("<b>UserBot is available on GitHub:</b>\n"
         "https://github.com/SkuzzyxD/TelePyroBot")
@@ -23,8 +25,7 @@ async def check_alive(client, message):
         name = me.first_name + ' ' + me.last_name
     if me.username:
         username = me.username
-    #await message.edit_text(ALIVE.format(name, username, __version__, layer))
-    await message.edit_text("`I'm Alive :3`\n<b>My Owner:</b> `{}`({})\n<b>Python Version:</b> `3.6.10`\n<b>Pyrogram Version:</b> `{} (Layer {})`".format(name, username, __version__, layer))
+    await message.edit_text(ALIVE)
 
 
 @Client.on_message(Filters.command("help", COMMAND_HAND_LER) & Filters.me)

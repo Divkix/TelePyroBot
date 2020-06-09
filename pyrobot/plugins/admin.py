@@ -6,6 +6,63 @@ from pyrobot.utils.extract_user import extract_user
 from pyrobot.utils.admin_check import admin_check
 from pyrobot.utils.list_to_string import listToString
 
+
+__PLUGIN__ = "Admin"
+
+__HELP__ = f"""
+{COMMAND_HAND_LER}promote: Promotes a user in the Group.
+Usage: {COMMAND_HAND_LER}promote (Username/User ID or reply to message)
+
+{COMMAND_HAND_LER}demote: Demotes a user in the Group.
+Usage: {COMMAND_HAND_LER}demote (Username/User ID or reply to message)
+
+{COMMAND_HAND_LER}ban: Bans a user in the Group.
+Usage: {COMMAND_HAND_LER}ban (Username/User ID or reply to message)
+
+{COMMAND_HAND_LER}mute: Mutes a user in the Group.
+Usage: {COMMAND_HAND_LER}mute (Username/User ID or reply to message)
+
+{COMMAND_HAND_LER}demote: Demotes a user in the Group.
+Usage: {COMMAND_HAND_LER}demote (Username/User ID or reply to message)
+
+{COMMAND_HAND_LER}unmute \ unban \ unrestrict: Unrestricts a user in the Group.
+Usage: {COMMAND_HAND_LER}unmute (Username/User ID or reply to message)
+
+{COMMAND_HAND_LER}pin: Pins the message in the Group.
+Usage: {COMMAND_HAND_LER}pin (as a reply to the message)
+
+{COMMAND_HAND_LER}unpin: Pins the message in the Group.
+Usage: {COMMAND_HAND_LER}unpin
+
+{COMMAND_HAND_LER}leavechat: Exit from the Group.
+Usage: {COMMAND_HAND_LER}leavechat
+
+{COMMAND_HAND_LER}invitelink: Gives the invitelink of the Group.
+Usage: {COMMAND_HAND_LER}invitelink
+
+{COMMAND_HAND_LER}setchatpic: Changes the Picture of Group.
+Usage: {COMMAND_HAND_LER}setchatpic (as a reply to the message)
+
+{COMMAND_HAND_LER}delchatpic: Removes the Picture of Group.
+Usage: {COMMAND_HAND_LER}delchatpic (as a reply to the message)
+
+{COMMAND_HAND_LER}setchatname: Renames the Group.
+Usage: {COMMAND_HAND_LER}setchatname (chatname or as a reply to the message)
+
+{COMMAND_HAND_LER}setchatdesc: Sets the Description of the Group.
+Usage: {COMMAND_HAND_LER}setchatdesc (chatdesc or as a reply to the message)
+
+{COMMAND_HAND_LER}purge: Deletes messages upto replied message.
+Usage: {COMMAND_HAND_LER}purge (as a reply to the message)
+
+{COMMAND_HAND_LER}del: Deletes a single message.
+Usage: {COMMAND_HAND_LER}del (as a reply to the message)
+
+{COMMAND_HAND_LER}invite: Sets the Description of the Group.
+Usage: {COMMAND_HAND_LER}invite (Username or User ID)
+"""
+
+
 @Client.on_message(Filters.command("promote", COMMAND_HAND_LER) & Filters.me)
 async def promote_usr(client, message):
     await message.edit("`Trying to Promote User.. Hang on!! ⏳`")
@@ -91,7 +148,7 @@ async def restrict_usr(client, message):
         await message.edit(f"**Error:**\n\n`{ef}`")
 
 
-@Client.on_message(Filters.command(["unmute", "unban"], COMMAND_HAND_LER) & Filters.me)
+@Client.on_message(Filters.command(["unmute", "unban", "unrestrict"], COMMAND_HAND_LER) & Filters.me)
 async def unrestrict_usr(client, message):
     await message.edit("`Trying to Unrestrict User.. Hang on!! ⏳`")
     is_admin = await admin_check(message)

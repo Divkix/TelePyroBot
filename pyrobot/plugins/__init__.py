@@ -1,16 +1,15 @@
 from pyrobot import LOGGER
 
-def __list_all_modules():
+def __list_all_plugins():
     from os.path import dirname, basename, isfile
     import glob
-    # This generates a list of modules in this folder for the * in __main__ to work.
+    # This generates a list of plugins in this folder for the * in __main__ to work.
     mod_paths = glob.glob(dirname(__file__) + "/*.py")
-    all_modules = [basename(f)[:-3] for f in mod_paths if isfile(f)
+    all_plugins = [basename(f)[:-3] for f in mod_paths if isfile(f)
                    and f.endswith(".py")
                    and not f.endswith('__init__.py')]
-    return all_modules
+    return all_plugins
 
 
-ALL_MODULES = sorted(__list_all_modules())
-LOGGER.info("Userbot module loaded: %s", str(ALL_MODULES))
-__all__ = ALL_MODULES + ["ALL_MODULES"]
+ALL_PLUGINS = sorted(__list_all_plugins())
+__all__ = ALL_PLUGINS + ["ALL_PLUGINS"]

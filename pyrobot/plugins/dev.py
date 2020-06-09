@@ -27,7 +27,7 @@ Syntax: `{COMMAND_HAND_LER}ip`
 @Client.on_message(Filters.command("eval", COMMAND_HAND_LER) & Filters.me)
 async def eval(client, message):
     status_message = await message.reply_text("Processing ...")
-    cmd = listToString (message.command[1:])
+    cmd = message.text.split(" ", maxsplit=1)[1]
 
     reply_to_id = message.message_id
     if message.reply_to_message:
@@ -89,7 +89,7 @@ async def aexec(code, client, message):
 
 @Client.on_message(Filters.command("exec", COMMAND_HAND_LER) & Filters.me)
 async def execution(client, message):
-    cmd = listToString (message.command[1:])
+    cmd = message.text.split(" ", maxsplit=1)[1]
 
     reply_to_id = message.message_id
     if message.reply_to_message:

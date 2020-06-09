@@ -86,7 +86,7 @@ async def aexec(code, client, message):
     return await locals()['__aexec'](client, message)
 
 
-@Client.on_message(Filters.command("exec", COMMAND_HAND_LER) & Filter.me)
+@Client.on_message(Filters.command("exec", COMMAND_HAND_LER) & Filters.me)
 async def execution(_, message):
     # DELAY_BETWEEN_EDITS = 0.3
     # PROCESS_RUN_TIME = 100

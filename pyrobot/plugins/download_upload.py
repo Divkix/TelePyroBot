@@ -21,7 +21,7 @@ from pyrobot.utils.display_progress_dl_up import progress_for_pyrogram
 
 __PLUGIN__ = "DL_UP"
 
-__HELP__ = f"""
+__help__ = f"""
 Download Telegram Media
 Syntax: {COMMAND_HAND_LER}download  <link> or as a reply to media
 
@@ -105,7 +105,7 @@ async def down_load_media(client, sms):
 
 @Client.on_message(Filters.command("upload", COMMAND_HAND_LER) & Filters.me)
 async def upload_as_document(client, message):
-    status_message = await message.reply_text("...")
+    status_message = await message.reply_text("`Uploading...`")
     if " " in message.text:
         recvd_command, local_file_name = message.text.split(" ", 1)
         if os.path.exists(local_file_name):

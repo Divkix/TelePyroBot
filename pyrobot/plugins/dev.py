@@ -7,12 +7,11 @@ import asyncio
 import requests
 from pyrogram import Client, Filters
 from pyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
-from pyrobot.utils.list_to_string import listToString
 
 
 __PLUGIN__ = "Dev"
 
-__HELP__ = f"""
+__help__ = f"""
 Evaluate Python Code inside Telegram
 Syntax: `{COMMAND_HAND_LER}eval PythonCode`
 
@@ -133,7 +132,7 @@ async def public_ip(client, message):
 
 @Client.on_message(Filters.command("ls", COMMAND_HAND_LER) & Filters.me)
 async def execution(client, message):
-    cmd = message.command[0]
+    cmd = message.split(' ', 1)[0]
     process = await asyncio.create_subprocess_shell(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
     stdout, stderr = await process.communicate()

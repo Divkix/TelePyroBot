@@ -16,7 +16,7 @@ REPO = ("<b>UserBot is available on GitHub:</b>\n"
 
 __PLUGIN__ = "Basic Commands"
 
-__HELP__ = f"""
+__help__ = f"""
 {COMMAND_HAND_LER}alive \ start: Check if bot is alive or not.
 
 {COMMAND_HAND_LER}ping: Get pinged.

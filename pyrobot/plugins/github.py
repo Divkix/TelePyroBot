@@ -4,15 +4,15 @@ from pyrobot import COMMAND_HAND_LER
 
 __PLUGIN__ = "Github"
 
-__HELP__ = f"""
+__help__ = f"""
 Get information about a Github Account
 Usage: `{COMMAND_HAND_LER}github (username)`
 """
 
 @Client.on_message(Filters.command("github", COMMAND_HAND_LER) & Filters.me)
 async def github(client, message):
-    if len(message.command) == 2:
-        username = message.command[1]
+    if len(message.text) == 2:
+        username = message.text.split(" ",1)[1]
     else:
         await message.edit("Usage: `github (username)`", parse_mode="md")
         return

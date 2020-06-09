@@ -1,6 +1,3 @@
-"""Set Antiflood
-Syntax: .setflood"""
-
 import asyncio
 
 from pyrogram import (
@@ -18,7 +15,12 @@ if DB_URI is not None:
     import pyrobot.utils.sql_helpers.antiflood_sql as sql
     CHAT_FLOOD = sql.__load_flood_settings()
 
+__PLUGIN__ = "Aniflood"
 
+__help__ = """
+Set Antiflood
+Syntax: .setflood <num>
+"""
 
 @Client.on_message(group=1)
 async def check_flood(client, message):

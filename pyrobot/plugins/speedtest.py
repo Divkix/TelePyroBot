@@ -4,7 +4,7 @@ from speedtest import Speedtest
 
 __PLUGIN__ = "Speedtest"
 
-__HELP__ = f"""
+__help__ = f"""
 {COMMAND_HAND_LER}speedtest: Get speedtest of your server.
 """
 

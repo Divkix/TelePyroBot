@@ -1,6 +1,3 @@
-"""Google Drive Plugins
-Syntax: .gdrive"""
-
 import asyncio
 import io
 import json
@@ -27,6 +24,11 @@ from pyrobot import (
 from pyrobot.utils.display_progress_dl_up import progress_for_pyrogram
 
 __PLUGIN__ = "GDrive"
+
+__help__ = """
+Google Drive Plugins
+Syntax: .gdrive
+"""
 
 if DB_URI is not None:
     import pyrobot.utils.sql_helpers.gDrive_sql as sql

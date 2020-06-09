@@ -26,7 +26,7 @@ UPDATE_IN_PROGRESS = f"**Updating Application!** __Please wait upto 5 minutes...
 
 __PLUGIN__ = "Updater"
 
-__HELP__ = f"""
+__help__ = f"""
 {COMMAND_HAND_LER}update: Update userbot to latest version.
 """
 

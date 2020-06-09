@@ -3,7 +3,7 @@ from pyrobot import COMMAND_HAND_LER
 
 __PLUGIN__ = "Mention"
 
-__HELP__ = """
+__help__ = """
 ──「 **Mention** 」──
 -> `mention (username without @) (custom text)`
 Generate a  hyperlink username you refer with a custom single text.

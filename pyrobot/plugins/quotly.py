@@ -9,7 +9,7 @@ p = 0
 
 __PLUGIN__ = "Quotly"
 
-__HELP__ = f"""
+__help__ = f"""
 {COMMAND_HAND_LER}qbot: As a reply to message to get its quote
 """
 

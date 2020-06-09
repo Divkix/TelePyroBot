@@ -13,3 +13,4 @@ pyrobot/downloads/*
 pyrobot/session/*
 !pyrobot/session/README.md
 unknown_errors.txt
+eval.text

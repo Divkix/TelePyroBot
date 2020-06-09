@@ -4,12 +4,11 @@ from pyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN
 
 from pyrobot.utils.extract_user import extract_user
 from pyrobot.utils.admin_check import admin_check
-from pyrobot.utils.list_to_string import listToString
 
 
 __PLUGIN__ = "Admin"
 
-__HELP__ = f"""
+__help__ = f"""
 {COMMAND_HAND_LER}promote: Promotes a user in the Group.
 Usage: {COMMAND_HAND_LER}promote (Username/User ID or reply to message)
 
@@ -173,11 +172,11 @@ async def pin_message(client, message):
         is_admin = await admin_check(message)
         if not is_admin:
             return
-
+        pin_loud = message.text.split(' ', 1)
         if message.reply_to_message:
             disable_notification = True
 
-            if len(message.command) >= 2 and message.command[1] in ['alert', 'notify', 'loud']:
+            if len(pin_loud) >= 2 and pin_loud[1] in ['alert', 'notify', 'loud']:
                 disable_notification = False
 
             pinned_event = await client.pin_chat_message(
@@ -263,10 +262,11 @@ async def setchatname(client, message):
     if not is_admin:
         return
     chat_id = message.chat.id
+    chat_title = message.text.split(' ', 1)
     if message.reply_to_message:
         chat_title = message.reply_to_message.text
     else:
-        chat_title = listToString(message.command[1:])
+        chat_title = chat_title[1]
     try:
         await client.set_chat_title(chat_id, chat_title)
         await message.edit(f"<b>Changed Chat Name to:</b> <code>{chat_title}</code>")
@@ -281,13 +281,14 @@ async def setchatdesc(client, message):
     if not is_admin:
         return
     chat_id = message.chat.id
+    chat_desc = message.text.split(' ', 1)
     if message.reply_to_message:
         chat_desc = message.reply_to_message.text
     else:
-        chat_desc = listToString(message.command[1:])
+        chat_desc = chat_desc[1]
     try:
         await client.set_chat_description(chat_id, chat_desc)
-        await message.edit(f"<b>Changed Chat Name to:</b> <code>{chat_title}</code>")
+        await message.edit(f"<b>Changed Chat Name to:</b> <code>{chat_desc}</code>")
     except Exception as ef:
         await message.edit(f"**Could not Change Chat Desciption due to:**\n`{ef}`")
 
@@ -345,7 +346,7 @@ async def del_msg(client, message):
 
 @Client.on_message(Filters.command("invite", COMMAND_HAND_LER) & Filters.me)
 async def del_msg(client, message):
-    cmd = message.command
+    cmd = message.text.split(' ', 1)
     user_id = cmd[1]
     if user_id:
         try:

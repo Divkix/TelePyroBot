@@ -7,7 +7,7 @@ from pyrobot import COMMAND_HAND_LER, TMP_DOWNLOAD_DIRECTORY
 
 __PLUGIN__ = "Paste"
 
-__HELP__ = f"""
+__help__ = f"""
 {COMMAND_HAND_LER}paste: as a reply to text message to paste it to nekobin.
 
 {COMMAND_HAND_LER}paste <nekobin>/<deldog>/<dogbin>: to use a specifi service for paste.
@@ -53,7 +53,7 @@ async def paste_bin(client, message):
 
     default_paste = "nekobin"
     if len(message.command) == 2:
-        default_paste = message.command[1]
+        default_paste = message.text.split(' ', 1)[1]
 
     paste_store_url = paste_bin_store_s.get(default_paste, paste_bin_store_s["nekobin"])
     paste_store_base_url_rp = urlparse(paste_store_url)

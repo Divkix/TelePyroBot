@@ -1,11 +1,10 @@
 import time
 from pyrogram import Client, Filters
-from pyrobot.utils.list_to_string import listToString
 from pyrobot import COMMAND_HAND_LER
 
 __PLUGIN__ = "Fban"
 
-__HELP__ = f"""
+__help__ = f"""
 {COMMAND_HAND_LER}fban <username/userid> <reason> to fban a user.
 
 {COMMAND_HAND_LER}unfban <username/userid> <reason> to unfban a user.
@@ -15,8 +14,8 @@ __HELP__ = f"""
 
 @Client.on_message(Filters.command("fban", COMMAND_HAND_LER) & Filters.me)
 async def fban_user(client, message):
-    fban_user = listToString(message.command[1])
-    fban_reason = listToString(message.command[2:])
+    fban_user = message.text.split(" ",2)[1]
+    fban_reason = message.text.split(" ",2)[2]
     await client.send_message("@MissRose_bot", f"/fban {fban_user} {fban_reason}")
     time.sleep(1)
     msg = await client.get_history("@MissRose_bot", 1)
@@ -28,7 +27,7 @@ async def fban_user(client, message):
 
 @Client.on_message(Filters.command("unfban", COMMAND_HAND_LER) & Filters.me)
 async def unfban_user(client, message):
-    unfban_user = listToString(message.command[1])
+    unfban_user = message.text.split(" ",1)[1]
     await client.send_message("@MissRose_bot", f"/unfban {unfban_user}")
     time.sleep(1)
     msg = await client.get_history("@MissRose_bot", 1)
@@ -41,7 +40,7 @@ async def unfban_user(client, message):
 @Client.on_message(Filters.command("fstat", COMMAND_HAND_LER) & Filters.me)
 async def fstat_user(client, message):
     if len(message.command)==2:
-        fstat_user = listToString(message.command[1:])
+        fstat_user = message.text.split(" ",1)[1]
         await client.send_message("@MissRose_bot", f"/fstat {fstat_user}")
     elif message.reply_to_message:
         fstat_user = message.reply_to_message.from_user.id

@@ -9,7 +9,7 @@ from pyrobot import COMMAND_HAND_LER
 
 __PLUGIN__ = "Covid"
 
-__HELP__ = f"""
+__help__ = f"""
 Check info of cases corona virus disease 2019
 
 -> `{COMMAND_HAND_LER}corona - for Global Stats`
@@ -19,7 +19,7 @@ Check info of cases corona virus disease 2019
 @Client.on_message(Filters.command("covid", COMMAND_HAND_LER) & Filters.me)
 async def covid(client, message):
     await message.edit("`Processing...`", parse_mode="md")
-    cmd = message.command
+    cmd = message.split(' ', 1)
     if len(cmd) == 1:
         r = requests.get("https://corona.lmao.ninja/v2/all?yesterday=true").json()
         last_updated = datetime.datetime.fromtimestamp(r['updated'] / 1000).strftime("%Y-%m-%d %I:%M:%S")
@@ -39,8 +39,8 @@ async def covid(client, message):
         ac.add_row(["Tests", f"{r['tests']:,}"])
         ac.add_row(["Tests/Million", f"{r['testsPerOneMillion']:,}"])
         ac.align = "l"
-
         await message.edit(f"`{str(ac)}`\nLast updated on: {last_updated}", parse_mode="md")
+
     country = cmd[1]
     r = requests.get(f"https://corona.lmao.ninja/v2/countries/{country}").json()
     if "cases" not in r:

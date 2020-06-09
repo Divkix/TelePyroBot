@@ -6,7 +6,7 @@ from pyrobot import COMMAND_HAND_LER, LOGGER
 
 __PLUGIN__ = "Typewriter"
 
-__HELP__ = f"""
+__help__ = f"""
 {COMMAND_HAND_LER}type / typewriter <text>: Get text typed in typewriter format.
 """
 

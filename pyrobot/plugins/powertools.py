@@ -7,7 +7,7 @@ from pyrogram import Client, Filters
 
 __PLUGIN__ = "Power_tools"
 
-__HELP__ = f"""
+__help__ = f"""
 {COMMAND_HAND_LER}restart: Restart userbot heroku dyno.
 
 {COMMAND_HAND_LER}dynostats: To get heroku dyno usage.

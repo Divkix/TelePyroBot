@@ -1,8 +1,5 @@
 from pyrogram import Client, Filters
-
 from pyrobot import COMMAND_HAND_LER
-
-from pyrobot.utils.list_to_string import listToString
 from requests import post
 import shutil
 import os
@@ -10,7 +7,7 @@ from time import sleep
 
 __PLUGIN__ = "Carbon"
 
-__HELP__ =  f"""
+__help__ =  f"""
 {COMMAND_HAND_LER}carbon <text> or as a reply to the message.
 """
 
@@ -23,15 +20,16 @@ async def carbon_api(client, message):
         "theme": "Dracula",
         "exportSize": "4x"
         }
+    cmd = message.split(' ', 1)
     rep_mesg_id = message.message_id
     if message.reply_to_message:
         rep_mesg_id = message.reply_to_message.message_id
         r = message.reply_to_message
         json["code"] = r.text
         await message.edit_text("Carbonizing code...")
-    if len(message.command) >= 2:
-        r = message.command[1:]
-        json["code"] = listToString(r)
+    if len(cmd) >= 2:
+        r = cmd[1]
+        json["code"] = r
     else:
         await message.edit("Usage: `.carbon` (reply to a code or text)")
     json["language"] = CARBON_LANG

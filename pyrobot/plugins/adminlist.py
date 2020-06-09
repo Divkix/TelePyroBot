@@ -4,7 +4,7 @@ from pyrobot.utils.misc.parser import mention_html, mention_markdown
 
 __PLUGIN__ = "Adminlist"
 
-__HELP__ = f"""
+__help__ = f"""
 {COMMAND_HAND_LER}adminlist \ admins: Returns the list of admins of group.
 
 {COMMAND_HAND_LER}all \ everyone: Tags All the users of group.

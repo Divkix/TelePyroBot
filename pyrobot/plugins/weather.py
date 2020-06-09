@@ -5,7 +5,7 @@ from pyrobot import COMMAND_HAND_LER
 
 __PLUGIN__ = "Weather"
 
-__HELP__ = """
+__help__ = """
 Get current weather in your location
 ──「 **Weather** 」──
 -> `weather (location)`

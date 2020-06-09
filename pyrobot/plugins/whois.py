@@ -4,7 +4,7 @@ from pyrobot import COMMAND_HAND_LER
 
 __PLUGIN__ = "Whois"
 
-__HELP__ = f"""
+__help__ = f"""
 {COMMAND_HAND_LER}whois / info <username/userid> or as a reply to message: Get the information about a user.
 """
 

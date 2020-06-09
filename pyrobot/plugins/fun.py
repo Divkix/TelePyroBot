@@ -16,13 +16,15 @@ RUN_STRINGS = (
 
 __PLUGIN__ = "Fun"
 
-__HELP__ = f"""
+__help__ = f"""
 {COMMAND_HAND_LER}throw \ dart Throw an Animated Dart.
 
 {COMMAND_HAND_LER}roll \ dice Throw an Animated Dice.
 
 {COMMAND_HAND_LER}run \ runs Check and watch yourself.
 """
+
+
 @Client.on_message(Filters.command(["throw", "dart"], COMMAND_HAND_LER) & Filters.me)
 async def throw_dart(client, message):
     rep_mesg_id = message.message_id

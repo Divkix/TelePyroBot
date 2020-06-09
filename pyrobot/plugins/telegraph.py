@@ -6,7 +6,7 @@ from pyrobot import COMMAND_HAND_LER
 
 __PLUGIN__ = "Telegraph"
 
-__HELP__ = f"""
+__help__ = f"""
 {COMMAND_HAND_LER}telegraph: As a reply to message to paste it to Telegraph.
 """
 

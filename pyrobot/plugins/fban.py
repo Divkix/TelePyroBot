@@ -41,7 +41,7 @@ async def unfban_user(client, message):
 @Client.on_message(Filters.command("fstat", COMMAND_HAND_LER) & Filters.me)
 async def fstat_user(client, message):
     if len(message.command)==2:
-        fstat_user = listToString(message.command[1])
+        fstat_user = listToString(message.command[1:])
         await client.send_message("@MissRose_bot", f"/fstat {fstat_user}")
     elif message.reply_to_message:
         fstat_user = message.reply_to_message.from_user.id

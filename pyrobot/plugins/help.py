@@ -6,7 +6,8 @@ import time
 import asyncio
 import requests
 from pyrogram import Client, Filters
-from pyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER, ALL_MODULES
+from pyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
+from pyrobot.plugins import ALL_MODULES
 
 HELP_DEFAULT = f"""
 To get help for any command, just type `{COMMAND_HAND_LER}help plugin_name`

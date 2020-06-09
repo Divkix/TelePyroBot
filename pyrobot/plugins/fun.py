@@ -14,10 +14,17 @@ RUN_STRINGS = (
     "`Bahut bada chutiya hai tu`")
 # CONSTANTS
 
+__PLUGIN__ = "Fun"
 
+__HELP__ = f"""
+{COMMAND_HAND_LER}throw \ dart Throw an Animated Dart.
+
+{COMMAND_HAND_LER}roll \ dice Throw an Animated Dice.
+
+{COMMAND_HAND_LER}run \ runs Check and watch yourself.
+"""
 @Client.on_message(Filters.command(["throw", "dart"], COMMAND_HAND_LER) & Filters.me)
 async def throw_dart(client, message):
-    """throw an AnimatedDart """
     rep_mesg_id = message.message_id
     if message.reply_to_message:
         rep_mesg_id = message.reply_to_message.message_id

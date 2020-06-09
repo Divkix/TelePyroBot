@@ -5,6 +5,13 @@ import math
 from pyrobot import COMMAND_HAND_LER, HEROKU_API_KEY, HEROKU_APP_NAME
 from pyrogram import Client, Filters
 
+__PLUGIN__ = "Power_tools"
+
+__HELP__ = f"""
+{COMMAND_HAND_LER}restart: Restart userbot heroku dyno.
+
+{COMMAND_HAND_LER}dynostats: To get heroku dyno usage.
+"""
 
 heroku_api = "https://api.heroku.com"
 Heroku = heroku3.from_key(HEROKU_API_KEY)

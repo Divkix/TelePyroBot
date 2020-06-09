@@ -1,9 +1,3 @@
-"""Evaluate Python Code inside Telegram
-Syntax: .eval PythonCode"""
-# This Source Code Form is subject to the terms of the Mozilla Public
-# License, v. 2.0. If a copy of the MPL was not distributed with this
-# file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
 import io
 import os
 import sys
@@ -13,6 +7,20 @@ import asyncio
 import requests
 from pyrogram import Client, Filters
 from pyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
+
+__PLUGIN__ = "Dev"
+
+__HELP__ = f"""
+Evaluate Python Code inside Telegram
+Syntax: `{COMMAND_HAND_LER}eval PythonCode`
+
+Run command on file system from Telegram
+Syntax: `{COMMAND_HAND_LER}exec CommandCode`
+
+Get IP Address of userbot server.
+Syntax: `{COMMAND_HAND_LER}ip`
+"""
+
 
 @Client.on_message(Filters.command("eval", COMMAND_HAND_LER) & Filters.me)
 async def eval(client, message):

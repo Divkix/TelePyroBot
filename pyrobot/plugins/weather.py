@@ -1,11 +1,11 @@
 from html import escape
-
 import requests
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
 
+__PLUGIN__ = "Weather"
 
-"""
+__HELP__ = """
 Get current weather in your location
 ──「 **Weather** 」──
 -> `weather (location)`

@@ -4,6 +4,11 @@ from telegraph import upload_file
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
 
+__PLUGIN__ = "Telegraph"
+
+__HELP__ = f"""
+{COMMAND_HAND_LER}telegraph: As a reply to message to paste it to Telegraph.
+"""
 
 @Client.on_message(Filters.command("telegraph", COMMAND_HAND_LER) & Filters.me)
 async def telegraph(client, message):

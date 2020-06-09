@@ -8,6 +8,12 @@ import shutil
 import os
 from time import sleep
 
+__PLUGIN__ = "Carbon"
+
+__HELP__ =  f"""
+{COMMAND_HAND_LER}carbon <text> or as a reply to the message.
+"""
+
 CARBON_LANG = "Auto"
 
 @Client.on_message(Filters.command("carbon", COMMAND_HAND_LER) & Filters.me)

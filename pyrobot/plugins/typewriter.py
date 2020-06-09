@@ -4,6 +4,11 @@ from pyrogram.errors.exceptions import FloodWait
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER, LOGGER
 
+__PLUGIN__ = "Typewriter"
+
+__HELP__ = f"""
+{COMMAND_HAND_LER}type / typewriter <text>: Get text typed in typewriter format.
+"""
 
 @Client.on_message(Filters.command(["type", "typewriter"], COMMAND_HAND_LER) & Filters.me)
 async def upload_as_document(client, message):

@@ -2,6 +2,12 @@ import os
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
 
+__PLUGIN__ = "Whois"
+
+__HELP__ = f"""
+{COMMAND_HAND_LER}whois / info <username/userid> or as a reply to message: Get the information about a user.
+"""
+
 @Client.on_message(Filters.command(["whois", "info"], COMMAND_HAND_LER) & Filters.me)
 async def upload_as_document(client, message):
     await message.edit("`Collecting Whois Info.. Hang on!`")

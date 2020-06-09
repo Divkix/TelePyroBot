@@ -2,7 +2,12 @@ import aiohttp
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
 
+__PLUGIN__ = "Github"
 
+__HELP__ = f"""
+Get information about a Github Account
+Usage: `{COMMAND_HAND_LER}github (username)`
+"""
 
 @Client.on_message(Filters.command("github", COMMAND_HAND_LER) & Filters.me)
 async def github(client, message):
@@ -11,7 +16,7 @@ async def github(client, message):
     else:
         await message.edit("Usage: `github (username)`", parse_mode="md")
         return
-    
+
     URL = f"https://api.github.com/users/{username}"
     async with aiohttp.ClientSession() as session:
         async with session.get(URL) as request:

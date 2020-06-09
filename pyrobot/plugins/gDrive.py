@@ -26,6 +26,7 @@ from pyrobot import (
 
 from pyrobot.utils.display_progress_dl_up import progress_for_pyrogram
 
+__PLUGIN__ = "GDrive"
 
 if DB_URI is not None:
     import pyrobot.utils.sql_helpers.gDrive_sql as sql

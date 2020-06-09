@@ -14,6 +14,22 @@ REPO = ("<b>UserBot is available on GitHub:</b>\n"
         "https://github.com/SkuzzyxD/TelePyroBot")
 # -- Constants End -- #
 
+__PLUGIN__ = "Basic Commands"
+
+__HELP__ = f"""
+{COMMAND_HAND_LER}alive \ start: Check if bot is alive or not.
+
+{COMMAND_HAND_LER}ping: Get pinged.
+
+{COMMAND_HAND_LER}repo: Get source of this repo.
+
+{COMMAND_HAND_LER}id: Get the ID of the file/user/group.
+Usage: {COMMAND_HAND_LER}id (as a reply to file or user or run to get group id)
+
+{COMMAND_HAND_LER}repo: Get source of this repo.
+
+{COMMAND_HAND_LER}json: Get json of the replied message.
+"""
 
 @Client.on_message(Filters.command(["alive", "start"], COMMAND_HAND_LER) & Filters.me)
 async def check_alive(client, message):

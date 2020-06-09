@@ -1,12 +1,13 @@
-"""
+from pyrogram import Client, Filters
+from pyrobot import COMMAND_HAND_LER
+
+__PLUGIN__ = "Mention"
+
+__HELP__ = """
 ──「 **Mention** 」──
 -> `mention (username without @) (custom text)`
 Generate a  hyperlink username you refer with a custom single text.
 """
-
-from pyrogram import Client, Filters
-from pyrobot import COMMAND_HAND_LER
-
 
 @Client.on_message(Filters.command("mention", COMMAND_HAND_LER) & Filters.me)
 async def mention(_, message):

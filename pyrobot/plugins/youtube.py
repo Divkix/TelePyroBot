@@ -25,6 +25,13 @@ from pytube import YouTube
 from pyrobot import COMMAND_HAND_LER
 from pyrobot.utils.misc.parser import escape_markdown
 
+__PLUGIN__ = "YouTube"
+
+__HELP__ = f"""
+{COMMAND_HAND_LER}yt / youtube <search query>: Get information about a video.
+
+{COMMAND_HAND_LER}yta / ytaudio / ytmusic <link>: Download YouTube Video's Audio.
+"""
 
 # --- Extras --- #
 async def time_parser(start, end):

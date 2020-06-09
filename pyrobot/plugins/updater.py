@@ -1,6 +1,3 @@
-"""Update User / Bot code
-Syntax: .update"""
-
 import asyncio
 import os
 import git
@@ -27,6 +24,11 @@ HEROKU_GIT_REF_SPEC = "HEAD:refs/heads/master"
 UPDATE_IN_PROGRESS = f"**Updating Application!** __Please wait upto 5 minutes....__\n\nDo `{COMMAND_HAND_LER}alive` or `{COMMAND_HAND_LER}start` to check if I'm alive"
 # -- Constants End -- #
 
+__PLUGIN__ = "Updater"
+
+__HELP__ = f"""
+{COMMAND_HAND_LER}update: Update userbot to latest version.
+"""
 
 @Client.on_message(Filters.command("update", COMMAND_HAND_LER) & Filters.me)
 async def updater(client, message):

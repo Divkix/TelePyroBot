@@ -1,20 +1,20 @@
-"""
-Check info of cases corona virus disease 2019
-──「 **Info Covid** 」──
--> `corona - for Global Stats`
--> `corona (country) - for a Country Stats`
-"""
-
-from pyrogram import Client, Filters
-from pyrobot import COMMAND_HAND_LER
-
-
 import os
 import shutil
 import datetime
 import asyncio
 from prettytable import PrettyTable
 import requests
+from pyrogram import Client, Filters
+from pyrobot import COMMAND_HAND_LER
+
+__PLUGIN__ = "Covid"
+
+__HELP__ = f"""
+Check info of cases corona virus disease 2019
+
+-> `{COMMAND_HAND_LER}corona - for Global Stats`
+-> `{COMMAND_HAND_LER}corona (country) - for a Country Stats`
+"""
 
 @Client.on_message(Filters.command("covid", COMMAND_HAND_LER) & Filters.me)
 async def covid(client, message):

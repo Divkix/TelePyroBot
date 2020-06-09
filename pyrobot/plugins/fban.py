@@ -3,6 +3,16 @@ from pyrogram import Client, Filters
 from pyrobot.utils.list_to_string import listToString
 from pyrobot import COMMAND_HAND_LER
 
+__PLUGIN__ = "Fban"
+
+__HELP__ = f"""
+{COMMAND_HAND_LER}fban <username/userid> <reason> to fban a user.
+
+{COMMAND_HAND_LER}unfban <username/userid> <reason> to unfban a user.
+
+{COMMAND_HAND_LER}fstat <username/userid> to get fstat of a user.
+"""
+
 @Client.on_message(Filters.command("fban", COMMAND_HAND_LER) & Filters.me)
 async def fban_user(client, message):
     fban_user = listToString(message.command[1])

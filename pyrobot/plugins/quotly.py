@@ -7,6 +7,12 @@ import time
 
 p = 0
 
+__PLUGIN__ = "Quotly"
+
+__HELP__ = f"""
+{COMMAND_HAND_LER}qbot: As a reply to message to get its quote
+"""
+
 @Client.on_message(Filters.command("qbot", COMMAND_HAND_LER) & Filters.me)
 async def quotly(client, message):
     if not message.reply_to_message:

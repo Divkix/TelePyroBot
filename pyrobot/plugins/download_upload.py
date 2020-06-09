@@ -1,6 +1,3 @@
-"""Download Telegram Media
-Syntax: .download"""
-
 import asyncio
 import math
 import os
@@ -21,6 +18,17 @@ from pyrobot.utils.display_progress_dl_up import (
 
 from pyrobot.utils.check_if_thumb_exists import is_thumb_image_exists
 from pyrobot.utils.display_progress_dl_up import progress_for_pyrogram
+
+__PLUGIN__ = "DL_UP"
+
+__HELP__ = f"""
+Download Telegram Media
+Syntax: {COMMAND_HAND_LER}download  <link> or as a reply to media
+
+Upload Media to Telegram
+Syntax: {COMMAND_HAND_LER}upload <file location>
+"""
+
 
 @Client.on_message(Filters.command(["download", "dl"], COMMAND_HAND_LER) & Filters.me)
 async def down_load_media(client, sms):

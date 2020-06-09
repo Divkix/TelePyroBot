@@ -1,21 +1,17 @@
-# Copyright (C) 2020 by SpEcHiDe@Github, < https://github.com/SpEcHiDe >.
-#
-# This file is part of < https://github.com/SpEcHiDe/PyroGramBot > project,
-# and is released under the "GNU Affero General Public License v3.0 License Agreement".
-# Please see < https://github.com/SpEcHiDe/PyroGramBot/raw/master/COPYING >
-#
-"""IX.IO pastebin like site
-Syntax: .paste"""
-
 import aiohttp
 import json
 import os
 from urllib.parse import urlparse
-
 from pyrogram import Client, Filters
-
 from pyrobot import COMMAND_HAND_LER, TMP_DOWNLOAD_DIRECTORY
 
+__PLUGIN__ = "Paste"
+
+__HELP__ = f"""
+{COMMAND_HAND_LER}paste: as a reply to text message to paste it to nekobin.
+
+{COMMAND_HAND_LER}paste <nekobin>/<deldog>/<dogbin>: to use a specifi service for paste.
+"""
 
 @Client.on_message(Filters.command("paste", COMMAND_HAND_LER))
 async def paste_bin(client, message):

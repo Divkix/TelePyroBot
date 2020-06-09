@@ -1,8 +1,15 @@
 from pyrogram import Client, Filters
-
 from pyrobot import COMMAND_HAND_LER
-
 from pyrobot.utils.misc.parser import mention_html, mention_markdown
+
+__PLUGIN__ = "Adminlist"
+
+__HELP__ = f"""
+{COMMAND_HAND_LER}adminlist \ admins: Returns the list of admins of group.
+
+{COMMAND_HAND_LER}all \ everyone: Tags All the users of group.
+"""
+
 
 @Client.on_message(Filters.command(["adminlist", "admins"], COMMAND_HAND_LER) & Filters.me)
 async def adminlist(client, message):

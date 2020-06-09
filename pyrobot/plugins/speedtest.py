@@ -1,8 +1,12 @@
 from pyrogram import Client, Filters
-
 from pyrobot import COMMAND_HAND_LER
-
 from speedtest import Speedtest
+
+__PLUGIN__ = "Speedtest"
+
+__HELP__ = f"""
+{COMMAND_HAND_LER}speedtest: Get speedtest of your server.
+"""
 
 @Client.on_message(Filters.command("speedtest", COMMAND_HAND_LER) & Filters.me)
 async def listbots(client, message):

@@ -40,6 +40,6 @@ async def help_me(client, message):
     elif len(message.command) == 2:
         module_name = message.command[1]
         try:
-            await message.edit(HELP_COMMANDS['module_name'])
+            await message.edit(HELP_COMMANDS[f'{module_name}'])
         except Exception as ef:
             await message.edit(f"<b>Error:</b>\n\n{ef}")

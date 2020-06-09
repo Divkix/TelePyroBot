@@ -6,5 +6,10 @@ pyrogrambot/plugins/__pycache__
 **/*.session
 videoplayback
 videoplayback.temp
-pyrobot/cache/thumb.jpg
+pyrobot/cache/*
+!pyrobot/cache/README.md
+pyrobot/downloads/*
+!pyrobot/downloads/README.md
+pyrobot/session/*
+!pyrobot/session/README.md
 unknown_errors.txt

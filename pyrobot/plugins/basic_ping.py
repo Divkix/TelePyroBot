@@ -8,16 +8,22 @@ from pyrogram.api.all import layer
 from pyrobot.utils.extract_user import extract_user
 
 # -- Constants -- #
-ALIVE = f"`I'm Alive :3`\n<b>My Owner:</b> `{OWNER_NAME}`\n<b>Python Version:</b> `3.6.10`\n<b>Pyrogram Version:</b> `{__version__} (Layer {layer})`"
+ALIVE = "`I'm Alive :3`\n<b>My Owner:</b> `{}`({})\n<b>Python Version:</b> `3.6.10`\n<b>Pyrogram Version:</b> `{} (Layer {})`"
 HELP = "CAADAgAD6AkAAowucAABsFGHedLEzeUWBA"
-REPO = ("<b>User / Bot is available on GitHub:</b>\n"
+REPO = ("<b>UserBot is available on GitHub:</b>\n"
         "https://github.com/SkuzzyxD/TelePyroBot")
 # -- Constants End -- #
 
 
 @Client.on_message(Filters.command(["alive", "start"], COMMAND_HAND_LER) & Filters.me)
 async def check_alive(client, message):
-    await message.edit_text(ALIVE)
+    me = await client.get_me()
+    name = me.first_name
+    if me.last_name:
+        name = me.first_name + ' ' + me.last_name
+    if me.username:
+        username = me.username
+    await message.edit_text(ALIVE.format(name, username, __version__, layer))
 
 
 @Client.on_message(Filters.command("help", COMMAND_HAND_LER) & Filters.me)
@@ -76,30 +82,6 @@ async def get_id(client, message):
         await message.edit("This File's ID: `{}`".format(file_id))
     else:
         await message.edit("This Chat's ID:\n`{}`".format(message.chat.id))
-
-
-@Client.on_message(Filters.command(["whois", "info"], COMMAND_HAND_LER) & Filters.me)
-async def who_is(client, message):
-    await message.edit("Finding user....")
-    from_user = None
-    from_user_id, _ = extract_user(message)
-    try:
-        user_id = from_user_id
-        if not str(user_id).startswith("@"):
-            user_id = int(user_id)
-        from_user = await client.get_users(user_id)
-    except Exception as error:
-        await message.edit(str(error))
-        return
-    if from_user is None:
-        await message.edit("No valid user_id / message specified")
-    else:
-        msg = ""
-        msg += f"ID: <code>{from_user.id}</code>\n"
-        msg += f"First Name: <a href='tg://user?id={from_user.id}'>{from_user.first_name}</a>"
-        msg += f"Last Name: {from_user.last_name}\n"
-        await message.edit(text=msg, disable_notification=True)
-        await message.delete()
 
 
 @Client.on_message(Filters.command("json", COMMAND_HAND_LER) & Filters.me)

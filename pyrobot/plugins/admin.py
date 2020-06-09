@@ -16,6 +16,8 @@ async def promote_usr(client, message):
 
     user_id, user_first_name = extract_user(message)
     chat_id = message.chat.id
+    if message.reply_to_message:
+        user_id = message.reply_to_message.from_user.id
     try:
         await client.promote_chat_member(chat_id, user_id,
                                         can_change_info=False,
@@ -37,6 +39,8 @@ async def demote_usr(client, message):
         return
 
     user_id, user_first_name = extract_user(message)
+    if message.reply_to_message:
+        user_id = message.reply_to_message.from_user.id
     chat_id = message.chat.id
     try:
         await client.promote_chat_member(chat_id, user_id,
@@ -59,6 +63,8 @@ async def ban_usr(client, message):
         return
 
     user_id, user_first_name = extract_user(message)
+    if message.reply_to_message:
+        user_id = message.reply_to_message.from_user.id
     try:
         await message.chat.kick_member(user_id)
         await message.edit(f"`Banned` [{user_first_name}](tg://user?id={user_id}) `Successfully...`")
@@ -67,13 +73,15 @@ async def ban_usr(client, message):
 
 
 @Client.on_message(Filters.command("mute", COMMAND_HAND_LER) & Filters.me)
-async def ban_usr(client, message):
+async def restrict_usr(client, message):
     await message.edit("`Trying to Mute User.. Hang on!! ⏳`")
     is_admin = await admin_check(message)
     if not is_admin:
         return
 
     user_id, user_first_name = extract_user(message)
+    if message.reply_to_message:
+        user_id = message.reply_to_message.from_user.id
     try:
         await message.chat.restrict_member(
             user_id=user_id,
@@ -84,13 +92,15 @@ async def ban_usr(client, message):
 
 
 @Client.on_message(Filters.command(["unmute", "unban"], COMMAND_HAND_LER) & Filters.me)
-async def ban_usr(client, message):
+async def unrestrict_usr(client, message):
     await message.edit("`Trying to Unrestrict User.. Hang on!! ⏳`")
     is_admin = await admin_check(message)
     if not is_admin:
         return
 
     user_id, user_first_name = extract_user(message)
+    if message.reply_to_message:
+        user_id = message.reply_to_message.from_user.id
     try:
         await message.chat.unban_member(
             user_id=user_id)
@@ -132,6 +142,8 @@ async def unpin_message(client, message):
             return
         await client.unpin_chat_message(chat_id)
         await message.edit("`Unpinned message!`")
+        await asyncio.sleep(3)
+        await message.delete()
 
 
 @Client.on_message(Filters.command("leavechat", COMMAND_HAND_LER) & Filters.me)
@@ -150,7 +162,7 @@ async def invitelink(client, message):
     if not is_admin:
         return
     chat_id = message.chat.id
-    link = client.export_chat_invite_link(chat_id)
+    link = await client.export_chat_invite_link(chat_id)
     await message.edit(f"**Link for Chat:**\n`{link}`")
 
 
@@ -256,6 +268,7 @@ async def purge(client, message):
     await asyncio.sleep(5)
     await message.delete()
 
+
 @Client.on_message(Filters.command("del", COMMAND_HAND_LER) & Filters.me)
 async def del_msg(client, message):
     """ Delete the replied message """
@@ -270,26 +283,28 @@ async def del_msg(client, message):
         await message.delete()
     else:
         await message.edit("`Reply to a message to delete it!`")
+        return
 
 
 @Client.on_message(Filters.command("invite", COMMAND_HAND_LER) & Filters.me)
 async def del_msg(client, message):
-    chat_id = message.chat.id
     cmd = message.command
-    if len(cmd)==2:
-        if not cmd[1].startswith("@"):
-            user_id = int(cmd[1])
-        elif cmd[1].startswith("@"):
-            user_id = str(cmd[1])
+    user_id = cmd[1]
+    if user_id:
+        try:
+            from_user = await client.get_users(user_id)
+            from_chat = await client.get_chat(user_id)
+        except Exception:
+            await message.edit("no valid user_id or message specified")
+            return
+    elif message.reply_to_message:
+        from_user = await client.get_users(message.reply_to_message.from_user.id)
+        from_chat = await client.get_chat(message.reply_to_message.from_user.id)
+    else:
+        await message.edit("no valid user_id or message specified")
+        return
     try:
-        await client.get_users(user_id)
-    except Exception as ef:
-        if ef == "list index out of range":
-            await message.edit("`User Not Found`")
-        else:
-            await message.edit(f"**Error while getting user:**\n`{ef}`")
-    try:
-        await client.add_chat_members(chat_id, user_id)
-        await message.reply_text("`Invited User Successfully`")
-    except Exception as ef:
-        await message.reply_text(f"Could not invite user due to:\n`{ef}`")
+        await chat.add_members(user_id)
+    except:
+        await message.edit("<b>Could not add user, maybe the user has restricted himself from being added to group.</b>")
+        return

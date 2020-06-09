@@ -7,6 +7,8 @@ import asyncio
 import requests
 from pyrogram import Client, Filters
 from pyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
+from pyrobot.utils.list_to_string import listToString
+
 
 __PLUGIN__ = "Dev"
 
@@ -25,7 +27,7 @@ Syntax: `{COMMAND_HAND_LER}ip`
 @Client.on_message(Filters.command("eval", COMMAND_HAND_LER) & Filters.me)
 async def eval(client, message):
     status_message = await message.reply_text("Processing ...")
-    cmd = message.command[1:]
+    cmd = listToString (message.command[1:])
 
     reply_to_id = message.message_id
     if message.reply_to_message:
@@ -87,7 +89,7 @@ async def aexec(code, client, message):
 
 @Client.on_message(Filters.command("exec", COMMAND_HAND_LER) & Filters.me)
 async def execution(client, message):
-    cmd = message.command[1:]
+    cmd = listToString (message.command[1:])
 
     reply_to_id = message.message_id
     if message.reply_to_message:
@@ -138,4 +140,4 @@ async def execution(client, message):
     output = stdout.decode()
     if not output:
         output = "No Output"
-    await message.reply_text(output)
+    await message.edit(output)

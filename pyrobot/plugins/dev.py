@@ -115,7 +115,7 @@ async def execution(_, message):
         await message.reply_text(OUTPUT)
 
 
-@Client.on_message(Filters.command(["ip"], Command) & Filters.me)
+@Client.on_message(Filters.command(["ip"], COMMAND_HAND_LER) & Filters.me)
 async def public_ip(client, message):
     ip = requests.get('https://api.ipify.org').text
     await message.edit(f'<code>{ip}</code>', parse_mode='html')

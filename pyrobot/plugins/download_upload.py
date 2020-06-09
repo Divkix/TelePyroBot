@@ -103,7 +103,7 @@ async def down_load_media(client, sms):
 
 
 
-@Client.on_message(Filters.command("upload", COMMAND_HAND_LER)  & sudo_filter)
+@Client.on_message(Filters.command("upload", COMMAND_HAND_LER) & Filters.me)
 async def upload_as_document(client, message):
     status_message = await message.reply_text("...")
     if " " in message.text:

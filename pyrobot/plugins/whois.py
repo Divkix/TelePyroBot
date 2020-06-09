@@ -1,5 +1,5 @@
 import os
-from pyrogram inport Client, Filters
+from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
 
 @Client.on_message(Filters.command(["whois", "info"], COMMAND_HAND_LER) & Filters.me)

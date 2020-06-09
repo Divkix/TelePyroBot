@@ -104,6 +104,7 @@ async def upload_as_document(client, message):
             c_time = time.time()
             doc_caption = os.path.basename(local_file_name)
             await client.send_document(
+                chat_id=message.chat.id,
                 document=local_file_name,
                 thumb=thumb_image_path,
                 caption=doc_caption,

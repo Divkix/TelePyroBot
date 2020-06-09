@@ -19,7 +19,7 @@ from pyrobot import COMMAND_HAND_LER, TMP_DOWNLOAD_DIRECTORY
 
 @Client.on_message(Filters.command("paste", COMMAND_HAND_LER))
 async def paste_bin(client, message):
-    status_message = await message.reply_text("...")
+    await message.edit("`Pasting...`")
     downloaded_file_name = None
 
     if message.reply_to_message and message.reply_to_message.media:
@@ -37,11 +37,11 @@ async def paste_bin(client, message):
     elif message.reply_to_message:
         downloaded_file_name = message.reply_to_message.text.html
     else:
-        await status_message.edit("What do you want to Paste?")
+        await message.edit("What do you want to Paste?")
         return
 
     if downloaded_file_name is None:
-        await status_message.edit("What do you want to Paste?")
+        await message.edit("What do you want to Paste?")
         return
 
     json_paste_data = {
@@ -55,11 +55,11 @@ async def paste_bin(client, message):
         "dogbin": "https://del.dog/documents"
         }
 
-    chosen_store = "nekobin"
+    default_paste = "nekobin"
     if len(message.command) == 2:
-        chosen_store = message.command[1]
+        default_paste = message.command[1]
 
-    paste_store_url = paste_bin_store_s.get(chosen_store, paste_bin_store_s["nekobin"])
+    paste_store_url = paste_bin_store_s.get(default_paste, paste_bin_store_s["nekobin"])
     paste_store_base_url_rp = urlparse(paste_store_url)
 
     paste_store_base_url = paste_store_base_url_rp.scheme + "://" + \
@@ -73,8 +73,7 @@ async def paste_bin(client, message):
     required_url = json.dumps(t_w_attempt, sort_keys=True, indent=4) + "\n\n #ERROR"
     if t_w_attempt is not None:
         required_url = paste_store_base_url + "/" + "raw" + "/" + t_w_attempt
-
-    await status_message.edit(required_url)
+    await message.edit(f"**Pasted to {default_paste}**:\n{required_url}")
 
 
 def bleck_megick(dict_rspns):

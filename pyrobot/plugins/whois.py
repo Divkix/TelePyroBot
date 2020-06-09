@@ -5,8 +5,8 @@ from pyrobot import COMMAND_HAND_LER
 @Client.on_message(Filters.command(["whois", "info"], COMMAND_HAND_LER) & Filters.me)
 async def upload_as_document(client, message):
     await message.edit("`Collecting Whois Info.. Hang on!`")
-    user_id = message.command[1]
-    if user_id:
+    if len(message.command) == 2:
+        user_id = message.command[1]
         try:
             from_user = await client.get_users(user_id)
             from_chat = await client.get_chat(user_id)

@@ -6,10 +6,12 @@ from pyrobot import COMMAND_HAND_LER
 
 @Client.on_message(Filters.command("github", COMMAND_HAND_LER) & Filters.me)
 async def github(client, message):
-    if len(message.text.split()) == 1:
-            await message.edit("Usage: `github (username)`", parse_mode="md")
-            return
-    username = message.text.split(None, 1)[1]
+    if len(message.command) == 2:
+        username = message.command[1]
+    else:
+        await message.edit("Usage: `github (username)`", parse_mode="md")
+        return
+    
     URL = f"https://api.github.com/users/{username}"
     async with aiohttp.ClientSession() as session:
         async with session.get(URL) as request:

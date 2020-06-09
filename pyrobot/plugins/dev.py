@@ -10,12 +10,9 @@ import sys
 import traceback
 import time
 import asyncio
-
+import requests
 from pyrogram import Client, Filters
-
 from pyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
-
-
 
 @Client.on_message(Filters.command("eval", COMMAND_HAND_LER) & Filters.me)
 async def eval(client, message):
@@ -116,3 +113,9 @@ async def execution(_, message):
         os.remove("exec.text")
     else:
         await message.reply_text(OUTPUT)
+
+
+@Client.on_message(Filters.command(["ip"], Command) & Filters.me)
+async def public_ip(client, message):
+    ip = requests.get('https://api.ipify.org').text
+    await message.edit(f'<code>{ip}</code>', parse_mode='html')

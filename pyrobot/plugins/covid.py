@@ -19,8 +19,8 @@ import requests
 @Client.on_message(Filters.command("covid", COMMAND_HAND_LER) & Filters.me)
 async def covid(client, message):
     await message.edit("`Processing...`", parse_mode="md")
-    args = message.text.split(None, 1)
-    if len(args) == 1:
+    cmd = message.command
+    if len(cmd) == 1:
         r = requests.get("https://corona.lmao.ninja/v2/all?yesterday=true").json()
         last_updated = datetime.datetime.fromtimestamp(r['updated'] / 1000).strftime("%Y-%m-%d %I:%M:%S")
 
@@ -41,7 +41,7 @@ async def covid(client, message):
         ac.align = "l"
 
         await message.edit(f"`{str(ac)}`\nLast updated on: {last_updated}", parse_mode="md")
-    country = args[1]
+    country = cmd[1]
     r = requests.get(f"https://corona.lmao.ninja/v2/countries/{country}").json()
     if "cases" not in r:
         await message.edit("`The country could not be found!`", parse_mode="md")

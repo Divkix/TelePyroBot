@@ -86,13 +86,17 @@ async def aexec(code, client, message):
     return await locals()['__aexec'](client, message)
 
 
-@Client.on_message(Filters.command("exec", COMMAND_HAND_LER) & Filters.me)
-async def execution(client, message):
+@Client.on_message(Filters.command("exec", COMMAND_HAND_LER) & Filter.me)
+async def execution(_, message):
+    # DELAY_BETWEEN_EDITS = 0.3
+    # PROCESS_RUN_TIME = 100
     cmd = message.text.split(" ", maxsplit=1)[1]
 
     reply_to_id = message.message_id
     if message.reply_to_message:
         reply_to_id = message.reply_to_message.message_id
+
+    # start_time = time.time() + PROCESS_RUN_TIME
     process = await asyncio.create_subprocess_shell(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
@@ -103,7 +107,7 @@ async def execution(client, message):
     o = stdout.decode()
     if not o:
         o = "No Output"
-
+    
     OUTPUT = ""
     OUTPUT += f"<b>QUERY:</b>\n<u>Command:</u>\n<code>{cmd}</code> \n"
     OUTPUT += f"<u>PID</u>: <code>{process.pid}</code>\n\n"
@@ -122,21 +126,3 @@ async def execution(client, message):
         os.remove("exec.text")
     else:
         await message.reply_text(OUTPUT)
-
-
-@Client.on_message(Filters.command(["ip"], COMMAND_HAND_LER) & Filters.me)
-async def public_ip(client, message):
-    ip = requests.get('https://api.ipify.org').text
-    await message.edit(f'<code>{ip}</code>', parse_mode='html')
-
-
-@Client.on_message(Filters.command("ls", COMMAND_HAND_LER) & Filters.me)
-async def execution(client, message):
-    cmd = message.text.split(' ', 1)[0]
-    process = await asyncio.create_subprocess_shell(
-        cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
-    stdout, stderr = await process.communicate()
-    output = stdout.decode()
-    if not output:
-        output = "No Output"
-    await message.edit(output)

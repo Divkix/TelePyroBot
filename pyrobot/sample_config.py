@@ -21,6 +21,7 @@ class Config():
     HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
     HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
     OWNER_NAME = os.environ.get("OWNER_NAME", "Skuzzy xD")
+    GBAN_GROUP = os.environ.get("GBAN_GROUP", -100)
 
 class Production(Config):
     LOGGER = False

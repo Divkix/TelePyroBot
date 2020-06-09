@@ -101,9 +101,11 @@ async def down_load_media(client, sms):
     else:
         await message.edit("Reply to a Telegram Media, to download it to local server.")
 
-@Client.on_message(Filters.command("upload", COMMAND_HAND_LER) & Filters.me)
+
+
+@Client.on_message(Filters.command("upload", COMMAND_HAND_LER)  & sudo_filter)
 async def upload_as_document(client, message):
-    status_message = await message.edit("...")
+    status_message = await message.reply_text("...")
     if " " in message.text:
         recvd_command, local_file_name = message.text.split(" ", 1)
         if os.path.exists(local_file_name):
@@ -111,8 +113,7 @@ async def upload_as_document(client, message):
             start_t = datetime.now()
             c_time = time.time()
             doc_caption = os.path.basename(local_file_name)
-            await client.send_document(
-                chat_id=message.chat.id,
+            await message.reply_document(
                 document=local_file_name,
                 thumb=thumb_image_path,
                 caption=doc_caption,
@@ -121,7 +122,7 @@ async def upload_as_document(client, message):
                 reply_to_message_id=message.message_id,
                 progress=progress_for_pyrogram,
                 progress_args=(
-                    "Trying to upload", status_message, c_time
+                    "trying to upload", status_message, c_time
                 )
             )
             end_t = datetime.now()
@@ -130,4 +131,4 @@ async def upload_as_document(client, message):
         else:
             await status_message.edit("404: media not found")
     else:
-        await status_message.edit(f"<code>{COMMAND_HAND_LER}upload FILE_PATH</code> to upload to current Telegram chat")
+        await status_message.edit(f"<code>{COMMAND_HAND_LER}uploadasdoc FILE_PATH</code> to upload to current Telegram chat")

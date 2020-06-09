@@ -86,9 +86,11 @@ async def get_id(client, message):
             file_id = rep.venue.file_id
         elif rep.from_user:
             user_id = rep.from_user.id
+            user_name = rep.from_user.first_name
+            username = rep.from_user.username
 
     if user_id:
-        await message.edit("This User's ID: `{}`".format(user_id))
+        await message.edit("User ID: `{}`\nName: `{}`\nUsername: `{}`".format(user_id, user_name, username))
     elif file_id:
         await message.edit("This File's ID: `{}`".format(file_id))
     else:

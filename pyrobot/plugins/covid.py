@@ -19,7 +19,7 @@ Check info of cases corona virus disease 2019
 @Client.on_message(Filters.command("covid", COMMAND_HAND_LER) & Filters.me)
 async def covid(client, message):
     await message.edit("`Processing...`", parse_mode="md")
-    cmd = message.split(' ', 1)
+    cmd = message.text.split(' ', 1)
     if len(cmd) == 1:
         r = requests.get("https://corona.lmao.ninja/v2/all?yesterday=true").json()
         last_updated = datetime.datetime.fromtimestamp(r['updated'] / 1000).strftime("%Y-%m-%d %I:%M:%S")

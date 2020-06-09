@@ -2,7 +2,6 @@ import asyncio
 from pyrogram import Client, Filters, ChatPermissions
 from pyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN
 
-from pyrobot.utils.extract_user import extract_user
 from pyrobot.utils.admin_check import admin_check
 
 
@@ -66,12 +65,23 @@ Usage: {COMMAND_HAND_LER}invite (Username or User ID)
 async def promote_usr(client, message):
     await message.edit("`Trying to Promote User.. Hang on!! ⏳`")
     is_admin = await admin_check(message)
-
+    chat_id = message.chat.id
     if not is_admin:
         return
-
-    user_id, user_first_name = extract_user(message)
-    chat_id = message.chat.id
+    if len(message.command) == 2:
+        user_id = message.command[1]
+        try:
+            user_id = await client.get_users(user_id)
+            user_chat = await client.get_chat(user_id)
+        except Exception:
+            await message.edit("`no valid user_id or message specified`")
+            return
+    elif message.reply_to_message:
+        user_id = await client.get_users(message.reply_to_message.from_user.id)
+        user_chat = await client.get_chat(message.reply_to_message.from_user.id)
+    else:
+        await message.edit("`no valid user_id or message specified`")
+        return
     if message.reply_to_message:
         user_id = message.reply_to_message.from_user.id
     try:
@@ -91,13 +101,25 @@ async def promote_usr(client, message):
 async def demote_usr(client, message):
     await message.edit("`Trying to Demote User.. Hang on!! ⏳`")
     is_admin = await admin_check(message)
+    chat_id = message.chat.id
     if not is_admin:
         return
-
-    user_id, user_first_name = extract_user(message)
+    if len(message.command) == 2:
+        user_id = message.command[1]
+        try:
+            user_id = await client.get_users(user_id)
+            user_chat = await client.get_chat(user_id)
+        except Exception:
+            await message.edit("`no valid user_id or message specified`")
+            return
+    elif message.reply_to_message:
+        user_id = await client.get_users(message.reply_to_message.from_user.id)
+        user_chat = await client.get_chat(message.reply_to_message.from_user.id)
+    else:
+        await message.edit("`no valid user_id or message specified`")
+        return
     if message.reply_to_message:
         user_id = message.reply_to_message.from_user.id
-    chat_id = message.chat.id
     try:
         await client.promote_chat_member(chat_id, user_id,
                                         can_change_info=False,
@@ -115,10 +137,23 @@ async def demote_usr(client, message):
 async def ban_usr(client, message):
     await message.edit("`Trying to Ban User.. Hang on!! ⏳`")
     is_admin = await admin_check(message)
+    chat_id = message.chat.id
     if not is_admin:
         return
-
-    user_id, user_first_name = extract_user(message)
+    if len(message.command) == 2:
+        user_id = message.command[1]
+        try:
+            user_id = await client.get_users(user_id)
+            user_chat = await client.get_chat(user_id)
+        except Exception:
+            await message.edit("`no valid user_id or message specified`")
+            return
+    elif message.reply_to_message:
+        user_id = await client.get_users(message.reply_to_message.from_user.id)
+        user_chat = await client.get_chat(message.reply_to_message.from_user.id)
+    else:
+        await message.edit("`no valid user_id or message specified`")
+        return
     if message.reply_to_message:
         user_id = message.reply_to_message.from_user.id
     try:
@@ -132,10 +167,23 @@ async def ban_usr(client, message):
 async def restrict_usr(client, message):
     await message.edit("`Trying to Mute User.. Hang on!! ⏳`")
     is_admin = await admin_check(message)
+    chat_id = message.chat.id
     if not is_admin:
         return
-
-    user_id, user_first_name = extract_user(message)
+    if len(message.command) == 2:
+        user_id = message.command[1]
+        try:
+            user_id = await client.get_users(user_id)
+            user_chat = await client.get_chat(user_id)
+        except Exception:
+            await message.edit("`no valid user_id or message specified`")
+            return
+    elif message.reply_to_message:
+        user_id = await client.get_users(message.reply_to_message.from_user.id)
+        user_chat = await client.get_chat(message.reply_to_message.from_user.id)
+    else:
+        await message.edit("`no valid user_id or message specified`")
+        return
     if message.reply_to_message:
         user_id = message.reply_to_message.from_user.id
     try:
@@ -151,10 +199,23 @@ async def restrict_usr(client, message):
 async def unrestrict_usr(client, message):
     await message.edit("`Trying to Unrestrict User.. Hang on!! ⏳`")
     is_admin = await admin_check(message)
+    chat_id = message.chat.id
     if not is_admin:
         return
-
-    user_id, user_first_name = extract_user(message)
+    if len(message.command) == 2:
+        user_id = message.command[1]
+        try:
+            user_id = await client.get_users(user_id)
+            user_chat = await client.get_chat(user_id)
+        except Exception:
+            await message.edit("`no valid user_id or message specified`")
+            return
+    elif message.reply_to_message:
+        user_id = await client.get_users(message.reply_to_message.from_user.id)
+        user_chat = await client.get_chat(message.reply_to_message.from_user.id)
+    else:
+        await message.edit("`no valid user_id or message specified`")
+        return
     if message.reply_to_message:
         user_id = message.reply_to_message.from_user.id
     try:

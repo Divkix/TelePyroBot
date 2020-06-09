@@ -20,7 +20,7 @@ async def carbon_api(client, message):
         "theme": "Dracula",
         "exportSize": "4x"
         }
-    cmd = message.split(' ', 1)
+    cmd = message.command
     rep_mesg_id = message.message_id
     if message.reply_to_message:
         rep_mesg_id = message.reply_to_message.message_id

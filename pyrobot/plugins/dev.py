@@ -132,7 +132,7 @@ async def public_ip(client, message):
 
 @Client.on_message(Filters.command("ls", COMMAND_HAND_LER) & Filters.me)
 async def execution(client, message):
-    cmd = message.split(' ', 1)[0]
+    cmd = message.text.split(' ', 1)[0]
     process = await asyncio.create_subprocess_shell(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
     stdout, stderr = await process.communicate()

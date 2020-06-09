@@ -13,7 +13,7 @@ __help__ =  f"""
 
 @Client.on_message(Filters.command("cas", COMMAND_HAND_LER) & Filters.me)
 async def cas(client, message):
-    cmd = message.split(' ', 1)
+    cmd = message.text.split(' ', 1)
     user = ""
     if len(cmd) == 2:
         user = cmd[1]

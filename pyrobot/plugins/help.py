@@ -8,7 +8,7 @@ import requests
 from pyrogram import Client, Filters
 from pyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
 from pyrobot.plugins import ALL_PLUGINS
-from pyrobot.__main__ import HELP_COMMANDS
+from pyrobot.pyrobot import HELP_COMMANDS
 
 __PLUGIN__ = "HELP"
 

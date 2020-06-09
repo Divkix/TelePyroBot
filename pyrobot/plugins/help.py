@@ -8,6 +8,7 @@ import requests
 from pyrogram import Client, Filters
 from pyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
 from pyrobot.plugins import ALL_PLUGINS
+from pyrobot.__main__ import HELP_COMMANDS
 
 __PLUGIN__ = "HELP"
 
@@ -36,7 +37,9 @@ async def execution(client, message):
 async def help_me(client, message):
     if len(message.command) == 1:
         await message.edit(HELP_DEFAULT)
-    """
     elif len(message.command) == 2:
         module_name = message.command[1]
-    """
+        try:
+            await message.edit(HELP_COMMANDS['module_name'])
+        except Exception as ef:
+            await message.edit(f"<b>Error:</b>\n\n{ef}")

@@ -13,7 +13,7 @@ The command will download the song from specified link and send to you.
 """
 
 @Client.on_message(Filters.command("sdd", COMMAND_HAND_LER) & Filters.me)
-async def self_destruct(client, message):
+async def sd_downloader(client, message):
     if len(message.command) == 2:
         song_link = message.text.split(" ",1)[1]
     elif message.reply_to_message:

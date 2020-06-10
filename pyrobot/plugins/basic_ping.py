@@ -79,9 +79,9 @@ async def get_id(client, message):
             user_name = rep.from_user.first_name
             username = rep.from_user.username
         elif rep.forward_from:
-            user_id = rep.forward_from.id
-            user_name = rep.forward_from.first_name
-            username = rep.forward_from.username
+            user_id = rep.forward_from.from_user.id
+            user_name = rep.forward_from.from_user.first_name
+            username = rep.forward_from.from_user.username
 
     if user_id:
         await message.edit("**User ID:** `{}`\n**Name:** `{}`\n**Username:** @{}".format(user_id, user_name, username))

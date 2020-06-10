@@ -16,9 +16,13 @@ __help__ = f"""
 @Client.on_message(Filters.command("fban", COMMAND_HAND_LER) & Filters.me)
 async def fban_user(client, message):
     if len(message.command) >= 3:
-        fban_user = message.text.split(" ",2)[1]
-        fban_reason = message.text.split(" ",2)[2]
-    elif message.reply_to_message:
+        cmd = message.text.split(" ",2)
+        fban_user = cmd[1]
+        fban_reason = cmd[2]
+    if len(message.command) == 2:
+        cmd = message.text.split(" ",1)
+        fban_user = cmd[1]
+    if message.reply_to_message:
         fban_user = message.reply_to_message.from_user.id
         if len(message.command) >= 2:
             fban_reason = message.text.split(" ",1)[1]
@@ -34,7 +38,7 @@ async def fban_user(client, message):
 @Client.on_message(Filters.command("unfban", COMMAND_HAND_LER) & Filters.me)
 async def unfban_user(client, message):
     if len(message.command) == 2:
-        unfban_user = message.text.split(" ",2)[1]
+        unfban_user = message.text.split(" ",1)[1]
     elif message.reply_to_message and len(message.command) == 1:
         unfban_user = message.reply_to_message.from_user.id
     await client.send_message("@MissRose_bot", f"/unfban {unfban_user}")

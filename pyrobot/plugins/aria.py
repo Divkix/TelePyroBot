@@ -64,14 +64,15 @@ async def url_download(client, message):
 
 @Client.on_message(Filters.command("ariaRM", COMMAND_HAND_LER) & Filters.me)
 async def aria_stopall(client, message):
-	try:
-		removed = aria2.remove_all(force=True)
-		aria2.purge_all()
-	except:
-		pass
-	if removed == False:
-		os.system("aria2p remove-all")
-		await message.edit("`Removed All Downloads.`")
+    try:
+        removed = aria2.remove_all(force=True)
+        aria2.purge_all()
+    except:
+        pass
+    if removed == False:
+        os.system("aria2p remove-all")
+    await message.edit("`Removed All Downloads.`")
+
 
 @Client.on_message(Filters.command("ariashow", COMMAND_HAND_LER) & Filters.me)
 async def aria_downloads(client, message):

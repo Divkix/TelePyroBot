@@ -80,8 +80,8 @@ async def aria_downloads(client, message):
         await message.edit("`Current Downloads: `\n"+msg)
     else:
     	await message.edit("`Output is huge. Sending as a file...`")
-        with open(output,'w') as f:
-            f.write(msg)
+		with open(output,'w') as f:
+			f.write(msg)
         await asyncio.sleep(2)
         await message.delete()
         await client.reply_document(

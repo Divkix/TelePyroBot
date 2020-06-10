@@ -126,34 +126,3 @@ async def execution(_, message):
         os.remove("exec.text")
     else:
         await message.reply_text(OUTPUT)
-
-@Client.on_message(Filters.command("ls", COMMAND_HAND_LER) & Filters.me)
-async def execution(_, message):
-    # DELAY_BETWEEN_EDITS = 0.3
-    # PROCESS_RUN_TIME = 100
-    cmd1 = message.text.split(" ", maxsplit=1)[0]
-    if len(message.command)==1:
-        cmd = cmd1
-    elif len(message.command)==2:
-        cmd2 = message.text.split(" ", maxsplit=1)[1]
-        cmd = cmd1 + " " + cmd2
-    else:
-        await message.edit("Enter a proper command!")
-    reply_to_id = message.message_id
-    process = await asyncio.create_subprocess_shell(
-        cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
-    stdout, stderr = await process.communicate()
-    OUTPUT = stdout.decode()
-
-    if len(OUTPUT) > MAX_MESSAGE_LENGTH:
-        with open("exec.text", "w+", encoding="utf8") as out_file:
-            out_file.write(str(OUTPUT))
-        await message.reply_document(
-            document="exec.text",
-            caption=cmd,
-            disable_notification=True,
-            reply_to_message_id=reply_to_id)
-        await message.delete()
-        os.remove("exec.text")
-    else:
-        await message.reply_text(f"`{OUTPUT}`")

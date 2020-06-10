@@ -39,6 +39,7 @@ async def covid(client, message):
             doc_caption = os.path.basename(required_file_name)
             LOGGER.info(f"Uploading {required_file_name} from {temp_dir} to Telegram.")
             await client.send_document(
+                chat_id=message.chat.id,
                 document=required_file_name,
                 thumb=thumb_image_path,
                 caption=doc_caption,

@@ -1,11 +1,10 @@
 import asyncio
+import os
 from pyrogram import Client, Filters, ChatPermissions
 from pyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN
-
 from pyrobot.utils.admin_check import admin_check
 
-
-__PLUGIN__ = __file__.replace(".py", "")
+__PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
 {COMMAND_HAND_LER}promote: Promotes a user in the Group.

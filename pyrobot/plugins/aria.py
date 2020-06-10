@@ -58,7 +58,7 @@ async def url_download(client, message):
         await progress_status(gid=new_gid,message=message,previous=None)
 
 
-@Client.on_message(Filters.command("ariaRM", COMMAND_HAND_LER) & Filters.me)
+"""@Client.on_message(Filters.command("ariaRM", COMMAND_HAND_LER) & Filters.me)
 async def aria_stopall(client, message):
     try:
         removed = aria2.remove_all(force=True)
@@ -67,7 +67,7 @@ async def aria_stopall(client, message):
         pass
     if removed == False:
 		os.system("aria2p remove-all")
-	await message.edit("`Removed All Downloads.`")
+	await message.edit("`Removed All Downloads.`")"""
 
 @Client.on_message(Filters.command("ariashow", COMMAND_HAND_LER) & Filters.me)
 async def aria_downloads(client, message):

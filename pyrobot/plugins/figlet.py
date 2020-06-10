@@ -17,7 +17,6 @@ https://nekobin.com/hesoyipowo
 @Client.on_message(Filters.command("figlet", COMMAND_HAND_LER) & Filters.me)
 async def figlet_font(client, message):
     CMD_FIG = {"slant": "slant", "3D": "3-d", "5line": "5lineoblique", "alpha": "alphabet", "banner": "banner3-D", "doh": "doh", "iso": "isometric1", "letter": "letters", "allig": "alligator", "dotm": "dotmatrix", "bubble": "bubble", "bulb": "bulbhead", "digi": "digital"}
-    if len(message.command) ==
     input_str = message.text.split(" ", 1)[1]
     if "|" in input_str:
         text, font_style = input_str.split("|", maxsplit=1)

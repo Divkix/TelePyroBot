@@ -28,9 +28,9 @@ class PyroBot(Client):
         await super().start()
 
         for oof in ALL_PLUGINS:
-            imported_module = importlib.import_module("pyrobot.plugins." + oof)
-            if import_module = "pyrobot.plugins.help":
+            if oof.lower() == "help":
                 continue
+            imported_module = importlib.import_module("pyrobot.plugins." + oof)
             if not hasattr(imported_module, "__PLUGIN__"):
                 imported_module.__PLUGIN__ = imported_module.__name__
 

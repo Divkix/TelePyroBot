@@ -14,7 +14,7 @@ __help__ = f"""
 
 @Client.on_message(Filters.command("fban", COMMAND_HAND_LER) & Filters.me)
 async def fban_user(client, message):
-    if len(message.command) == 2:
+    if len(message.command) == 3:
         fban_user = message.text.split(" ",2)[1]
     elif message.reply_to_message and len(message.command) == 2:
         fban_user = message.reply_to_message.from_user.id

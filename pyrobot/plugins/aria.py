@@ -39,8 +39,6 @@ async def magnet_download(client, message):
     new_gid = await check_metadata(gid)
     await progress_status(gid=new_gid,message=message,previous=None)
 
-#Buggy
-"""
 @Client.on_message(Filters.command("ariaurl", COMMAND_HAND_LER) & Filters.me)
 async def url_download(client, message):
     var = message.text[5:]
@@ -68,8 +66,8 @@ async def aria_stopall(client, message):
     except:
         pass
     if removed == False:
-        os.system("aria2p remove-all")
-    await message.edit("`Removed All Downloads.`")
+		os.system("aria2p remove-all")
+	await message.edit("`Removed All Downloads.`")
 
 @Client.on_message(Filters.command("ariashow", COMMAND_HAND_LER) & Filters.me)
 async def aria_downloads(client, message):
@@ -129,4 +127,3 @@ async def progress_status(gid,message,previous):
 			LOGGER.info(str(e))
 			await message.edit("Error :\n`{}`".format(str(e)))
 			return
-"""

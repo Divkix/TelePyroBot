@@ -156,4 +156,4 @@ async def execution(_, message):
         await message.delete()
         os.remove("exec.text")
     else:
-        await message.edit(f"`{OUTPUT}`")
+        await message.reply_text(f"`{OUTPUT}`")

@@ -151,6 +151,7 @@ async def ban_usr(client, message):
     elif message.reply_to_message:
         user_id = await client.get_users(message.reply_to_message.from_user.id)
         user_chat = await client.get_chat(message.reply_to_message.from_user.id)
+        del_msg = message.reply_to_message.message_id
     else:
         await message.edit("`no valid user_id or message specified`")
         return
@@ -159,6 +160,7 @@ async def ban_usr(client, message):
     try:
         await message.chat.kick_member(user_id)
         await message.edit(f"`Banned` [{user_first_name}](tg://user?id={user_id}) `Successfully...`")
+        await client.delete_messages(chat_id, del_msg)
     except Exception as ef:
         await message.edit(f"**Error:**\n\n`{ef}`")
 
@@ -416,14 +418,11 @@ async def del_msg(client, message):
         except Exception:
             await message.edit("no valid user_id or message specified")
             return
-    elif message.reply_to_message:
-        from_user = await client.get_users(message.reply_to_message.from_user.id)
-        from_chat = await client.get_chat(message.reply_to_message.from_user.id)
     else:
         await message.edit("no valid user_id or message specified")
         return
     try:
         await chat.add_members(user_id)
-    except:
-        await message.edit("<b>Could not add user, maybe the user has restricted himself from being added to group.</b>")
+    except Exception as ef:
+        await message.edit("<b>Error:</b>\n`{ef}`")
         return

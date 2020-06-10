@@ -68,7 +68,7 @@ async def aria_stopall(client, message):
     except:
         pass
     if removed == False:
-    os.system("aria2p remove-all")
+		os.system("aria2p remove-all")
     await message.edit("`Removed All Downloads.`")
 
 @Client.on_message(Filters.command("ariashow", COMMAND_HAND_LER) & Filters.me)
@@ -97,7 +97,7 @@ async def aria_downloads(client, message):
 async def check_metadata(gid):
 	file = aria2.get_download(gid)
 	new_gid = file.followed_by_ids[0]
-	LOGGER.info("Changing GID "+gid+" to "+new_gid)
+	LOGGER.info("Changing GID " + gid + " to " + new_gid)
 	return new_gid
 
 async def progress_status(gid,message,previous):

@@ -30,7 +30,7 @@ async def covid(client, message):
     if os.path.exists(temp_dir):
         files = os.listdir(temp_dir)
         files.sort()
-        await event.edit("Uploading Files on Telegram...")
+        await message.edit("Uploading Files on Telegram...")
         for file in files:
             c_time = time.time()
             required_file_name = temp_dir+"/"+file

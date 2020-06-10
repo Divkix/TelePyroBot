@@ -4,7 +4,7 @@ from telegraph import upload_file
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
 
-__PLUGIN__ = __file__.replace(".py", "")
+__PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
 {COMMAND_HAND_LER}telegraph: As a reply to message to paste it to Telegraph.

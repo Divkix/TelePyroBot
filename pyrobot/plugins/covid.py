@@ -7,10 +7,10 @@ import requests
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
 
-__PLUGIN__ = __file__.replace(".py", "")
+__PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
-Check info of cases corona virus disease 2019
+Check info of cases Covid19(Corona) Disease.
 
 -> `{COMMAND_HAND_LER}corona - for Global Stats`
 -> `{COMMAND_HAND_LER}corona (country) - for a Country Stats`

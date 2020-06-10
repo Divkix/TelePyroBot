@@ -1,9 +1,10 @@
 from html import escape
 import requests
+import os
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
 
-__PLUGIN__ = __file__.replace(".py", "")
+__PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = """
 Get current weather in your location

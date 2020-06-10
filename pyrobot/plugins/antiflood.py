@@ -1,25 +1,24 @@
+import os
 import asyncio
-
 from pyrogram import (
     ChatPermissions,
     Client,
-    Filters
-)
+    Filters)
 from pyrobot import (
     COMMAND_HAND_LER,
-    DB_URI
-)
-
+    DB_URI)
 from pyrobot.utils.admin_check import admin_check
 if DB_URI is not None:
     import pyrobot.utils.sql_helpers.antiflood_sql as sql
     CHAT_FLOOD = sql.__load_flood_settings()
 
-__PLUGIN__ = __file__.replace(".py", "")
+__PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = """
 Set Antiflood
 Syntax: .setflood <num>
+
+Not fully  complete yet!
 """
 
 @Client.on_message(group=1)
@@ -73,7 +72,6 @@ because he reached the defined flood limit.
 
 @Client.on_message(Filters.command("setflood", COMMAND_HAND_LER) & Filters.me)
 async def set_flood(client, message):
-    """ /setflood command """
     is_admin = await admin_check(message)
     if not is_admin:
         return
@@ -83,8 +81,6 @@ async def set_flood(client, message):
         sql.set_flood(message.chat.id, input_str)
         global CHAT_FLOOD
         CHAT_FLOOD = sql.__load_flood_settings()
-        await message.reply_text(
-            "Antiflood updated to {} in the current chat".format(input_str)
-        )
+        await message.reply_text("Antiflood updated to {} in the current chat".format(input_str))
     except Exception as e:  # pylint:disable=C0103,W0703
         await message.reply_text(str(e))

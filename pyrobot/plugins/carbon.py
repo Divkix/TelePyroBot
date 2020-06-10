@@ -5,10 +5,10 @@ import shutil
 import os
 from time import sleep
 
-__PLUGIN__ = __file__.replace(".py", "")
+__PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ =  f"""
-{COMMAND_HAND_LER}carbon <text> or as a reply to the message.
+`{COMMAND_HAND_LER}carbon` <text> or as a reply to the message.
 """
 
 CARBON_LANG = "Auto"

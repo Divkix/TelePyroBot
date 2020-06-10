@@ -10,7 +10,7 @@ from pyrobot.utils.display_progress_dl_up import (
 from pyrobot.utils.check_if_thumb_exists import is_thumb_image_exists
 from pyrobot.utils.display_progress_dl_up import progress_for_pyrogram
 
-__PLUGIN__ = __file__.replace(".py", "")
+__PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
 Upload files from a directory to telegram easily!
@@ -31,25 +31,24 @@ async def covid(client, message):
     if os.path.exists(temp_dir):
         files = os.listdir(temp_dir)
         files.sort()
-        await status_message.edit("Uploading Files on Telegram...")
+        await status_message.edit("`Uploading Files to Telegram...`")
         for file in files:
             c_time = time.time()
             required_file_name = temp_dir+"/"+file
             thumb_image_path = await is_thumb_image_exists(required_file_name)
             doc_caption = os.path.basename(required_file_name)
-            LOGGER.info(f"Uploading {required_file_name}")
-            await message.reply_document(
+            LOGGER.info(f"Uploading {required_file_name} from {temp_dir} to Telegram.")
+            await client.send_document(
                 document=required_file_name,
                 thumb=thumb_image_path,
                 caption=doc_caption,
                 parse_mode="html",
                 disable_notification=True,
-                reply_to_message_id=message.message_id,
                 progress=progress_for_pyrogram,
                 progress_args=(
-                    "trying to upload", status_message, c_time)
+                    "Trying to upload multiple files...", status_message, c_time)
                 )
     else:
         await message.edit("Directory Not Found.")
         return
-    await client.send_message(message.chat.id, "Successfull.")
+    await client.send_message(message.chat.id, f"Uploaded all files from Directory `{temp_dir}`")

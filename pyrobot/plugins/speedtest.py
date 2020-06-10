@@ -1,8 +1,9 @@
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
 from speedtest import Speedtest
+import os
 
-__PLUGIN__ = __file__.replace(".py", "")
+__PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
 {COMMAND_HAND_LER}speedtest: Get speedtest of your server.

@@ -1,7 +1,7 @@
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
 import random
-
+import os
 # CONSTANTS
 DART_E_MOJI = "🎯"
 DICE_E_MOJI = "🎲"
@@ -15,7 +15,7 @@ RUN_STRINGS = (
     "`Bahut bada chutiya hai tu`")
 # CONSTANTS
 
-__PLUGIN__ = __file__.replace(".py", "")
+__PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
 {COMMAND_HAND_LER}throw \ dart Throw an Animated Dart.

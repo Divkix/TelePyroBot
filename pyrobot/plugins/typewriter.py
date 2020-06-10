@@ -1,10 +1,11 @@
 import time
+import os
 import random
 from pyrogram.errors.exceptions import FloodWait
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER, LOGGER
 
-__PLUGIN__ = __file__.replace(".py", "")
+__PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
 {COMMAND_HAND_LER}type / typewriter <text>: Get text typed in typewriter format.

@@ -1,5 +1,5 @@
-import asyncio
 import os
+import asyncio
 from pyrogram import Client, Filters, ChatPermissions
 from pyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN
 from pyrobot.utils.admin_check import admin_check
@@ -13,56 +13,35 @@ Usage: {COMMAND_HAND_LER}promote (Username/User ID or reply to message)
 {COMMAND_HAND_LER}demote: Demotes a user in the Group.
 Usage: {COMMAND_HAND_LER}demote (Username/User ID or reply to message)
 
-{COMMAND_HAND_LER}ban: Bans a user in the Group.
+`{COMMAND_HAND_LER}ban`: Bans a user in the Group.
 Usage: {COMMAND_HAND_LER}ban (Username/User ID or reply to message)
 
-{COMMAND_HAND_LER}mute: Mutes a user in the Group.
+`{COMMAND_HAND_LER}mute`: Mutes a user in the Group.
 Usage: {COMMAND_HAND_LER}mute (Username/User ID or reply to message)
 
-{COMMAND_HAND_LER}demote: Demotes a user in the Group.
-Usage: {COMMAND_HAND_LER}demote (Username/User ID or reply to message)
-
-{COMMAND_HAND_LER}unmute \ unban \ unrestrict: Unrestricts a user in the Group.
+`{COMMAND_HAND_LER}unrestrict` \ unban \ unmute: Unrestricts a user in the Group.
 Usage: {COMMAND_HAND_LER}unmute (Username/User ID or reply to message)
 
-{COMMAND_HAND_LER}pin: Pins the message in the Group.
+`{COMMAND_HAND_LER}pin`: Pins the message in the Group.
 Usage: {COMMAND_HAND_LER}pin (as a reply to the message)
 
-{COMMAND_HAND_LER}unpin: Pins the message in the Group.
+`{COMMAND_HAND_LER}unpin`: Pins the message in the Group.
 Usage: {COMMAND_HAND_LER}unpin
 
-{COMMAND_HAND_LER}leavechat: Exit from the Group.
-Usage: {COMMAND_HAND_LER}leavechat
-
-{COMMAND_HAND_LER}invitelink: Gives the invitelink of the Group.
-Usage: {COMMAND_HAND_LER}invitelink
-
-{COMMAND_HAND_LER}setchatpic: Changes the Picture of Group.
-Usage: {COMMAND_HAND_LER}setchatpic (as a reply to the message)
-
-{COMMAND_HAND_LER}delchatpic: Removes the Picture of Group.
-Usage: {COMMAND_HAND_LER}delchatpic (as a reply to the message)
-
-{COMMAND_HAND_LER}setchatname: Renames the Group.
-Usage: {COMMAND_HAND_LER}setchatname (chatname or as a reply to the message)
-
-{COMMAND_HAND_LER}setchatdesc: Sets the Description of the Group.
-Usage: {COMMAND_HAND_LER}setchatdesc (chatdesc or as a reply to the message)
-
-{COMMAND_HAND_LER}purge: Deletes messages upto replied message.
+`{COMMAND_HAND_LER}purge`: Deletes messages upto replied message.
 Usage: {COMMAND_HAND_LER}purge (as a reply to the message)
 
-{COMMAND_HAND_LER}del: Deletes a single message.
+`{COMMAND_HAND_LER}del`: Deletes a single message.
 Usage: {COMMAND_HAND_LER}del (as a reply to the message)
 
-{COMMAND_HAND_LER}invite: Sets the Description of the Group.
+`{COMMAND_HAND_LER}invite`: Add the user to your Group.
 Usage: {COMMAND_HAND_LER}invite (Username or User ID)
 """
 
 
 @Client.on_message(Filters.command("promote", COMMAND_HAND_LER) & Filters.me)
 async def promote_usr(client, message):
-    await message.edit("`Trying to Promote User.. Hang on!! ⏳`")
+    await message.edit("`Trying to Promote user...`")
     is_admin = await admin_check(message)
     chat_id = message.chat.id
     if not is_admin:
@@ -98,7 +77,7 @@ async def promote_usr(client, message):
 
 @Client.on_message(Filters.command("demote", COMMAND_HAND_LER) & Filters.me)
 async def demote_usr(client, message):
-    await message.edit("`Trying to Demote User.. Hang on!! ⏳`")
+    await message.edit("`Trying to Demote user...`")
     is_admin = await admin_check(message)
     chat_id = message.chat.id
     if not is_admin:
@@ -134,7 +113,7 @@ async def demote_usr(client, message):
 
 @Client.on_message(Filters.command("ban", COMMAND_HAND_LER) & Filters.me)
 async def ban_usr(client, message):
-    await message.edit("`Trying to Ban User.. Hang on!! ⏳`")
+    await message.edit("`Trying to Ban user...`")
     is_admin = await admin_check(message)
     chat_id = message.chat.id
     if not is_admin:
@@ -166,7 +145,7 @@ async def ban_usr(client, message):
 
 @Client.on_message(Filters.command("mute", COMMAND_HAND_LER) & Filters.me)
 async def restrict_usr(client, message):
-    await message.edit("`Trying to Mute User.. Hang on!! ⏳`")
+    await message.edit("`Trying to Mute user...`")
     is_admin = await admin_check(message)
     chat_id = message.chat.id
     if not is_admin:
@@ -198,7 +177,7 @@ async def restrict_usr(client, message):
 
 @Client.on_message(Filters.command(["unmute", "unban", "unrestrict"], COMMAND_HAND_LER) & Filters.me)
 async def unrestrict_usr(client, message):
-    await message.edit("`Trying to Unrestrict User.. Hang on!! ⏳`")
+    await message.edit("`Trying to Unrestrict user...`")
     is_admin = await admin_check(message)
     chat_id = message.chat.id
     if not is_admin:
@@ -264,101 +243,10 @@ async def unpin_message(client, message):
         await message.delete()
 
 
-@Client.on_message(Filters.command("leavechat", COMMAND_HAND_LER) & Filters.me)
-async def leavechat(client, message):
-    if message.chat.type in ['group', 'supergroup']:
-        chat_id = message.chat.id
-        is_admin = await admin_check(message)
-        if not is_admin:
-            return
-        await client.leave_chat(chat_id, delete=True)
-
-
-@Client.on_message(Filters.command("invitelink", COMMAND_HAND_LER) & Filters.me)
-async def invitelink(client, message):
-    is_admin = await admin_check(message)
-    if not is_admin:
-        return
-    chat_id = message.chat.id
-    link = await client.export_chat_invite_link(chat_id)
-    await message.edit(f"**Link for Chat:**\n`{link}`")
-
-
-@Client.on_message(Filters.command("setchatpic", COMMAND_HAND_LER) & Filters.me)
-async def set_picture(client, message):
-    if message.chat.type in ['group', 'supergroup']:
-        is_admin = await admin_check(message)
-        if not is_admin:
-            return
-        await message.edit("`Tring to Change Group Picture....`")
-        chat_id = message.chat.id
-        try:
-            if message.reply_to_message and message.reply_to_message.media:
-                file_id = message.reply_to_message.photo.file_id
-                file_ref = message.reply_to_message.photo.file_ref
-                await client.set_chat_photo(chat_id, file_id, file_ref=file_ref)
-                await message.edit(f"`{message.chat.type.title()} picture has been set.`")
-            else:
-                await message.edit("`Reply to an image to set that as group pic`")
-        except Exception as ef:
-            await message.edit(f"**Could not Change Chat Pic due to:**\n`{ef}`")
-
-
-@Client.on_message(Filters.command("delchatpic", COMMAND_HAND_LER) & Filters.me)
-async def delchatpic(client, message):
-    is_admin = await admin_check(message)
-    if not is_admin:
-        return
-    chat_id = message.chat.id
-    try:
-        await client.delete_chat_photo(chat_id)
-        await message.edit(f"`Deleted Chat Picture for {message.chat.type.title()}`")
-    except Exception as ef:
-        await message.edit(f"Error deleting Chat Pic due to:\n`{ef}`")
-
-
-@Client.on_message(Filters.command("setchatname", COMMAND_HAND_LER) & Filters.me)
-async def setchatname(client, message):
-    await message.edit("__Trying to Change Chat Name!__")
-    is_admin = await admin_check(message)
-    if not is_admin:
-        return
-    chat_id = message.chat.id
-    chat_title = message.text.split(' ', 1)
-    if message.reply_to_message:
-        chat_title = message.reply_to_message.text
-    else:
-        chat_title = chat_title[1]
-    try:
-        await client.set_chat_title(chat_id, chat_title)
-        await message.edit(f"<b>Changed Chat Name to:</b> <code>{chat_title}</code>")
-    except Exception as ef:
-        await message.edit(f"**Could not Change Chat Title due to:**\n`{ef}`")
-
-
-@Client.on_message(Filters.command("setchatdesc", COMMAND_HAND_LER) & Filters.me)
-async def setchatdesc(client, message):
-    await message.edit("__Trying to Change Chat Desciption!__")
-    is_admin = await admin_check(message)
-    if not is_admin:
-        return
-    chat_id = message.chat.id
-    chat_desc = message.text.split(' ', 1)
-    if message.reply_to_message:
-        chat_desc = message.reply_to_message.text
-    else:
-        chat_desc = chat_desc[1]
-    try:
-        await client.set_chat_description(chat_id, chat_desc)
-        await message.edit(f"<b>Changed Chat Name to:</b> <code>{chat_desc}</code>")
-    except Exception as ef:
-        await message.edit(f"**Could not Change Chat Desciption due to:**\n`{ef}`")
-
-
 @Client.on_message(Filters.command("purge", COMMAND_HAND_LER) & Filters.me)
 async def purge(client, message):
     """ purge upto the replied message """
-    if message.chat.type in (("supergroup", "channel")):
+    if message.chat.type == "supergroup":
         is_admin = await admin_check(message)
         if not is_admin:
             return
@@ -383,24 +271,26 @@ async def purge(client, message):
                 revoke=True)
             count_del_etion_s += len(message_ids)
 
-    await message.edit(
-        f"Deleted `{count_del_etion_s}` messages")
-    await asyncio.sleep(5)
+    await message.edit(f"`Deleted <u>{count_del_etion_s}</u> messages`")
+    await asyncio.sleep(3)
     await message.delete()
 
 
 @Client.on_message(Filters.command("del", COMMAND_HAND_LER) & Filters.me)
 async def del_msg(client, message):
-    """ Delete the replied message """
-    if message.chat.type in (("supergroup", "channel")):
+    rm = await message.edit("`Trying to delete message`")
+    if message.chat.type == "supergroup":
         is_admin = await admin_check(message)
         if not is_admin:
             return
     chat_id = message.chat.id
     if message.reply_to_message:
-        message_id = message.reply_to_message.message_id
-        await client.delete_messages(chat_id, message_id)
-        await message.delete()
+        try:
+            await rm.delete()
+            message_id = message.reply_to_message.message_id
+            await client.delete_messages(chat_id, message_id)
+        except Exception as ef:
+            await message.edit(f"<b>Error</b>:\n`{ef}`")
     else:
         await message.edit("`Reply to a message to delete it!`")
         return
@@ -408,8 +298,7 @@ async def del_msg(client, message):
 
 @Client.on_message(Filters.command("invite", COMMAND_HAND_LER) & Filters.me)
 async def del_msg(client, message):
-    cmd = message.text.split(' ', 1)
-    user_id = cmd[1]
+    user_id = message.text.split(' ', 1)[1]
     if user_id:
         try:
             from_user = await client.get_users(user_id)
@@ -423,5 +312,5 @@ async def del_msg(client, message):
     try:
         await chat.add_members(user_id)
     except Exception as ef:
-        await message.edit("<b>Error:</b>\n`{ef}`")
+        await message.edit(f"<b>Error:</b>\n`{ef}`")
         return

@@ -1,16 +1,8 @@
-import io
 import os
-import sys
-import traceback
-import time
-import asyncio
-import requests
 from pyrogram import Client, Filters
 from pyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
 from pyrobot.plugins import ALL_PLUGINS
 from pyrobot.pyrobot import HELP_COMMANDS
-
-__PLUGIN__ = "HELP"
 
 HELP_DEFAULT = f"""
 To get help for any command, just type `{COMMAND_HAND_LER}help plugin_name`
@@ -41,7 +33,10 @@ async def help_me(client, message):
     elif len(message.command) == 2:
         module_name = message.text.split(" ",1)[1]
         try:
-            await message.reply_text(HELP_COMMANDS[f'{module_name}'])
+            HELP = f"<b>Help for <u>{module_name}</u></b>\n\n" + HELP_COMMANDS[f'{module_name}']
+            await message.reply_text(HELP)
             await message.delete()
         except Exception as ef:
             await message.edit(f"<b>Error:</b>\n\n{ef}")
+    else:
+        await message.edit(f"Use `{COMMAND_HAND_LER}help` to view help")

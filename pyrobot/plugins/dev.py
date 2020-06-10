@@ -9,7 +9,7 @@ from pyrogram import Client, Filters
 from pyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
 
 
-__PLUGIN__ = __file__.replace(".py", "")
+__PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
 Evaluate Python Code inside Telegram
@@ -25,7 +25,7 @@ Syntax: `{COMMAND_HAND_LER}ip`
 
 @Client.on_message(Filters.command("eval", COMMAND_HAND_LER) & Filters.me)
 async def eval(client, message):
-    status_message = await message.reply_text("Processing ...")
+    status_message = await message.reply_text("`Processing...`")
     cmd = message.text.split(" ", maxsplit=1)[1]
 
     reply_to_id = message.message_id
@@ -88,15 +88,12 @@ async def aexec(code, client, message):
 
 @Client.on_message(Filters.command("exec", COMMAND_HAND_LER) & Filters.me)
 async def execution(_, message):
-    # DELAY_BETWEEN_EDITS = 0.3
-    # PROCESS_RUN_TIME = 100
     cmd = message.text.split(" ", maxsplit=1)[1]
 
     reply_to_id = message.message_id
     if message.reply_to_message:
         reply_to_id = message.reply_to_message.message_id
 
-    # start_time = time.time() + PROCESS_RUN_TIME
     process = await asyncio.create_subprocess_shell(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )

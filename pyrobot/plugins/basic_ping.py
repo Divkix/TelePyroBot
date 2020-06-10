@@ -1,5 +1,3 @@
-"""Basic Commands"""
-
 import time
 import os
 from platform import python_version
@@ -14,7 +12,7 @@ REPO = ("<b>UserBot is available on GitHub:</b>\n"
         "https://github.com/SkuzzyxD/TelePyroBot")
 # -- Constants End -- #
 
-__PLUGIN__ = __file__.replace(".py", "")
+__PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
 {COMMAND_HAND_LER}alive \ start: Check if bot is alive or not.
@@ -33,13 +31,7 @@ Usage: {COMMAND_HAND_LER}id (as a reply to file or user or run to get group id)
 
 @Client.on_message(Filters.command(["alive", "start"], COMMAND_HAND_LER) & Filters.me)
 async def check_alive(client, message):
-    me = await client.get_me()
-    name = me.first_name
-    if me.last_name:
-        name = me.first_name + ' ' + me.last_name
-    if me.username:
-        username = me.username
-    await message.edit_text(ALIVE)
+    await message.edit_text(ALIVE, disable_web_page_preview=True)
 
 
 @Client.on_message(Filters.command("ping", COMMAND_HAND_LER) & Filters.me)
@@ -53,7 +45,7 @@ async def ping(client, message):
 
 @Client.on_message(Filters.command("repo", COMMAND_HAND_LER) & Filters.me)
 async def repo(client, message):
-    await message.edit(REPO)
+    await message.edit(REPO, disable_web_page_preview=True)
 
 @Client.on_message(Filters.command("id", COMMAND_HAND_LER) & Filters.me)
 async def get_id(client, message):
@@ -88,13 +80,17 @@ async def get_id(client, message):
             user_id = rep.from_user.id
             user_name = rep.from_user.first_name
             username = rep.from_user.username
+        elif rep.forward_from:
+            user_id = rep.forward_from.id
+            user_name = rep.forward_from.first_name
+            username = rep.forward_from.username
 
     if user_id:
-        await message.edit("User ID: `{}`\nName: `{}`\nUsername: @{}".format(user_id, user_name, username))
+        await message.edit("**User ID:** `{}`\n**Name:** `{}`\n**Username:** @{}".format(user_id, user_name, username))
     elif file_id:
-        await message.edit("This File's ID: `{}`".format(file_id))
+        await message.edit("**File's ID:** `{}`".format(file_id))
     else:
-        await message.edit("This Chat's ID:\n`{}`".format(message.chat.id))
+        await message.edit("**This Chat's ID:** `{}`".format(message.chat.id))
 
 
 @Client.on_message(Filters.command("json", COMMAND_HAND_LER) & Filters.me)
@@ -106,7 +102,6 @@ async def jsonify(client, message):
         the_real_message = message.reply_to_message
     else:
         the_real_message = message
-
     try:
         await message.reply_text(f"<code>{the_real_message}</code>")
     except Exception as e:

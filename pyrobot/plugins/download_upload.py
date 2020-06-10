@@ -19,7 +19,7 @@ from pyrobot.utils.display_progress_dl_up import (
 from pyrobot.utils.check_if_thumb_exists import is_thumb_image_exists
 from pyrobot.utils.display_progress_dl_up import progress_for_pyrogram
 
-__PLUGIN__ = __file__.replace(".py", "")
+__PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
 Download Telegram Media

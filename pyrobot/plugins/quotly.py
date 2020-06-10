@@ -1,13 +1,12 @@
 from pyrogram import Client, Filters
-
+import os
 from pyrobot import COMMAND_HAND_LER
-
 import random
 import time
 
 p = 0
 
-__PLUGIN__ = __file__.replace(".py", "")
+__PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
 {COMMAND_HAND_LER}qbot: As a reply to message to get its quote

@@ -1,7 +1,8 @@
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
+import os
 
-__PLUGIN__ = __file__.replace(".py", "")
+__PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = """
 ──「 **Mention** 」──
@@ -19,8 +20,7 @@ async def mention(_, message):
         await message.edit(
             rep,
             disable_web_page_preview=True,
-            parse_mode="html"
-        )
+            parse_mode="html")
     else:
-        await message.edit("Usage: `mention (username without @) (custom text)`", parse_mode="md")
+        await message.edit("Usage: `mention (username without @) (custom text)`")
         return

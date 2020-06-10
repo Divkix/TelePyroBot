@@ -1,8 +1,9 @@
 import aiohttp
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
+import os
 
-__PLUGIN__ = __file__.replace(".py", "")
+__PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
 Get information about a Github Account

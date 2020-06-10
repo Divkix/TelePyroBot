@@ -29,6 +29,6 @@ async def unshort_link(client, message):
         input_str = "http://" + input_str
     r = requests.get(input_str, allow_redirects=False)
     if str(r.status_code).startswith('3'):
-        await message.edit(f"Input URL: {input_str}\nReDirected URL: {r.headers["Location"]}"
+        await message.edit("Input URL: {}\nReDirected URL: {}".format(input_str, r.headers["Location"]))
     else:
-        await message.edit(f"Input URL {input_str} returned status_code {r.status_code}")
+        await message.edit("Input URL {} returned status_code {}".format(input_str, r.status_code))

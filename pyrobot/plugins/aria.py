@@ -78,15 +78,15 @@ async def aria_downloads(client, message):
     msg = ""
     for download in downloads:
         msg = msg+"File: `"+str(download.name) +"`\nSpeed: "+ str(download.download_speed_string())+"\nProgress: "+str(download.progress_string())+"\nTotal Size: "+str(download.total_length_string())+"\nStatus: "+str(download.status)+"\nETA:  "+str(download.eta_string())+"\n\n"
-	if len(msg) <= 4096:
-		await message.edit("`Current Downloads: `\n"+msg)
-	else:
-		await message.edit("`Output is huge. Sending as a file...`")
-		with open(output,'w') as f:
-			f.write(msg)
-		await asyncio.sleep(2)
-		await message.delete()
-		await message.reply_document(output, quote=True)
+    if len(msg) <= 4096:
+        await message.edit("`Current Downloads: `\n"+msg)
+    else:
+        await message.edit("`Output is huge. Sending as a file...`")
+    with open(output,'w') as f:
+        f.write(msg)
+    await asyncio.sleep(2)
+    await message.delete()
+    await message.reply_document(output)
 
 async def check_metadata(gid):
 	file = aria2.get_download(gid)

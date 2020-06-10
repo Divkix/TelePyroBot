@@ -132,13 +132,13 @@ async def execution(_, message):
     # DELAY_BETWEEN_EDITS = 0.3
     # PROCESS_RUN_TIME = 100
     cmd1 = message.text.split(" ", maxsplit=1)[0]
-    if len(message.commands)==1:
+    if len(message.command)==1:
         cmd = cmd1
     elif len(message.command)==2:
         cmd2 = message.text.split(" ", maxsplit=1)[1]
         cmd = cmd1 + " " + cmd2
     else:
-        await message.edit("Enter a proper location")
+        await message.edit("Enter a proper command!")
     reply_to_id = message.message_id
     process = await asyncio.create_subprocess_shell(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)

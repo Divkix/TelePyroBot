@@ -21,11 +21,11 @@ async def self_destruct(client, message):
     await client.send_message("@DeezLoadBot", f"{song_link}")
     time.sleep(1)
     wait = 0
-    if wait =< 5:
+    if wait < 5:
         wait += 1
         time.sleep(1)
         wait_time = 5 - wait
-        await client.edit(f"`Please wait <u>{wait_time}</u> seconds`")
+        await message.edit(f"`Please wait <u>{wait_time}</u> seconds`")
     msg = await client.get_history("@DeezLoadBot", limit=3)
     msg_id = msg[1]["message_id"]
     await client.forward_messages(message.chat.id, "@DeezLoadBot", msg_id)

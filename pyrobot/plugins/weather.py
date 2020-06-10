@@ -8,9 +8,8 @@ __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = """
 Get current weather in your location
-──「 **Weather** 」──
--> `weather (location)`
-Get current weather in your location.
+`weather <location>`
+
 Powered by `wttr.in`
 """
 

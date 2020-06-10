@@ -9,9 +9,9 @@ import os
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
-{COMMAND_HAND_LER}paste: as a reply to text message to paste it to nekobin.
+`{COMMAND_HAND_LER}paste`: as a reply to text message to paste it to nekobin.
 
-{COMMAND_HAND_LER}paste <nekobin>/<deldog>/<dogbin>: to use a specifi service for paste.
+`{COMMAND_HAND_LER}paste <nekobin>`/<deldog>/<dogbin>: to use a specific service for paste.
 """
 
 @Client.on_message(Filters.command("paste", COMMAND_HAND_LER))

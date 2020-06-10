@@ -6,11 +6,11 @@ from pyrobot import COMMAND_HAND_LER
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
-{COMMAND_HAND_LER}fban <username/userid> <reason>: To fban a user.
+`{COMMAND_HAND_LER}fban <username/userid> <reason>`: To fban a user.
 
-{COMMAND_HAND_LER}unfban <username/userid>: To unfban a user.
+`{COMMAND_HAND_LER}unfban <username/userid>`: To unfban a user.
 
-{COMMAND_HAND_LER}fstat <username/userid>: To get fstat of a user.
+`{COMMAND_HAND_LER}fstat <username/userid>`: To get fstat of a user.
 """
 
 @Client.on_message(Filters.command("fban", COMMAND_HAND_LER) & Filters.me)

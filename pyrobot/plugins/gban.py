@@ -6,9 +6,9 @@ import os
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
-{COMMAND_HAND_LER}gban <username/userid> <gban reason>: To gban a user.
+`{COMMAND_HAND_LER}gban <username/userid> <gban reason>`: To gban a user.
 
-{COMMAND_HAND_LER}ungban <username/userid> <gban reason>: To ungban a user.
+`{COMMAND_HAND_LER}ungban <username/userid> <unngban reason>`: To ungban a user.
 """
 
 @Client.on_message(Filters.command(["gban", "globalban"], COMMAND_HAND_LER) & Filters.me)

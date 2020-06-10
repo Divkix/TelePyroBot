@@ -6,9 +6,11 @@ from pyrobot.utils.misc.parser import mention_html, mention_markdown
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
-{COMMAND_HAND_LER}adminlist \ admins: Returns the list of admins of group.
+Tag people Easily!
 
-{COMMAND_HAND_LER}all \ everyone: Tags All the users of group.
+`{COMMAND_HAND_LER}adminlist` \ admins: Returns the list of admins of group.
+
+`{COMMAND_HAND_LER}all` \ everyone: Tags All the users of group.
 """
 
 

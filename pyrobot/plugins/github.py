@@ -7,7 +7,7 @@ __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
 Get information about a Github Account
-Usage: `{COMMAND_HAND_LER}github (username)`
+Usage: `{COMMAND_HAND_LER}github <github username>`
 """
 
 @Client.on_message(Filters.command("github", COMMAND_HAND_LER) & Filters.me)

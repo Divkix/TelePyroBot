@@ -6,8 +6,10 @@ from pyrobot.pyrobot import HELP_COMMANDS
 
 HELP_DEFAULT = f"""
 To get help for any command, just type `{COMMAND_HAND_LER}help plugin_name`
+'plugin_name' should be the name of a proper plugin!
 
-List of all Plugins: `{COMMAND_HAND_LER}plugins`
+Get a list of all Plugins using:
+`{COMMAND_HAND_LER}plugins`
 
 <b>Still WIP, not all Commands added!</b>
 """

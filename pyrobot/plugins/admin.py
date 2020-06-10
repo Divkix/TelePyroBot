@@ -7,10 +7,10 @@ from pyrobot.utils.admin_check import admin_check
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
-{COMMAND_HAND_LER}promote: Promotes a user in the Group.
+`{COMMAND_HAND_LER}promote`: Promotes a user in the Group.
 Usage: {COMMAND_HAND_LER}promote (Username/User ID or reply to message)
 
-{COMMAND_HAND_LER}demote: Demotes a user in the Group.
+`{COMMAND_HAND_LER}demote`: Demotes a user in the Group.
 Usage: {COMMAND_HAND_LER}demote (Username/User ID or reply to message)
 
 `{COMMAND_HAND_LER}ban`: Bans a user in the Group.
@@ -278,15 +278,15 @@ async def purge(client, message):
 
 @Client.on_message(Filters.command("del", COMMAND_HAND_LER) & Filters.me)
 async def del_msg(client, message):
-    rm = await message.edit("`Trying to delete message`")
+    await message.edit("`Trying to delete message`")
     if message.chat.type == "supergroup":
         is_admin = await admin_check(message)
         if not is_admin:
             return
     chat_id = message.chat.id
     if message.reply_to_message:
+        await message.delete()
         try:
-            await rm.delete()
             message_id = message.reply_to_message.message_id
             await client.delete_messages(chat_id, message_id)
         except Exception as ef:

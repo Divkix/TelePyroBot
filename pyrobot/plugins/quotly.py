@@ -9,7 +9,7 @@ p = 0
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
-{COMMAND_HAND_LER}qbot: As a reply to message to get its quote
+`{COMMAND_HAND_LER}qbot`: As a reply to message to get its quote
 """
 
 @Client.on_message(Filters.command("qbot", COMMAND_HAND_LER) & Filters.me)

@@ -18,11 +18,11 @@ RUN_STRINGS = (
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
-{COMMAND_HAND_LER}throw \ dart Throw an Animated Dart.
+`{COMMAND_HAND_LER}throw` \ dart Throw an Animated Dart.
 
-{COMMAND_HAND_LER}roll \ dice Throw an Animated Dice.
+`{COMMAND_HAND_LER}roll` \ dice Throw an Animated Dice.
 
-{COMMAND_HAND_LER}run \ runs Check and watch yourself.
+`{COMMAND_HAND_LER}run` \ runs Check and watch yourself.
 """
 
 

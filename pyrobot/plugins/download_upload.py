@@ -6,11 +6,7 @@ from datetime import datetime
 from pySmartDL import SmartDL
 from pyrogram import Client, Filters
 
-from pyrobot import (
-    COMMAND_HAND_LER,
-    LOGGER,
-    TMP_DOWNLOAD_DIRECTORY
-)
+from pyrobot import COMMAND_HAND_LER, LOGGER, TMP_DOWNLOAD_DIRECTORY
 from pyrobot.utils.display_progress_dl_up import (
     progress_for_pyrogram,
     humanbytes
@@ -23,10 +19,15 @@ __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
 Download Telegram Media
-Syntax: {COMMAND_HAND_LER}download  <link> or as a reply to media
+Syntax: `{COMMAND_HAND_LER}download  <link>` or as a reply to media
 
 Upload Media to Telegram
-Syntax: {COMMAND_HAND_LER}upload <file location>
+Syntax: `{COMMAND_HAND_LER}upload <file location>`
+
+Upload files of a directory to Telegram
+Usage: `{COMMAND_HAND_LER}batchup <directory location>`
+
+The command will upload all files from the directory location to the current Telegram Chat.
 """
 
 
@@ -132,3 +133,40 @@ async def upload_as_document(client, message):
             await status_message.edit("404: media not found")
     else:
         await status_message.edit(f"<code>{COMMAND_HAND_LER}upload FILE_PATH</code> to upload to current Telegram chat")
+
+@Client.on_message(Filters.command("batchup", COMMAND_HAND_LER) & Filters.me)
+async def covid(client, message):
+    if len(message.command) == 1:
+        await message.edit("`Enter a directory location`")
+    elif len(message.command) == 2:
+        temp_dir = message.text.split(" ", 1)[1]
+    else:
+        await message.edit(f"__Please check help by using__ `{COMMAND_HAND_LER}help batchup`")
+    status_message = await message.reply_text("`Uploading Files...`")
+    if os.path.exists(temp_dir):
+        files = os.listdir(temp_dir)
+        files.sort()
+        await status_message.edit("`Uploading Files to Telegram...`")
+        for file in files:
+            if file == "README.md":
+                continue
+            c_time = time.time()
+            required_file_name = temp_dir+"/"+file
+            thumb_image_path = await is_thumb_image_exists(required_file_name)
+            doc_caption = os.path.basename(required_file_name)
+            LOGGER.info(f"Uploading {required_file_name} from {temp_dir} to Telegram.")
+            await client.send_document(
+                chat_id=message.chat.id,
+                document=required_file_name,
+                thumb=thumb_image_path,
+                caption=doc_caption,
+                parse_mode="html",
+                disable_notification=True,
+                progress=progress_for_pyrogram,
+                progress_args=(
+                    "Trying to upload multiple files...", status_message, c_time)
+                )
+    else:
+        await message.edit("Directory Not Found.")
+        return
+    await client.send_message(message.chat.id, f"Uploaded all files from Directory `{temp_dir}`")

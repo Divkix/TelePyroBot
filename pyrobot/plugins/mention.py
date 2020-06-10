@@ -4,10 +4,11 @@ import os
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
-__help__ = """
-──「 **Mention** 」──
--> `mention (username without @) (custom text)`
+__help__ = f"""
 Generate a  hyperlink username you refer with a custom single text.
+
+──「 **Mention** 」──
+Usage: `{COMMAND_HAND_LER}mention <username without @> <custom text>`
 """
 
 @Client.on_message(Filters.command("mention", COMMAND_HAND_LER) & Filters.me)

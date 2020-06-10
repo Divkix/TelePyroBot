@@ -27,7 +27,7 @@ UPDATE_IN_PROGRESS = f"**Updating Application!** __Please wait upto 5 minutes...
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
-{COMMAND_HAND_LER}update: Update userbot to latest version.
+`{COMMAND_HAND_LER}update`: Update userbot to latest version.
 """
 
 @Client.on_message(Filters.command("update", COMMAND_HAND_LER) & Filters.me)

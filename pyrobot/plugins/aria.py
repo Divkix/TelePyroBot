@@ -9,9 +9,11 @@ __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 __help__ = f"""
 A Torrent Client Plugin Based On Aria2 for Userbot
 
-Commands: Magnet link : `{COMMAND_HAND_LER}magnet` <magnetLink>
-	  	  Show Downloads: `{COMMAND_HAND_LER}ariashow`
-	  	  Remove All Downloads: `{COMMAND_HAND_LER}ariaRM`
+Commands:
+Magnet link : `{COMMAND_HAND_LER}magnet <magnetLink>`
+URL Link: `{COMMAND_HAND_LER}ariaurl <url link>`
+Show Downloads: `{COMMAND_HAND_LER}ariashow`
+Remove All Downloads: `{COMMAND_HAND_LER}ariaRM`
 """
 
 cmd = "aria2c --enable-rpc --rpc-listen-all=false --rpc-listen-port 6800  --max-connection-per-server=10 --rpc-max-request-size=1024M --seed-time=0.01 --min-split-size=10M --follow-torrent=mem --split=10 --daemon=true --allow-overwrite=true"

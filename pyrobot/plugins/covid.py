@@ -12,8 +12,8 @@ __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 __help__ = f"""
 Check info of cases Covid19(Corona) Disease.
 
--> `{COMMAND_HAND_LER}corona - for Global Stats`
--> `{COMMAND_HAND_LER}corona (country) - for a Country Stats`
+-> `{COMMAND_HAND_LER}corona` - for Global Stats
+-> `{COMMAND_HAND_LER}corona <country>` - for a Country Stats
 """
 
 @Client.on_message(Filters.command("covid", COMMAND_HAND_LER) & Filters.me)

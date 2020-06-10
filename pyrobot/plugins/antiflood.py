@@ -14,9 +14,9 @@ if DB_URI is not None:
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
-__help__ = """
+__help__ = f"""
 Set Antiflood
-Syntax: .setflood <num>
+Syntax: `{COMMAND_HAND_LER}setflood <num>`
 
 Not fully  complete yet!
 """

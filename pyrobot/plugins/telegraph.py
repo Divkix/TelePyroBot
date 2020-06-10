@@ -7,7 +7,7 @@ from pyrobot import COMMAND_HAND_LER
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
-{COMMAND_HAND_LER}telegraph: As a reply to message to paste it to Telegraph.
+`{COMMAND_HAND_LER}telegraph`: As a reply to message to paste it to Telegraph.
 """
 
 @Client.on_message(Filters.command("telegraph", COMMAND_HAND_LER) & Filters.me)

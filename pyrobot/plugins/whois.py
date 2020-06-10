@@ -5,7 +5,7 @@ from pyrobot import COMMAND_HAND_LER
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
-{COMMAND_HAND_LER}whois / info <username/userid> or as a reply to message: Get the information about a user.
+`{COMMAND_HAND_LER}whois` / info <username/userid> or as a reply to message: Get the information about a user.
 """
 
 @Client.on_message(Filters.command(["whois", "info"], COMMAND_HAND_LER) & Filters.me)

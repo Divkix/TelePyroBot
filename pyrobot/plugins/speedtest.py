@@ -6,7 +6,7 @@ import os
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
-{COMMAND_HAND_LER}speedtest: Get speedtest of your server.
+`{COMMAND_HAND_LER}speedtest`: Get speedtest of your server.
 """
 
 @Client.on_message(Filters.command("speedtest", COMMAND_HAND_LER) & Filters.me)

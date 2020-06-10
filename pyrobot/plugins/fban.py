@@ -16,7 +16,7 @@ __help__ = f"""
 async def fban_user(client, message):
     if len(message.command) == 2:
         fban_user = message.text.split(" ",2)[1]
-    elif message.reply_to_message and len(message.command) == 1:
+    elif message.reply_to_message and len(message.command) == 2:
         fban_user = message.reply_to_message.from_user.id
     fban_reason = message.text.split(" ",2)[2]
     await client.send_message("@MissRose_bot", f"/fban {fban_user} {fban_reason}")

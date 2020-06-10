@@ -2,7 +2,7 @@ import aria2p
 import asyncio
 import os
 from pyrogram import Client, Filters
-from pyrobot import COMMAND_HAND_LER
+from pyrobot import COMMAND_HAND_LER, LOGGER
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 

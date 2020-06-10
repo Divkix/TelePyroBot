@@ -16,9 +16,10 @@ __help__ = f"""
 async def fban_user(client, message):
     if len(message.command) == 3:
         fban_user = message.text.split(" ",2)[1]
+        fban_reason = message.text.split(" ",2)[2]
     elif message.reply_to_message and len(message.command) == 2:
         fban_user = message.reply_to_message.from_user.id
-    fban_reason = message.text.split(" ",2)[2]
+        fban_reason = message.text.split(" ",1)[1]
     await client.send_message("@MissRose_bot", f"/fban {fban_user} {fban_reason}")
     time.sleep(1)
     msg = await client.get_history("@MissRose_bot", 1)

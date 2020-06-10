@@ -20,6 +20,7 @@ aria2_is_running = os.system(cmd)
 
 aria2 = aria2p.API(aria2p.Client(host="http://localhost", port=6800, secret=""))
 
+
 @Client.on_message(Filters.command("magnet", COMMAND_HAND_LER) & Filters.me)
 async def magnet_download(client, message):
     var = message.text
@@ -38,6 +39,7 @@ async def magnet_download(client, message):
     await asyncio.sleep(EDIT_SLEEP_TIME_OUT)
     new_gid = await check_metadata(gid)
     await progress_status(gid=new_gid,message=message,previous=None)
+
 
 @Client.on_message(Filters.command("ariaurl", COMMAND_HAND_LER) & Filters.me)
 async def url_download(client, message):
@@ -58,16 +60,16 @@ async def url_download(client, message):
         await progress_status(gid=new_gid,message=message,previous=None)
 
 
-"""@Client.on_message(Filters.command("ariaRM", COMMAND_HAND_LER) & Filters.me)
+@Client.on_message(Filters.command("ariaRM", COMMAND_HAND_LER) & Filters.me)
 async def aria_stopall(client, message):
-    try:
-        removed = aria2.remove_all(force=True)
-        aria2.purge_all()
-    except:
-        pass
-    if removed == False:
+	try:
+		removed = aria2.remove_all(force=True)
+		aria2.purge_all()
+	except:
+		pass
+	if removed == False:
 		os.system("aria2p remove-all")
-	await message.edit("`Removed All Downloads.`")
+		await message.edit("`Removed All Downloads.`")
 
 @Client.on_message(Filters.command("ariashow", COMMAND_HAND_LER) & Filters.me)
 async def aria_downloads(client, message):
@@ -76,22 +78,16 @@ async def aria_downloads(client, message):
     msg = ""
     for download in downloads:
         msg = msg+"File: `"+str(download.name) +"`\nSpeed: "+ str(download.download_speed_string())+"\nProgress: "+str(download.progress_string())+"\nTotal Size: "+str(download.total_length_string())+"\nStatus: "+str(download.status)+"\nETA:  "+str(download.eta_string())+"\n\n"
-    if len(msg) <= 4096:
-        await message.edit("`Current Downloads: `\n"+msg)
-    else:
-    	await message.edit("`Output is huge. Sending as a file...`")
+	if len(msg) <= 4096:
+		await message.edit("`Current Downloads: `\n"+msg)
+	else:
+		await message.edit("`Output is huge. Sending as a file...`")
 		with open(output,'w') as f:
 			f.write(msg)
-        await asyncio.sleep(2)
-        await message.delete()
-        await client.reply_document(
-				message.chat_id,
-				output,
-				force_document=True,
-				supports_streaming=False,
-				allow_cache=False,
-				reply_to=message.message.id,)
-"""
+		await asyncio.sleep(2)
+		await message.delete()
+		await message.reply_document(output, quote=True)
+
 async def check_metadata(gid):
 	file = aria2.get_download(gid)
 	new_gid = file.followed_by_ids[0]

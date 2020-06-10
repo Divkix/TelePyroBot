@@ -13,7 +13,7 @@ Commands:
 Start: `{COMMAND_HAND_LER}ariastart` - Starts the Aria Client!
 Magnet link : `{COMMAND_HAND_LER}magnet <magnetLink>`
 URL Link: `{COMMAND_HAND_LER}ariaurl <url link>`
-Show Downloads: `{COMMAND_HAND_LER}ariashow`
+Show Downloads: `{COMMAND_HAND_LER}showaria`
 Remove All Downloads: `{COMMAND_HAND_LER}ariaRM`
 """
 
@@ -21,7 +21,7 @@ EDIT_SLEEP_TIME_OUT = 5
 aria2_is_running = None
 
 @Client.on_message(Filters.command("ariastart", COMMAND_HAND_LER) & Filters.me)
-async def magnet_download(client, message):
+async def aria_start(client, message):
     cmd = "aria2c --enable-rpc --rpc-listen-all=false --rpc-listen-port 6800  --max-connection-per-server=10 --rpc-max-request-size=1024M --seed-time=0.01 --min-split-size=10M --follow-torrent=mem --split=10 --daemon=true --allow-overwrite=true --dir='/app/pyrobot/downloads'"
     aria2_is_running = os.system(cmd)
     aria2 = aria2p.API(aria2p.Client(host="http://localhost", port=6800, secret=""))
@@ -31,7 +31,7 @@ async def magnet_download(client, message):
 @Client.on_message(Filters.command("addmagnet", COMMAND_HAND_LER) & Filters.me)
 async def magnet_download(client, message):
     if aria2_is_running is None:
-        await message.edit("__First start the Aria Client using__ `{COMMAND_HAND_LER}aria start`")
+        await message.edit(f"__First start the Aria Client using__ `{COMMAND_HAND_LER}aria start`")
         return
     var = message.text
     var = var[8:]
@@ -53,6 +53,9 @@ async def magnet_download(client, message):
 
 @Client.on_message(Filters.command("addurl", COMMAND_HAND_LER) & Filters.me)
 async def url_download(client, message):
+    if aria2_is_running is None:
+        await message.edit(f"__First start the Aria Client using__ `{COMMAND_HAND_LER}aria start`")
+        return
     var = message.text[5:]
     print(var)
     uris = [var]
@@ -72,6 +75,9 @@ async def url_download(client, message):
 
 @Client.on_message(Filters.command("ariaRM", COMMAND_HAND_LER) & Filters.me)
 async def aria_stopall(client, message):
+    if aria2_is_running is None:
+        await message.edit(f"__First start the Aria Client using__ `{COMMAND_HAND_LER}aria start`")
+        return
     try:
         removed = aria2.remove_all(force=True)
         aria2.purge_all()
@@ -84,6 +90,9 @@ async def aria_stopall(client, message):
 
 @Client.on_message(Filters.command("showaria", COMMAND_HAND_LER) & Filters.me)
 async def aria_downloads(client, message):
+    if aria2_is_running is None:
+        await message.edit(f"__First start the Aria Client using__ `{COMMAND_HAND_LER}aria start`")
+        return
     output = "output.txt"
     downloads = aria2.get_downloads()
     msg = ""

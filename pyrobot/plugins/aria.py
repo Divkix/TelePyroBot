@@ -10,21 +10,29 @@ __help__ = f"""
 A Torrent Client Plugin Based On Aria2 for Userbot
 
 Commands:
+Start: `{COMMAND_HAND_LER}ariastart` - Starts the Aria Client!
 Magnet link : `{COMMAND_HAND_LER}magnet <magnetLink>`
 URL Link: `{COMMAND_HAND_LER}ariaurl <url link>`
 Show Downloads: `{COMMAND_HAND_LER}ariashow`
 Remove All Downloads: `{COMMAND_HAND_LER}ariaRM`
 """
 
-cmd = "aria2c --enable-rpc --rpc-listen-all=false --rpc-listen-port 6800  --max-connection-per-server=10 --rpc-max-request-size=1024M --seed-time=0.01 --min-split-size=10M --follow-torrent=mem --split=10 --daemon=true --allow-overwrite=true --dir='/app/pyrobot/downloads'"
 EDIT_SLEEP_TIME_OUT = 5
-aria2_is_running = os.system(cmd)
+aria2_is_running = None
 
-aria2 = aria2p.API(aria2p.Client(host="http://localhost", port=6800, secret=""))
-
-
-@Client.on_message(Filters.command("magnet", COMMAND_HAND_LER) & Filters.me)
+@Client.on_message(Filters.command("ariastart", COMMAND_HAND_LER) & Filters.me)
 async def magnet_download(client, message):
+    cmd = "aria2c --enable-rpc --rpc-listen-all=false --rpc-listen-port 6800  --max-connection-per-server=10 --rpc-max-request-size=1024M --seed-time=0.01 --min-split-size=10M --follow-torrent=mem --split=10 --daemon=true --allow-overwrite=true --dir='/app/pyrobot/downloads'"
+    aria2_is_running = os.system(cmd)
+    aria2 = aria2p.API(aria2p.Client(host="http://localhost", port=6800, secret=""))
+    await message.edit("`Started Aria Client`")
+
+
+@Client.on_message(Filters.command("addmagnet", COMMAND_HAND_LER) & Filters.me)
+async def magnet_download(client, message):
+    if aria2_is_running is None:
+        await message.edit("__First start the Aria Client using__ `{COMMAND_HAND_LER}aria start`")
+        return
     var = message.text
     var = var[8:]
     magnet_uri = var
@@ -43,7 +51,7 @@ async def magnet_download(client, message):
     await progress_status(gid=new_gid,message=message,previous=None)
 
 
-@Client.on_message(Filters.command("ariaurl", COMMAND_HAND_LER) & Filters.me)
+@Client.on_message(Filters.command("addurl", COMMAND_HAND_LER) & Filters.me)
 async def url_download(client, message):
     var = message.text[5:]
     print(var)
@@ -71,10 +79,10 @@ async def aria_stopall(client, message):
         pass
     if removed == False:
         os.system("aria2p remove-all")
-    await message.edit("`Removed All Downloads.`")
+    await message.edit("`Removed All Downloads`")
 
 
-@Client.on_message(Filters.command("ariashow", COMMAND_HAND_LER) & Filters.me)
+@Client.on_message(Filters.command("showaria", COMMAND_HAND_LER) & Filters.me)
 async def aria_downloads(client, message):
     output = "output.txt"
     downloads = aria2.get_downloads()
@@ -85,17 +93,19 @@ async def aria_downloads(client, message):
         await message.edit("`Current Downloads: `\n"+msg)
     else:
         await message.edit("`Output is huge. Sending as a file...`")
-    with open(output,'w') as f:
-        f.write(msg)
-    await asyncio.sleep(2)
-    await message.delete()
-    await message.reply_document(output)
+        with open(output,'w') as f:
+            f.write(msg)
+        await asyncio.sleep(2)
+        await message.delete()
+        await message.reply_document(output)
+
 
 async def check_metadata(gid):
 	file = aria2.get_download(gid)
 	new_gid = file.followed_by_ids[0]
 	LOGGER.info("Changing GID " + gid + " to " + new_gid)
 	return new_gid
+
 
 async def progress_status(gid,message,previous):
 	try:

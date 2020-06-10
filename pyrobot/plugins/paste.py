@@ -5,7 +5,7 @@ from urllib.parse import urlparse
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER, TMP_DOWNLOAD_DIRECTORY
 
-__PLUGIN__ = "Paste"
+__PLUGIN__ = __file__.replace(".py", "")
 
 __help__ = f"""
 {COMMAND_HAND_LER}paste: as a reply to text message to paste it to nekobin.

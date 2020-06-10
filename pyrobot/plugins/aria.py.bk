@@ -1,19 +1,20 @@
-"""
-A Torrent Client Plugin Based On Aria2 for Userbot
-
-cmds: Magnet link : .magnet magnetLink
-	  Torrent file from local: .tor file_path
-	  Show Downloads: .show
-	  Remove All Downloads: .ariaRM
-	  
-By:- @Zero_cool7870	   
-
-"""
 import aria2p
 from telethon import events
 import asyncio
 import os
 
+__PLUGIN__ = __file__.replace(".py", "")
+
+__help__ = f"""
+A Torrent Client Plugin Based On Aria2 for Userbot
+
+cmds: Magnet link : {COMMAND_HAND_LER}magnet magnetLink
+	  	Show Downloads: {COMMAND_HAND_LER}show
+	  	Remove All Downloads: {COMMAND_HAND_LER}ariaRM
+
+By:- @Zero_cool7870
+
+"""
 
 cmd = "aria2c --enable-rpc --rpc-listen-all=false --rpc-listen-port 6800  --max-connection-per-server=10 --rpc-max-request-size=1024M --seed-time=0.01 --min-split-size=10M --follow-torrent=mem --split=10 --daemon=true --allow-overwrite=true"
 EDIT_SLEEP_TIME_OUT = 5
@@ -50,7 +51,7 @@ async def magnet_download(client, message):
 @Client.on_message(Filters.command("ariaurl", COMMAND_HAND_LER) & Filters.me)
 async def url_download(client, message):
     var = message.text[5:]
-    print(var)	
+    print(var)
     uris = [var]
     try: # Add URL Into Queue
         download = aria2.add_uris(uris, options=None, position=None)
@@ -68,18 +69,18 @@ async def url_download(client, message):
 @Client.on_message(Filters.command("ariaRM", COMMAND_HAND_LER) & Filters.me)
 async def aria_stopall(client, message):
     try:
-        removed = aria2.remove_all(force=True)	
+        removed = aria2.remove_all(force=True)
         aria2.purge_all()
     except:
         pass
     if removed == False:  #If API returns False Try to Remove Through System Call.
     os.system("aria2p remove-all")
-    await message.edit("`Removed All Downloads.`")  
+    await message.edit("`Removed All Downloads.`")
 
 @Client.on_message(Filters.command("gdrive", COMMAND_HAND_LER) & Filters.me)
 async def g_drive_commands(client, message):
     output = "output.txt"
-    downloads = aria2.get_downloads() 
+    downloads = aria2.get_downloads()
     msg = ""
     for download in downloads:
         msg = msg+"File: `"+str(download.name) +"`\nSpeed: "+ str(download.download_speed_string())+"\nProgress: "+str(download.progress_string())+"\nTotal Size: "+str(download.total_length_string())+"\nStatus: "+str(download.status)+"\nETA:  "+str(download.eta_string())+"\n\n"
@@ -89,8 +90,8 @@ async def g_drive_commands(client, message):
         await event.edit("`Output is huge. Sending as a file...`")
         with open(output,'w') as f:
             f.write(msg)
-        await asyncio.sleep(2)	
-        await event.delete()	
+        await asyncio.sleep(2)
+        await event.delete()
         await client.reply_document(
 			message.chat_id,
 			output,
@@ -98,13 +99,13 @@ async def g_drive_commands(client, message):
 			supports_streaming=False,
 			allow_cache=False,
 			reply_to=event.message.id,
-			)				
+			)
 
 async def check_metadata(gid):
 	file = aria2.get_download(gid)
 	new_gid = file.followed_by_ids[0]
 	logger.info("Changing GID "+gid+" to "+new_gid)
-	return new_gid	
+	return new_gid
 
 async def progress_status(gid,event,previous):
 	try:
@@ -117,9 +118,9 @@ async def progress_status(gid,event,previous):
 					previous = msg
 			else:
 				logger.info(str(file.error_message))
-				await event.edit("Error : `{}`".format(str(file.error_message)))		
+				await event.edit("Error : `{}`".format(str(file.error_message)))
 				return
-			await asyncio.sleep(EDIT_SLEEP_TIME_OUT)	
+			await asyncio.sleep(EDIT_SLEEP_TIME_OUT)
 			await progress_status(gid,event,previous)
 		else:
 			await event.edit("File Downloaded Successfully: `{}`".format(file.name))
@@ -134,4 +135,4 @@ async def progress_status(gid,event,previous):
 		else:
 			logger.info(str(e))
 			await event.edit("Error :\n`{}`".format(str(e)))
-			return			
+			return

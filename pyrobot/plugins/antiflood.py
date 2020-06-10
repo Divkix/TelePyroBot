@@ -15,7 +15,7 @@ if DB_URI is not None:
     import pyrobot.utils.sql_helpers.antiflood_sql as sql
     CHAT_FLOOD = sql.__load_flood_settings()
 
-__PLUGIN__ = "Aniflood"
+__PLUGIN__ = __file__.replace(".py", "")
 
 __help__ = """
 Set Antiflood

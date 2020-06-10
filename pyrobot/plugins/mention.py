@@ -1,7 +1,7 @@
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
 
-__PLUGIN__ = "Mention"
+__PLUGIN__ = __file__.replace(".py", "")
 
 __help__ = """
 ──「 **Mention** 」──

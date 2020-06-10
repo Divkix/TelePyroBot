@@ -1,4 +1,5 @@
-import os 
+import os
+import time
 import asyncio
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER, TMP_DOWNLOAD_DIRECTORY, LOGGER
@@ -9,7 +10,7 @@ from pyrobot.utils.display_progress_dl_up import (
 from pyrobot.utils.check_if_thumb_exists import is_thumb_image_exists
 from pyrobot.utils.display_progress_dl_up import progress_for_pyrogram
 
-__PLUGIN__ = "batchup"
+__PLUGIN__ = __file__.replace(".py", "")
 
 __help__ = f"""
 Upload files from a directory to telegram easily!
@@ -30,7 +31,7 @@ async def covid(client, message):
     if os.path.exists(temp_dir):
         files = os.listdir(temp_dir)
         files.sort()
-        await message.edit("Uploading Files on Telegram...")
+        await status_message.edit("Uploading Files on Telegram...")
         for file in files:
             c_time = time.time()
             required_file_name = temp_dir+"/"+file
@@ -50,5 +51,5 @@ async def covid(client, message):
                 )
     else:
         await message.edit("Directory Not Found.")
-        return		
-    await message.edit("Successfull.")	
+        return
+    await client.send_message(message.chat.id, "Successfull.")

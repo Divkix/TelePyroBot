@@ -14,7 +14,7 @@ REPO = ("<b>UserBot is available on GitHub:</b>\n"
         "https://github.com/SkuzzyxD/TelePyroBot")
 # -- Constants End -- #
 
-__PLUGIN__ = "Basic Commands"
+__PLUGIN__ = __file__.replace(".py", "")
 
 __help__ = f"""
 {COMMAND_HAND_LER}alive \ start: Check if bot is alive or not.
@@ -90,7 +90,7 @@ async def get_id(client, message):
             username = rep.from_user.username
 
     if user_id:
-        await message.edit("User ID: `{}`\nName: `{}`\nUsername: `{}`".format(user_id, user_name, username))
+        await message.edit("User ID: `{}`\nName: `{}`\nUsername: @{}".format(user_id, user_name, username))
     elif file_id:
         await message.edit("This File's ID: `{}`".format(file_id))
     else:

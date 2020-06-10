@@ -12,7 +12,7 @@ from pyrobot.pyrobot import HELP_COMMANDS
 
 __PLUGIN__ = "HELP"
 
-__help__ = f"""
+HELP_DEFAULT = f"""
 To get help for any command, just type `{COMMAND_HAND_LER}help plugin_name`
 
 List of all Plugins: `{COMMAND_HAND_LER}plugins`

@@ -5,7 +5,7 @@ from pyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN
 from pyrobot.utils.admin_check import admin_check
 
 
-__PLUGIN__ = "Admin"
+__PLUGIN__ = __file__.replace(".py", "")
 
 __help__ = f"""
 {COMMAND_HAND_LER}promote: Promotes a user in the Group.
@@ -92,7 +92,7 @@ async def promote_usr(client, message):
                                         can_invite_users=True,
                                         can_pin_messages=True)
         await asyncio.sleep(2)
-        await message.edit(f"`👑 Promoted` [{user_first_name}](tg://user?id={user_id}) `Successfully...`")
+        await message.edit(f"`👑 Promoted {user_id.first_name} `")
     except Exception as ef:
         await message.edit(f"**Error:**\n\n`{ef}`")
 
@@ -128,7 +128,7 @@ async def demote_usr(client, message):
                                         can_invite_users=False,
                                         can_pin_messages=False)
         await asyncio.sleep(2)
-        await message.edit(f"`Demoted` [{user_first_name}](tg://user?id={user_id}) `Successfully...`")
+        await message.edit(f"`Demoted {user_id.first_name} `")
     except Exception as ef:
         await message.edit(f"**Error:**\n\n`{ef}`")
 
@@ -159,7 +159,7 @@ async def ban_usr(client, message):
         user_id = message.reply_to_message.from_user.id
     try:
         await message.chat.kick_member(user_id)
-        await message.edit(f"`Banned` [{user_first_name}](tg://user?id={user_id}) `Successfully...`")
+        await message.edit(f"`Banned {user_id.first_name} `")
         await client.delete_messages(chat_id, del_msg)
     except Exception as ef:
         await message.edit(f"**Error:**\n\n`{ef}`")
@@ -192,7 +192,7 @@ async def restrict_usr(client, message):
         await message.chat.restrict_member(
             user_id=user_id,
             permissions=ChatPermissions())
-        await message.edit(f"`Muted` [{user_first_name}](tg://user?id={user_id}) `Successfully...`")
+        await message.edit(f"`Muted {user_id.first_name} `")
     except Exception as ef:
         await message.edit(f"**Error:**\n\n`{ef}`")
 
@@ -223,7 +223,7 @@ async def unrestrict_usr(client, message):
     try:
         await message.chat.unban_member(
             user_id=user_id)
-        await message.edit(f"`Unrestrict` [{user_first_name}](tg://user?id={user_id}) `Successfully...`")
+        await message.edit(f"`Unrestrict {user_id.first_name} `")
     except Exception as ef:
         await message.edit(f"**Error:**\n\n`{ef}`")
 

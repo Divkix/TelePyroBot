@@ -2,7 +2,7 @@ import time
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
 
-__PLUGIN__ = "Fban"
+__PLUGIN__ = __file__.replace(".py", "")
 
 __help__ = f"""
 {COMMAND_HAND_LER}fban <username/userid> <reason>: To fban a user.

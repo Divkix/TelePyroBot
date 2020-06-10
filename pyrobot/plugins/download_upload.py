@@ -19,7 +19,7 @@ from pyrobot.utils.display_progress_dl_up import (
 from pyrobot.utils.check_if_thumb_exists import is_thumb_image_exists
 from pyrobot.utils.display_progress_dl_up import progress_for_pyrogram
 
-__PLUGIN__ = "DL_UP"
+__PLUGIN__ = __file__.replace(".py", "")
 
 __help__ = f"""
 Download Telegram Media
@@ -131,4 +131,4 @@ async def upload_as_document(client, message):
         else:
             await status_message.edit("404: media not found")
     else:
-        await status_message.edit(f"<code>{COMMAND_HAND_LER}uploadasdoc FILE_PATH</code> to upload to current Telegram chat")
+        await status_message.edit(f"<code>{COMMAND_HAND_LER}upload FILE_PATH</code> to upload to current Telegram chat")

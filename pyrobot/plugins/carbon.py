@@ -5,7 +5,7 @@ import shutil
 import os
 from time import sleep
 
-__PLUGIN__ = "Carbon"
+__PLUGIN__ = __file__.replace(".py", "")
 
 __help__ =  f"""
 {COMMAND_HAND_LER}carbon <text> or as a reply to the message.
@@ -28,7 +28,7 @@ async def carbon_api(client, message):
         json["code"] = r.text
         await message.edit_text("Carbonizing code...")
     if len(cmd) >= 2:
-        r = cmd[1]
+        r = message.text.split(" ", 1)[1]
         json["code"] = r
     else:
         await message.edit("Usage: `.carbon` (reply to a code or text)")

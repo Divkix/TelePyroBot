@@ -25,7 +25,7 @@ from pytube import YouTube
 from pyrobot import COMMAND_HAND_LER
 from pyrobot.utils.misc.parser import escape_markdown
 
-__PLUGIN__ = "YouTube"
+__PLUGIN__ = __file__.replace(".py", "")
 
 __help__ = f"""
 {COMMAND_HAND_LER}yt / youtube <search query>: Get information about a video.

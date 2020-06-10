@@ -9,7 +9,7 @@ from pyrogram import Client, Filters
 from pyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
 
 
-__PLUGIN__ = "Dev"
+__PLUGIN__ = __file__.replace(".py", "")
 
 __help__ = f"""
 Evaluate Python Code inside Telegram
@@ -107,7 +107,7 @@ async def execution(_, message):
     o = stdout.decode()
     if not o:
         o = "No Output"
-    
+
     OUTPUT = ""
     OUTPUT += f"<b>QUERY:</b>\n<u>Command:</u>\n<code>{cmd}</code> \n"
     OUTPUT += f"<u>PID</u>: <code>{process.pid}</code>\n\n"

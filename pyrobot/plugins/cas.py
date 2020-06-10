@@ -5,10 +5,10 @@ import asyncio
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
 
-__PLUGIN__ = "CAS"
+__PLUGIN__ = __file__.replace(".py", "")
 
 __help__ =  f"""
-{COMMAND_HAND_LER}cas <user_id> or as a reply to the message to check the cas status of the user.
+{COMMAND_HAND_LER}cas <user_id> or as a reply to the message to check the CAS status of the user.
 """
 
 @Client.on_message(Filters.command("cas", COMMAND_HAND_LER) & Filters.me)

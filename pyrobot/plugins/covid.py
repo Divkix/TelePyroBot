@@ -7,7 +7,7 @@ import requests
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
 
-__PLUGIN__ = "Covid"
+__PLUGIN__ = __file__.replace(".py", "")
 
 __help__ = f"""
 Check info of cases corona virus disease 2019

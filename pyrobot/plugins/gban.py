@@ -2,7 +2,7 @@ import time
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER, GBAN_GROUP
 
-__PLUGIN__ = "Global Ban"
+__PLUGIN__ = __file__.replace(".py", "")
 
 __help__ = f"""
 {COMMAND_HAND_LER}gban <username/userid> <gban reason>: To gban a user.

@@ -14,7 +14,7 @@ RUN_STRINGS = (
     "`Bahut bada chutiya hai tu`")
 # CONSTANTS
 
-__PLUGIN__ = "Fun"
+__PLUGIN__ = __file__.replace(".py", "")
 
 __help__ = f"""
 {COMMAND_HAND_LER}throw \ dart Throw an Animated Dart.

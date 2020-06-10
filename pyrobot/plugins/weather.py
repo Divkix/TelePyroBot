@@ -3,7 +3,7 @@ import requests
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
 
-__PLUGIN__ = "Weather"
+__PLUGIN__ = __file__.replace(".py", "")
 
 __help__ = """
 Get current weather in your location

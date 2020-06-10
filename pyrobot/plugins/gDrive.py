@@ -23,11 +23,15 @@ from pyrobot import (
 
 from pyrobot.utils.display_progress_dl_up import progress_for_pyrogram
 
-__PLUGIN__ = "GDrive"
+__PLUGIN__ = __file__.replace(".py", "")
 
-__help__ = """
+__help__ = f"""
 Google Drive Plugins
-Syntax: .gdrive
+{COMMAND_HAND_LER}gdrive <file loaction> to upload file to your Google drive
+
+{COMMAND_HAND_LER}gdrive reset: Reset the Gdrive credentials
+
+{COMMAND_HAND_LER}grdive setup: To setup GDrive, only needed if reset grive credentials or setting-up first time.
 """
 
 if DB_URI is not None:

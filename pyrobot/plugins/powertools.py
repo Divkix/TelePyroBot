@@ -5,7 +5,7 @@ import math
 from pyrobot import COMMAND_HAND_LER, HEROKU_API_KEY, HEROKU_APP_NAME
 from pyrogram import Client, Filters
 
-__PLUGIN__ = "Power_tools"
+__PLUGIN__ = __file__.replace(".py", "")
 
 __help__ = f"""
 {COMMAND_HAND_LER}restart: Restart userbot heroku dyno.

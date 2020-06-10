@@ -7,7 +7,7 @@ import time
 
 p = 0
 
-__PLUGIN__ = "Quotly"
+__PLUGIN__ = __file__.replace(".py", "")
 
 __help__ = f"""
 {COMMAND_HAND_LER}qbot: As a reply to message to get its quote

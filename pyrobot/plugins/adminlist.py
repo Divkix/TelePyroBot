@@ -2,7 +2,7 @@ from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
 from pyrobot.utils.misc.parser import mention_html, mention_markdown
 
-__PLUGIN__ = "Adminlist"
+__PLUGIN__ = __file__.replace(".py", "")
 
 __help__ = f"""
 {COMMAND_HAND_LER}adminlist \ admins: Returns the list of admins of group.

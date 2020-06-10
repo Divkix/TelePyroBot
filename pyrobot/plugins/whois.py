@@ -2,7 +2,7 @@ import os
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
 
-__PLUGIN__ = "Whois"
+__PLUGIN__ = __file__.replace(".py", "")
 
 __help__ = f"""
 {COMMAND_HAND_LER}whois / info <username/userid> or as a reply to message: Get the information about a user.

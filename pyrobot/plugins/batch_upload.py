@@ -25,7 +25,7 @@ async def covid(client, message):
     elif len(message.command) == 2:
         temp_dir = message.text.split(" ", 1)[1]
     else:
-        await message.edit(f"Please check help by using `{COMMAND_HAND_LER}help batchup`)
+        await message.edit(f"Please check help by using `{COMMAND_HAND_LER}help batchup`")
     status_message = await message.reply_text("`Uploading Files...`")
     if os.path.exists(temp_dir):
         files = os.listdir(temp_dir)

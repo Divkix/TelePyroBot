@@ -1,5 +1,6 @@
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
+import random
 
 # CONSTANTS
 DART_E_MOJI = "🎯"

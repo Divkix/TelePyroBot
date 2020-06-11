@@ -34,12 +34,12 @@ async def tor_search(client, message):
         listdata = listdata + list1
 
     tsfileloc = f"{TMP_DOWNLOAD_DIRECTORY}/torrent_search.txt"
-
+    caption = f"Here are the results for the query: {query}"
     with open(tsfileloc, "w+", encoding="utf8") as out_file:
         out_file.write(str(listdata))
     await message.reply_document(
         document=tsfileloc,
-        caption=f"Here are the results for the query: {query}"
+        caption=caption,
         disable_notification=True)
     os.remove(tsfileloc)
     await message.delete()

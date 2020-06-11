@@ -130,7 +130,7 @@ async def execution(_, message):
 @Client.on_message(Filters.command("ip", COMMAND_HAND_LER) & Filters.me)
 async def public_ip(client, message):
     ip = requests.get('https://api.ipify.org').text
-    await message.edit(f'Bot IP Address:\n<code>{ip}</code>', parse_mode='html')
+    await message.edit(f'<b>Bot IP Address:</b>\n\n<code>{ip}</code>', parse_mode='html')
 
 
 @Client.on_message(Filters.command("dc", COMMAND_HAND_LER) & Filters.me)

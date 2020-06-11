@@ -60,13 +60,11 @@
       "description": "Goto @Alita_Robot on Telegram and send /id to get your ID and fill it here.",
       "required": true
     },
-    {
-      "GBAN_GROUP": {
-        "description": "A group withbots where you have permissions to gban a persion.",
-        "required": false,
-        "value": "-100"
-      }
-    },
+    "GBAN_GROUP": {
+      "description": "A group withbots where you have permissions to gban a persion.",
+      "required": false,
+      "value": "-100"
+    }
   },
   "addons": [{
     "plan": "heroku-postgresql",

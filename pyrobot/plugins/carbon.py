@@ -26,12 +26,12 @@ async def carbon_api(client, message):
         rep_mesg_id = message.reply_to_message.message_id
         r = message.reply_to_message
         json["code"] = r.text
-        await message.edit_text("Carbonizing code...")
+        await message.edit_text("`Carbonizing code...`")
     if len(cmd) >= 2:
         r = message.text.split(" ", 1)[1]
         json["code"] = r
     else:
-        await message.edit("Usage: `.carbon` (reply to a code or text)")
+        await message.edit("Usage: `.carbon` <reply to a code or text>")
     json["language"] = CARBON_LANG
     apiUrl = "http://carbonnowsh.herokuapp.com"
     r = post(apiUrl,json=json,stream=True)

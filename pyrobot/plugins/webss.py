@@ -39,7 +39,7 @@ async def web_screenshot(client, message):
     try:
         await message.reply_document(
             document=imgloc,
-            caption=img_link,
+            caption=caption,
             disable_notification=True,
             reply_to_message_id=message.message_id)
         await message.edit("`Done!`")

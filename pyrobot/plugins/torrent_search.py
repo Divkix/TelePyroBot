@@ -32,6 +32,7 @@ async def tor_search(client, message):
         listdata = listdata + list1
 
     tsfileloc = f"{TMP_DOWNLOAD_DIRECTORY}/torrent_search.txt"
+
     with open(tsfileloc, "w+", encoding="utf8") as out_file:
         out_file.write(str(listdata))
     await message.reply_document(

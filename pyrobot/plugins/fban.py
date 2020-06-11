@@ -50,7 +50,7 @@ async def unfban_user(client, message):
     await message.delete()
 
 
-@Client.on_message(Filters.command("fstat", COMMAND_HAND_LER) & Filters.me)
+@Client.on_message(Filters.command(["fstat", "fbanstat"], COMMAND_HAND_LER) & Filters.me)
 async def fstat_user(client, message):
     if len(message.command)==2:
         fstat_user = message.text.split(" ",1)[1]

@@ -284,11 +284,12 @@ async def del_msg(client, message):
         if not is_admin:
             return
     chat_id = message.chat.id
+    message_ids = []
     if message.reply_to_message:
         try:
-            message_id = list(message.reply_to_message.message_id)
-            await client.delete_messages(chat_id=message.chat.id,
-                            message_ids=message_id,
+            message_ids.append(message.reply_to_message.message_id)
+            await client.delete_messages(chat_id=chat_id,
+                            message_ids=message_ids,
                             revoke=True)
         except Exception as ef:
             await message.edit(f"<b>Error</b>:\n`{ef}`")
@@ -301,7 +302,7 @@ async def del_msg(client, message):
 @Client.on_message(Filters.command("invite", COMMAND_HAND_LER) & Filters.me)
 async def del_msg(client, message):
     if len(message.command) > 2:
-        await message.edit("__Only one user can be added at atime, check__ `{COMMAND_HAND_LER}help` __for more info.__")
+        await message.edit("__Only one user can be invited at a time,\ncheck__ `{COMMAND_HAND_LER}help` __for more info.__")
         return
     user_id = message.text.split(' ', 1)[1]
     if user_id:

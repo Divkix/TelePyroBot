@@ -69,8 +69,7 @@ async def updater(client, message):
     if HEROKU_API_KEY is not None:
         import heroku3
         heroku = heroku3.from_key(HEROKU_API_KEY)
-        heroku_applications = heroku.apps()[f'{HEROKU_APP_NAME}']
-        if len(heroku_applications) >= 1:
+        heroku_app = heroku.apps()[HEROKU_APP_NAME]
         heroku_git_url = heroku_app.git_url.replace(
             "https://",
             "https://api:" + HEROKU_API_KEY + "@"

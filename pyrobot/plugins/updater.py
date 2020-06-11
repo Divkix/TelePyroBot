@@ -7,6 +7,7 @@ from pyrogram import Client, Filters
 from pyrobot import (
     COMMAND_HAND_LER,
     HEROKU_API_KEY,
+    HEROKU_APP_NAME,
     LOGGER,
     MAX_MESSAGE_LENGTH,
     OFFICIAL_UPSTREAM_REPO)
@@ -68,9 +69,9 @@ async def updater(client, message):
     if HEROKU_API_KEY is not None:
         import heroku3
         heroku = heroku3.from_key(HEROKU_API_KEY)
-        heroku_applications = heroku.apps()
+        heroku_applications = heroku.apps(HEROKU_APP_NAME)
         if len(heroku_applications) >= 1:
-            heroku_app = heroku_applications[0]
+            heroku_app = heroku_applications
             heroku_git_url = heroku_app.git_url.replace(
                 "https://",
                 "https://api:" + HEROKU_API_KEY + "@"

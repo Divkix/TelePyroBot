@@ -44,6 +44,7 @@ async def web_screenshot(client, message):
             reply_to_message_id=message.message_id)
         await message.edit("`Done!`")
         await asyncio.sleep(3)
+        os.remove(imgloc)
         await message.delete()
     except Exception as ef:
         await message.edit(f"**Error:**\n{ef}")

@@ -17,6 +17,8 @@ Get Screenshot of any website.
 async def tor_search(client, message):
     if len(message.command) == 1:
         await message.edit("`Check help on how to use this command`")
+        return
+    await message.edit("`Please wait, fetching results...`")
     query = message.text.split(" ", 1)[1]
     response = requests.get(f"https://sjprojectsapi.herokuapp.com/torrent/?query={query}")
     ts = json.loads(response.text)
@@ -28,7 +30,7 @@ async def tor_search(client, message):
     while run < 10:
         run = run + 1
         r1 = ts[run]
-        list1 = "**Name:**{}\n**Magnet:**\n{}\n\n".format(r1['name'], r1['magnet'])
+        list1 = "Name: {}\Seeders: {}\nAge: {}\nMagnet:\n{}\n\n".format(r1['name'], r1['seeder'], r1['age'], r1['magnet'])
         listdata = listdata + list1
 
     tsfileloc = f"{TMP_DOWNLOAD_DIRECTORY}/torrent_search.txt"

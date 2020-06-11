@@ -27,7 +27,7 @@ async def carbon_api(client, message):
         r = message.reply_to_message
         json["code"] = r.text
         await message.edit_text("`Carbonizing code...`")
-    if len(cmd) >= 2:
+    elif len(cmd) >= 2:
         r = message.text.split(" ", 1)[1]
         json["code"] = r
     else:

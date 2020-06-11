@@ -14,7 +14,7 @@
   ],
   "repository": "https://github.com/SkuzzyxD/TelePyroBot",
   "success_url": "https://telegram.dog/UserBotTalk",
-  "website": "https://github.com/SpEcHiDe/PyroGramUserBot",
+  "website": "https://github.com/Skuzzy_xD/TelePyroBot",
   "env": {
     "ENV": {
       "description": "Setting this to ANYTHING will enable webhooks when in env mode",

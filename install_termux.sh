@@ -34,7 +34,7 @@ if [ "$OSTYPE" = "linux-android" ]; then
   cd /sdcard/Telegram
   # install async
   pip install https://github.com/pyrogram/pyrogram/archive/asyncio.zip
-  git clone https://github.com/SpEcHiDe/PyroGramUserBot
+  git clone https://github.com/Skuzzy_xD/TelePyroBot
   cd PyroGramUserBot
   # generate string session
   python3 GenerateStringSession.py

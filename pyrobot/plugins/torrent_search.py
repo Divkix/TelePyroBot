@@ -30,7 +30,7 @@ async def tor_search(client, message):
     while run < 10:
         run = run + 1
         r1 = ts[run]
-        list1 = "Name: {}\Seeders: {}\nAge: {}\nMagnet:\n{}\n\n".format(r1['name'], r1['seeder'], r1['age'], r1['magnet'])
+        list1 = "Name: {}\nSeeders: {}\nAge: {}\nMagnet:\n{}\n\n".format(r1['name'], r1['seeder'], r1['age'], r1['magnet'])
         listdata = listdata + list1
 
     tsfileloc = f"{TMP_DOWNLOAD_DIRECTORY}/torrent_search.txt"

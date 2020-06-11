@@ -31,7 +31,7 @@ async def cas(client, message):
         except Exception as ef:
             await message.edit(f"**Error:**\n`{ef}`")
             return
-
+        await message.edit(f"**Created new __BasicGroup__ named:**\n`{grpname}`")
     elif grptype == "super":
         try:
             await message.edit(f"__Trying to make a SuperGroup named:__`{grpname}`")
@@ -39,3 +39,4 @@ async def cas(client, message):
         except Exception as ef:
             await message.edit(f"**Error:**\n`{ef}`")
             return
+        await message.edit(f"**Created new __SuperGroup__ named:**\n`{grpname}`")

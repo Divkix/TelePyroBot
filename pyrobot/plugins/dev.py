@@ -20,9 +20,6 @@ Syntax: `{COMMAND_HAND_LER}exec CommandCode`
 
 Get IP Address of userbot server.
 Syntax: `{COMMAND_HAND_LER}ip`
-
-Get the location of DataCentre of telegram
-Syntax: `{COMMAND_HAND_LER}dc` as a reply to message or standalone.
 """
 
 
@@ -127,38 +124,8 @@ async def execution(_, message):
     else:
         await message.reply_text(OUTPUT)
 
+
 @Client.on_message(Filters.command("ip", COMMAND_HAND_LER) & Filters.me)
 async def public_ip(client, message):
     ip = requests.get('https://api.ipify.org').text
     await message.edit(f'<b>Bot IP Address:</b>\n\n<code>{ip}</code>', parse_mode='html')
-
-
-@Client.on_message(Filters.command("dc", COMMAND_HAND_LER) & Filters.me)
-async def Tg_dc(client, message):
-    chat = message.chat
-    user = message.from_user
-    if message.reply_to_message:
-        if message.reply_to_message.forward_from:
-            dc_id = message.reply_to_message.forward_from.dc_id
-            user = mention_markdown(message.reply_to_message.forward_from.id,
-                                    message.reply_to_message.forward_from.first_name)
-        else:
-            dc_id = message.reply_to_message.from_user.dc_id
-            user = mention_markdown(message.reply_to_message.from_user.id,
-                                    message.reply_to_message.from_user.first_name)
-    else:
-        dc_id = user.dc_id
-        user = mention_markdown(message.from_user.id, message.from_user.first_name)
-    if dc_id == 1:
-        text = "{}'s assigned datacenter is **DC1**, located in **MIA, Miami FL, USA**".format(user)
-    elif dc_id == 2:
-        text = "{}'s assigned datacenter is **DC2**, located in **AMS, Amsterdam, NL**".format(user)
-    elif dc_id == 3:
-        text = "{}'s assigned datacenter is **DC3**, located in **MIA, Miami FL, USA**".format(user)
-    elif dc_id == 4:
-        text = "{}'s assigned datacenter is **DC4**, located in **AMS, Amsterdam, NL**".format(user)
-    elif dc_id == 5:
-        text = "{}'s assigned datacenter is **DC5**, located in **SIN, Singapore, SG**".format(user)
-    else:
-        text = "{}'s assigned datacenter is **Unknown**".format(user)
-    await message.edit(text)

@@ -31,18 +31,11 @@ async def tor_search(client, message):
         list1 = "**Name:**{}\n**Magnet:**\n{}\n\n".format(r1['name'], r1['magnet'])
         listdata = listdata + list1
 
-    tsfile = open(f"{TMP_DOWNLOAD_DIRECTORY}/torrent_search.txt", "wb")
-    tsfile.write(listdata)
-    tsfile.close()
     tsfileloc = f"{TMP_DOWNLOAD_DIRECTORY}/torrent_search.txt"
-    try:
-        await message.reply_document(
-            document=tsfileloc,
-            disable_notification=True,
-            reply_to_message_id=message.message_id)
-        await message.edit("`Uploaded file!`")
-        await asyncio.sleep(3)
-        await message.delete()
-    except Exception as ef:
-        await message.edit(f"**Error:**\n`{ef}`")
-        return
+    with open(tsfileloc, "w+", encoding="utf8") as out_file:
+        out_file.write(str(listdata))
+    await message.reply_document(
+        document=tsfileloc,
+        disable_notification=True)
+    os.remove(tsfileloc)
+    await message.delete()

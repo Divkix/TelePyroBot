@@ -129,7 +129,6 @@ async def ban_usr(client, message):
     elif message.reply_to_message:
         user_id = await client.get_users(message.reply_to_message.from_user.id)
         user_chat = await client.get_chat(message.reply_to_message.from_user.id)
-        del_msg = message.reply_to_message.message_id
     else:
         await message.edit("`no valid user_id or message specified`")
         return
@@ -138,7 +137,6 @@ async def ban_usr(client, message):
     try:
         await message.chat.kick_member(user_id)
         await message.edit(f"`Banned {user_id.first_name} `")
-        await client.delete_messages(chat_id, del_msg)
     except Exception as ef:
         await message.edit(f"**Error:**\n\n`{ef}`")
 
@@ -242,7 +240,7 @@ async def unpin_message(client, message):
         await asyncio.sleep(3)
         await message.delete()
 
-
+"""
 @Client.on_message(Filters.command("purge", COMMAND_HAND_LER) & Filters.me)
 async def purge(client, message):
     """ purge upto the replied message """
@@ -297,10 +295,10 @@ async def del_msg(client, message):
     else:
         await message.edit("`Reply to a message to delete it!`")
         return
-
+"""
 
 @Client.on_message(Filters.command("invite", COMMAND_HAND_LER) & Filters.me)
-async def del_msg(client, message):
+async def invite_user(client, message):
     if len(message.command) > 2:
         await message.edit("__Only one user can be invited at a time,\ncheck__ `{COMMAND_HAND_LER}help` __for more info.__")
         return

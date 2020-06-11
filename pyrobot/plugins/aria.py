@@ -31,7 +31,7 @@ async def aria_start(client, message):
 @Client.on_message(Filters.command("addmagnet", COMMAND_HAND_LER) & Filters.me)
 async def magnet_download(client, message):
     if aria2_is_running is None:
-        await message.edit(f"__First start the Aria Client using__ `{COMMAND_HAND_LER}aria start`")
+        await message.edit(f"**First start the Aria Client using** `{COMMAND_HAND_LER}ariastart`")
         return
     var = message.text
     var = var[8:]
@@ -54,7 +54,7 @@ async def magnet_download(client, message):
 @Client.on_message(Filters.command("addurl", COMMAND_HAND_LER) & Filters.me)
 async def url_download(client, message):
     if aria2_is_running is None:
-        await message.edit(f"__First start the Aria Client using__ `{COMMAND_HAND_LER}aria start`")
+        await message.edit(f"**First start the Aria Client using** `{COMMAND_HAND_LER}ariastart`")
         return
     var = message.text[5:]
     print(var)
@@ -76,7 +76,7 @@ async def url_download(client, message):
 @Client.on_message(Filters.command("ariaRM", COMMAND_HAND_LER) & Filters.me)
 async def aria_stopall(client, message):
     if aria2_is_running is None:
-        await message.edit(f"__First start the Aria Client using__ `{COMMAND_HAND_LER}aria start`")
+        await message.edit(f"**First start the Aria Client using** `{COMMAND_HAND_LER}ariastart`")
         return
     try:
         removed = aria2.remove_all(force=True)
@@ -91,7 +91,7 @@ async def aria_stopall(client, message):
 @Client.on_message(Filters.command("showaria", COMMAND_HAND_LER) & Filters.me)
 async def aria_downloads(client, message):
     if aria2_is_running is None:
-        await message.edit(f"__First start the Aria Client using__ `{COMMAND_HAND_LER}aria start`")
+        await message.edit(f"**First start the Aria Client using** `{COMMAND_HAND_LER}ariastart`")
         return
     output = "output.txt"
     downloads = aria2.get_downloads()

@@ -27,7 +27,7 @@ async def tor_search(client, message):
         return
     listdata = ""
     run = 0
-    while run < 20:
+    while run < 10:
         run = run + 1
         r1 = ts[run]
         list1 = "Name: {}\nSeeders: {}\nSize: {}\nAge: {}\n<--Magnet Below-->\n{}\n\n\n".format(r1['name'], r1['seeder'], r1['size'], r1['age'], r1['magnet'])

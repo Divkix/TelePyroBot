@@ -201,7 +201,7 @@ async def unrestrict_usr(client, message):
     try:
         await message.chat.unban_member(
             user_id=user_id)
-        await message.edit(f"`Unrestrict {user_id.first_name} `")
+        await message.edit(f"`Unrestricted {user_id.first_name} `")
     except Exception as ef:
         await message.edit(f"**Error:**\n\n`{ef}`")
 
@@ -285,12 +285,14 @@ async def del_msg(client, message):
             return
     chat_id = message.chat.id
     if message.reply_to_message:
-        await message.delete()
         try:
-            message_id = message.reply_to_message.message_id
-            await client.delete_messages(chat_id, message_id)
+            message_id = list(message.reply_to_message.message_id)
+            await client.delete_messages(chat_id=message.chat.id,
+                            message_ids=message_id,
+                            revoke=True)
         except Exception as ef:
             await message.edit(f"<b>Error</b>:\n`{ef}`")
+        await message.delete()
     else:
         await message.edit("`Reply to a message to delete it!`")
         return
@@ -298,6 +300,9 @@ async def del_msg(client, message):
 
 @Client.on_message(Filters.command("invite", COMMAND_HAND_LER) & Filters.me)
 async def del_msg(client, message):
+    if len(message.command) > 2:
+        await message.edit("__Only one user can be added at atime, check__ `{COMMAND_HAND_LER}help` __for more info.__")
+        return
     user_id = message.text.split(' ', 1)[1]
     if user_id:
         try:
@@ -310,7 +315,7 @@ async def del_msg(client, message):
         await message.edit("no valid user_id or message specified")
         return
     try:
-        await chat.add_members(user_id)
+        await client.add_chat_members(message.chat.id, user_id)
     except Exception as ef:
         await message.edit(f"<b>Error:</b>\n`{ef}`")
         return

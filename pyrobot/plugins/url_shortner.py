@@ -6,6 +6,8 @@ from pyrobot import COMMAND_HAND_LER
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
+Url Shortner Plugin for https://da.gd
+
 `{COMMAND_HAND_LER}short <long-link>`: Will return shortlink of the long-link.
 
 `{COMMAND_HAND_LER}unshort <shortlink>`: Will return long url of the shortlink.
@@ -27,6 +29,8 @@ async def unshort_link(client, message):
     input_str = message.text.split(" ", 1)[1]
     if not input_str.startswith("http"):
         input_str = "http://" + input_str
+    if not input_str.startswith("http://da.gd"):
+        await message.edit("`I can only unshort da.gd links`")
     r = requests.get(input_str, allow_redirects=False)
     if str(r.status_code).startswith('3'):
         await message.edit("Input URL: {}\nReDirected URL: {}".format(input_str, r.headers["Location"]))

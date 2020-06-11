@@ -19,13 +19,8 @@ async def sd_downloader(client, message):
     elif message.reply_to_message:
         song_link = message.reply_to_message.text
     await client.send_message("@DeezLoadBot", f"{song_link}")
-    time.sleep(1)
-    wait = 0
-    while wait < 5:
-        wait += 1
-        time.sleep(1)
-        wait_time = 5 - wait
-        await message.edit(f"`Please wait <u>{wait_time}</u> seconds`")
+    await message.edit(f"`Please wait <u>5</u> seconds.`")
+    time.sleep(4)
     msg = await client.get_history("@DeezLoadBot", limit=3)
     msg_id = msg[1]["audio"]["message_id"]
     try:

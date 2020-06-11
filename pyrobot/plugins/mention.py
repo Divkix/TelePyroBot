@@ -1,6 +1,6 @@
+import os
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
-import os
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -23,5 +23,5 @@ async def mention(_, message):
             disable_web_page_preview=True,
             parse_mode="html")
     else:
-        await message.edit("Usage: `mention (username without @) (custom text)`")
+        await message.edit(f"**Usage:** `{COMMAND_HAND_LER}mention <username without @> <custom text>`", parse_mode="md")
         return

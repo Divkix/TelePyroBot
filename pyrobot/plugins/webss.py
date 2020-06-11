@@ -37,7 +37,7 @@ async def web_screenshot(client, message):
     img_size = ssp['size']
     extension = ssp['extension']
 
-    caption = f"**Raw File:** {img_link}\n**URL:**{url_requested}"
+    caption = f"**Raw File:** {img_link}\n**URL:** {url_requested}"
 
     img = requests.get(f"{img_link}")
     imgfile = open(f"{TMP_DOWNLOAD_DIRECTORY}/web_screenshot.{extension}", "wb")

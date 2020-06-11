@@ -240,7 +240,7 @@ async def unpin_message(client, message):
         await asyncio.sleep(3)
         await message.delete()
 
-"""
+
 @Client.on_message(Filters.command("purge", COMMAND_HAND_LER) & Filters.me)
 async def purge(client, message):
     if message.chat.type == "supergroup":
@@ -294,7 +294,7 @@ async def del_msg(client, message):
     else:
         await message.edit("`Reply to a message to delete it!`")
         return
-"""
+
 
 @Client.on_message(Filters.command("invite", COMMAND_HAND_LER) & Filters.me)
 async def invite_user(client, message):

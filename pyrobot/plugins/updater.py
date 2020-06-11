@@ -71,16 +71,15 @@ async def updater(client, message):
         heroku = heroku3.from_key(HEROKU_API_KEY)
         heroku_applications = heroku.apps()[f'{HEROKU_APP_NAME}']
         if len(heroku_applications) >= 1:
-            heroku_app = heroku_applications
-            heroku_git_url = heroku_app.git_url.replace(
-                "https://",
-                "https://api:" + HEROKU_API_KEY + "@"
-            )
-            if "heroku" in repo.remotes:
-                remote = repo.remote("heroku")
-                remote.set_url(heroku_git_url)
-            else:
-                remote = repo.create_remote("heroku", heroku_git_url)
-            remote.push(refspec=HEROKU_GIT_REF_SPEC)
+        heroku_git_url = heroku_app.git_url.replace(
+            "https://",
+            "https://api:" + HEROKU_API_KEY + "@"
+        )
+        if "heroku" in repo.remotes:
+            remote = repo.remote("heroku")
+            remote.set_url(heroku_git_url)
         else:
-            await message.edit(NO_HEROKU_APP_CFGD)
+            remote = repo.create_remote("heroku", heroku_git_url)
+        remote.push(refspec=HEROKU_GIT_REF_SPEC)
+    else:
+        await message.edit(NO_HEROKU_APP_CFGD)

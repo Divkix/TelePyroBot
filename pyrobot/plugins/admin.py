@@ -243,7 +243,6 @@ async def unpin_message(client, message):
 """
 @Client.on_message(Filters.command("purge", COMMAND_HAND_LER) & Filters.me)
 async def purge(client, message):
-    """ purge upto the replied message """
     if message.chat.type == "supergroup":
         is_admin = await admin_check(message)
         if not is_admin:

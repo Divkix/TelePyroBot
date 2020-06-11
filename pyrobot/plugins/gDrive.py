@@ -26,13 +26,11 @@ from pyrobot.utils.display_progress_dl_up import progress_for_pyrogram
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
-Google Drive Plugins
+Plugin used to help you manage your **Google Drive**!
+
 `{COMMAND_HAND_LER}gdrive <file loaction>` or as a reply to message to upload file to your Google Drive and get it's link.
-
 `{COMMAND_HAND_LER}gdrive reset`: Reset the G Drive credentials.
-
 `{COMMAND_HAND_LER}grdive setup`: To setup GDrive, only needed if reset grive credentials or setting-up first time.
-
 `{COMMAND_HAND_LER}grdive search <query>`: To search a file in your GDrive.
 """
 

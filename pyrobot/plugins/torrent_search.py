@@ -10,7 +10,7 @@ __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 __help__ =  f"""
 Get Screenshot of any website.
 
-`{COMMAND_HAND_LER}torsearch <query>`: Search for torrent qury and display results.
+`{COMMAND_HAND_LER}torsearch <query>`: Search for torrent query and display results.
 """
 
 @Client.on_message(Filters.command("torsearch", COMMAND_HAND_LER) & Filters.me)
@@ -27,10 +27,10 @@ async def tor_search(client, message):
         return
     listdata = ""
     run = 0
-    while run < 10:
+    while run < 20:
         run = run + 1
         r1 = ts[run]
-        list1 = "Name: {}\nSeeders: {}\nAge: {}\nMagnet:\n{}\n\n".format(r1['name'], r1['seeder'], r1['age'], r1['magnet'])
+        list1 = "Name: {}\nSeeders: {}\nSize: {}\nAge: {}\n<--Magnet Below-->\n{}\n\n\n".format(r1['name'], r1['seeder'], r1['size'], r1['age'], r1['magnet'])
         listdata = listdata + list1
 
     tsfileloc = f"{TMP_DOWNLOAD_DIRECTORY}/torrent_search.txt"
@@ -39,6 +39,7 @@ async def tor_search(client, message):
         out_file.write(str(listdata))
     await message.reply_document(
         document=tsfileloc,
+        caption=f"Here are the results for the query: {query}"
         disable_notification=True)
     os.remove(tsfileloc)
     await message.delete()

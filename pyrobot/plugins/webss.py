@@ -17,6 +17,8 @@ Get Screenshot of any website.
 async def web_screenshot(client, message):
     await message.edit("`Fetching image...`")
     link = message.text.split(" ", 1)[1]
+    if not link.startswith("http"):
+        link = "https://" + link
     response = requests.get(f"https://sjprojectsapi.herokuapp.com/ss/?url={link}")
     ss = json.loads(response.text)
     if not ss == response.json():

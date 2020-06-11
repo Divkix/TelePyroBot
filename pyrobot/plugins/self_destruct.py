@@ -18,15 +18,15 @@ async def self_destruct(client, message):
     ttl = 0
     if input_str:
         if "=" in input_str:
-            message, ttl = input_str.split("=")
+            msg, ttl = input_str.split("=")
         else:
             await message.reply_text("__Check help to know how to use__")
             return
         if message.reply_to_message:
             reply_id = reply_to_message.message.id
-            sd_msg = await reply_text(f"{message}", reply_to_message_id=reply_id)
+            sd_msg = await reply_text(f"{msg}", reply_to_message_id=reply_id)
         else:
-            sd_msg = await reply_text(f"{message}")
+            sd_msg = await reply_text(f"{msg}")
         await rm.delete()
         await asyncio.sleep(int(ttl))
         await sd_msg.delete()

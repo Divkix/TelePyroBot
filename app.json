@@ -1,6 +1,6 @@
 {
-  "name": "PyroGramUserBot",
-  "description": "PyroGram UserBot. Powered by @UserBotTalk",
+  "name": "TelePyroBot",
+  "description": "PyroGram UserBot",
   "keywords": [
     "telegram",
     "best",
@@ -12,7 +12,7 @@
     "modular",
     "productivity"
   ],
-  "repository": "https://github.com/SpEcHiDe/PyroGramUserBot",
+  "repository": "https://github.com/SkuzzyxD/TelePyroBot",
   "success_url": "https://telegram.dog/UserBotTalk",
   "website": "https://github.com/SpEcHiDe/PyroGramUserBot",
   "env": {
@@ -59,7 +59,14 @@
     "OWNER_ID": {
       "description": "Goto @Alita_Robot on Telegram and send /id to get your ID and fill it here.",
       "required": true
-    }
+    },
+    {
+      "GBAN_GROUP": {
+        "description": "A group withbots where you have permissions to gban a persion.",
+        "required": false,
+        "value": "-100"
+      }
+    },
   },
   "addons": [{
     "plan": "heroku-postgresql",

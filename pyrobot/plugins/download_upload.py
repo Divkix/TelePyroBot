@@ -169,4 +169,4 @@ async def covid(client, message):
     else:
         await message.edit("Directory Not Found.")
         return
-    await client.send_message(message.chat.id, f"Uploaded all files from Directory `{temp_dir}`")
+    await status_message.edit(f"Uploaded all files from Directory `{temp_dir}`")

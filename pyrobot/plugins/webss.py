@@ -25,10 +25,17 @@ async def web_screenshot(client, message):
         await message.edit("**Some error occured**\n`Try Again Later`")
         return
     url_requested = ss['url']
-    img_link = ss['high']['url']
-    img_size = ss['high']['size']
-    file_name = ss['high']['filename']
-    extension = ss['high']['extension']
+
+    try:
+        ssp = ss['high']
+    except KeyError:
+        ssp = ss['low']
+    except:
+        await message.edit("`Some Error Occurred, Try again Later`")
+
+    img_link = ssp['url']
+    img_size = ssp['size']
+    extension = ssp['extension']
 
     caption = f"**Raw File:** {img_link}\n**URL:**{url_requested}"
 

@@ -13,6 +13,7 @@ __help__ = f"""
 @Client.on_message(Filters.command("telegraph", COMMAND_HAND_LER) & Filters.me)
 async def telegraph(client, message):
     replied = message.reply_to_message
+    await message.edit("`Trying to paste to telegraph...`, parse_mode="md")
     if not replied:
         await message.edit("reply to a supported media file")
         return
@@ -27,12 +28,12 @@ async def telegraph(client, message):
         await message.edit("**Not supported!**", parse_mode="md")
         return
     download_location = await client.download_media(message=message.reply_to_message,file_name='root/nana/')
-    await message.edit("`Passing to telegraph...`", parse_mode="md")
+    await message.edit("`Pasting to telegraph...`", parse_mode="md")
     try:
         response = upload_file(download_location)
     except Exception as document:
         await message.edit(document)
     else:
-        await message.edit(f"**Document passed to: [Telegra.ph](https://telegra.ph{response[0]})**", parse_mode="md")
+        await message.edit(f"**Document pasted to: [Telegra.ph](https://telegra.ph{response[0]})**", parse_mode="md")
     finally:
         os.remove(download_location)

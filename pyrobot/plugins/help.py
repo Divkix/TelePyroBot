@@ -10,8 +10,6 @@ To get help for any command, just type `{COMMAND_HAND_LER}help plugin_name`
 
 Get a list of all Plugins using:
 `{COMMAND_HAND_LER}plugins`
-
-<b>Still WIP, not all Commands added!</b>
 """
 
 @Client.on_message(Filters.command("plugins", COMMAND_HAND_LER) & Filters.me)

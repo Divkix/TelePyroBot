@@ -34,7 +34,7 @@ async def magnet_download(client, message):
     if not aria2:
         await message.edit(f"**First start the Aria Client using** `{COMMAND_HAND_LER}ariastart`")
         return
-    var = message.text.split("•", 1)[1]
+    var = message.text.split(" ", 1)[1]
     magnet_uri = var
     magnet_uri = magnet_uri.replace("`","")
     LOGGER.info(magnet_uri)

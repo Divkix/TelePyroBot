@@ -18,7 +18,7 @@ Remove All Downloads: `{COMMAND_HAND_LER}ariaRM`
 """
 
 EDIT_SLEEP_TIME_OUT = 5
-aria2_running = None
+aria2 = None
 
 @Client.on_message(Filters.command("ariastart", COMMAND_HAND_LER) & Filters.me)
 async def aria_start(client, message):

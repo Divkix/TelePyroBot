@@ -18,19 +18,20 @@ Remove All Downloads: `{COMMAND_HAND_LER}ariaRM`
 """
 
 EDIT_SLEEP_TIME_OUT = 5
-aria2_is_running = None
+aria2_running = None
 
 @Client.on_message(Filters.command("ariastart", COMMAND_HAND_LER) & Filters.me)
 async def aria_start(client, message):
     cmd = "aria2c --enable-rpc --rpc-listen-all=false --rpc-listen-port 6800  --max-connection-per-server=10 --rpc-max-request-size=1024M --seed-time=0.01 --min-split-size=10M --follow-torrent=mem --split=10 --daemon=true --allow-overwrite=true --dir='/app/pyrobot/downloads'"
     aria2_is_running = os.system(cmd)
     aria2 = aria2p.API(aria2p.Client(host="http://localhost", port=6800, secret=""))
+    aria_running = "Yes"
     await message.edit("`Started Aria Client`")
 
 
 @Client.on_message(Filters.command("addmagnet", COMMAND_HAND_LER) & Filters.me)
 async def magnet_download(client, message):
-    if aria2_is_running is None:
+    if aria2_running != "Yes":
         await message.edit(f"**First start the Aria Client using** `{COMMAND_HAND_LER}ariastart`")
         return
     var = message.text
@@ -53,7 +54,7 @@ async def magnet_download(client, message):
 
 @Client.on_message(Filters.command("addurl", COMMAND_HAND_LER) & Filters.me)
 async def url_download(client, message):
-    if aria2_is_running is None:
+    if aria2_running != "Yes":
         await message.edit(f"**First start the Aria Client using** `{COMMAND_HAND_LER}ariastart`")
         return
     var = message.text[5:]
@@ -75,7 +76,7 @@ async def url_download(client, message):
 
 @Client.on_message(Filters.command("ariaRM", COMMAND_HAND_LER) & Filters.me)
 async def aria_stopall(client, message):
-    if aria2_is_running is None:
+    if aria2_running != "Yes":
         await message.edit(f"**First start the Aria Client using** `{COMMAND_HAND_LER}ariastart`")
         return
     try:
@@ -90,7 +91,7 @@ async def aria_stopall(client, message):
 
 @Client.on_message(Filters.command("showaria", COMMAND_HAND_LER) & Filters.me)
 async def aria_downloads(client, message):
-    if aria2_is_running is None:
+    if aria2_running != "Yes":
         await message.edit(f"**First start the Aria Client using** `{COMMAND_HAND_LER}ariastart`")
         return
     output = "output.txt"

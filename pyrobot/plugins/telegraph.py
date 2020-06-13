@@ -13,7 +13,7 @@ __help__ = f"""
 @Client.on_message(Filters.command("telegraph", COMMAND_HAND_LER) & Filters.me)
 async def telegraph(client, message):
     replied = message.reply_to_message
-    await message.edit("`Trying to paste to telegraph..."`, parse_mode="md")
+    await message.edit("`Trying to paste to telegraph...`", parse_mode="md")
     if not replied:
         await message.edit("reply to a supported media file")
         return

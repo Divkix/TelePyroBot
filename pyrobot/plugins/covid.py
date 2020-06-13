@@ -42,14 +42,12 @@ async def covid(client, message):
         await message.edit(f"`{str(ac)}`\nLast updated on: {last_updated}", parse_mode="md")
 
     country = cmd[1]
-    r = requests.get(f"https://corona.lmao.ninja/v2/countries/{country}").json()
+    r = requests.get(f"https://skuzapis.herokuapp.com/covid/data?country={country}").json()
     if "cases" not in r:
         await message.edit("`The country could not be found!`", parse_mode="md")
         await asyncio.sleep(3)
         await message.delete()
     else:
-        last_updated = datetime.datetime.fromtimestamp(r['updated'] / 1000).strftime("%Y-%m-%d %I:%M:%S")
-
         cc = PrettyTable()
         cc.header = False
         country = r['countryInfo']['iso3'] if len(r['country']) > 12 else r['country']
@@ -63,10 +61,10 @@ async def covid(client, message):
         cc.add_row(["Critical", f"{r['critical']:,}"])
         cc.add_row(["Cases/Million", f"{r['casesPerOneMillion']:,}"])
         cc.add_row(["Deaths/Million", f"{r['deathsPerOneMillion']:,}"])
-        cc.add_row(["Tests", f"{r['tests']:,}"])
+        cc.add_row(["Tests", f"{r['totalTests']:,}"])
         cc.add_row(["Tests/Million", f"{r['testsPerOneMillion']:,}"])
         cc.align = "l"
-        await message.edit(f"`{str(cc)}`\nLast updated on: {last_updated}", parse_mode="md")
+        await message.edit(f"`{str(cc)}`\Recently updated.", parse_mode="md")
 
 
 def get_country_data(country, world):

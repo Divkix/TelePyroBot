@@ -10,10 +10,10 @@ __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 __help__ =  f"""
 Get Screenshot of any website.
 
-`{COMMAND_HAND_LER}torsearch <query>`: Search for torrent query and display results.
+`{COMMAND_HAND_LER}tsearch <query>`: Search for torrent query and display results.
 """
 
-@Client.on_message(Filters.command("torsearch", COMMAND_HAND_LER) & Filters.me)
+@Client.on_message(Filters.command("tsearch", COMMAND_HAND_LER) & Filters.me)
 async def tor_search(client, message):
     if len(message.command) == 1:
         await message.edit("`Check help on how to use this command`")
@@ -27,11 +27,14 @@ async def tor_search(client, message):
         return
     listdata = ""
     run = 0
-    while run < 10:
-        run = run + 1
-        r1 = ts[run]
-        list1 = "Name: {}\nSeeders: {}\nSize: {}\nAge: {}\n<--Magnet Below-->\n{}\n\n\n".format(r1['name'], r1['seeder'], r1['size'], r1['age'], r1['magnet'])
-        listdata = listdata + list1
+    while True:
+        try:
+            run += 1
+            r1 = ts[run]
+            list1 = "<-----{}----->\nName: {}\nSeeders: {}\nSize: {}\nAge: {}\n<--Magnet Below-->\n{}\n\n\n".format(run, r1['name'], r1['seeder'], r1['size'], r1['age'], r1['magnet'])
+            listdata = listdata + list1
+        except:
+            break
 
     tsfileloc = f"{TMP_DOWNLOAD_DIRECTORY}/torrent_search.txt"
     caption = f"Here are the results for the query: {query}"

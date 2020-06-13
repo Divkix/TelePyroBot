@@ -16,17 +16,21 @@ __help__ = f"""
 @Client.on_message(Filters.command("fban", COMMAND_HAND_LER) & Filters.me)
 async def fban_user(client, message):
     if len(message.command) >= 3:
-        cmd = message.text.split(" ",2)
-        fban_user = cmd[1]
-        fban_reason = cmd[2]
-    if len(message.command) == 2:
         cmd = message.text.split(" ",1)
-        fban_user = cmd[1]
-    if message.reply_to_message:
+        fban_string = cmd[1]
+    elif len(message.command) == 2:
+        cmd = message.text.split(" ",1)
+        fban_string = cmd[1]
+    elif message.reply_to_message:
         fban_user = message.reply_to_message.from_user.id
-        if len(message.command) >= 2:
-            fban_reason = message.text.split(" ",1)[1]
-    await client.send_message("@MissRose_bot", f"/fban {fban_user} {fban_reason}")
+        if cmd[1]:
+            fban_string = fban_user + " " + cmd[1]
+        else:
+            fban_string = fban_user
+    else:
+        await message.edit("`Use Proper format to fban a user, check help for more information`")
+        return
+    await client.send_message("@MissRose_bot", f"/fban {fban_string}")
     time.sleep(1)
     msg = await client.get_history("@MissRose_bot", 1)
     msg_id = msg[0]["message_id"]
@@ -41,6 +45,9 @@ async def unfban_user(client, message):
         unfban_user = message.text.split(" ",1)[1]
     elif message.reply_to_message and len(message.command) == 1:
         unfban_user = message.reply_to_message.from_user.id
+    else:
+        await message.edit("`Use Proper format to unfban a user, check help for more information`")
+        return
     await client.send_message("@MissRose_bot", f"/unfban {unfban_user}")
     time.sleep(1)
     msg = await client.get_history("@MissRose_bot", 1)

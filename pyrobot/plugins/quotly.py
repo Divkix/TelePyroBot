@@ -33,8 +33,8 @@ async def quotly(client, message):
                 await message.edit("```Making a Quote```\nProcessing {}%".format(progress), parse_mode="md")
                 if progress >= 100:
                     pass
-            except:
-                await message.edit("__ERROR SUUUU__", parse_mode="md")
+            except Exception as ef:
+                await message.edit(f"**ERROR:**\n{ef}", parse_mode="md")
                 p += 1
                 if p == 3:
                     break

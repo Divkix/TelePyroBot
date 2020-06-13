@@ -10,6 +10,8 @@ __help__ = f"""
 `{COMMAND_HAND_LER}sdd <link>`
 
 The command will download the song from specified link and send to you.
+
+**Warning:** __It doesn't correctly work with many Indian Songs.__
 """
 
 @Client.on_message(Filters.command("sdd", COMMAND_HAND_LER) & Filters.me)

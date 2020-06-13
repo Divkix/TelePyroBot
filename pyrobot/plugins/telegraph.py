@@ -27,7 +27,7 @@ async def telegraph(client, message):
                 and replied.document.file_size <= 5242880)):
         await message.edit("**Not supported!**", parse_mode="md")
         return
-    download_location = await client.download_media(message=message.reply_to_message,file_name='root/nana/')
+    download_location = await client.download_media(message=message.reply_to_message,file_name='pyrobot/downloads/')
     await message.edit("`Pasting to telegraph...`", parse_mode="md")
     try:
         response = upload_file(download_location)

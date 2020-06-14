@@ -20,11 +20,12 @@ async def upload_as_document(client, message):
             await message.edit("`no valid user_id or message specified`")
             return
     elif message.reply_to_message:
-        from_user = await client.get_users(message.reply_to_message.from_user.id)
-        from_chat = await client.get_chat(message.reply_to_message.from_user.id)
-    elif message.reply_to_message.forward_from:
-        from_user = await client.get_users(message.reply_to_message.forward_from.id)
-        from_chat = await client.get_chat(message.reply_to_message.forward_from.id)
+        if message.reply_to_message.forward_from:
+            from_user = await client.get_users(message.reply_to_message.forward_from.id)
+            from_chat = await client.get_chat(message.reply_to_message.forward_from.id)
+        else:
+            from_user = await client.get_users(message.reply_to_message.from_user.id)
+            from_chat = await client.get_chat(message.reply_to_message.from_user.id)
     else:
         await message.edit("`no valid user_id or message specified`")
         return

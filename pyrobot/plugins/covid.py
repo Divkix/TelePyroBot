@@ -64,7 +64,7 @@ async def covid(client, message):
         cc.add_row(["Tests", f"{r['totalTests']:,}"])
         cc.add_row(["Tests/Million", f"{r['testsPerOneMillion']:,}"])
         cc.align = "l"
-        await message.edit(f"`{str(cc)}`\Recently updated.", parse_mode="md")
+        await message.edit(f"`{str(cc)}`\nRecently updated.", parse_mode="md")
 
 
 def get_country_data(country, world):

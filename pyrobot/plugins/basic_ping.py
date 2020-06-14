@@ -75,16 +75,25 @@ async def get_id(client, message):
         elif rep.venue:
             file_id = rep.venue.file_id
         elif rep.from_user:
-            user_id = rep.from_user.id
-            user_name = rep.from_user.first_name
-            username = rep.from_user.username
-        elif rep.forward_from:
-            user_id = rep.forward_from.from_user.id
-            user_name = rep.forward_from.from_user.first_name
-            username = rep.forward_from.from_user.username
+            if rep.forward_from:
+                fuser_id = rep.forward_from.id
+                if rep.forward_from.last_name:
+                    fuser_name = rep.forward_from.first_name + " " + rep.forward_from.last_name
+                else:
+                    fuser_name = rep.forward_from.first_name
+                fusername = rep.forward_from.username
+            else:
+                user_id = rep.from_user.id
+                if rep.from_user.last_name:
+                    fuser_name = rep.from_user.first_name + " " + rep.from_user.last_name
+                else:
+                    fuser_name = rep.from_user.first_name
+                username = rep.from_user.username
 
-    if user_id:
-        await message.edit("**User ID:** `{}`\n**Name:** `{}`\n**Username:** @{}".format(user_id, user_name, username))
+    if fuser_id:
+        await message.edit("__Information of User__:\n\n**User ID:** `{}`\n**Name:** `{}`\n**Username:** @{}".format(fuser_id, fuser_name, fusername))
+    elif user_id:
+        await message.edit("__Information of User__:\n\n**User ID:** `{}`\n**Name:** `{}`\n**Username:** @{}".format(user_id, user_name, username))
     elif file_id:
         await message.edit("**File's ID:** `{}`".format(file_id))
     else:

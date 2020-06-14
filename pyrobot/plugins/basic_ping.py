@@ -85,9 +85,9 @@ async def get_id(client, message):
             else:
                 user_id = rep.from_user.id
                 if rep.from_user.last_name:
-                    fuser_name = rep.from_user.first_name + " " + rep.from_user.last_name
+                    user_name = rep.from_user.first_name + " " + rep.from_user.last_name
                 else:
-                    fuser_name = rep.from_user.first_name
+                    user_name = rep.from_user.first_name
                 username = rep.from_user.username
 
     if user_id:

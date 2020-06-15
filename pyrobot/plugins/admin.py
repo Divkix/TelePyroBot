@@ -180,7 +180,7 @@ async def unrestrict_usr(client, message):
         return
     try:
         get_mem = await client.get_chat_member(chat_id, from_user)
-         await client.unban_chat_member(chat_id, from_user)
+        await client.unban_chat_member(chat_id, from_user)
         await message.edit(f"`Unbanned {get_mem.first_name} `")
     except Exception as ef:
         await message.edit(f"**Error:**\n\n`{ef}`")

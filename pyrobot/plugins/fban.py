@@ -23,10 +23,11 @@ async def fban_user(client, message):
         fban_string = cmd[1]
     elif message.reply_to_message:
         fban_user = message.reply_to_message.from_user.id
+        from_user = await client.get_users(fban_user)
         if cmd[1]:
-            fban_string = fban_user + " " + cmd[1]
+            fban_string = from_user.id + " " + cmd[1]
         else:
-            fban_string = fban_user
+            fban_string = from_user.id
     else:
         await message.edit("`Use Proper format to fban a user, check help for more information`")
         return
@@ -43,12 +44,13 @@ async def fban_user(client, message):
 async def unfban_user(client, message):
     if len(message.command) == 2:
         unfban_user = message.text.split(" ",1)[1]
-    elif message.reply_to_message and len(message.command) == 1:
+    elif message.reply_to_message:
         unfban_user = message.reply_to_message.from_user.id
+        from_user = await client.get_users(unfban_user)
     else:
         await message.edit("`Use Proper format to unfban a user, check help for more information`")
         return
-    await client.send_message("@MissRose_bot", f"/unfban {unfban_user}")
+    await client.send_message("@MissRose_bot", f"/unfban {from_user.id}")
     time.sleep(1)
     msg = await client.get_history("@MissRose_bot", 1)
     msg_id = msg[0]["message_id"]

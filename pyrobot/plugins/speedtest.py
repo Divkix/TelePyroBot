@@ -11,17 +11,14 @@ __help__ = f"""
 
 @Client.on_message(Filters.command("speedtest", COMMAND_HAND_LER) & Filters.me)
 async def listbots(client, message):
-    try:
-        rm = await message.edit("`Running speed test . . .`")
-    except:
-        rm = await message.reply_text("`Running speed test . . .`")
+    await message.edit("`Running speed test . . .`")
     test = Speedtest()
     test.get_best_server()
     test.download()
     test.upload()
     test.results.share()
     result = test.results.dict()
-    await rm.edit("`"
+    await message.edit("`"
                        "Started at "
                        f"{result['timestamp']} \n\n"
                        "Download "

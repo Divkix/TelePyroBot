@@ -13,7 +13,6 @@ from pyrobot.utils.display_progress_dl_up import (
 )
 
 from pyrobot.utils.check_if_thumb_exists import is_thumb_image_exists
-from pyrobot.utils.display_progress_dl_up import progress_for_pyrogram
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -74,8 +73,8 @@ async def down_load_media(client, sms):
             speed = downloader.get_speed()
             elapsed_time = round(diff) * 1000
             progress_str = "[{0}{1}]\nProgress: {2}%".format(
-                ''.join(["█" for i in range(math.floor(percentage / 5))]),
-                ''.join(["░" for i in range(20 - math.floor(percentage / 5))]),
+                ''.join(["●" for i in range(math.floor(percentage / 5))]),
+                ''.join(["○" for i in range(20 - math.floor(percentage / 5))]),
                 round(percentage, 2))
             estimated_total_time = downloader.get_eta(human=True)
             try:

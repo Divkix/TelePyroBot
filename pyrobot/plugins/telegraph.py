@@ -38,6 +38,6 @@ async def telegraph(client, message):
     else:
         end_t = datetime.now()
         ms = (end_t - start_t).seconds
-        await message.edit(f"**Document Passed to [Telegra.ph](https://telegra.ph{response[0]}) in {ms} seconds**", parse_mode="md")
+        await message.edit(f"**Document Passed to** [Telegra.ph](https://telegra.ph{response[0]}) **in __{ms}__ seconds**", parse_mode="md", disable_web_page_preview=True)
     finally:
         os.remove(download_location)

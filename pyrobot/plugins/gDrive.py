@@ -320,8 +320,8 @@ async def gDrive_upload_file(creds, file_path, message):
         if status:
             percentage = int(status.progress() * 100)
             progress_str = "[{0}{1}]\nProgress: {2}%\n".format(
-                "".join(["█" for i in range(math.floor(percentage / 5))]),
-                "".join(["░" for i in range(20 - math.floor(percentage / 5))]),
+                "".join(["●" for i in range(math.floor(percentage / 5))]),
+                "".join(["○" for i in range(20 - math.floor(percentage / 5))]),
                 round(percentage, 2)
             )
             current_message = f"uploading to gDrive\nFile Name: {file_name}\n{progress_str}"

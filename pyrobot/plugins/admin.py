@@ -49,28 +49,25 @@ async def promote_usr(client, message):
     if len(message.command) == 2:
         user_id = message.command[1]
         try:
-            user_id = await client.get_users(user_id)
-            user_chat = await client.get_chat(user_id)
+            from_user = await client.get_users(user_id)
         except Exception:
             await message.edit("`no valid user_id or message specified`")
             return
     elif message.reply_to_message:
-        user_id = await client.get_users(message.reply_to_message.from_user.id)
-        user_chat = await client.get_chat(message.reply_to_message.from_user.id)
+        from_user = await client.get_users(message.reply_to_message.from_user.id)
     else:
         await message.edit("`no valid user_id or message specified`")
         return
-    if message.reply_to_message:
-        user_id = message.reply_to_message.from_user.id
     try:
-        await client.promote_chat_member(chat_id, user_id,
+        get_mem = await client.get_chat_member(chat_id, from_user)
+        await client.promote_chat_member(chat_id, from_user,
                                         can_change_info=False,
                                         can_delete_messages=True,
                                         can_restrict_members=True,
                                         can_invite_users=True,
                                         can_pin_messages=True)
         await asyncio.sleep(2)
-        await message.edit(f"`👑 Promoted {user_id.first_name} `")
+        await message.edit(f"`👑 Promoted {get_mem.first_name} `")
     except Exception as ef:
         await message.edit(f"**Error:**\n\n`{ef}`")
 
@@ -85,28 +82,25 @@ async def demote_usr(client, message):
     if len(message.command) == 2:
         user_id = message.command[1]
         try:
-            user_id = await client.get_users(user_id)
-            user_chat = await client.get_chat(user_id)
+            from_user = await client.get_users(user_id)
         except Exception:
             await message.edit("`no valid user_id or message specified`")
             return
     elif message.reply_to_message:
-        user_id = await client.get_users(message.reply_to_message.from_user.id)
-        user_chat = await client.get_chat(message.reply_to_message.from_user.id)
+        from_user = await client.get_users(message.reply_to_message.from_user.id)
     else:
         await message.edit("`no valid user_id or message specified`")
         return
-    if message.reply_to_message:
-        user_id = message.reply_to_message.from_user.id
     try:
-        await client.promote_chat_member(chat_id, user_id,
+        get_mem = await client.get_chat_member(chat_id, from_user)
+        await client.promote_chat_member(chat_id, from_user,
                                         can_change_info=False,
                                         can_delete_messages=False,
                                         can_restrict_members=False,
                                         can_invite_users=False,
                                         can_pin_messages=False)
         await asyncio.sleep(2)
-        await message.edit(f"`Demoted {user_id.first_name} `")
+        await message.edit(f"`Demoted {get_mem.first_name} `")
     except Exception as ef:
         await message.edit(f"**Error:**\n\n`{ef}`")
 
@@ -121,22 +115,19 @@ async def ban_usr(client, message):
     if len(message.command) == 2:
         user_id = message.command[1]
         try:
-            user_id = await client.get_users(user_id)
-            user_chat = await client.get_chat(user_id)
+            from_user = await client.get_users(user_id)
         except Exception:
             await message.edit("`no valid user_id or message specified`")
             return
     elif message.reply_to_message:
-        user_id = await client.get_users(message.reply_to_message.from_user.id)
-        user_chat = await client.get_chat(message.reply_to_message.from_user.id)
+        from_user = await client.get_users(message.reply_to_message.from_user.id)
     else:
         await message.edit("`no valid user_id or message specified`")
         return
-    if message.reply_to_message:
-        user_id = message.reply_to_message.from_user.id
     try:
-        await message.chat.kick_member(user_id)
-        await message.edit(f"`Banned {user_id.first_name} `")
+        get_mem = await client.get_chat_member(chat_id, from_user)
+        await client.kick_chat_member(chat_id, user_id)
+        await message.edit(f"`Banned {get_mem.first_name} `")
     except Exception as ef:
         await message.edit(f"**Error:**\n\n`{ef}`")
 
@@ -151,31 +142,26 @@ async def restrict_usr(client, message):
     if len(message.command) == 2:
         user_id = message.command[1]
         try:
-            user_id = await client.get_users(user_id)
-            user_chat = await client.get_chat(user_id)
+            from_user = await client.get_users(user_id)
         except Exception:
             await message.edit("`no valid user_id or message specified`")
             return
     elif message.reply_to_message:
-        user_id = await client.get_users(message.reply_to_message.from_user.id)
-        user_chat = await client.get_chat(message.reply_to_message.from_user.id)
+        from_user = await client.get_users(message.reply_to_message.from_user.id)
     else:
         await message.edit("`no valid user_id or message specified`")
         return
-    if message.reply_to_message:
-        user_id = message.reply_to_message.from_user.id
     try:
-        await message.chat.restrict_member(
-            user_id=user_id,
-            permissions=ChatPermissions())
-        await message.edit(f"`Muted {user_id.first_name} `")
+        get_mem = await client.get_chat_member(chat_id, from_user)
+        await client.restrict_chat_member(chat_id, user_id, ChatPermissions())
+        await message.edit(f"`Muted {get_mem.first_name} `")
     except Exception as ef:
         await message.edit(f"**Error:**\n\n`{ef}`")
 
 
-@Client.on_message(Filters.command(["unmute", "unban", "unrestrict"], COMMAND_HAND_LER) & Filters.me)
+@Client.on_message(Filters.command("unban", COMMAND_HAND_LER) & Filters.me)
 async def unrestrict_usr(client, message):
-    await message.edit("`Trying to Unrestrict user...`")
+    await message.edit("`Trying to Unban user...`")
     is_admin = await admin_check(message)
     chat_id = message.chat.id
     if not is_admin:
@@ -183,23 +169,70 @@ async def unrestrict_usr(client, message):
     if len(message.command) == 2:
         user_id = message.command[1]
         try:
-            user_id = await client.get_users(user_id)
-            user_chat = await client.get_chat(user_id)
+            from_user = await client.get_users(user_id)
         except Exception:
             await message.edit("`no valid user_id or message specified`")
             return
     elif message.reply_to_message:
-        user_id = await client.get_users(message.reply_to_message.from_user.id)
-        user_chat = await client.get_chat(message.reply_to_message.from_user.id)
+        from_user = await client.get_users(message.reply_to_message.from_user.id)
     else:
         await message.edit("`no valid user_id or message specified`")
         return
-    if message.reply_to_message:
-        user_id = message.reply_to_message.from_user.id
     try:
-        await message.chat.unban_member(
-            user_id=user_id)
-        await message.edit(f"`Unrestricted {user_id.first_name} `")
+        get_mem = await client.get_chat_member(chat_id, from_user)
+         await client.unban_chat_member(chat_id, from_user)
+        await message.edit(f"`Unbanned {get_mem.first_name} `")
+    except Exception as ef:
+        await message.edit(f"**Error:**\n\n`{ef}`")
+
+
+@Client.on_message(Filters.command("unmute", COMMAND_HAND_LER) & Filters.me)
+async def unrestrict_usr(client, message):
+    await message.edit("`Trying to Unmute user...`")
+    is_admin = await admin_check(message)
+    get_group = await client.get_chat(chat_id)
+    chat_id = message.chat.id
+    amsg = get_group.permissions.can_send_messages
+    amedia = get_group.permissions.can_send_media_messages
+    astickers = get_group.permissions.can_send_stickers
+    aanimations = get_group.permissions.can_send_animations
+    agames = get_group.permissions.can_send_games
+    ainlinebots = get_group.permissions.can_use_inline_bots
+    awebprev = get_group.permissions.can_add_web_page_previews
+    apolls = get_group.permissions.can_send_polls
+    ainfo = get_group.permissions.can_change_info
+    ainvite = get_group.permissions.can_invite_users
+    apin = get_group.permissions.can_pin_messages
+    if not is_admin:
+        return
+    if len(message.command) == 2:
+        user_id = message.command[1]
+        try:
+            from_user = await client.get_users(user_id)
+        except Exception:
+            await message.edit("`no valid user_id or message specified`")
+            return
+    elif message.reply_to_message:
+        from_user = await client.get_users(message.reply_to_message.from_user.id)
+    else:
+        await message.edit("`no valid user_id or message specified`")
+        return
+    try:
+        get_mem = await client.get_chat_member(chat_id, from_user)
+         await client.restrict_chat_member(chat_id, user_id,
+                                            ChatPermissions(
+                                            can_send_messages=amsg,
+                                            can_send_media_messages=amedia,
+                                            can_send_stickers=astickers,
+                                            can_send_animations=aanimations,
+                                            can_send_games=agames,
+                                            can_use_inline_bots=ainlinebots,
+                                            can_add_web_page_previews=awebprev,
+                                            can_send_polls=apolls,
+                                            can_change_info=ainfo,
+                                            can_invite_users=ainvite,
+                                            can_pin_messages=apin))
+        await message.edit(f"`Unmuted {get_mem.first_name} `")
     except Exception as ef:
         await message.edit(f"**Error:**\n\n`{ef}`")
 
@@ -240,13 +273,16 @@ async def unpin_message(client, message):
         await asyncio.sleep(3)
         await message.delete()
 
-"""
+
 @Client.on_message(Filters.command("purge", COMMAND_HAND_LER) & Filters.me)
 async def purge(client, message):
-    if message.chat.type == "supergroup":
+    if message.chat.type == ["supergroup", "channel"]:
         is_admin = await admin_check(message)
         if not is_admin:
             return
+    elif message.chat.type in ["private", "bot", "group"]
+        await message.edit("`You are not allowed to use this command here!`")
+        return
 
     message_ids = []
     count_del_etion_s = 0
@@ -273,39 +309,16 @@ async def purge(client, message):
     await message.delete()
 
 
-@Client.on_message(Filters.command("del", COMMAND_HAND_LER) & Filters.me)
-async def del_msg(client, message):
-    await message.edit("`Trying to delete message`")
-    if message.chat.type == "supergroup":
-        is_admin = await admin_check(message)
-        if not is_admin:
-            return
-    chat_id = message.chat.id
-    message_ids = []
-    if message.reply_to_message:
-        try:
-            message_ids.append(message.reply_to_message.message_id)
-            await client.delete_messages(chat_id=chat_id,
-                            message_ids=message_ids,
-                            revoke=True)
-        except Exception as ef:
-            await message.edit(f"<b>Error</b>:\n`{ef}`")
-        await message.delete()
-    else:
-        await message.edit("`Reply to a message to delete it!`")
-        return
-"""
-
 @Client.on_message(Filters.command("invite", COMMAND_HAND_LER) & Filters.me)
 async def invite_user(client, message):
     if len(message.command) > 2:
         await message.edit("__Only one user can be invited at a time,\ncheck__ `{COMMAND_HAND_LER}help` __for more info.__")
         return
     user_id = message.text.split(' ', 1)[1]
+    chat_id = message.chat.id
     if user_id:
         try:
             from_user = await client.get_users(user_id)
-            from_chat = await client.get_chat(user_id)
         except Exception:
             await message.edit("no valid user_id or message specified")
             return
@@ -313,7 +326,7 @@ async def invite_user(client, message):
         await message.edit("no valid user_id or message specified")
         return
     try:
-        await client.add_chat_members(message.chat.id, user_id)
+        await client.add_chat_members(chat_id, from_user)
     except Exception as ef:
         await message.edit(f"<b>Error:</b>\n`{ef}`")
         return

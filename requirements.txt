@@ -24,6 +24,5 @@ gtts
 telegraph
 heroku3
 pafy
-git+https://github.com/pytube3/pytube3.git
 pyDownload
 pyfiglet

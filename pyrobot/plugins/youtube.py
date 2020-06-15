@@ -20,7 +20,6 @@ import pafy
 import requests
 from bs4 import BeautifulSoup
 from pyrogram import Client, Filters
-from pytube import YouTube
 
 from pyrobot import COMMAND_HAND_LER
 from pyrobot.utils.misc.parser import escape_markdown
@@ -110,54 +109,6 @@ async def youtube_search(client, message):
 		nomor += 1
 		yutub += '<b>{}.</b> <a href="{}">{}</a> {}\n'.format(nomor, "https://www.youtube.com" + url, title, vidtime)
 	await message.edit(yutub, disable_web_page_preview=True, parse_mode="html")
-
-
-@Client.on_message(Filters.command(["ytdl"], COMMAND_HAND_LER) & Filters.me)
-async def youtube_download(client, message):
-	args = message.text.split(None, 2)
-	await message.edit("Checking")
-	if len(args) == 1:
-		await message.edit("Write any args here!")
-		return
-	try:
-		yt = YouTube(args[1])
-	except ValueError:
-		await message.edit("Invalid URL!")
-		return
-
-	if len(args) == 2:
-		link = args[1]
-		text = "🎬 **Title:** [{}]({})\n".format(escape_markdown(yt.title), link)
-		status = "**Downloading video...**\n"
-		await message.edit(status + text, disable_web_page_preview=True)
-		YouTube(link).streams.first().download('pyrobot/downloads', filename="tempvid")
-		status = "**Uploading File To Telegram...**\n"
-		await message.edit(status + text, disable_web_page_preview=True)
-		await client.send_video(message.chat.id, video="pyrobot/downloads/tempvid.mp4")
-		status = "**Removing Temp File...**"
-		await message.edit(status)
-		os.remove('pyrobot/downloads/tempvid.mp4')
-		status = "** Done ✔️✔️**\n"
-		await message.edit(status + text, disable_web_page_preview=True)
-
-		return
-	if len(args) == 3:
-		link = args[1]
-		reso = args[2]
-		text = "🎬 **Title:** [{}]({})\n".format(escape_markdown(yt.title), link)
-		status = "**Downloading video...**\n"
-		await message.edit(status + text, disable_web_page_preview=True)
-		stream = yt.streams.filter(file_extension='mp4').filter(resolution="{}".format(reso)).first()
-		stream.download('pyrobot/downloads', filename="tempvid")
-		status = "**Uploading File To Telegram...**\n"
-		await message.edit(status + text, disable_web_page_preview=True)
-		await client.send_video(message.chat.id, video="pyrobot/downloads/tempvid.mp4")
-		status = "**Removing Temp File...**"
-		await message.edit(status)
-		os.remove('pyrobot/downloads/tempvid.mp4')
-		status = "**Done ✔️✔️**\n"
-		await message.edit(status + text, disable_web_page_preview=True)
-		return
 
 
 @Client.on_message(Filters.command(["ytmusic", "ytaudio", "yta"], COMMAND_HAND_LER) & Filters.me)

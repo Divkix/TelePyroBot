@@ -276,11 +276,11 @@ async def unpin_message(client, message):
 
 @Client.on_message(Filters.command("purge", COMMAND_HAND_LER) & Filters.me)
 async def purge(client, message):
-    if message.chat.type == ["supergroup", "channel"]:
+    if message.chat.type in ["supergroup", "channel"]:
         is_admin = await admin_check(message)
         if not is_admin:
             return
-    elif message.chat.type in ["private", "bot", "group"]
+    if message.chat.type in ["private", "bot", "group"]:
         await message.edit("`You are not allowed to use this command here!`")
         return
 

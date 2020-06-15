@@ -31,6 +31,13 @@ async def aria_start(client, message):
     await message.edit(f"**Started Aria Client**")
 
 
+@Client.on_message(Filters.command("ariastop", COMMAND_HAND_LER) & Filters.me)
+async def aria_start(client, message):
+    global aria2
+    aria2 = None
+    await message.edit(f"**Stopped Aria Client**")
+
+
 @Client.on_message(Filters.command("addmagnet", COMMAND_HAND_LER) & Filters.me)
 async def magnet_download(client, message):
     if not aria2:

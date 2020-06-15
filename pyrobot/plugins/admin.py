@@ -219,7 +219,7 @@ async def unrestrict_usr(client, message):
         return
     try:
         get_mem = await client.get_chat_member(chat_id, from_user)
-         await client.restrict_chat_member(chat_id, user_id,
+        await client.restrict_chat_member(chat_id, user_id,
                                             ChatPermissions(
                                             can_send_messages=amsg,
                                             can_send_media_messages=amedia,

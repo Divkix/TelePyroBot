@@ -57,6 +57,10 @@
       "description": "Goto @Alita_Robot on Telegram and send /id to get your ID and fill it here.",
       "required": true
     },
+    "OWNER_NAME": {
+      "description": "Name which you would like to appear when 'alive' or 'start' commands are used.",
+      "required": true
+    },
     "GBAN_GROUP": {
       "description": "A group withbots where you have permissions to gban a persion.",
       "required": false,

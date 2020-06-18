@@ -61,12 +61,26 @@ async def unfban_user(client, message):
 
 @Client.on_message(Filters.command(["fstat", "fbanstat"], COMMAND_HAND_LER) & Filters.me)
 async def fstat_user(client, message):
-    if len(message.command)==2:
-        fstat_user = message.text.split(" ",1)[1]
-        await client.send_message("@MissRose_bot", f"/fstat {fstat_user}")
-    elif message.reply_to_message and len(message.command) == 1:
-        fstat_user = message.reply_to_message.from_user.id
-        await client.send_message("@MissRose_bot", f"/fstat {fstat_user}")
+    if len(message.command) <= 3:
+        if len(message.command) == 2:
+            fstat_user = message.text.split(" ",1)[1]
+            await client.send_message("@MissRose_bot", f"/fstat {fstat_user}")
+        elif len(message.command) == 3:
+            fstat_user = message.text.split(" ",1)[1]
+            fstat_id = message.text.split(" ",1)[2]
+            await client.send_message("@MissRose_bot", f"/fstat {fstat_user} {fstat_id}")
+        else:
+            await message.edit(f"Please check {COMMAND_HAND_LER}help on how to use")
+    elif message.reply_to_message:
+        if len(message.command) == 1:
+            fstat_user = message.reply_to_message.from_user.id
+            await client.send_message("@MissRose_bot", f"/fstat {fstat_user}")
+        elif len(message.command) == 2:
+            fstat_user = message.reply_to_message.from_user.id
+            fstat_id = message.text.split(" ",1)[2]
+            await client.send_message("@MissRose_bot", f"/fstat {fstat_user} {fstat_id}")
+        else:
+            await message.edit(f"Please check {COMMAND_HAND_LER}help on how to use")
     else:
         await client.send_message("@MissRose_bot", "/fstat")
     time.sleep(1)

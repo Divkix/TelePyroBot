@@ -1,4 +1,4 @@
-# TelePyroBot 🔥🤖
+# TelePyroBot 🤖
 
 A Telegram User / Bot based on [Pyrogram](https://github.com/pyrogram/pyrogram)
 
@@ -52,9 +52,13 @@ class Development(Config):
 - Please report any issues to the support group: [@Skuzzy xD](https://t.me/DraXCommunity)
 
 
-## Credits, and Thanks to
+## Credits, and Special Thanks to
 
-* [Spechide](https://telegram.dog/ThankTelegram) for some basic plugins and Login Base
+* [Spechide](https://telegram.dog/ThankTelegram) for some basic plugins and Login Base.
 * [Dan Tès](https://telegram.dog/haskell) for his [Pyrogram Library](https://github.com/pyrogram/pyrogram)
 * [Colin Shark](https://telegram.dog/ColinShark) for his [PyroBot](https://git.colinshark.de/PyroBot/PyroBot)
-* [![CopyLeft](https://telegra.ph/file/b514ed14d994557a724cb.jpg)](https://telegra.ph/file/fab1017e21c42a5c1e613.mp4 "CopyLeft Credit Video")
+
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)

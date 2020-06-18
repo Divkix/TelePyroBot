@@ -1,7 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-# (c) Shrimadhav U K
-
 import asyncio
 from pyrogram import Client
 
@@ -9,8 +5,8 @@ from pyrogram import Client
 try:
     from pyrobot import APP_ID, API_HASH
 except ModuleNotFoundError:
-    APP_ID = int(input("enter Telegram APP ID: "))
-    API_HASH = input("enter Telegram API HASH: ")
+    APP_ID = int(input("Enter Telegram APP ID: "))
+    API_HASH = input("Enter Telegram API HASH: ")
 
 
 async def main(api_id, api_hash):

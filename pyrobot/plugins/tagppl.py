@@ -48,28 +48,28 @@ async def adminlist(client, message):
     badmin.sort()
     totaladmins = len(creator) + len(admin) + len(badmin)
     teks = "**Admins in {}**\n".format(grup.title)
-    teks += "╒═══「 Creator 」\n"
+    teks += "「 Creator 」\n"
     for x in creator:
         teks += "│ • {}\n".format(x)
         if len(teks) >= 4096:
             await message.reply(message.chat.id, teks, reply_to_message_id=replyid, parse_mode="md")
             teks = ""
             toolong = True
-    teks += "╞══「 {} Human Administrator 」\n".format(len(admin))
+    teks += "「 {} Human Administrator 」\n".format(len(admin))
     for x in admin:
         teks += "│ • {}\n".format(x)
         if len(teks) >= 4096:
             await message.reply(message.chat.id, teks, reply_to_message_id=replyid, parse_mode="md")
             teks = ""
             toolong = True
-    teks += "╞══「 {} Bot Administrator 」\n".format(len(badmin))
+    teks += "「 {} Bot Administrator 」\n".format(len(badmin))
     for x in badmin:
         teks += "│ • {}\n".format(x)
         if len(teks) >= 4096:
             await message.reply(message.chat.id, teks, reply_to_message_id=replyid, parse_mode="md")
             teks = ""
             toolong = True
-    teks += "╘══「 Total {} Admins 」".format(totaladmins)
+    teks += "「 Total {} Admins 」".format(totaladmins)
     if toolong:
         await message.reply(message.chat.id, teks, reply_to_message_id=replyid, parse_mode="md")
     else:
@@ -92,6 +92,7 @@ async def everyone(client, message):
                                   parse_mode="html")
     else:
         await client.send_message(message.chat.id, text, parse_mode="html")
+
 
 @Client.on_message(Filters.command(["bots", "listbots"], COMMAND_HAND_LER) & Filters.me)
 async def listbots(client, message):

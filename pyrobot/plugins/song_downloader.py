@@ -43,7 +43,6 @@ async def spotify_dl(client, message):
 	elif message.reply_to_message:
 		songname = message.reply_to_message.text
 	subprocess.run(["spotdl", "--song", songname])
-	subprocess.run('for f in *.opus; do      mv -- "$f" "${f%.opus}.mp3"; done', shell=True)
 	l = glob.glob("*.mp3")
 	loa = l[0]
 	rply = await message.reply_text("`Uploading Song...`")

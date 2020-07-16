@@ -38,7 +38,7 @@ async def sd_downloader(client, message):
 
 @Client.on_message(Filters.command("spotdl", COMMAND_HAND_LER) & Filters.me)
 async def spotify_dl(client, message):
-	if len(message.command) == 2:
+	if len(message.text.split(' ', 1)) == 2:
 		songname = message.text.split(" ",1)[1]
 	elif message.reply_to_message:
 		songname = message.reply_to_message.text

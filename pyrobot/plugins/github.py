@@ -12,10 +12,10 @@ Usage: `{COMMAND_HAND_LER}github <github username>`
 
 @Client.on_message(Filters.command("github", COMMAND_HAND_LER) & Filters.me)
 async def github(client, message):
-    if len(message.text) == 2:
+    if len(message.text.split(" ")) == 2:
         username = message.text.split(" ",1)[1]
     else:
-        await message.edit("Usage: `github (username)`", parse_mode="md")
+        await message.edit(f"Usage: `{COMMAND_HAND_LER}github <username>`", parse_mode="md")
         return
 
     URL = f"https://api.github.com/users/{username}"

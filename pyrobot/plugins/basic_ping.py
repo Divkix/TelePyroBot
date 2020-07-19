@@ -7,9 +7,10 @@ from pyrogram.api.all import layer
 from pyrobot.utils.extract_user import extract_user
 
 # -- Constants -- #
-ALIVE = f"`I'm Alive :3`\n<b>My Owner:</b> `{OWNER_NAME}`\n<b>Pyrogram Version:</b> `{__version__} (Layer {layer})`\n<b>Python Version:</b> `{python_version()}`\n\n**Repo Link:**\n[Github](https://github.com/SkuzzyxD/TelePyroBot)"
+ALIVE = f"`I'm Alive :3`\n<b>My Owner:</b> `{OWNER_NAME}`\n<b>Pyrogram Version:</b> `{__version__} (Layer {layer})`\n<b>Python Version:</b> `{python_version()}`\nJoin @MyAwesomeProjects for more epic shit!\n\n**Repo Link:**\n[Github](https://github.com/SkuzzyxD/TelePyroBot)"
 REPO = ("<b>UserBot is available on GitHub:</b>\n"
-        "https://github.com/SkuzzyxD/TelePyroBot")
+        "https://github.com/SkuzzyxD/TelePyroBot\n\n"
+        "More info available at: @MyAweosmeProjects")
 # -- Constants End -- #
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -38,7 +39,7 @@ async def ping(client, message):
     rm = await message.edit("Pinging...")
     end_t = time.time()
     time_taken_s = (end_t - start_t) * 1000
-    await message.edit(f"Pong!\n`{time_taken_s:.3f}` ms")
+    await message.edit(f"**Pong!**\n`{time_taken_s:.3f}` ms")
 
 
 @Client.on_message(Filters.command("repo", COMMAND_HAND_LER) & Filters.me)
@@ -91,7 +92,7 @@ async def get_id(client, message):
                 username = rep.from_user.username
 
     if user_id:
-        await message.edit("__Information of User__:\n\n**User ID:** `{}`\n**Name:** `{}`\n**Username:** @{}".format(user_id, user_name, username))
+        await message.edit("User Short Info:\n\n**User ID:** `{}`\n**Name:** `{}`\n**Username:** @{}".format(user_id, user_name, username))
     elif file_id:
         await message.edit("**File's ID:** `{}`".format(file_id))
     else:

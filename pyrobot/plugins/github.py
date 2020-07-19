@@ -34,7 +34,7 @@ async def github(client, message):
             created_at = result.get("created_at", "Not Found")
 
             REPLY = (
-                f"**GitHub Info for `{username}**`"
+                f"**GitHub Info for** `{username}`"
                 f"\n**Username:** `{name}`\n**Bio:** `{bio}`\n**URL:** {url}"
                 f"\n**Company:** `{company}`\n**Created at:** `{created_at}`"
             )

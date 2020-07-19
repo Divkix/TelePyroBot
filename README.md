@@ -5,6 +5,8 @@
 
 A Telegram User / Bot based on [Pyrogram](https://github.com/pyrogram/pyrogram)
 
+Join [@MyAwesomeProjects](https://t.me/MyAwesomeProjects)!
+
 ## installing
 
 #### The Easy Way

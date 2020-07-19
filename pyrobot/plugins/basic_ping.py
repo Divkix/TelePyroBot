@@ -10,7 +10,7 @@ from pyrobot.utils.extract_user import extract_user
 ALIVE = f"`I'm Alive :3`\n<b>My Owner:</b> `{OWNER_NAME}`\n<b>Pyrogram Version:</b> `{__version__} (Layer {layer})`\n<b>Python Version:</b> `{python_version()}`\nJoin @MyAwesomeProjects for more epic shit!\n\n**Repo Link:**\n[Github](https://github.com/SkuzzyxD/TelePyroBot)"
 REPO = ("<b>UserBot is available on GitHub:</b>\n"
         "https://github.com/SkuzzyxD/TelePyroBot\n\n"
-        "More info available at: @MyAweosmeProjects")
+        "More info available at: @MyAwesomeProjects")
 # -- Constants End -- #
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))

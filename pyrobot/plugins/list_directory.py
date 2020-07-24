@@ -23,7 +23,10 @@ async def list_directories(_, message):
     if len(message.command) == 1:
         cmd = "ls"
     elif len(message.command) >= 2:
-        cmd = "ls " + message.text.split(" ", maxsplit=1)[1]
+        location = message.text.split(" ",1)[1]
+        if (message.text.split(" ")[1]).lower in ("download", "downloads")
+            location = "pyrobot/downloads"
+        cmd = "ls " + location
     else:
         await message.edit("<b>Error:</b>\n<i>Check Help documentaion for Help</i>")
 

@@ -83,7 +83,7 @@ async def down_load_media(client, sms):
                 current_message += f"File Name: {custom_file_name}\n"
                 current_message += f"{progress_str}\n"
                 current_message += f"{humanbytes(downloaded)} of {humanbytes(total_length)}\n"
-                current_message += f"Download Speed: {speed}"
+                current_message += f"Download Speed: {humanbytes(speed)}\n"
                 current_message += f"ETA: {estimated_total_time}"
                 if round(diff % 10.00) == 0 and current_message != display_message:
                     await message.edit(

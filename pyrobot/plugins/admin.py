@@ -308,6 +308,26 @@ async def purge(client, message):
     await asyncio.sleep(3)
     await message.delete()
 
+@Client.on_message(Filters.command("del", COMMAND_HAND_LER) & Filters.me)
+async def del_msg(client, message):
+    if message.chat.type in ["supergroup", "channel"]:
+        is_admin = await admin_check(message)
+        if not is_admin:
+            await asyncio.sleep(3)
+            await message.delete()
+            return
+    if message.chat.type in ["private", "bot", "group"]:
+        await message.edit("`You are not allowed to use this command here!`")
+        return
+
+    if message.reply_to_message:
+        await client.delete_messages(
+            chat_id=message.chat.id,
+            message_id=message.reply_to_message.message_id,
+            revoke=True)
+    await asyncio.sleep(3)
+    await message.delete()
+
 
 @Client.on_message(Filters.command("invite", COMMAND_HAND_LER) & Filters.me)
 async def invite_user(client, message):

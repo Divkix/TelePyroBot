@@ -79,12 +79,12 @@ async def down_load_media(client, sms):
             estimated_total_time = downloader.get_eta(human=True)
             try:
                 current_message = f"trying to download\n"
-                current_message += f"URL: {url}\n"
-                current_message += f"File Name: {custom_file_name}\n"
+                current_message += f"URL: `{url}`\n"
+                current_message += f"File Name: `{custom_file_name}`\n"
                 current_message += f"{progress_str}\n"
-                current_message += f"{humanbytes(downloaded)} of {humanbytes(total_length)}\n"
-                current_message += f"Download Speed: {humanbytes(speed)}\n"
-                current_message += f"ETA: {estimated_total_time}"
+                current_message += f"`{humanbytes(downloaded)}` **of** `{humanbytes(total_length)}`\n"
+                current_message += f"Download Speed: `{humanbytes(speed)}`\n"
+                current_message += f"ETA: `{estimated_total_time}`"
                 if round(diff % 10.00) == 0 and current_message != display_message:
                     await message.edit(
                         disable_web_page_preview=True,
@@ -108,7 +108,7 @@ async def down_load_media(client, sms):
 async def upload_as_document(client, message):
     status_message = await message.reply_text("`Uploading...`")
     if " " in message.text:
-        recvd_command, local_file_name = message.text.split(" ", 1)
+        local_file_name = message.text.split(" ", 1)[1]
         if os.path.exists(local_file_name):
             thumb_image_path = await is_thumb_image_exists(local_file_name)
             start_t = datetime.now()
@@ -136,9 +136,9 @@ async def upload_as_document(client, message):
 
 @Client.on_message(Filters.command("batchup", COMMAND_HAND_LER) & Filters.me)
 async def covid(client, message):
-    if len(message.command) == 1:
+    if len(message.text.split(" ")) == 1:
         await message.edit("`Enter a directory location`")
-    elif len(message.command) == 2:
+    elif len(message.text.split(" ",1)) == 2:
         temp_dir = message.text.split(" ", 1)[1]
     else:
         await message.edit(f"__Please check help by using__ `{COMMAND_HAND_LER}help batchup`")

@@ -276,7 +276,7 @@ async def unpin_message(client, message):
 
 @Client.on_message(Filters.command("purge", COMMAND_HAND_LER) & Filters.me)
 async def purge(client, message):
-    if message.chat.type in ["supergroup", "channel"]:
+    if message.chat.type in (("supergroup", "channel")):
         is_admin = await admin_check(message)
         if not is_admin:
             return
@@ -310,7 +310,7 @@ async def purge(client, message):
 
 @Client.on_message(Filters.command("del", COMMAND_HAND_LER) & Filters.me)
 async def del_msg(client, message):
-    if message.chat.type in ["supergroup", "channel"]:
+    if message.chat.type in (("supergroup", "channel")):
         is_admin = await admin_check(message)
         if not is_admin:
             await asyncio.sleep(3)

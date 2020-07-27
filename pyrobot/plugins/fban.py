@@ -63,14 +63,15 @@ async def unfban_user(client, message):
 async def fstat_user(client, message):
     if len(message.command) <= 3:
         if len(message.command) == 2:
-            fstat_user = message.text.split(" ",1)[1]
-            await client.send_message("@MissRose_bot", f"/fstat {fstat_user}")
+            query = message.text.split(" ",1)[1]
+            await client.send_message("@MissRose_bot", f"/fstat {query}")
         elif len(message.command) == 3:
             fstat_user = message.text.split(" ",1)[1]
             fstat_id = message.text.split(" ",1)[2]
             await client.send_message("@MissRose_bot", f"/fstat {fstat_user} {fstat_id}")
         else:
             await message.edit(f"Please check {COMMAND_HAND_LER}help on how to use")
+
     elif message.reply_to_message:
         if len(message.command) == 1:
             fstat_user = message.reply_to_message.from_user.id
@@ -81,8 +82,10 @@ async def fstat_user(client, message):
             await client.send_message("@MissRose_bot", f"/fstat {fstat_user} {fstat_id}")
         else:
             await message.edit(f"Please check {COMMAND_HAND_LER}help on how to use")
+
     else:
         await client.send_message("@MissRose_bot", "/fstat")
+
     time.sleep(1)
     msg = await client.get_history("@MissRose_bot", 1)
     msg_id = msg[0]["message_id"]

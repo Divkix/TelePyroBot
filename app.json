@@ -62,8 +62,13 @@
       "required": true
     },
     "GBAN_GROUP": {
-      "description": "A group withbots where you have permissions to gban a persion.",
+      "description": "A group with bots where you have permissions to gban a persion.",
       "required": false,
+      "value": "-100"
+    },
+    "PRIVATE_GROUP_ID": {
+      "description": "A group where all your userbot messages will be logged!",
+      "required": true,
       "value": "-100"
     }
   },

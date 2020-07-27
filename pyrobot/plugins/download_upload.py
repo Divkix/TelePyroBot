@@ -11,14 +11,13 @@ from pyrobot.utils.display_progress_dl_up import (
     progress_for_pyrogram,
     humanbytes
 )
-
 from pyrobot.utils.check_if_thumb_exists import is_thumb_image_exists
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
 Download Telegram Media
-Syntax: `{COMMAND_HAND_LER}download  <link>` or as a reply to media
+Syntax: `{COMMAND_HAND_LER}dl` / download <link> or as a reply to media
 
 Upload Media to Telegram
 Syntax: `{COMMAND_HAND_LER}upload <file location>`
@@ -44,7 +43,7 @@ async def down_load_media(client, sms):
             file_name=download_location,
             progress=progress_for_pyrogram,
             progress_args=(
-                "trying to download", message, c_time
+                "**__Trying to download...__**", message, c_time
             )
         )
         end_t = datetime.now()
@@ -72,19 +71,19 @@ async def down_load_media(client, sms):
             percentage = downloader.get_progress() * 100
             speed = downloader.get_speed()
             elapsed_time = round(diff) * 1000
-            progress_str = "[{0}{1}]\nProgress: {2}%".format(
+            progress_str = "**[{0}{1}]**\n**Progress:** __{2}%__".format(
                 ''.join(["●" for i in range(math.floor(percentage / 5))]),
                 ''.join(["○" for i in range(20 - math.floor(percentage / 5))]),
                 round(percentage, 2))
             estimated_total_time = downloader.get_eta(human=True)
             try:
-                current_message = f"trying to download\n"
-                current_message += f"URL: `{url}`\n"
-                current_message += f"File Name: `{custom_file_name}`\n"
+                current_message = f"__**Trying to download...**__\n"
+                current_message += f"**URL:** `{url}`\n"
+                current_message += f"**File Name:** `{custom_file_name}`\n"
                 current_message += f"{progress_str}\n"
-                current_message += f"`{humanbytes(downloaded)}` **of** `{humanbytes(total_length)}`\n"
-                current_message += f"Download Speed: `{humanbytes(speed)}`\n"
-                current_message += f"ETA: `{estimated_total_time}`"
+                current_message += f"__{humanbytes(downloaded)} of {humanbytes(total_length)}__\n"
+                current_message += f"**Download Speed** __{speed}__\n"
+                current_message += f"**ETA:** __{estimated_total_time}__"
                 if round(diff % 10.00) == 0 and current_message != display_message:
                     await message.edit(
                         disable_web_page_preview=True,
@@ -100,7 +99,7 @@ async def down_load_media(client, sms):
             ms = (end_t - start_t).seconds
             await message.edit(f"Downloaded to <code>{download_file_path}</code> in <u>{ms}</u> seconds", parse_mode="html")
     else:
-        await message.edit("Reply to a Telegram Media, to download it to local server.")
+        await message.edit("`Reply to a Telegram Media, to download it to local server.`")
 
 
 
@@ -128,7 +127,7 @@ async def upload_as_document(client, message):
             )
             end_t = datetime.now()
             ms = (end_t - start_t).seconds
-            await status_message.edit(f"Uploaded in {ms} seconds")
+            await status_message.edit(f"**Uploaded in {ms} seconds**")
         else:
             await status_message.edit("404: media not found")
     else:
@@ -148,8 +147,6 @@ async def covid(client, message):
         files.sort()
         await status_message.edit("`Uploading Files to Telegram...`")
         for file in files:
-            if file == "README.md":
-                continue
             c_time = time.time()
             required_file_name = temp_dir+"/"+file
             thumb_image_path = await is_thumb_image_exists(required_file_name)

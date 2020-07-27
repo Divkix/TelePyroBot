@@ -18,24 +18,20 @@ async def listbots(client, message):
     test.upload()
     test.results.share()
     result = test.results.dict()
-    await message.edit("`"
-                       "Started at "
-                       f"{result['timestamp']} \n\n"
-                       "Download "
-                       f"{speed_convert(result['download'])} \n"
-                       "Upload "
-                       f"{speed_convert(result['upload'])} \n"
-                       "Ping "
-                       f"{result['ping']} \n"
-                       "ISP "
-                       f"{result['client']['isp']}"
-                       "`", parse_mode="md")
+    await message.edit("**Started at:** "
+                       f"`{result['timestamp']}`\n\n"
+                       "**Download:** "
+                       f"`{speed_convert(result['download'])}`\n"
+                       "**Upload:** "
+                       f"`{speed_convert(result['upload'])}`\n"
+                       "**Ping:** "
+                       f"`{result['ping']}`\n"
+                       "**ISP:** "
+                       f"`{result['client']['isp']}`",
+                       parse_mode="markdown")
 
 
 def speed_convert(size):
-    """
-    Hi human, you can't read bytes?
-    """
     power = 2 ** 10
     zero = 0
     units = {0: '', 1: 'Kb/s', 2: 'Mb/s', 3: 'Gb/s', 4: 'Tb/s'}

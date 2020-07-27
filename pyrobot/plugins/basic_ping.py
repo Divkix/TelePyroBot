@@ -2,21 +2,21 @@ import time
 import os
 from platform import python_version
 from pyrogram import Client, Filters, __version__
-from pyrobot import COMMAND_HAND_LER, OWNER_NAME
+from pyrobot import COMMAND_HAND_LER, OWNER_NAME, UB_VERSION
 from pyrogram.api.all import layer
 from pyrobot.utils.extract_user import extract_user
 
 # -- Constants -- #
-ALIVE = f"`I'm Alive :3`\n<b>My Owner:</b> `{OWNER_NAME}`\n<b>Pyrogram Version:</b> `{__version__} (Layer {layer})`\n<b>Python Version:</b> `{python_version()}`\nJoin @MyAwesomeProjects for more epic shit!\n\n**Repo Link:**\n[Github](https://github.com/SkuzzyxD/TelePyroBot)"
+ALIVE = f"`I'm Alive :3 Saaaar`\n<b>My Owner:</b> `{OWNER_NAME}`\n<b>Pyrogram Version:</b> `{__version__} (Layer {layer})`\n<b>Python Version:</b> `{python_version()}`\nUserBot Version: {UB_VERSION}\nJoin @MyAwesomeProjects for more epic shit!\n\n**Repo Link:**\n[Github](https://github.com/MyAwesomeProjects/TelePyroBot)"
 REPO = ("<b>UserBot is available on GitHub:</b>\n"
-        "https://github.com/SkuzzyxD/TelePyroBot\n\n"
+        "https://github.com/MyAwesomeProjects/TelePyroBot\n\n"
         "More info available at: @MyAwesomeProjects")
 # -- Constants End -- #
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
-`{COMMAND_HAND_LER}alive` \ start: Check if bot is alive or not.
+`{COMMAND_HAND_LER}alive` / start: Check if bot is alive or not.
 
 `{COMMAND_HAND_LER}ping`: Get pinged.
 

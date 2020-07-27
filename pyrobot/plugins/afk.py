@@ -5,6 +5,7 @@ from pyrogram import Client, Filters, ChatPermissions
 from pyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN, PRIVATE_GROUP_ID, OWNER_ID, OWNER_NAME
 from pyrobot.utils.admin_check import admin_check
 from pyrobot.utils.parser import mention_markdown, escape_markdown
+from pyrobot.utils.msg_types import get_message_type
 from pyrobot.utils.sql_helpers.afk_db import set_afk, get_afk
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))

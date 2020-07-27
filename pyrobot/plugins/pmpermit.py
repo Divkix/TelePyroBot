@@ -43,6 +43,7 @@ async def pm_block(client, message):
 async def approve_pm(client, message):
     set_whitelist(message.chat.id, True)
     await message.edit("**__PM permission was approved!__**")
+    await client.send_message(PRIVATE_GROUP_ID, "{} **is approved to contact you in PM!**".format(mention_markdown(message.from_user.id, message.from_user.first_name)))
     await asyncio.sleep(5)
     await message.delete()
 
@@ -51,5 +52,6 @@ async def approve_pm(client, message):
 async def revoke_pm_block(client, message):
     del_whitelist(message.chat.id)
     await message.edit("__**PM permission was revoked!**__")
+    await client.send_message(PRIVATE_GROUP_ID, "{}'s *permission to contact you in PM was revoked!**".format(mention_markdown(message.from_user.id, message.from_user.first_name)))
     await asyncio.sleep(5)
     await message.delete()

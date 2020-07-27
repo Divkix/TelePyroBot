@@ -52,6 +52,6 @@ async def approve_pm(client, message):
 async def revoke_pm_block(client, message):
     del_whitelist(message.chat.id)
     await message.edit("__**PM permission was revoked!**__")
-    await client.send_message(PRIVATE_GROUP_ID, "{}'s *permission to contact you in PM was revoked!**".format(mention_markdown(message.from_user.id, message.from_user.first_name)))
+    await client.send_message(PRIVATE_GROUP_ID, "{}'s **permission to contact you in PM has been revoked!**".format(mention_markdown(message.chat.id, message.chat.title)))
     await asyncio.sleep(5)
     await message.delete()

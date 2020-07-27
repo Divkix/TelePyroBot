@@ -80,8 +80,8 @@ async def afk_mentioned(client, message):
         MENTIONED.append(
             {"user": message.from_user.first_name, "user_id": message.from_user.id, "chat": message.chat.title,
              "chat_id": cid, "text": text, "message_id": message.message_id})
-        await client.send_message(PRIVATE_GROUP_ID, "{} mentioned you in {}\n\n{}\n\nTotal count: `{}`".format(
-            mention_markdown(message.from_user.id, message.from_user.first_name), message.chat.title, text[:3500],
+        await client.send_message(PRIVATE_GROUP_ID, "{}({}) mentioned you in {}({})\nText:\n`{}`\n\nTotal count: `{}`".format(
+            mention_markdown(message.from_user.id, message.from_user.first_name), message.from_user.id, message.chat.title, message.chat.id, text[:3500],
             len(MENTIONED)))
 
 
@@ -90,6 +90,7 @@ async def afk_mentioned(client, message):
 async def no_longer_afk(client, message):
     global MENTIONED
     get = get_afk()
+    unafkmsg = await message.edit("`No Longer AFK!`")
     if get and get['afk']:
         await client.send_message(PRIVATE_GROUP_ID, "No longer afk!")
         set_afk(False, "")
@@ -101,4 +102,6 @@ async def no_longer_afk(client, message):
             text += "- [{}](https://t.me/c/{}/{}) ({}): {}\n".format(escape_markdown(x["user"]), x["chat_id"],
                                                                      x["message_id"], x["chat"], msg_text)
         await client.send_message(PRIVATE_GROUP_ID, text)
+        await asyncio.sleep(3)
+        await unafkmsg.detete()
         MENTIONED = []

@@ -49,6 +49,7 @@ async def down_load_media(client, sms):
         end_t = datetime.now()
         ms = (end_t - start_t).seconds
         await message.edit(f"Downloaded to <code>{the_real_download_location}</code> in <u>{ms}</u> seconds", parse_mode="html")
+        await sms.delete()
     elif len(sms.command) > 1:
         start_t = datetime.now()
         the_url_parts = " ".join(sms.command[1:])
@@ -132,6 +133,7 @@ async def upload_as_document(client, message):
             await status_message.edit("404: media not found")
     else:
         await status_message.edit(f"<code>{COMMAND_HAND_LER}upload FILE_PATH</code> to upload to current Telegram chat")
+    await message.delete()
 
 @Client.on_message(Filters.command("batchup", COMMAND_HAND_LER) & Filters.me)
 async def covid(client, message):

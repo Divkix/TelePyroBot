@@ -39,7 +39,7 @@ async def promote_usr(client, message):
     is_admin = await admin_check(message)
     chat_id = message.chat.id
     if not is_admin:
-    	await msg.edit("`I'm not admin, bot plays Hat Bhen ki Lodi on Spotify!`")
+        await msg.edit("`I'm not admin, bot plays Hat Bhen ki Lodi on Spotify!`")
         return
     if len(message.command) == 2:
         user_id = message.command[1]
@@ -73,7 +73,7 @@ async def demote_usr(client, message):
     is_admin = await admin_check(message)
     chat_id = message.chat.id
     if not is_admin:
-    	await msg.edit("`I'm not admin, bot plays Hat Bhen ki Lodi on Spotify!`")
+        await msg.edit("`I'm not admin, bot plays Hat Bhen ki Lodi on Spotify!`")
         return
     if len(message.command) == 2:
         user_id = message.command[1]

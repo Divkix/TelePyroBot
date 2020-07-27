@@ -83,10 +83,11 @@ async def afk_mentioned(client, message):
         await client.send_message(PRIVATE_GROUP_ID, "{}({}) mentioned you in {}({})\nText:\n`{}`\n\nTotal count: `{}`".format(
             mention_markdown(message.from_user.id, message.from_user.first_name), message.from_user.id, message.chat.title, message.chat.id, text[:3500],
             len(MENTIONED)))
+    await message.stop_propagation()
 
 
-#@Client.on_message(Filters.me & Filters.group, group=12)
-@Client.on_message((Filters.command("unafk", COMMAND_HAND_LER)) & Filters.me)
+@Client.on_message(Filters.me & Filters.group & ~Filters.group(PRIVATE_GROUP_ID), group=12)
+#@Client.on_message((Filters.command("unafk", COMMAND_HAND_LER)) & Filters.me)
 async def no_longer_afk(client, message):
     global MENTIONED
     get = get_afk()
@@ -105,3 +106,4 @@ async def no_longer_afk(client, message):
         await asyncio.sleep(3)
         await unafkmsg.detete()
         MENTIONED = []
+        await message.stop_propagation()

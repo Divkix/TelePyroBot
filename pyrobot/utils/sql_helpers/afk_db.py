@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, Boolean, UnicodeText
-from pyrobot import BASE, SESSION, OWNER_ID
-
+from pyrobot import OWNER_ID
+from pyrobot.utils.sql_helpers import BASE, SESSION
 
 class AFK(BASE):
     __tablename__ = "afk"

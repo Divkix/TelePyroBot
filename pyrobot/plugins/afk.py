@@ -5,10 +5,12 @@ from pyrogram import Client, Filters, ChatPermissions
 from pyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN, PRIVATE_GROUP_ID, OWNER_ID, OWNER_NAME
 from pyrobot.utils.admin_check import admin_check
 from pyrobot.utils.parser import mention_markdown, escape_markdown
-from pyrobot.utils.msg_types import get_message_type
+from pyrobot.utils.msg_types import Types, get_message_type
 from pyrobot.utils.sql_helpers.afk_db import set_afk, get_afk
 
+
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
+
 __HELP__ = f"""
 Set yourself to afk.
 
@@ -31,11 +33,9 @@ async def afk(client, message):
     if len(message.text.split()) >= 2:
         set_afk(True, message.text.split(None, 1)[1])
         await message.edit_text(
-            "{} is now AFK!\nBecause of {}".format(mention_markdown(message.from_user.id, message.from_user.first_name),
-                                                   message.text.split(None, 1)[1]))
+            "I am going AFK now...\nBecause of {}".format(message.text.split(None, 1)[1]))
         await client.send_message(PRIVATE_GROUP_ID,
-            "{} is now AFK!\nBecause of {}".format(mention_markdown(message.from_user.id, message.from_user.first_name),
-                                                   message.text.split(None, 1)[1]))
+            "You are AFK!\nBecause of {}".format(message.text.split(None, 1)[1]))
         await asyncio.sleep(3)
         await message.delete()
         
@@ -67,9 +67,9 @@ async def afk_mentioned(client, message):
         AFK_RESTIRECT[cid] = int(time.time()) + DELAY_TIME
         if get['reason']:
             await message.reply_text(
-                "Sorry, {} is AFK!\nBecause of {}".format(mention_markdown(OWNER_ID, OWNER_NAME), get['reason']))
+                "Sorry, My Master {} is AFK right now!\nBecause of {}".format(mention_markdown(OWNER_ID, OWNER_NAME), get['reason']))
         else:
-            await message.reply_text("Sorry, {} is AFK!".format(mention_markdown(OWNER_ID, OWNER_NAME)))
+            await message.reply_text("Sorry, My Master {} is AFK right now!".format(mention_markdown(OWNER_ID, OWNER_NAME)))
 
         _, message_type = get_message_type(message)
         if message_type == Types.TEXT:
@@ -82,7 +82,7 @@ async def afk_mentioned(client, message):
              "chat_id": cid, "text": text, "message_id": message.message_id})
         await client.send_message(PRIVATE_GROUP_ID, "{} mentioned you in {}\n\n{}\n\nTotal count: `{}`".format(
             mention_markdown(message.from_user.id, message.from_user.first_name), message.chat.title, text[:3500],
-            len(MENTIONED)), reply_markup=button)
+            len(MENTIONED)))
 
 
 #@Client.on_message(Filters.me & Filters.group, group=12)

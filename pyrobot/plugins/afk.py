@@ -91,11 +91,9 @@ async def afk_mentioned(client, message):
 async def no_longer_afk(client, message):
     global MENTIONED
     get = get_afk()
-    await message.edit("`No Longer AFK!`")
-    await asyncio.sleep(3)
     await message.detete()
     if get and get['afk']:
-        await client.send_message(PRIVATE_GROUP_ID, "No longer afk!")
+        await client.send_message(PRIVATE_GROUP_ID, "`No longer afk!`")
         set_afk(False, "")
         text = "**Total {} mentioned you**\n".format(len(MENTIONED))
         for x in MENTIONED:

@@ -86,8 +86,8 @@ async def afk_mentioned(client, message):
     await message.stop_propagation()
 
 
-#@Client.on_message(Filters.me & Filters.group & ~Filters.chat(PRIVATE_GROUP_ID), group=12)
-@Client.on_message((Filters.command("unafk", COMMAND_HAND_LER)) & Filters.me)
+@Client.on_message(Filters.me & Filters.group & ~Filters.chat(PRIVATE_GROUP_ID), group=12)
+#@Client.on_message((Filters.command("unafk", COMMAND_HAND_LER)) & Filters.me)
 async def no_longer_afk(client, message):
     global MENTIONED
     get = get_afk()

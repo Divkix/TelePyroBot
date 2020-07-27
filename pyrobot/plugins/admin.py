@@ -19,20 +19,14 @@ Usage: {COMMAND_HAND_LER}ban (Username/User ID or reply to message)
 `{COMMAND_HAND_LER}mute`: Mutes a user in the Group.
 Usage: {COMMAND_HAND_LER}mute (Username/User ID or reply to message)
 
-`{COMMAND_HAND_LER}unrestrict` \ unban \ unmute: Unrestricts a user in the Group.
+`{COMMAND_HAND_LER}unrestrict` / unban / unmute: Unrestricts a user in the Group.
 Usage: {COMMAND_HAND_LER}unmute (Username/User ID or reply to message)
 
 `{COMMAND_HAND_LER}pin`: Pins the message in the Group.
 Usage: {COMMAND_HAND_LER}pin (as a reply to the message)
 
-`{COMMAND_HAND_LER}unpin`: Pins the message in the Group.
+`{COMMAND_HAND_LER}unpin`: unins the message in the Group.
 Usage: {COMMAND_HAND_LER}unpin
-
-`{COMMAND_HAND_LER}purge`: Deletes messages upto replied message.
-Usage: {COMMAND_HAND_LER}purge (as a reply to the message)
-
-`{COMMAND_HAND_LER}del`: Deletes a single message.
-Usage: {COMMAND_HAND_LER}del (as a reply to the message)
 
 `{COMMAND_HAND_LER}invite`: Add the user to your Group.
 Usage: {COMMAND_HAND_LER}invite (Username or User ID)
@@ -41,10 +35,11 @@ Usage: {COMMAND_HAND_LER}invite (Username or User ID)
 
 @Client.on_message(Filters.command("promote", COMMAND_HAND_LER) & Filters.me)
 async def promote_usr(client, message):
-    await message.edit("`Trying to Promote user...`")
+    msg = await message.edit("`Trying to Promote user...`")
     is_admin = await admin_check(message)
     chat_id = message.chat.id
     if not is_admin:
+        await msg.edit("`I'm not admin, bot plays Hat Bhen ki Lodi on Spotify!`")
         return
     if len(message.command) == 2:
         user_id = message.command[1]
@@ -74,10 +69,11 @@ async def promote_usr(client, message):
 
 @Client.on_message(Filters.command("demote", COMMAND_HAND_LER) & Filters.me)
 async def demote_usr(client, message):
-    await message.edit("`Trying to Demote user...`")
+    msg = await message.edit("`Trying to Demote user...`")
     is_admin = await admin_check(message)
     chat_id = message.chat.id
     if not is_admin:
+        await msg.edit("`I'm not admin, bot plays Hat Bhen ki Lodi on Spotify!`")
         return
     if len(message.command) == 2:
         user_id = message.command[1]
@@ -109,11 +105,10 @@ async def demote_usr(client, message):
 async def ban_usr(client, message):
     await message.edit("`Trying to Ban user...`")
     is_admin = await admin_check(message)
-    chat_id = message.chat.id
     if not is_admin:
         return
     if len(message.command) == 2:
-        user_id = message.command[1]
+        user_id = message.text.split(" ")[1]
         try:
             from_user = await client.get_users(user_id)
         except Exception:
@@ -125,8 +120,8 @@ async def ban_usr(client, message):
         await message.edit("`no valid user_id or message specified`")
         return
     try:
-        get_mem = await client.get_chat_member(chat_id, from_user)
-        await client.kick_chat_member(chat_id, user_id)
+        get_mem = await client.get_chat_member(message.chat.id, from_user)
+        await client.kick_chat_member(message.chat.id, user_id)
         await message.edit(f"`Banned {get_mem.first_name} `")
     except Exception as ef:
         await message.edit(f"**Error:**\n\n`{ef}`")
@@ -274,61 +269,6 @@ async def unpin_message(client, message):
         await message.delete()
 
 
-@Client.on_message(Filters.command("purge", COMMAND_HAND_LER) & Filters.me)
-async def purge(client, message):
-    if message.chat.type in (("supergroup", "channel")):
-        is_admin = await admin_check(message)
-        if not is_admin:
-            return
-    if message.chat.type in ["private", "bot", "group"]:
-        await message.edit("`You are not allowed to use this command here!`")
-        return
-
-    message_ids = []
-    count_del_etion_s = 0
-
-    if message.reply_to_message:
-        for a_s_message_id in range(message.reply_to_message.message_id, message.message_id):
-            message_ids.append(a_s_message_id)
-            if len(message_ids) == TG_MAX_SELECT_LEN:
-                await client.delete_messages(
-                    chat_id=message.chat.id,
-                    message_ids=message_ids,
-                    revoke=True)
-                count_del_etion_s += len(message_ids)
-                message_ids = []
-        if len(message_ids) > 0:
-            await client.delete_messages(
-                chat_id=message.chat.id,
-                message_ids=message_ids,
-                revoke=True)
-            count_del_etion_s += len(message_ids)
-
-    await message.edit(f"`Deleted <u>{count_del_etion_s}</u> messages`")
-    await asyncio.sleep(3)
-    await message.delete()
-
-@Client.on_message(Filters.command("del", COMMAND_HAND_LER) & Filters.me)
-async def del_msg(client, message):
-    if message.chat.type in (("supergroup", "channel")):
-        is_admin = await admin_check(message)
-        if not is_admin:
-            await asyncio.sleep(3)
-            await message.delete()
-            return
-    if message.chat.type in ["private", "bot", "group"]:
-        await message.edit("`You are not allowed to use this command here!`")
-        return
-
-    if message.reply_to_message:
-        await client.delete_messages(
-            chat_id=message.chat.id,
-            message_id=message.reply_to_message.message_id,
-            revoke=True)
-    await asyncio.sleep(3)
-    await message.delete()
-
-
 @Client.on_message(Filters.command("invite", COMMAND_HAND_LER) & Filters.me)
 async def invite_user(client, message):
     if len(message.command) > 2:
@@ -339,14 +279,14 @@ async def invite_user(client, message):
     if user_id:
         try:
             from_user = await client.get_users(user_id)
-        except Exception:
-            await message.edit("no valid user_id or message specified")
+        except:
+            await message.edit("No User found!")
             return
     else:
-        await message.edit("no valid user_id or message specified")
+        await message.edit("User_id not defined")
         return
     try:
-        await client.add_chat_members(chat_id, from_user)
+        await client.add_chat_members(chat_id, from_user.id)
     except Exception as ef:
         await message.edit(f"<b>Error:</b>\n`{ef}`")
         return

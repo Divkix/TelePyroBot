@@ -22,7 +22,7 @@ from bs4 import BeautifulSoup
 from pyrogram import Client, Filters
 
 from pyrobot import COMMAND_HAND_LER
-from pyrobot.utils.misc.parser import escape_markdown
+from pyrobot.utils.parser import escape_markdown
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 

@@ -1,7 +1,7 @@
 import os
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
-from pyrobot.utils.misc.parser import mention_html, mention_markdown
+from pyrobot.utils.parser import mention_html, mention_markdown
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 

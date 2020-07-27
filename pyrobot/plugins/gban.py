@@ -13,41 +13,61 @@ __help__ = f"""
 
 @Client.on_message(Filters.command(["gban", "globalban"], COMMAND_HAND_LER) & Filters.me)
 async def gban_user(client, message):
-    await message.edit("`Initiating Global Ban for user...`")
+    msg = await message.edit("`Initiating Global Ban for user...`")
     if len(message.command) >= 3:
         user_id = message.text.split(" ",2)[1]
         gban_reason = message.text.split(" ",2)[2]
+
         if user_id.startswith("@"):
             user_name = user_id
             await client.send_message(GBAN_GROUP, f"/gban {user_name} {gban_reason}")
+
         elif message.reply_to_message:
             user_id = message.reply_to_message.from_user.id
-            await client.send_message(GBAN_GROUP, f"/gban [user](tg://user?id={user_id}) {gban_reason}")
+            if gban_reason:
+            	await client.send_message(GBAN_GROUP, f"/gban [user](tg://user?id={user_id}) {gban_reason}")
+            else:
+            	await client.send_message(GBAN_GROUP, f"/gban [user](tg://user?id={user_id}) Gbanning User")
+
         else:
-            await client.send_message(GBAN_GROUP, f"/gban [user](tg://user?id={user_id}) {gban_reason}")
+            if gban_reason:
+            	await client.send_message(GBAN_GROUP, f"/gban [user](tg://user?id={user_id}) {gban_reason}")
+            else:
+            	await client.send_message(GBAN_GROUP, f"/gban [user](tg://user?id={user_id}) Gbanning User")
+
     else:
-        await message.edit("`Please give a proper **user_id** or **gban_reason**`")
+        await msg.edit("`Please give a proper **user_id** and **gban_reason**`")
         return
+
     await client.read_history(GBAN_GROUP)
-    await message.edit("`User has been gbanned!`")
+    await msg.edit("`User has been gbanned!`")
 
 
 @Client.on_message(Filters.command(["ungban", "unglobalban", "gunban", "globalunban"], COMMAND_HAND_LER) & Filters.me)
 async def ungban_user(client, message):
-    await message.edit("`Initiating Global UnBan for user...`")
+    msg = await message.edit("`Initiating Global Unban for user...`")
+
     if len(message.command) >= 3:
         user_id = message.text.split(" ",2)[1]
         ungban_reason = message.text.split(" ",2)[2]
+
         if user_id.startswith("@"):
             user_name = user_id
             await client.send_message(GBAN_GROUP, f"/ungban {user_name} {ungban_reason}")
+
         elif message.reply_to_message:
             user_id = message.reply_to_message.from_user.id
-            await client.send_message(GBAN_GROUP, f"/ungban [user](tg://user?id={user_id}) {ungban_reason}")
+            if gban_reason:
+            	await client.send_message(GBAN_GROUP, f"/ungban [user](tg://user?id={user_id}) {gban_reason}")
+            else:
+            	await client.send_message(GBAN_GROUP, f"/ungban [user](tg://user?id={user_id}) Ungbanning User")
         else:
-            await client.send_message(GBAN_GROUP, f"/ungban [user](tg://user?id={user_id}) {ungban_reason}")
+            if gban_reason:
+            	await client.send_message(GBAN_GROUP, f"/ungban [user](tg://user?id={user_id}) {gban_reason}")
+            else:
+            	await client.send_message(GBAN_GROUP, f"/ungban [user](tg://user?id={user_id}) Ungbanning User")
     else:
-        await message.edit("`Please give a proper **user_id** or **ungban_reason**`")
+        await msg.edit("`Please give a proper **user_id** or **ungban_reason**`")
         return
     await client.read_history(GBAN_GROUP)
-    await message.edit("`User has been ungbanned!`")
+    await msg.edit("`User has been ungbanned!`")

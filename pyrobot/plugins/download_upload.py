@@ -70,7 +70,7 @@ async def down_load_media(client, sms):
             now = time.time()
             diff = now - c_time
             percentage = downloader.get_progress() * 100
-            speed = downloader.get_speed()
+            speed = downloader.get_speed(human=True)
             elapsed_time = round(diff) * 1000
             progress_str = "**[{0}{1}]**\n**Progress:** __{2}%__".format(
                 ''.join(["●" for i in range(math.floor(percentage / 5))]),

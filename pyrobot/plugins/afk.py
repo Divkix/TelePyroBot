@@ -1,4 +1,5 @@
 import os
+import time
 import asyncio
 from pyrogram import Client, Filters, ChatPermissions
 from pyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN, PRIVATE_GROUP_ID, OWNER_ID, OWNER_NAME
@@ -83,6 +84,7 @@ async def afk_mentioned(client, message):
             len(MENTIONED)), reply_markup=button)
 
 
+#@Client.on_message(Filters.me & Filters.group, group=12)
 @Client.on_message((Filters.command("unafk", COMMAND_HAND_LER)) & Filters.me)
 async def no_longer_afk(client, message):
     global MENTIONED

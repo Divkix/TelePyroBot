@@ -2,7 +2,7 @@ import re
 import os
 import asyncio
 from pyrogram import Client, Filters
-from pyrobot import COMMAND_HAND_LER, LOGGER, OWNER_ID, PM_PERMIT, PRIVATE_GROUP_ID
+from pyrobot import COMMAND_HAND_LER, LOGGER, OWNER_ID, PM_PERMIT, PRIVATE_GROUP_ID, OWNER_NAME
 from pyrobot.utils.parser import mention_markdown
 from pyrobot.utils.sql_helpers.pmpermit_db import set_whitelist, get_whitelist, del_whitelist
 

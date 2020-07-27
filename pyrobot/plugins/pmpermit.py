@@ -26,7 +26,6 @@ async def pm_block(client, message):
     if not PM_PERMIT:
         return
     if not get_whitelist(message.chat.id):
-        await client.read_history(message.chat.id)
         if message.text:
             for x in message.text.lower().split():
                 if x in BLACKLIST:
@@ -37,7 +36,7 @@ async def pm_block(client, message):
                 else:
                     await message.reply_text(welc_txt)
                     await asyncio.sleep(2)
-                    await client.send_message(PRIVATE_GROUP_ID, "{} **wants to contact you in PM**".format(mention_markdown(message.chat.first_name, message.chat.id)))    
+                    await client.send_message(PRIVATE_GROUP_ID, "{} **wants to contact you in PM**".format(mention_markdown(message.from_user.id, message.from_user.first_name)))    
 
 
 @Client.on_message(Filters.me & Filters.command(["approve", "pm"], COMMAND_HAND_LER) & Filters.private)

@@ -83,7 +83,7 @@ async def afk_mentioned(client, message):
             len(MENTIONED)), reply_markup=button)
 
 
-@Client.on_message(Filters.me & Filters.group, group=12)
+@Client.on_message((Filters.command("unafk", COMMAND_HAND_LER)) & Filters.me)
 async def no_longer_afk(client, message):
     global MENTIONED
     get = get_afk()

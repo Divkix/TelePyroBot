@@ -122,6 +122,7 @@ def get_file_id(msg: Message):
             data_type = Types.VIDEO_NOTE
     return data_type, content
 
+
 def get_message_type(msg):
     if msg.text or msg.caption:
         content = None
@@ -160,3 +161,8 @@ def get_message_type(msg):
     elif msg.animation:
         content = msg.animation.file_id
         message_type = Types.ANIMATION
+
+    else:
+        return None, None
+
+    return content, message_type

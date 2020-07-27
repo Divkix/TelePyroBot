@@ -37,16 +37,20 @@ async def pm_block(client, message):
                 else:
                     await message.reply_text(welc_txt)
                     await asyncio.sleep(2)
-                    await client.send_message(PRIVATE_GROUP_ID, "{} **wants to contact you in PM**".format(mention_markdown(message.chat.first_name)))    
+                    await client.send_message(PRIVATE_GROUP_ID, "{} **wants to contact you in PM**".format(mention_markdown(message.chat.first_name, message.chat.id)))    
 
 
 @Client.on_message(Filters.me & Filters.command(["approve", "pm"], COMMAND_HAND_LER) & Filters.private)
 async def approve_pm(client, message):
     set_whitelist(message.chat.id, True)
-    await message.edit("**PM permission was approved!**")
+    await message.edit("**__PM permission was approved!__**")
+    await asyncio.sleep(5)
+    await message.delete()
 
 
 @Client.on_message(Filters.me & Filters.command(["revoke", "disapprove", "dispm"], COMMAND_HAND_LER) & Filters.private)
 async def revoke_pm_block(client, message):
     del_whitelist(message.chat.id)
-    await message.edit("**PM permission was revoked!**")
+    await message.edit("__**PM permission was revoked!**__")
+    await asyncio.sleep(5)
+    await message.delete()

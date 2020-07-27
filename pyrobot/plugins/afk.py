@@ -91,7 +91,9 @@ async def afk_mentioned(client, message):
 async def no_longer_afk(client, message):
     global MENTIONED
     get = get_afk()
-    unafkmsg = await message.edit("`No Longer AFK!`")
+    await message.edit("`No Longer AFK!`")
+    await asyncio.sleep(3)
+    await message.detete()
     if get and get['afk']:
         await client.send_message(PRIVATE_GROUP_ID, "No longer afk!")
         set_afk(False, "")
@@ -103,7 +105,5 @@ async def no_longer_afk(client, message):
             text += "- [{}](https://t.me/c/{}/{}) ({}): {}\n".format(escape_markdown(x["user"]), x["chat_id"],
                                                                      x["message_id"], x["chat"], msg_text)
         await client.send_message(PRIVATE_GROUP_ID, text)
-        await asyncio.sleep(3)
-        await unafkmsg.detete()
         MENTIONED = []
         await message.stop_propagation()

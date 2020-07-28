@@ -48,7 +48,7 @@ async def take_screen_shot(video_file: str, duration: int, path: str = '') -> Op
     return thumb_image_path if os.path.exists(thumb_image_path) else None
 
 
-@Client.on_message(Filters.me & Filters.command("reverse", Command))
+@Client.on_message(Filters.me & Filters.command("reverse", COMMAND_HAND_LER))
 async def google_rs(client, message):
     start = datetime.now()
     dis_loc = ''

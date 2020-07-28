@@ -68,8 +68,8 @@ async def google_rs(client, message):
                 await message.edit("`Something went wrong in Conversion`")
                 await asyncio.sleep(5)
                 await message.delete()"""
-                await message.edit("<i>Currently not supported!</i>")
-                return
+            await message.edit("<i>Currently not supported!</i>")
+            return
             dis_loc = img_file
         base_url = "http://www.google.com"
         if dis_loc:

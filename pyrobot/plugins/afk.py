@@ -20,6 +20,9 @@ But you will still in afk, and always reply when got mentioned.
 **Set AFK status**:
 `{COMMAND_HAND_LER}afk <reason>` Set yourself to afk, give a reason if need.
 * reason is optional
+
+whenever you send any message to any other chat that your `PRIVATE_GROUP_ID`,
+the afk status would be set to False!
 """
 
 # Set priority to 11 and 12

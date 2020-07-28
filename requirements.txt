@@ -27,3 +27,4 @@ pafy
 pyDownload
 pyfiglet
 spotdl
+bs4

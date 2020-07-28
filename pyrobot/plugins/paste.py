@@ -20,7 +20,7 @@ async def paste_bin(client, message):
     downloaded_file_name = None
 
     if message.reply_to_message and message.reply_to_message.media:
-        filename = TMP_DOWNLOAD_DIRECTORY+"/"+tmp_file_paste.txt
+        filename = TMP_DOWNLOAD_DIRECTORY+"/tmp_file_paste.txt"
         await message.reply_to_message.download(
             file_name=filename
         )
@@ -31,7 +31,7 @@ async def paste_bin(client, message):
         for m in m_list:
             downloaded_file_name += m.decode("UTF-8")
             downloaded_file_name += "\n"
-        os.remove(TMP_DOWNLOAD_DIRECTORY+"/"+tmp_file_paste.txt)
+        os.remove(TMP_DOWNLOAD_DIRECTORY+"/tmp_file_paste.txt")
     elif message.reply_to_message:
         downloaded_file_name = message.reply_to_message.text.html
     else:

@@ -9,6 +9,8 @@ from pyrobot.utils.string import extract_time
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
+Manage Tasks with your userbot easily, great plugin for people to manage their chats.
+
 `{COMMAND_HAND_LER}promote`: Promotes a user in the Group.
 Usage: {COMMAND_HAND_LER}promote (Username/User ID or reply to message)
 

@@ -38,7 +38,7 @@ async def afk(client, message):
             "You are AFK!\nBecause of {}".format(message.text.split(None, 1)[1]))
         await asyncio.sleep(3)
         await message.delete()
-        
+
     else:
         set_afk(True, "")
         await message.edit_text(
@@ -50,7 +50,7 @@ async def afk(client, message):
     return
 
 
-@Client.on_message(Filters.mentioned & ~Filters.bot, group=11)
+@Client.on_message(Filters.mentioned & ~Filters.bot & ~Filters.chat(PRIVATE_GROUP_ID), group=11)
 async def afk_mentioned(client, message):
     global MENTIONED
     get = get_afk()

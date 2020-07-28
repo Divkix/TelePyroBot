@@ -23,8 +23,6 @@ Reverse search any supported media by google
 
 screen_shot = "pyrobot/downloads/"
 
-_LOG = logging.getLogger(__name__)
-
 
 async def run_cmd(cmd: str) -> Tuple[str, str, int, int]:
     """run command in terminal."""

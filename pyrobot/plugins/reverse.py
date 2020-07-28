@@ -49,6 +49,7 @@ async def take_screen_shot(video_file: str, duration: int, path: str = '') -> Op
 
 @Client.on_message(Filters.command("reverse", COMMAND_HAND_LER) & Filters.me)
 async def google_rs(client, message):
+    await message.edit("`Searching...`")
     start = datetime.now()
     out_str = "`Reply to an image`"
     if message.reply_to_message:
@@ -82,7 +83,7 @@ async def google_rs(client, message):
         else:
             await message.delete()
             return
-        await message.edit("`Found Google Result.`")
+        await message.edit("`Found Google Results...`")
         headers = {
             "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0"
         }

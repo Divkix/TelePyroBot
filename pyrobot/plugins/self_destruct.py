@@ -6,7 +6,7 @@ from pyrobot import COMMAND_HAND_LER
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
-`{COMMAND_HAND_LER}sdmsg <message> = <time in seconds>`
+`{COMMAND_HAND_LER}sdmsg <message> | <time in seconds>`
 
 The command will automatically destruct the message after specified time.
 """
@@ -18,7 +18,7 @@ async def self_destruct(client, message):
     ttl = 0
     if input_str:
         if "=" in input_str:
-            msg, ttl = input_str.split("=")
+            msg, ttl = input_str.split("|")
         else:
             await message.reply_text("__Check help to know how to use__")
             return

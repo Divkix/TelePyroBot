@@ -1,8 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-# (c) Shrimadhav U K
-
-
 import os
 import random
 import time
@@ -54,18 +49,12 @@ async def take_screen_shot(file_name: str, ttl: str) -> str:
 
 
 def gen_tg_thumbnail(downloaded_file_name: str) -> str:
-    # https://stackoverflow.com/a/21669827/4723940
     Image.open(downloaded_file_name).convert("RGB").save(downloaded_file_name)
     metadata = extractMetadata(createParser(downloaded_file_name))
     height = 0
     if metadata.has("height"):
         height = metadata.get("height")
-    # resize image
-    # ref: https://t.me/PyrogramChat/44663
     img = Image.open(downloaded_file_name)
-    # https://stackoverflow.com/a/37631799/4723940
-    # img.thumbnail((320, 320))
     img.resize((320, height))
     img.save(downloaded_file_name, "JPEG")
-    # https://pillow.readthedocs.io/en/3.1.x/reference/Image.html#create-thumbnails
     return downloaded_file_name

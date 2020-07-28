@@ -20,6 +20,9 @@ But you will still in afk, and always reply when got mentioned.
 **Set AFK status**:
 `{COMMAND_HAND_LER}afk <reason>` Set yourself to afk, give a reason if need.
 * reason is optional
+
+whenever you send any message to any other chat that your `PRIVATE_GROUP_ID`,
+the afk status would be set to False!
 """
 
 # Set priority to 11 and 12
@@ -38,7 +41,7 @@ async def afk(client, message):
             "You are AFK!\nBecause of {}".format(message.text.split(None, 1)[1]))
         await asyncio.sleep(3)
         await message.delete()
-        
+
     else:
         set_afk(True, "")
         await message.edit_text(
@@ -50,7 +53,7 @@ async def afk(client, message):
     return
 
 
-@Client.on_message(Filters.mentioned & ~Filters.bot, group=11)
+@Client.on_message(Filters.mentioned & ~Filters.bot & ~Filters.chat(PRIVATE_GROUP_ID), group=11)
 async def afk_mentioned(client, message):
     global MENTIONED
     get = get_afk()

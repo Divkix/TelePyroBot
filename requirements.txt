@@ -1,4 +1,5 @@
 git+https://github.com/pyrogram/pyrogram@asyncio-dev
+psutil
 tgcrypto
 asyncio
 aiohttp
@@ -27,3 +28,4 @@ pafy
 pyDownload
 pyfiglet
 spotdl
+bs4

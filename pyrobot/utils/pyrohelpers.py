@@ -1,11 +1,18 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 from pyrogram import Message
 
 
+def ReplyCheck(message: Message):
+    reply_id = None
+
+    if message.reply_to_message:
+        reply_id = message.reply_to_message.message_id
+
+    elif not message.from_user.is_self:
+        reply_id = message.message_id
+
+    return reply_id
+
 def extract_user(message: Message) -> (int, str):
-    """extracts the user from a message"""
     user_id = None
     user_first_name = None
 
@@ -15,8 +22,6 @@ def extract_user(message: Message) -> (int, str):
 
     elif len(message.command) > 1:
         if len(message.entities) > 1:
-            # 0: is the command used
-            # 1: should be the user specified
             required_entity = message.entities[1]
             if required_entity.type == "text_mention":
                 user_id = required_entity.user.id
@@ -26,11 +31,9 @@ def extract_user(message: Message) -> (int, str):
                     required_entity.offset:
                     required_entity.offset + required_entity.length
                 ]
-                # don't want to make a request -_-
                 user_first_name = user_id
         else:
             user_id = message.command[1]
-            # don't want to make a request -_-
             user_first_name = user_id
 
     else:

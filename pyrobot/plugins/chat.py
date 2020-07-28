@@ -114,6 +114,6 @@ async def setchatdesc(client, message):
         chat_desc = chat_desc[1]
     try:
         await client.set_chat_description(chat_id, chat_desc)
-        await message.edit(f"<b>Changed Chat Name to:</b> <code>{chat_desc}</code>")
+        await message.edit(f"<b>Changed Chat Description to:</b> <code>{chat_desc}</code>")
     except Exception as ef:
         await message.edit(f"**Could not Change Chat Desciption due to:**\n`{ef}`")

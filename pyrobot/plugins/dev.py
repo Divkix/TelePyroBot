@@ -6,6 +6,7 @@ import time
 import asyncio
 import requests
 from pyrogram import Client, Filters
+from pyrobot.utils.cust_p_filters import sudo_filter
 from pyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
 
 
@@ -23,7 +24,7 @@ Syntax: `{COMMAND_HAND_LER}ip`
 """
 
 
-@Client.on_message(Filters.command("eval", COMMAND_HAND_LER) & Filters.me)
+@Client.on_message(Filters.command("eval", COMMAND_HAND_LER) & sudo_filter)
 async def eval(client, message):
     status_message = await message.reply_text("`Processing...`")
     cmd = message.text.split(" ", maxsplit=1)[1]
@@ -86,7 +87,7 @@ async def aexec(code, client, message):
     return await locals()['__aexec'](client, message)
 
 
-@Client.on_message(Filters.command("exec", COMMAND_HAND_LER) & Filters.me)
+@Client.on_message(Filters.command("exec", COMMAND_HAND_LER) & sudo_filter)
 async def execution(_, message):
     cmd = message.text.split(" ", maxsplit=1)[1]
 
@@ -123,9 +124,9 @@ async def execution(_, message):
         os.remove("exec.text")
     else:
         await message.reply_text(OUTPUT)
+    await message.delete()
 
-
-@Client.on_message(Filters.command("ip", COMMAND_HAND_LER) & Filters.me)
+@Client.on_message(Filters.command("ip", COMMAND_HAND_LER) & sudo_filter)
 async def public_ip(client, message):
     ip = requests.get('https://api.ipify.org').text
-    await message.edit(f'<b>Bot IP Address:</b>\n\n<code>{ip}</code>', parse_mode='html')
+    await message.reply_text(f'<b>Bot IP Address:</b>\n<code>{ip}</code>', parse_mode='html')

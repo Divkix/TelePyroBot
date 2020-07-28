@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 from pyrogram import Message
 
 
@@ -17,7 +14,6 @@ async def admin_check(message: Message) -> bool:
         "creator",
         "administrator"
     ]
-    # https://git.colinshark.de/PyroBot/PyroBot/src/branch/master/pyrobot/modules/admin.py#L69
     if check_status.status not in admin_strings:
         return False
     else:

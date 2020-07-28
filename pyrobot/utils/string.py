@@ -1,10 +1,6 @@
 import re
 import time
 
-from pyrogram import InlineKeyboardButton
-
-BTN_URL_REGEX = re.compile(r"(\[([^\[]+?)\]\(buttonurl:(?:/{0,2})(.+?)(:same)?\))")
-
 
 def replace_text(text):
         return text.replace("\"", "").replace("\\r", "").replace("\\n", "\n").replace(
@@ -26,7 +22,6 @@ def extract_time(message, time_val):
         elif unit == 's':
             bantime = int(time.time() + int(time_num) * 24 * 60 * 60)
         else:
-            # how even...?
             return ""
         return bantime
     else:
@@ -80,54 +75,9 @@ def id_from_reply(message):
     return user_id, res[1]
 
 
-def parse_button(text):
-    markdown_note = text
-    prev = 0
-    note_data = ""
-    buttons = []
-    for match in BTN_URL_REGEX.finditer(markdown_note):
-        # Check if btnurl is escaped
-        n_escapes = 0
-        to_check = match.start(1) - 1
-        while to_check > 0 and markdown_note[to_check] == "\\":
-            n_escapes += 1
-            to_check -= 1
-
-        # if even, not escaped -> create button
-        if n_escapes % 2 == 0:
-            # create a thruple with button label, url, and newline status
-            buttons.append((match.group(2), match.group(3), bool(match.group(4))))
-            note_data += markdown_note[prev:match.start(1)]
-            prev = match.end(1)
-        # if odd, escaped -> move along
-        else:
-            note_data += markdown_note[prev:to_check]
-            prev = match.start(1) - 1
-    else:
-        note_data += markdown_note[prev:]
-
-    return note_data, buttons
-
-
-def build_keyboard(buttons):
-    keyb = []
-    for btn in buttons:
-        if btn[-1] and keyb:
-            keyb[-1].append(InlineKeyboardButton(btn[0], url=btn[1]))
-        else:
-            keyb.append([InlineKeyboardButton(btn[0], url=btn[1])])
-
-    return keyb
-
-
-SMART_OPEN = '“'
-SMART_CLOSE = '”'
-START_CHAR = ('\'', '"', SMART_OPEN)
-
-
 def split_quotes(text: str):
     if any(text.startswith(char) for char in START_CHAR):
-        counter = 1  # ignore first char -> is some kind of quote
+        counter = 1
         while counter < len(text):
             if text[counter] == "\\":
                 counter += 1
@@ -137,9 +87,7 @@ def split_quotes(text: str):
         else:
             return text.split(None, 1)
 
-        # 1 to avoid starting quote, and counter is exclusive so avoids ending
         key = remove_escapes(text[1:counter].strip())
-        # index will be in range, or `else` would have been executed and returned
         rest = text[counter + 1:].strip()
         if not key:
             key = text[0] + text[0]

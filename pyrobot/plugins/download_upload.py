@@ -73,8 +73,8 @@ async def down_load_media(client, sms):
             speed = downloader.get_speed(human=True)
             elapsed_time = round(diff) * 1000
             progress_str = "**[{0}{1}]**\n**Progress:** __{2}%__".format(
-                ''.join(["●" for i in range(math.floor(percentage / 5))]),
-                ''.join(["○" for i in range(20 - math.floor(percentage / 5))]),
+                ''.join(["▰" for i in range(math.floor(percentage / 5))]),
+                ''.join(["▱" for i in range(20 - math.floor(percentage / 5))]),
                 round(percentage, 2))
             estimated_total_time = downloader.get_eta(human=True)
             try:
@@ -134,6 +134,7 @@ async def upload_as_document(client, message):
     else:
         await status_message.edit(f"<code>{COMMAND_HAND_LER}upload FILE_PATH</code> to upload to current Telegram chat")
     await message.delete()
+
 
 @Client.on_message(Filters.command("batchup", COMMAND_HAND_LER) & Filters.me)
 async def covid(client, message):

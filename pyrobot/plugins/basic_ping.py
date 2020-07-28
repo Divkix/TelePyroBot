@@ -4,10 +4,9 @@ from platform import python_version
 from pyrogram import Client, Filters, __version__
 from pyrobot import COMMAND_HAND_LER, OWNER_NAME, UB_VERSION
 from pyrogram.api.all import layer
-from pyrobot.utils.extract_user import extract_user
 
 # -- Constants -- #
-ALIVE = f"`I'm Alive :3 Saaaar`\n<b>My Owner:</b> `{OWNER_NAME}`\n<b>Pyrogram Version:</b> `{__version__} (Layer {layer})`\n<b>Python Version:</b> `{python_version()}`\nUserBot Version: {UB_VERSION}\nJoin @MyAwesomeProjects for more epic shit!\n\n**Repo Link:**\n[Github](https://github.com/MyAwesomeProjects/TelePyroBot)"
+ALIVE = f"`I'm Alive :3 Saaaar`\n<b>My Owner:</b> `{OWNER_NAME}`\n<b>Pyrogram Version:</b> `{__version__} (Layer {layer})`\n<b>Python Version:</b> `{python_version()}`\n<b>UserBot Version:</b> `{UB_VERSION}`\nJoin @MyAwesomeProjects for more epic shit!\n\n**Repo Link:**\n[Github](https://github.com/MyAwesomeProjects/TelePyroBot)"
 REPO = ("<b>UserBot is available on GitHub:</b>\n"
         "https://github.com/MyAwesomeProjects/TelePyroBot\n\n"
         "More info available at: @MyAwesomeProjects")

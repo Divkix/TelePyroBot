@@ -4,6 +4,7 @@ import asyncio
 import os
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
+from pyrobot.utils.pyrohelpers import extract_user
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -13,20 +14,10 @@ __help__ =  f"""
 
 @Client.on_message(Filters.command("cas", COMMAND_HAND_LER) & Filters.me)
 async def cas(client, message):
-    cmd = message.text.split(' ', 1)
-    user = ""
-    if len(cmd) == 2:
-        user = cmd[1]
-    elif message.reply_to_message and len(cmd) == 1:
-        user = message.reply_to_message.from_user.id
-    else:
-        await message.edit("**Usage:** `cas user_id`")
-        await asyncio.sleep(2)
-        await message.delete()
-        return
-    results = requests.get(f'https://api.cas.chat/check?user_id={user}').json()
+    user_id, user_first_name = extract_user(message)
+    results = requests.get(f'https://api.cas.chat/check?user_id={user_id}').json()
     try:
-        reply_text = f'`User ID: `{user}\n`Offenses: `{results["result"]["offenses"]}\n`Messages: `\n{results["result"]["messages"]}\n`Time Added: `{results["result"]["time_added"]}'
+        text = f'**User ID:** {user_id}\n**Name:** {user_first_name}\n`Offenses: `{results["result"]["offenses"]}\n`Messages: `\n{results["result"]["messages"]}\n`Time Added: `{results["result"]["time_added"]}'
     except:
-        reply_text = "`Record not found`"
-    await message.edit(reply_text, parse_mode="md")
+        text = "`Not banned in CAS`"
+    await message.edit(text, parse_mode="markdown")

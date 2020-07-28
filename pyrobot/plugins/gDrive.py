@@ -63,17 +63,12 @@ async def g_drive_commands(client, message):
             else:
                 await status_message.edit_text(text="please give auth_code correctly")
         elif current_recvd_command == "search":
-            # The gDrive table stores the user's access and refresh tokens, and is
-            # created automatically when the authorization flow completes for the first
-            # time.
             creds = sql.get_credential(message.from_user.id)
-            # If there are no (valid) credentials available, throw error
             if not creds or not creds.invalid:
                 if creds and creds.refresh_token:
                     creds.refresh(get_new_http_instance())
-                    # Save the credentials for the next run
                     sql.set_credential(message.from_user.id, creds)
-                    #
+
                     if len(message.command) > 2:
                         search_query = " ".join(message.command[2:])
                         message_string = "<b>gDrive <i>Search Query</i></b>:"
@@ -104,15 +99,10 @@ async def g_drive_commands(client, message):
                     text=f"please run <code>{COMMAND_HAND_LER}gdrive setup</code> first", parse_mode="html"
                 )
         elif current_recvd_command == "upload":
-            # The gDrive table stores the user's access and refresh tokens, and is
-            # created automatically when the authorization flow completes for the first
-            # time.
             creds = sql.get_credential(message.from_user.id)
-            # If there are no (valid) credentials available, throw error
             if not creds or not creds.invalid:
                 if creds and creds.refresh_token:
                     creds.refresh(get_new_http_instance())
-                    # Save the credentials for the next run
                     sql.set_credential(message.from_user.id, creds)
                     #
                     if len(message.command) > 2:
@@ -147,10 +137,10 @@ async def g_drive_commands(client, message):
                             file_name=download_location,
                             progress=progress_for_pyrogram,
                             progress_args=(
-                                "trying to download", status_message, c_time
+                                "`Trying to download...`", status_message, c_time
                             )
                         )
-                        await status_message.edit(f"Downloaded to <code>{the_real_download_location}</code>")
+                        await status_message.edit(f"<b>Downloaded to</b> <code>{the_real_download_location}</code>")
                         if not os.path.exists(the_real_download_location):
                             await message.edit_text("invalid file path provided?")
                             return
@@ -166,7 +156,7 @@ async def g_drive_commands(client, message):
                             reply_message_text += gDrive_file_id
                             reply_message_text += "'>" + gDrive_file_id + "</a>"
                         else:
-                            reply_message_text += "failed to upload.. check logs?"
+                            reply_message_text += "failed to upload...\nPlease check Logs"
                         os.remove(the_real_download_location)
                         await status_message.edit_text(
                             text=reply_message_text,
@@ -193,15 +183,10 @@ async def g_drive_commands(client, message):
 
 
 async def g_drive_setup(message):
-    # The gDrive table stores the user's access and refresh tokens, and is
-    # created automatically when the authorization flow completes for the first
-    # time.
     creds = sql.get_credential(message.from_user.id)
-    # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.invalid:
         if creds and creds.refresh_token:
             creds.refresh(get_new_http_instance())
-            # Save the credentials for the next run
             sql.set_credential(message.from_user.id, creds)
             #
             await message.edit_text(
@@ -209,7 +194,6 @@ async def g_drive_setup(message):
             )
         else:
             global flow
-            # Run through the OAuth flow and retrieve credentials
             flow = OAuth2WebServerFlow(
                 G_DRIVE_CLIENT_ID,
                 G_DRIVE_CLIENT_SECRET,
@@ -226,7 +210,7 @@ async def g_drive_setup(message):
             )
     else:
         await message.edit_text(
-            text="don't type this command -_-"
+            text="`Setup Done Already!`"
         )
 
 
@@ -238,19 +222,16 @@ async def AskUserToVisitLinkAndGiveCode(message, code):
             text=f"run <code>{COMMAND_HAND_LER}gdrive setup</code> first.", parse_mode="html"
         )
         return
-    await message.edit_text(text="checking received code ...")
+    await message.edit_text(text="`Checking received code...``")
     creds = flow.step2_exchange(code)
-    #
-    # Save the credentials for the next run
     sql.set_credential(
         message.reply_to_message.from_user.id,
         creds
     )
     #
     await message.edit_text(
-        text="saved gDrive authentication credentials"
+        text="<b>Saved gDrive credentials</b>"
     )
-    # clear the global variable once the authentication FLOW is finished
     flow = None
 
 
@@ -264,7 +245,6 @@ async def search_g_drive(creds, search_query):
     #
     query = "name contains '{}'".format(search_query)
     page_token = None
-    # Call the Drive v3 API
     results = service.files().list(
         q=query,
         spaces="drive",
@@ -277,7 +257,7 @@ async def search_g_drive(creds, search_query):
         message_string = "no files found in your gDrive?"
     else:
         for item in items:
-            message_string += "👉 <a href='https://drive.google.com/open?id="
+            message_string += "#-- <a href='https://drive.google.com/open?id="
             message_string += item.get("id")
             message_string += "'>"
             message_string += item.get("name")
@@ -287,17 +267,14 @@ async def search_g_drive(creds, search_query):
 
 
 async def gDrive_upload_file(creds, file_path, message):
-    # Create Google Drive service instance
     service = build(
         "drive",
         "v3",
         credentials=creds,
         cache_discovery=False
     )
-    # getting the mime type of the file
     mime_type = guess_type(file_path)[0]
     mime_type = mime_type if mime_type else "text/plain"
-    # File body description
     media_body = MediaFileUpload(
         file_path,
         mimetype=mime_type,
@@ -307,21 +284,19 @@ async def gDrive_upload_file(creds, file_path, message):
     file_name = os.path.basename(file_path)
     body = {
         "name": file_name,
-        "description": "Uploaded using TelePyroBot gDrive v7",
+        "description": "Uploaded using TelePyroBot gDrive",
         "mimeType": mime_type,
     }
-    # Insert a file
     u_file_obj = service.files().create(body=body, media_body=media_body)
     response = None
     display_message = ""
     while response is None:
         status, response = u_file_obj.next_chunk()
-        #await asyncio.sleep(5)
         if status:
             percentage = int(status.progress() * 100)
             progress_str = "[{0}{1}]\nProgress: {2}%\n".format(
-                "".join(["●" for i in range(math.floor(percentage / 5))]),
-                "".join(["○" for i in range(20 - math.floor(percentage / 5))]),
+                "".join(["▰" for i in range(math.floor(percentage / 5))]),
+                "".join(["▱" for i in range(20 - math.floor(percentage / 5))]),
                 round(percentage, 2)
             )
             current_message = f"uploading to gDrive\nFile Name: {file_name}\n{progress_str}"

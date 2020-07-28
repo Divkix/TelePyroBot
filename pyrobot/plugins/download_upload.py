@@ -106,7 +106,7 @@ async def down_load_media(client, sms):
     else:
         await message.edit("`Reply to a Telegram Media, to download it to local server.`")
 
-@Client.on_message(Filters.command("direct", Command) & Filters.me)
+@Client.on_message(Filters.command("direct", COMMAND_HAND_LER) & Filters.me)
 async def direct_link_generator(client, message):
     args = message.text.split(None, 1)
     await message.edit("`Processing...`")

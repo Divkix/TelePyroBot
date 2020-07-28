@@ -129,4 +129,5 @@ async def execution(_, message):
 @Client.on_message(Filters.command("ip", COMMAND_HAND_LER) & sudo_filter)
 async def public_ip(client, message):
     ip = requests.get('https://api.ipify.org').text
+    await message.delete()
     await message.reply_text(f'<b>Bot IP Address:</b>\n<code>{ip}</code>', parse_mode='html')

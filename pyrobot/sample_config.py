@@ -8,7 +8,6 @@ class Config():
     MAX_MESSAGE_LENGTH = 4096
     COMMAND_HAND_LER = os.environ.get("COMMAND_HAND_LER", ".")
     TMP_DOWNLOAD_DIRECTORY = os.environ.get("TMP_DOWNLOAD_DIRECTORY", "./downloads")
-    HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
     OFFICIAL_UPSTREAM_REPO = os.environ.get(
         "OFFICIAL_UPSTREAM_REPO",
         "https://github.com/SkuzzyxD/TelePyroBot")

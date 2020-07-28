@@ -4,6 +4,7 @@ from pyrogram import Client, Filters, ChatPermissions
 from pyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN
 from pyrobot.utils.admin_check import admin_check
 
+
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 
@@ -18,12 +19,15 @@ Usage: {COMMAND_HAND_LER}del <as a reply to the message>"""
 
 @Client.on_message(Filters.command("purge", COMMAND_HAND_LER) & Filters.me)
 async def purge(client, message):
-    if message.chat.type in (("supergroup", "channel")):
+    if message.chat.type in ("supergroup", "channel"):
+    	await message.edit("`Incinerating these useless messages...`")
         is_admin = await admin_check(message)
         if not is_admin:
             return
     if message.chat.type in ["private", "bot", "group"]:
         await message.edit("`You are not allowed to use this command here!`")
+        await asyncio.sleep(2)
+        await message.delete()
         return
 
     message_ids = []
@@ -52,7 +56,7 @@ async def purge(client, message):
 
 @Client.on_message(Filters.command("del", COMMAND_HAND_LER) & Filters.me)
 async def del_msg(client, message):
-    if message.chat.type in (("supergroup", "channel")):
+    if message.chat.type in ("supergroup", "channel"):
         is_admin = await admin_check(message)
         if not is_admin:
             await asyncio.sleep(3)
@@ -60,6 +64,8 @@ async def del_msg(client, message):
             return
     if message.chat.type in ["private", "bot", "group"]:
         await message.edit("`You are not allowed to use this command here!`")
+        await asyncio.sleep(2)
+        await message.delete()
         return
 
     if message.reply_to_message:
@@ -67,5 +73,10 @@ async def del_msg(client, message):
             chat_id=message.chat.id,
             message_id=message.reply_to_message.message_id,
             revoke=True)
+
+    else:
+    	await message.edit(
+    		"`Reply to a message to delete!`")
+
     await asyncio.sleep(3)
     await message.delete()

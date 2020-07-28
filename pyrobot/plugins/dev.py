@@ -124,14 +124,9 @@ async def execution(_, message):
         os.remove("exec.text")
     else:
         await message.reply_text(OUTPUT)
-    await message.delete()    
-
+    await message.delete()
 
 @Client.on_message(Filters.command("ip", COMMAND_HAND_LER) & sudo_filter)
 async def public_ip(client, message):
     ip = requests.get('https://api.ipify.org').text
     await message.reply_text(f'<b>Bot IP Address:</b>\n<code>{ip}</code>', parse_mode='html')
-    try:
-        await message.delete()
-    except Exception as ef:
-        await message.reply_text("Error:\n\n{}".format(ef))

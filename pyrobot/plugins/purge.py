@@ -20,7 +20,7 @@ Usage: {COMMAND_HAND_LER}del <as a reply to the message>"""
 @Client.on_message(Filters.command("purge", COMMAND_HAND_LER) & Filters.me)
 async def purge(client, message):
     if message.chat.type in ("supergroup", "channel"):
-    	await message.edit("`Incinerating these useless messages...`")
+        await message.edit("`Incinerating these useless messages...`")
         is_admin = await admin_check(message)
         if not is_admin:
             return
@@ -75,8 +75,8 @@ async def del_msg(client, message):
             revoke=True)
 
     else:
-    	await message.edit(
-    		"`Reply to a message to delete!`")
+        await message.edit(
+            "`Reply to a message to delete!`")
 
     await asyncio.sleep(3)
     await message.delete()

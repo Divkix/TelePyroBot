@@ -61,13 +61,14 @@ async def google_rs(client, message):
             dis_loc = await client.download_media(
                 message=message_)
         if message_.animation or message_.video:
-            await message.edit("`Converting this Gif`")
+            """await message.edit("`Converting this Gif`")
             img_file = os.path.join(screen_shot, "grs.jpg")
             await take_screen_shot(dis_loc, 0, img_file)
             if not os.path.lexists(img_file):
                 await message.edit("`Something went wrong in Conversion`")
                 await asyncio.sleep(5)
-                await message.delete()
+                await message.delete()"""
+                await message.edit("<i>Currently not supported!</i>")
                 return
             dis_loc = img_file
         base_url = "http://www.google.com"

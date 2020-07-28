@@ -138,7 +138,7 @@ async def restrict_usr(client, message):
 
 
 @Client.on_message(Filters.command("tmute", COMMAND_HAND_LER) & Filters.me)
-async def restrict_usr(client, message):
+async def restrict_usr_tmp(client, message):
     await message.edit("`Trying to Temporarily Mute user...`")
     is_admin = await admin_check(message)
     chat_id = message.chat.id

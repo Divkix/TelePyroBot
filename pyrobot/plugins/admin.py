@@ -227,13 +227,14 @@ async def unpin_message(client, message):
 
 @Client.on_message(Filters.command("invite", COMMAND_HAND_LER) & Filters.me)
 async def invite_user(client, message):
-    if len(message.command) > 2:
-        await message.edit(f"__Only one user can be invited at a time,\ncheck__ `{COMMAND_HAND_LER}help` __for more info.__")
-        return
+    is_admin = await admin_check(message)
     if not is_admin:
         await msg.edit("`I'm not admin nub nibba!`")
         await asyncio.sleep(2)
         await message.delete()
+        return
+    if len(message.command) > 2:
+        await message.edit(f"__Only one user can be invited at a time,\ncheck__ `{COMMAND_HAND_LER}help` __for more info.__")
         return
     user_id, user_first_name = extract_user(message)
     try:

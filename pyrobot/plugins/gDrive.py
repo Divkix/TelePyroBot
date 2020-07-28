@@ -30,8 +30,8 @@ Plugin used to help you manage your **Google Drive**!
 
 `{COMMAND_HAND_LER}gdrive <file loaction>` or as a reply to message to upload file to your Google Drive and get it's link.
 `{COMMAND_HAND_LER}gdrive reset`: Reset the G Drive credentials.
-`{COMMAND_HAND_LER}grdive setup`: To setup GDrive, only needed if reset grive credentials or setting-up first time.
-`{COMMAND_HAND_LER}grdive search <query>`: To search a file in your GDrive.
+`{COMMAND_HAND_LER}gdrive setup`: To setup GDrive, only needed if reset grive credentials or setting-up first time.
+`{COMMAND_HAND_LER}gdrive search <query>`: To search a file in your GDrive.
 """
 
 if DB_URI is not None:
@@ -84,19 +84,18 @@ async def g_drive_commands(client, message):
                         )
                     else:
                         await status_message.edit_text(
-                            "syntax:\n"
+                            "<b>Syntax:</b>\n"
                             f"<code>{COMMAND_HAND_LER}gdrive search (QUERY)</code> "
                         )
                 else:
                     await status_message.edit_text(
-                        "invalid credentials, supplied??!\n"
-                        f"use <code>{COMMAND_HAND_LER}gdrive reset</code> "
-                        "to clear saved credentials", parse_mode="html"
-                    )
+                        "<b>Invalid credentials!</b>\n"
+                        f"<i>Use</i> <code>{COMMAND_HAND_LER}gdrive reset</code> <i>to clear saved credentials.</i>",
+                        parse_mode="html")
                     return
             else:
                 await status_message.edit_text(
-                    text=f"please run <code>{COMMAND_HAND_LER}gdrive setup</code> first", parse_mode="html"
+                    text=f"<i>Please run</i> <code>{COMMAND_HAND_LER}gdrive setup</code> <i>first</i>", parse_mode="html"
                 )
         elif current_recvd_command == "upload":
             creds = sql.get_credential(message.from_user.id)
@@ -104,7 +103,6 @@ async def g_drive_commands(client, message):
                 if creds and creds.refresh_token:
                     creds.refresh(get_new_http_instance())
                     sql.set_credential(message.from_user.id, creds)
-                    #
                     if len(message.command) > 2:
                         upload_file_name = " ".join(message.command[2:])
                         if not os.path.exists(upload_file_name):
@@ -137,7 +135,7 @@ async def g_drive_commands(client, message):
                             file_name=download_location,
                             progress=progress_for_pyrogram,
                             progress_args=(
-                                "`Trying to download...`", status_message, c_time
+                                "`Trying to download to Local Storage...`", status_message, c_time
                             )
                         )
                         await status_message.edit(f"<b>Downloaded to</b> <code>{the_real_download_location}</code>")
@@ -156,7 +154,7 @@ async def g_drive_commands(client, message):
                             reply_message_text += gDrive_file_id
                             reply_message_text += "'>" + gDrive_file_id + "</a>"
                         else:
-                            reply_message_text += "failed to upload...\nPlease check Logs"
+                            reply_message_text += "<b><i>Failed to upload...</b><i>\n<i>Please check Logs</i>"
                         os.remove(the_real_download_location)
                         await status_message.edit_text(
                             text=reply_message_text,
@@ -164,22 +162,21 @@ async def g_drive_commands(client, message):
                         )
                     else:
                         await status_message.edit_text(
-                            "syntax:\n"
-                            f"<code>{COMMAND_HAND_LER}gdrive upload (file name)</code> "
+                            "<b>Syntax:</b>\n"
+                            f"<code>{COMMAND_HAND_LER}gdrive upload (file name)</code>"
                         )
                 else:
                     await status_message.edit_text(
-                        "invalid credentials, supplied??!\n"
-                        f"use <code>{COMMAND_HAND_LER}gdrive reset</code> "
-                        "to clear saved credentials"
+                        "<b>Invalid credentials!</b>\n"
+                        f"<i>Use</i> <code>{COMMAND_HAND_LER}gdrive reset</code> <i>to clear saved credentials</i>"
                     )
                     return
             else:
                 await status_message.edit_text(
-                    text=f"please run <code>{COMMAND_HAND_LER}gdrive setup</code> first"
+                    text=f"<i>Please run</i> <code>{COMMAND_HAND_LER}gdrive setup</code> <i>first</i>"
                 )
     else:
-        await status_message.edit_text(text="type correctly")
+        await status_message.edit_text(text=f"__Check__ `{COMMAND_HAND_LER}help gdrive` __on how to use the plugin__")
 
 
 async def g_drive_setup(message):
@@ -295,8 +292,8 @@ async def gDrive_upload_file(creds, file_path, message):
         if status:
             percentage = int(status.progress() * 100)
             progress_str = "[{0}{1}]\nProgress: {2}%\n".format(
-                "".join(["▰" for i in range(math.floor(percentage / 5))]),
-                "".join(["▱" for i in range(20 - math.floor(percentage / 5))]),
+                "".join(["●" for i in range(math.floor(percentage / 5))]),
+                "".join(["○" for i in range(20 - math.floor(percentage / 5))]),
                 round(percentage, 2)
             )
             current_message = f"uploading to gDrive\nFile Name: {file_name}\n{progress_str}"
@@ -307,19 +304,6 @@ async def gDrive_upload_file(creds, file_path, message):
                 except Exception as e:
                     LOGGER.info(str(e))
                     pass
-    # Permissions body description: anyone who has link can upload
-    # Other permissions can be found at https://developers.google.com/drive/v3/reference/permissions
-    # permissions = {
-    #     "role": "reader",
-    #     "type": "anyone",
-    #     "value": None,
-    #     "withLink": True
-    # }
-    # try:
-    #     # Insert new permissions
-    #     service.permissions().insert(fileId=file_id, body=permissions).execute()
-    # except:
-    #     pass
     file_id = response.get("id")
     return file_id
 

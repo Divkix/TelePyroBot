@@ -20,18 +20,17 @@ async def paste_bin(client, message):
     downloaded_file_name = None
 
     if message.reply_to_message and message.reply_to_message.media:
-        filename = TMP_DOWNLOAD_DIRECTORY+"/tmp_file_paste.txt"
-        await message.reply_to_message.download(
-            file_name=filename
+        filename_loc = await message.reply_to_message.download(
+            file_name=TMP_DOWNLOAD_DIRECTORY+"/"
         )
         m_list = None
-        with open(downloaded_file_name_res, "rb") as fd:
+        with open(filename_loc, "rb") as fd:
             m_list = fd.readlines()
         downloaded_file_name = ""
         for m in m_list:
             downloaded_file_name += m.decode("UTF-8")
             downloaded_file_name += "\n"
-        os.remove(TMP_DOWNLOAD_DIRECTORY+"/tmp_file_paste.txt")
+        os.remove(filename_loc)
     elif message.reply_to_message:
         downloaded_file_name = message.reply_to_message.text.html
     else:

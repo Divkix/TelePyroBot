@@ -25,7 +25,6 @@ screen_shot = "pyrobot/downloads/"
 
 
 async def run_cmd(cmd: str) -> Tuple[str, str, int, int]:
-    """run command in terminal."""
     args = shlex.split(cmd)
     process = await asyncio.create_subprocess_exec(*args,
                                                    stdout=asyncio.subprocess.PIPE,
@@ -48,22 +47,18 @@ async def take_screen_shot(video_file: str, duration: int, path: str = '') -> Op
     return thumb_image_path if os.path.exists(thumb_image_path) else None
 
 
-@Client.on_message(Filters.me & Filters.command("reverse", COMMAND_HAND_LER))
+@Client.on_message(Filters.command("reverse", COMMAND_HAND_LER) & Filters.me)
 async def google_rs(client, message):
     start = datetime.now()
-    dis_loc = ''
     out_str = "`Reply to an image`"
     if message.reply_to_message:
         message_ = message.reply_to_message
         if message_.sticker and message_.sticker.file_name.endswith('.tgs'):
-            await message.delete()
+            await message.edit("<b><i>Currently Not supported!</b></i>")
             return
         if message_.photo or message_.animation or message_.sticker:
-            dis = await client.download_media(
-                message=message_,
-                file_name=screen_shot
-            )
-            dis_loc = os.path.join(screen_shot, os.path.basename(dis))
+            dis_loc = await client.download_media(
+                message=message_)
         if message_.animation or message_.video:
             await message.edit("`Converting this Gif`")
             img_file = os.path.join(screen_shot, "grs.jpg")

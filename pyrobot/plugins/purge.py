@@ -23,6 +23,9 @@ async def purge(client, message):
         await message.edit("`Incinerating these useless messages...`")
         is_admin = await admin_check(message)
         if not is_admin:
+            await message.edit("I'm not admin nub nibba")
+            await asyncio.sleep(2)
+            await message.delete()
             return
     if message.chat.type in ["private", "bot", "group"]:
         await message.edit("`You are not allowed to use this command here!`")

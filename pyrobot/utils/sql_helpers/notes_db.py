@@ -77,17 +77,13 @@ def get_all_selfnotes(user_id):
     return allnotes
 
 
-def get_all_selfnotes_inline(user_id):
-    if not SELF_NOTES.get(user_id):
-        SELF_NOTES[user_id] = {}
-        return None
-    # Sorting
-    allnotes = {}
-    sortnotes = list(SELF_NOTES[user_id])
-    sortnotes.sort()
-    for x in sortnotes:
-        allnotes[x] = SELF_NOTES[user_id][x]
-    return allnotes
+def get_num_notes(user_id):
+    try:
+        num_notes = SESSION.query(SelfNotes).count()
+        return num_notes
+    finally:
+        SESSION.close()
+
 
 
 def rm_selfnote(user_id, note_name):
@@ -99,7 +95,6 @@ def rm_selfnote(user_id, note_name):
             SESSION.commit()
             SELF_NOTES[user_id].pop(note_name)
             return True
-
         else:
             SESSION.close()
             return False

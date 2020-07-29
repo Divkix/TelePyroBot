@@ -17,7 +17,7 @@ async def local_notes(client, message):
 
 @Client.on_message(Filters.command("notesnum", COMMAND_HAND_LER) & Filters.me)
 async def num_local_notes(client, message):
-    num_notes = db.num_notes()
+    num_notes = db.num_notes(message.from_user.id)
     await message.edit("`There are {} notes!`".format(num_notes))
     return
 
@@ -30,7 +30,7 @@ async def save_notes(client, message):
     else:
         await message.edit("`Only Text messages supported right now`")
         return
-    db.add_note_to_db(notename, text_data)
+    db.add_note_to_db(message.from_user.id, notename, text_data)
     await message.edit(f"`Saved note {notename}`")
     return
 
@@ -42,6 +42,6 @@ async def get_notes(client, message):
     else:
         await message.edit(f"__Use `{COMMAND_HAND_LER}get <notename>` __to get the note!__`",
                     parse_mode="markdown")
-    note_data = db.get_note(notename)
+    note_data = db.get_note(message.from_user.id, notename)
     await message.edit(note_data, parse_mode="html")
     return

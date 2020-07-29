@@ -3,7 +3,7 @@ import threading
 
 from sqlalchemy import Column, String, Boolean, UnicodeText, Integer, func, distinct
 
-from pyrobot.helper_functions.sql_helpers import SESSION, BASE
+from pyrobot.utils.sql_helpers import SESSION, BASE
 
 
 class Notes(BASE):

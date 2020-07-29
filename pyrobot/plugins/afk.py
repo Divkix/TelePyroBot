@@ -132,8 +132,8 @@ async def afk_mentioned(client, message):
         MENTIONED.append(
             {"user": message.from_user.first_name, "user_id": message.from_user.id, "chat": message.chat.title,
              "chat_id": cid, "text": text, "message_id": message.message_id, "time": datetime.now()})
-        await client.send_message(PRIVATE_GROUP_ID, "{}({}) mentioned you in {}({}) at {}\nText:\n`{}`\n\nTotal count: `{}`".format(
-            mention_markdown(message.from_user.id, message.from_user.first_name), message.from_user.id, message.chat.title, message.chat.id, datetime.now(), text[:3500],
+        await client.send_message(PRIVATE_GROUP_ID, "{}({}) mentioned you in {}({})\nText:\n`{}`\n\nTotal count: `{}`".format(
+            mention_markdown(message.from_user.id, message.from_user.first_name), message.from_user.id, message.chat.title, message.chat.id, text[:3500],
             len(MENTIONED)))
     await message.stop_propagation()
 

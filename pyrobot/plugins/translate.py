@@ -1,5 +1,5 @@
 from googletrans import Translator
-from pyrogram import Filters
+from pyrogram import Filters, Client
 import os
 from pyrobot import COMMAND_HAND_LER
 

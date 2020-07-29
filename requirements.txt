@@ -29,3 +29,4 @@ pyDownload
 pyfiglet
 spotdl
 bs4
+lxml

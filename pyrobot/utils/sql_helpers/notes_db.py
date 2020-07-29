@@ -2,7 +2,7 @@ import threading
 
 from sqlalchemy import Column, UnicodeText, Integer
 
-from pyrobot import BASE, SESSION
+from pyrobot.utils.sql_helpers import BASE, SESSION
 from pyrobot.utils.msg_types import Types
 
 

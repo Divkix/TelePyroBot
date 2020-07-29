@@ -29,17 +29,6 @@ Delete that note, if avaiable.
 -> `saved`
 -> `notes`
 Get all your notes, if too much notes, please use this in your saved message instead!
-
-
-── **Note Format** ──
--> **Button**
-`[Button Text](buttonurl:google.com)`
--> **Bold**
-`**Bold**`
--> __Italic__
-`__Italic__`
--> `Code`
-`Code` (grave accent)
 """
 
 GET_FORMAT = {
@@ -94,7 +83,10 @@ async def get_note(client, message):
     elif getnotes['type'] in (Types.STICKER, Types.VOICE, Types.VIDEO_NOTE, Types.CONTACT, Types.ANIMATED_STICKER):
         await GET_FORMAT[getnotes['type']](message.chat.id, getnotes['file'], reply_to_message_id=ReplyCheck(message))
     else:
-        teks = getnotes.get('value')
+        if getnotes.get('value'):
+            teks = getnotes.get('value')
+        else:
+            teks = None
         await GET_FORMAT[getnotes['type']](message.chat.id, getnotes['file'], caption=teks,
                                                reply_to_message_id=ReplyCheck(message))
 

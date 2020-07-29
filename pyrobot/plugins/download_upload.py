@@ -4,7 +4,7 @@ import os
 import time
 from datetime import datetime
 from pySmartDL import SmartDL
-from pyrogram import Client, Filter
+from pyrogram import Client, Filters
 import json
 import logging
 import re

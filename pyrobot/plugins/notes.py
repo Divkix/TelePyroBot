@@ -75,7 +75,7 @@ async def save_note(client, message):
     await message.edit(f'Saved note `{note_name}`!')
 
 
-@Client.on_message(Filters.user(Owner) & Filters.command("get", COMMAND_HAND_LER))
+@Client.on_message(Filters.me & Filters.command("get", COMMAND_HAND_LER))
 async def get_note(client, message):
     if len(message.text.split()) >= 2:
         note = message.text.split()[1]

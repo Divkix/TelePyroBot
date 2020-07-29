@@ -78,34 +78,34 @@ async def afk_mentioned(client, message):
         if afk_start != {}:
             total_afk_time = str((afk_end - afk_start))
         afk_since = "**a while ago**"
-            if afk_time:
-                now = datetime.datetime.now()
-                datime_since_afk = now - afk_time
-                time_of_akf = float(datime_since_afk.seconds)
-                days = time_of_akf // (24 * 3600)
-                time_of_akf = time_of_akf % (24 * 3600)
-                hours = time // 3600
-                time_of_akf %= 3600
-                minutes = time_of_akf // 60
-                time_of_akf %= 60
-                seconds = time_of_akf
-                if days == 1:
-                    afk_since = "**Yesterday**"
-                elif days > 1:
-                    if days > 6:
-                        date = now + \
-                            datetime.timedelta(
-                                days=-days, hours=-hours, minutes=-minutes)
-                        afk_since = date.strftime("%A, %Y %B %m, %H:%I")
-                    else:
-                        wday = now + datetime.timedelta(days=-days)
-                        afk_since = wday.strftime('%A')
-                elif hours > 1:
-                    afk_since = f"`{int(hours)}h{int(minutes)}m` **ago**"
-                elif minutes > 0:
-                    afk_since = f"`{int(minutes)}m{int(seconds)}s` **ago**"
+        if afk_time:
+            now = datetime.datetime.now()
+            datime_since_afk = now - afk_time
+            time_of_akf = float(datime_since_afk.seconds)
+            days = time_of_akf // (24 * 3600)
+            time_of_akf = time_of_akf % (24 * 3600)
+            hours = time // 3600
+            time_of_akf %= 3600
+            minutes = time_of_akf // 60
+            time_of_akf %= 60
+            seconds = time_of_akf
+            if days == 1:
+                afk_since = "**Yesterday**"
+            elif days > 1:
+                if days > 6:
+                    date = now + \
+                        datetime.timedelta(
+                            days=-days, hours=-hours, minutes=-minutes)
+                    afk_since = date.strftime("%A, %Y %B %m, %H:%I")
                 else:
-                    afk_since = f"`{int(seconds)}s` **ago**"
+                    wday = now + datetime.timedelta(days=-days)
+                    afk_since = wday.strftime('%A')
+            elif hours > 1:
+                afk_since = f"`{int(hours)}h{int(minutes)}m` **ago**"
+            elif minutes > 0:
+                afk_since = f"`{int(minutes)}m{int(seconds)}s` **ago**"
+            else:
+                afk_since = f"`{int(seconds)}s` **ago**"
 
         if "-" in str(message.chat.id):
             cid = str(message.chat.id)[4:]

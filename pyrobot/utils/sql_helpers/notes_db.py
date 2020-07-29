@@ -6,7 +6,7 @@ from pyrobot.utils.sql_helpers import SESSION, BASE
 class Notes(BASE):
     __tablename__ = "notes"
     name = Column(UnicodeText, primary_key=True)
-    d_message_id = Column(Integer)
+    d_message_id = Column(String)
 
     def __init__(self, name, d_message_id):
         self.name = name

@@ -1,4 +1,4 @@
-from pyrogram import Filters
+from pyrogram import Filters, Client
 
 from pyrobot import COMMAND_HAND_LER
 from pyrobot.utils.msg_types import Types, get_note_type

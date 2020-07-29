@@ -77,7 +77,7 @@ async def afk_mentioned(client, message):
         afk_end = current_time_afk.replace(microsecond=0)
         if afk_start != {}:
             total_afk_time = str((afk_end - afk_start))
-
+        afk_since = "**a while ago**"
             if afk_time:
                 now = datetime.datetime.now()
                 datime_since_afk = now - afk_time
@@ -119,9 +119,9 @@ async def afk_mentioned(client, message):
         AFK_RESTIRECT[cid] = int(time.time()) + DELAY_TIME
         if get['reason']:
             await message.reply_text(
-                "Sorry, My Master {} is AFK right now!\nReason: {}\n\nAFK Since:{}".format(mention_markdown(OWNER_ID, OWNER_NAME), get['reason'], afk_since))
+                "Sorry, My Master {} is AFK right now!\nReason: {}\n\nAFK Since:{}".format(mention_markdown(OWNER_ID, OWNER_NAME), get['reason'], total_afk_time))
         else:
-            await message.reply_text("Sorry, My Master {} is AFK right now!\n\nAFK Since:{}".format(mention_markdown(OWNER_ID, OWNER_NAME, afk_since)))
+            await message.reply_text("Sorry, My Master {} is AFK right now!\n\nAFK Since:{}".format(mention_markdown(OWNER_ID, OWNER_NAME, total_afk_time)))
 
         _, message_type = get_message_type(message)
         if message_type == Types.TEXT:

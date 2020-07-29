@@ -84,7 +84,7 @@ async def afk_mentioned(client, message):
             time_of_akf = float(datime_since_afk.seconds)
             days = time_of_akf // (24 * 3600)
             time_of_akf = time_of_akf % (24 * 3600)
-            hours = time // 3600
+            hours = time_of_akf // 3600
             time_of_akf %= 3600
             minutes = time_of_akf // 60
             time_of_akf %= 60

@@ -16,7 +16,7 @@ Reply a message to translate that.
 *text is not uaed when replying to a message
 """
 
-@Clientl.on_message(Filters.me & Filters.command("tr", COMMAND_HAND_LER))
+@Client.on_message(Filters.me & Filters.command("tr", COMMAND_HAND_LER))
 async def translate(client, message):
     if message.reply_to_message and (message.reply_to_message.text or message.reply_to_message.caption):
         if len(message.text.split()) == 1:

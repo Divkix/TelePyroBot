@@ -88,7 +88,7 @@ async def get_note(client, message):
         return
 
     if getnotes['type'] == Types.TEXT:
-        teks = getnotes.get('value'))
+        teks = getnotes.get('value')
         if teks:
             await message.edit(teks)
     elif getnotes['type'] in (Types.STICKER, Types.VOICE, Types.VIDEO_NOTE, Types.CONTACT, Types.ANIMATED_STICKER):

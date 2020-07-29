@@ -81,14 +81,14 @@ async def afk_mentioned(client, message):
             if afk_time:
                 now = datetime.datetime.now()
                 datime_since_afk = now - afk_time
-                time = float(datime_since_afk.seconds)
-                days = time // (24 * 3600)
-                time = time % (24 * 3600)
+                time_of_akf = float(datime_since_afk.seconds)
+                days = time_of_akf // (24 * 3600)
+                time_of_akf = time_of_akf % (24 * 3600)
                 hours = time // 3600
-                time %= 3600
-                minutes = time // 60
-                time %= 60
-                seconds = time
+                time_of_akf %= 3600
+                minutes = time_of_akf // 60
+                time_of_akf %= 60
+                seconds = time_of_akf
                 if days == 1:
                     afk_since = "**Yesterday**"
                 elif days > 1:

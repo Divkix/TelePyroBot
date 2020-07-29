@@ -80,11 +80,11 @@ async def get_note(client, message):
     if len(message.text.split()) >= 2:
         note = message.text.split()[1]
     else:
-        await message.edit("Give me a note tag!")
+        await message.edit("`Give me a note tag!`")
 
     getnotes = db.get_selfnote(message.from_user.id, note)
     if not getnotes:
-        await message.edit("This note does not exist!")
+        await message.edit("`This note does not exist!`")
         return
 
     if getnotes['type'] == Types.TEXT:
@@ -97,11 +97,12 @@ async def get_note(client, message):
         await GET_FORMAT[getnotes['type']](message.chat.id, getnotes['file'], caption=teks,
                                                reply_to_message_id=ReplyCheck(message))
 
+
 @Client.on_message(Filters.me & Filters.command(["notes", "saved"], COMMAND_HAND_LER))
 async def local_notes(client, message):
     getnotes = db.get_all_selfnotes(message.from_user.id)
     if not getnotes:
-        await message.edit("There are no notes in local notes!")
+        await message.edit("`There are no notes!`")
         return
     rply = "**Local notes:**\n"
     for x in getnotes:
@@ -116,13 +117,20 @@ async def local_notes(client, message):
 @Client.on_message(Filters.me & Filters.command("clear", COMMAND_HAND_LER))
 async def clear_note(client, message):
     if len(message.text.split()) <= 1:
-        await message.edit("What do you want to clear?")
+        await message.edit("**What do you want to clear?**")
         return
 
     note = message.text.split()[1]
     getnote = db.rm_selfnote(message.from_user.id, note)
     if not getnote:
-        await message.edit("This note does not exist!")
+        await message.edit("`This note does not exist!`")
         return
 
-    await message.edit(f"Deleted note `{note}`!")
+    await message.edit(f"**Deleted note** `{note}`!")
+
+
+@Client.on_message(Filters.me & Filters.command("numnotes", COMMAND_HAND_LER))
+async def get_num_notes(client, message):
+    num_notes = db.get_num_notes(message.user.id)
+    await message.edit(f"`There are total {num_notes} stored`")
+    return

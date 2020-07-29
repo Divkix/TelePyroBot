@@ -10,12 +10,7 @@ async def local_notes(client, message):
     if not getnotes:
         await message.edit("`There are no notes!`")
         return
-    rply = "**Local notes:**\n"
-    for x in getnotes:
-        if len(rply) >= 1800:
-            await message.reply(rply)
-            rply = "**Local notes:**\n"
-        rply += f"- `{x}`\n"
+    rply = "**Local notes:**\n" + get_notes
     await message.edit(rply)
     return
 
@@ -25,6 +20,7 @@ async def num_local_notes(client, message):
     num_notes = db.num_notes()
     await message.edit("`There are {} notes!`".format(num_notes))
     return
+
 
 @Client.on_message(Filters.command("save", COMMAND_HAND_LER) & Filters.me)
 async def save_notes(client, message):

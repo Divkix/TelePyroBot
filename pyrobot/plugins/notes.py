@@ -43,17 +43,17 @@ Get all your notes, if too much notes, please use this in your saved message ins
 """
 
 GET_FORMAT = {
-    Types.TEXT.value: client.send_message,
-    Types.DOCUMENT.value: client.send_document,
-    Types.PHOTO.value: client.send_photo,
-    Types.VIDEO.value: client.send_video,
-    Types.STICKER.value: client.send_sticker,
-    Types.AUDIO.value: client.send_audio,
-    Types.VOICE.value: client.send_voice,
-    Types.VIDEO_NOTE.value: client.send_video_note,
-    Types.ANIMATION.value: client.send_animation,
-    Types.ANIMATED_STICKER.value: client.send_sticker,
-    Types.CONTACT: client.send_contact
+    Types.TEXT.value: Client.send_message,
+    Types.DOCUMENT.value: Client.send_document,
+    Types.PHOTO.value: Client.send_photo,
+    Types.VIDEO.value: Client.send_video,
+    Types.STICKER.value: Client.send_sticker,
+    Types.AUDIO.value: Client.send_audio,
+    Types.VOICE.value: Client.send_voice,
+    Types.VIDEO_NOTE.value: Client.send_video_note,
+    Types.ANIMATION.value: Client.send_animation,
+    Types.ANIMATED_STICKER.value: Client.send_sticker,
+    Types.CONTACT: Client.send_contact
 }
 
 

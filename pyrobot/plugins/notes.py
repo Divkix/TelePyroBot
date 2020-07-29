@@ -131,6 +131,6 @@ async def clear_note(client, message):
 
 @Client.on_message(Filters.me & Filters.command("numnotes", COMMAND_HAND_LER))
 async def get_num_notes(client, message):
-    num_notes = db.get_num_notes(message.user.id)
+    num_notes = db.get_num_notes(message.from_user.id)
     await message.edit(f"`There are total {num_notes} stored`")
     return

@@ -1,14 +1,14 @@
 from pyrogram import Filters, Client
-
+import os
 from pyrobot import COMMAND_HAND_LER
 from pyrobot.utils.msg_types import Types, get_note_type
 from pyrobot.utils.pyrohelpers import ReplyCheck
-
+import asyncio
 from pyrobot.utils.sql_helpers import notes_db as db
 
 
-__PLUGIN__ = "notes"
-__HELP__ = """
+__PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
+__help__ = """
 Save a note, get that, even you can delete that note.
 This note only avaiable for yourself only!
 Also notes support inline button powered by inline query assistant bot.
@@ -94,6 +94,7 @@ async def get_note(client, message):
     elif getnotes['type'] in (Types.STICKER, Types.VOICE, Types.VIDEO_NOTE, Types.CONTACT, Types.ANIMATED_STICKER):
         await GET_FORMAT[getnotes['type']](message.chat.id, getnotes['file'], reply_to_message_id=ReplyCheck(message))
     else:
+        teks = getnotes.get('value')
         await GET_FORMAT[getnotes['type']](message.chat.id, getnotes['file'], caption=teks,
                                                reply_to_message_id=ReplyCheck(message))
 

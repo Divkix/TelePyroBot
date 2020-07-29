@@ -97,7 +97,7 @@ async def get_note(client, message):
         await message.edit("`Non supported format!`")
 
 @Client.on_message(Filters.me & Filters.command(["notes", "saved"], COMMAND_HAND_LER))
-async def local_notes(_client, message):
+async def local_notes(client, message):
     getnotes = db.get_all_selfnotes(message.from_user.id)
     if not getnotes:
         await message.edit("There are no notes in local notes!")
@@ -113,10 +113,7 @@ async def local_notes(_client, message):
 
 
 @Client.on_message(Filters.me & Filters.command("clear", COMMAND_HAND_LER))
-async def clear_note(_client, message):
-    if not DB_AVAILABLE:
-        await message.edit("Your database is not avaiable!")
-        return
+async def clear_note(client, message):
     if len(message.text.split()) <= 1:
         await message.edit("What do you want to clear?")
         return

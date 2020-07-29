@@ -28,9 +28,9 @@ async def num_local_notes(client, message):
 
 @Client.on_message(Filters.command("save", COMMAND_HAND_LER) & Filters.me)
 async def save_notes(client, message):
-    if message.reply_to_message and len(message.text.split(" ",1)) ==2:
+    if message.reply_to_message and len(message.text.split(" ",1)) == 2:
         notename = message.text.split(" ",1)[1]
-        text_data = message.reply_to_message.message_id
+        text_data = message.reply_to_message.text
     else:
         await message.edit("`Only Text messages supported right now`")
         return

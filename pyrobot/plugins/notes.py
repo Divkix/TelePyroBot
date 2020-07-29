@@ -17,7 +17,7 @@ async def local_notes(client, message):
 
 @Client.on_message(Filters.command("notesnum", COMMAND_HAND_LER) & Filters.me)
 async def num_local_notes(client, message):
-    num_notes = db.num_notes(message.from_user.id)
+    num_notes = db.num_notes()
     await message.edit("`There are {} notes!`".format(num_notes))
     return
 

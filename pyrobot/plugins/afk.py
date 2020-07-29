@@ -44,22 +44,22 @@ async def afk(client, message):
     start_1 = datetime.now()
     afk_start = start_1.replace(microsecond=0)
     if len(message.text.split()) >= 2:
-        set_afk(True, message.text.split(None, 1)[1])
         await message.edit_text(
             "I am going AFK now...\nBecause of {}".format(message.text.split(None, 1)[1]))
         await client.send_message(PRIVATE_GROUP_ID,
             "You are AFK!\nBecause of {}".format(message.text.split(None, 1)[1]))
         await asyncio.sleep(3)
         await message.delete()
+        set_afk(True, message.text.split(None, 1)[1])
 
     else:
-        set_afk(True, "")
         await message.edit_text(
             "{} is now AFK!".format(mention_markdown(message.from_user.id, message.from_user.first_name)))
         await client.send_message(PRIVATE_GROUP_ID,
             "{} is now AFK!".format(mention_markdown(message.from_user.id, message.from_user.first_name)))
         await asyncio.sleep(3)
         await message.delete()
+        set_afk(True, "")
     return
 
 
@@ -117,7 +117,7 @@ async def afk_mentioned(client, message):
         AFK_RESTIRECT[cid] = int(time.time()) + DELAY_TIME
         if get['reason']:
             await message.reply_text(
-                "Sorry, My Master {} is AFK right now!\nBecause of {}\n\nAFK Since:{}".format(mention_markdown(OWNER_ID, OWNER_NAME), get['reason'], afk_since))
+                "Sorry, My Master {} is AFK right now!\nReason: {}\n\nAFK Since:{}".format(mention_markdown(OWNER_ID, OWNER_NAME), get['reason'], afk_since))
         else:
             await message.reply_text("Sorry, My Master {} is AFK right now!\n\nAFK Since:{}".format(mention_markdown(OWNER_ID, OWNER_NAME, afk_since)))
 

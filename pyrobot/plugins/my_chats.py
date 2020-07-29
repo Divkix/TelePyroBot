@@ -34,7 +34,7 @@ async def get_chat(client, message):
             chatfile += "{} - ({}): @{}\n".format(chat.chat_name, chat.chat_id, chat.chat_username)
         else:
             chatfile += "{} - ({})\n".format(chat.chat_name, chat.chat_id)
-    chatlist_file = "pyrobot/downloads/chatlist.txt"
+    chatlist_file = "pyrobot/cache/chatlist.txt"
     with open(chatlist_file, "w", encoding="utf-8") as f:
         f.write(str(chatfile))
         f.close()

@@ -6,7 +6,7 @@ from pyrobot.utils.sql_helpers import notes_db as db
 
 @Client.on_message(Filters.command(["notes", "saved"], COMMAND_HAND_LER) & Filters.me)
 async def local_notes(client, message):
-    getnotes = db.get_all_chat_notes()
+    getnotes = db.get_all_chat_notes(message.from_user.id)
     if not getnotes:
         await message.edit("`There are no notes!`")
         return

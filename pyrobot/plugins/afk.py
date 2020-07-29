@@ -48,8 +48,9 @@ async def afk(client, message):
             "I am going AFK now...\nBecause of {}".format(message.text.split(None, 1)[1]))
         await client.send_message(PRIVATE_GROUP_ID,
             "You are AFK!\nBecause of {}".format(message.text.split(None, 1)[1]))
-        await asyncio.sleep(3)
+        await asyncio.sleep(2)
         await message.delete()
+        await asyncio.sleep(2)
         set_afk(True, message.text.split(None, 1)[1])
 
     else:
@@ -57,8 +58,9 @@ async def afk(client, message):
             "{} is now AFK!".format(mention_markdown(message.from_user.id, message.from_user.first_name)))
         await client.send_message(PRIVATE_GROUP_ID,
             "{} is now AFK!".format(mention_markdown(message.from_user.id, message.from_user.first_name)))
-        await asyncio.sleep(3)
+        await asyncio.sleep(2)
         await message.delete()
+        await asyncio.sleep(2)
         set_afk(True, "")
     return
 

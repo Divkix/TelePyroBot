@@ -1,16 +1,21 @@
+# Note: chat_id's are stored as strings because the int is too large to be stored in a PSQL database.
 import threading
+
 from sqlalchemy import Column, String, Boolean, UnicodeText, Integer, func, distinct
-from pyrobot.utils.sql_helpers import SESSION, BASE
+
+from pyrobot.helper_functions.sql_helpers import SESSION, BASE
 
 
 class Notes(BASE):
     __tablename__ = "notes"
+    chat_id = Column(String, primary_key=True)
     name = Column(UnicodeText, primary_key=True)
-    d_message_id = Column(String)
+    data = Column(Integer)
 
-    def __init__(self, name, d_message_id):
+    def __init__(self, chat_id, name, d_message_id):
+        self.chat_id = str(chat_id)
         self.name = name
-        self.d_message_id = d_message_id
+        self.data = data
 
     def __repr__(self):
         return "<Note %s>" % self.name
@@ -21,27 +26,26 @@ Notes.__table__.create(checkfirst=True)
 NOTES_INSERTION_LOCK = threading.RLock()
 
 
-def add_note_to_db(note_name, note_message_id):
+def add_note_to_db(chat_id, note_name, note_message_id):
     with NOTES_INSERTION_LOCK:
-        prev_note = SESSION.query(Notes).get(note_name)
-        if prev_note:
+        prev = SESSION.query(Notes).get((str(chat_id), note_name))
+        if prev:
             SESSION.delete(prev)
-        note = Notes(note_name, note_message_id)
+        note = Notes(str(chat_id), note_name, note_message_id)
         SESSION.add(note)
         SESSION.commit()
 
 
-def get_note(note_name):
+def get_note(chat_id, note_name):
     try:
-        note = SESSION.query(Notes).get(note_name)
-        return note
+        return SESSION.query(Notes).get((str(chat_id), note_name))
     finally:
         SESSION.close()
 
 
-def rm_note(note_name):
+def rm_note(chat_id, note_name):
     with NOTES_INSERTION_LOCK:
-        note = SESSION.query(Notes).get(note_name)
+        note = SESSION.query(Notes).get((str(chat_id), note_name))
         if note:
             SESSION.delete(note)
             SESSION.commit()
@@ -51,17 +55,15 @@ def rm_note(note_name):
             return False
 
 
-def get_all_chat_notes():
+def get_all_chat_notes(chat_id):
     try:
-        all_notes = SESSION.query(Notes).order_by(Notes.name.asc()).all()
-        return all_notes
+        return SESSION.query(Notes).filter(Notes.chat_id == str(chat_id)).order_by(Notes.name.asc()).all()
     finally:
         SESSION.close()
 
 
 def num_notes():
     try:
-        notes_count = SESSION.query(Notes).count()
-        return notes_count
+        return SESSION.query(Notes).count()
     finally:
         SESSION.close()

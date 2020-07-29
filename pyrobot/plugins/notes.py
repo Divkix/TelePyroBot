@@ -66,7 +66,7 @@ async def save_note(client, message):
         return
 
     if data_type == Types.TEXT:
-        teks = content
+        teks = text
         if not teks:
             await message.edit("```" + message.text + '```\n\nError: There is no text in here!')
             return

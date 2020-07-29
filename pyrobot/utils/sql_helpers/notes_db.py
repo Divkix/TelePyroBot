@@ -10,12 +10,12 @@ class Notes(BASE):
     __tablename__ = "notes"
     chat_id = Column(String, primary_key=True)
     name = Column(UnicodeText, primary_key=True)
-    data = Column(Integer)
+    data = Column(String)
 
     def __init__(self, chat_id, name, d_message_id):
         self.chat_id = str(chat_id)
         self.name = name
-        self.data = data
+        self.data = str(data)
 
     def __repr__(self):
         return "<Note %s>" % self.name

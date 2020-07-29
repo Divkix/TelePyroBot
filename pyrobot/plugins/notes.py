@@ -94,7 +94,8 @@ async def get_note(client, message):
     elif getnotes['type'] in (Types.STICKER, Types.VOICE, Types.VIDEO_NOTE, Types.CONTACT, Types.ANIMATED_STICKER):
         await GET_FORMAT[getnotes['type']](message.chat.id, getnotes['file'], reply_to_message_id=ReplyCheck(message))
     else:
-        await message.edit("`Non supported format!`")
+        await GET_FORMAT[getnotes['type']](message.chat.id, getnotes['file'], caption=teks,
+                                               reply_to_message_id=ReplyCheck(message))
 
 @Client.on_message(Filters.me & Filters.command(["notes", "saved"], COMMAND_HAND_LER))
 async def local_notes(client, message):

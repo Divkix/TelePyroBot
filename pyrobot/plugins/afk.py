@@ -1,7 +1,7 @@
 import os
 import time
 import asyncio
-import datetime
+from datetime import datetime
 from pyrogram import Client, Filters, ChatPermissions
 from pyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN, PRIVATE_GROUP_ID, OWNER_ID, OWNER_NAME
 from pyrobot.utils.admin_check import admin_check

@@ -20,10 +20,9 @@ GMUTE_USERS = []
 def is_gmuted(sender_id):
     Global GMUTE_USERS
     with INSERTION_LOCK:
-        try:
-            if sender_id in GMUTE_USERS:
+        if sender_id in GMUTE_USERS:
             return True
-        except:
+        else:
             return None
         finally:
             SESSION.close()

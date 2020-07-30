@@ -62,7 +62,7 @@ def save_note(user_id, note_name, note_data, msgtype, file_id=None, file_ref=Non
 
         if not SELF_NOTES.get(user_id):
             SELF_NOTES[user_id] = {}
-        SELF_NOTES[user_id][note_name] = {'value': note_data, 'type': msgtype, 'file_id': file_id, "file_ref"=file_ref}
+        SELF_NOTES[user_id][note_name] = {'value': note_data, 'type': msgtype, 'file_id': file_id, "file_ref": file_ref}
 
 
 def get_note(user_id, note_name):

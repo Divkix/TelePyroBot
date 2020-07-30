@@ -30,3 +30,4 @@ pyfiglet
 spotdl
 bs4
 lxml
+googletrans

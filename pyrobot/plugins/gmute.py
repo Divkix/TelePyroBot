@@ -10,7 +10,7 @@ __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
 Gmute users easily!
-They will not be able to speak until you gmute them!
+They will not be able to speak until you ungmute them!
 
 **Commands:**
 `{COMMAND_HAND_LER}gmute` as a reply to user or entering user id

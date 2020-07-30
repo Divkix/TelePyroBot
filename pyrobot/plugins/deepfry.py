@@ -36,13 +36,13 @@ async def do_deepfry(client, message):
         return
 
     # download last photo (highres) as byte array
-    await message.edit("`Downloading media…`")
+    await message.edit("`Downloading media...`")
     image = io.BytesIO()
     image = await client.download_media(data)
     image = Image.open(image)
 
-    # fry the image
-    await message.edit("`Deep frying media…`")
+    await asyncio.sleep(3)
+    await message.edit("`Deep frying media...`")
     for _ in range(frycount):
         image = await deepfry(image)
 
@@ -51,6 +51,7 @@ async def do_deepfry(client, message):
     image.save(fried_io, "JPEG")
     fried_io.seek(0)
 
+    await message.delete()
     await message.reply_photo(fried_io)
     return
 

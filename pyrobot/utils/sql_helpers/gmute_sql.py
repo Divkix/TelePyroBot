@@ -15,10 +15,14 @@ GMute.__table__.create(checkfirst=True)
 
 INSERTION_LOCK = threading.RLock()
 
+GMUTE_USERS = []
+
 def is_gmuted(sender_id):
+    Global GMUTE_USERS
     with INSERTION_LOCK:
         try:
-            return SESSION.query(GMute).all()
+            if sender_id in GMUTE_USERS:
+            return True
         except:
             return None
         finally:
@@ -27,17 +31,32 @@ def is_gmuted(sender_id):
 
 
 def gmute(sender):
+    Global GMUTE_USERS
     with INSERTION_LOCK:
         adder = GMute(str(sender))
+        GMUTE_USERS.append(str(sender))
         SESSION.add(adder)
         SESSION.commit()
     return
 
 
 def ungmute(sender):
+    Global GMUTE_USERS
     with INSERTION_LOCK:
         rem = SESSION.query(GMute).get((str(sender)))
         if rem:
+            GMUTE_USERS.remove(sender)
             SESSION.delete(rem)
             SESSION.commit()
         return
+
+
+def __load_all_gmute_users():
+    Global GMUTE_USERS
+    getall = SESSION.query(GMute).all()
+    for x in getall:
+        GMUTE_USERS.append(x)
+    return
+
+# Load All GMute Users
+__load_all_gmute_users()

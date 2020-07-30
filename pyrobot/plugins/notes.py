@@ -11,6 +11,7 @@ __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 __help__ = f"""
 Save a note, get that, even you can delete that note.
 This note only avaiable for yourself only!
+
 **Save Note**
 `{COMMAND_HAND_LER}save <note>`
 Save a note, you can get or delete that later.
@@ -27,6 +28,8 @@ Delete that note, if avaiable.
 `{COMMAND_HAND_LER}saved`
 `{COMMAND_HAND_LER}notes`
 Get all your notes, if too much notes, please use this in your saved message instead!
+
+-->**__ANYTHING EXCEPT TEXT IS CURRENTLY NOT SUPPORTED__**<--
 """
 
 GET_FORMAT = {
@@ -79,15 +82,18 @@ async def get_note(client, message):
         if teks:
             await message.edit(teks)
     elif getnotes['type'] in (Types.STICKER, Types.VOICE, Types.VIDEO_NOTE, Types.CONTACT, Types.ANIMATED_STICKER):
-        type_sent = (GET_FORMAT[getnotes['value']].split("_",1)[1])
-        await GET_FORMAT[getnotes['type']](chat_id=message.chat.id, type_sent=getnotes['file_id'], file_ref=getnotes['file_ref'], reply_to_message_id=ReplyCheck(message))
+        #type_sent = (GET_FORMAT[getnotes['value']].split("_",1)[1])
+        #await GET_FORMAT[getnotes['type']](chat_id=message.chat.id, type_sent=getnotes['file_id'], file_ref=getnotes['file_ref'], reply_to_message_id=ReplyCheck(message))
+        await message.edit("`Currently not supported!`")
     else:
-        if getnotes.get('value'):
+        """if getnotes.get('value'):
             teks = getnotes.get('value')
         else:
             teks = None
         await GET_FORMAT[getnotes['type']](message.chat.id, getnotes['file_id'], getnotes['file_ref'], caption=teks,
-                                               reply_to_message_id=ReplyCheck(message))
+                                               reply_to_message_id=ReplyCheck(message))"""
+        await message.edit("`Currently not supported!`")
+    return
 
 
 @Client.on_message(Filters.me & Filters.command(["notes", "saved"], COMMAND_HAND_LER))

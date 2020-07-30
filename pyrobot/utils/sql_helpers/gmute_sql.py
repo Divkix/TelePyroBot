@@ -49,6 +49,8 @@ def ungmute(sender):
             SESSION.commit()
         return
 
+def get_gmute_users():
+    return GMUTE_USERS
 
 def __load_all_gmute_users():
     Global GMUTE_USERS

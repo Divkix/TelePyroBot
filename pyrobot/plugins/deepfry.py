@@ -25,7 +25,7 @@ async def do_deepfry(client, message):
         frycount = int(message.text.split(" ",1)[1])
         if frycount < 1:
             raise ValueError
-    except ValueError:
+    except IndexError:
         frycount = 1
 
     if message.reply_to_message.photo or message.reply_to_message.sticker:

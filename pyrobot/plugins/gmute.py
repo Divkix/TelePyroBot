@@ -19,7 +19,7 @@ They will not be able to speak until you gmute them!
 
 
 @Client.on_message(Filters.command("gmute", COMMAND_HAND_LER) & Filters.me)
-async def startgmute(client, message):
+async def start_sgmute(client, message):
     await message.edit("`Putting duct tape...`")
     user_id, user_first_name = extract_user(message)
 
@@ -37,7 +37,7 @@ async def startgmute(client, message):
 
 
 @Client.on_message(Filters.command("ungmute", COMMAND_HAND_LER) & Filters.me)
-async def endgmute(client, message):
+async def end_gmute(client, message):
     await message.edit("`Removing duct tape...`")
     user_id, user_first_name = extract_user(message)
 
@@ -53,10 +53,12 @@ async def endgmute(client, message):
         await client.send_message(PRIVATE_GROUP_ID, f"#UNGMUTE\nUser:<a herf='tg://user?id={user_id}'>{user_first_name}</a>\nChat: {message.chat.title} (`{message.chat.id}`)")
     return
 
-
+"""
 @Client.on_message(Filters.group)
 async def watcher(client, message):
     if is_gmuted(message.from_user.id):
+        if message.chat.type in ("channel", "private"):
+            return
         try:
             await client.delete_messages(
                 chat_id=message.chat.id,
@@ -65,3 +67,4 @@ async def watcher(client, message):
         except Exception as err:
             print(f"Could not delete message!\nError:\n\n{str(err)}")
     return
+"""

@@ -29,7 +29,7 @@ async def do_deepfry(client, message):
         frycount = 1
 
     if message.reply_to_message.photo or message.reply_to_message.sticker:
-        reply_message = await message.reply_to_message
+        reply_message = message.reply_to_message
         data = await check_media(reply_message)
     else:
         await message.edit("`Reply to an image or sticker to deep fry it!`")

@@ -88,7 +88,6 @@ def get_num_notes(user_id):
         SESSION.close()
 
 
-
 def rm_note(user_id, note_name):
     global SELF_NOTES
     with INSERTION_LOCK:
@@ -101,6 +100,20 @@ def rm_note(user_id, note_name):
         else:
             SESSION.close()
             return False
+
+
+def rm_all_notes(user_id):
+    global SELF_NOTES
+    getall = SESSION.query(Notes).distinct().all()
+    with INSERTION_LOCK:
+    	try:
+	    	for note in getall:
+		        SESSION.delete(note)
+		        SESSION.commit()
+		        SELF_NOTES[user_id].pop(note)
+		finally:
+			SESSION.close()
+	return True
 
 
 def __load_all_notes():

@@ -127,6 +127,17 @@ async def clear_note(client, message):
     await message.edit(f"**Deleted note** `{note}`!")
 
 
+@Client.on_message(Filters.me & Filters.command(["clearall", "clearallnotes"], COMMAND_HAND_LER))
+async def clear_all_notes(client, message):
+    getnote = db.rm_all_notes(message.from_user.id)
+    if not getnote:
+        await message.edit("`Could not clear all notes!`")
+        return
+
+    await message.edit(f"**Deleted all notes!**")
+    return
+
+
 @Client.on_message(Filters.me & Filters.command("numnotes", COMMAND_HAND_LER))
 async def get_num_notes(client, message):
     num_notes = db.get_num_notes(message.from_user.id)

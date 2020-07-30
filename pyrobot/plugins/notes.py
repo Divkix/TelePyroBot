@@ -79,7 +79,8 @@ async def get_note(client, message):
         if teks:
             await message.edit(teks)
     elif getnotes['type'] in (Types.STICKER, Types.VOICE, Types.VIDEO_NOTE, Types.CONTACT, Types.ANIMATED_STICKER):
-        await GET_FORMAT[getnotes['type']](chat_id=message.chat.id, (GET_FORMAT[getnotes['value']].split("_",1)[1])=getnotes['file_id'], file_ref=getnotes['file_ref'], reply_to_message_id=ReplyCheck(message))
+        type_sent = (GET_FORMAT[getnotes['value']].split("_",1)[1])
+        await GET_FORMAT[getnotes['type']](chat_id=message.chat.id, type_sent=getnotes['file_id'], file_ref=getnotes['file_ref'], reply_to_message_id=ReplyCheck(message))
     else:
         if getnotes.get('value'):
             teks = getnotes.get('value')

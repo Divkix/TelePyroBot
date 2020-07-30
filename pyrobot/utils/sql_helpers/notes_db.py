@@ -106,14 +106,14 @@ def rm_all_notes(user_id):
     global SELF_NOTES
     getall = SESSION.query(Notes).distinct().all()
     with INSERTION_LOCK:
-    	try:
-	    	for note in getall:
-		        SESSION.delete(note)
-		        SESSION.commit()
-		        SELF_NOTES[user_id].pop(note)
-		finally:
-			SESSION.close()
-	return True
+        try:
+            for note in getall:
+                SESSION.delete(note)
+                SESSION.commit()
+                SELF_NOTES[user_id].pop(note)
+        finally:
+            SESSION.close()
+    return True
 
 
 def __load_all_notes():

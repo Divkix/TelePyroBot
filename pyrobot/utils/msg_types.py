@@ -86,6 +86,7 @@ def get_note_type(msg):
 
         elif msg.reply_to_message.sticker:
             content = msg.reply_to_message.sticker.file_id
+            file_ref = msg.reply_to_message.sticker.file_ref
             data_type = Types.STICKER
 
         elif msg.reply_to_message.document:
@@ -94,32 +95,39 @@ def get_note_type(msg):
             else:
                 data_type = Types.DOCUMENT
             content = msg.reply_to_message.document.file_id
+            file_ref = msg.reply_to_message.document.file_ref
 
         elif msg.reply_to_message.photo:
             content = msg.reply_to_message.photo.file_id  # last elem = best quality
+            file_ref = msg.reply_to_message.photo.file_ref
             data_type = Types.PHOTO
 
         elif msg.reply_to_message.audio:
             content = msg.reply_to_message.audio.file_id
+            file_ref = msg.reply_to_message.audio.file_ref
             data_type = Types.AUDIO
 
         elif msg.reply_to_message.voice:
             content = msg.reply_to_message.voice.file_id
+            file_ref = msg.reply_to_message.voice.file_ref
             data_type = Types.VOICE
 
         elif msg.reply_to_message.video:
             content = msg.reply_to_message.video.file_id
+            file_ref = msg.reply_to_message.video.file_ref
             data_type = Types.VIDEO
 
         elif msg.reply_to_message.video_note:
             content = msg.reply_to_message.video_note.file_id
+            file_ref = msg.reply_to_message.video_note.file_ref
             data_type = Types.VIDEO_NOTE
 
         elif msg.reply_to_message.animation:
             content = msg.reply_to_message.animation.file_id
+            file_ref = msg.reply_to_message.animation.file_ref
             data_type = Types.ANIMATION
 
     else:
-        return None, None, None, None
+        return None, None, None, None, None
 
-    return note_name, text, data_type, content
+    return note_name, text, data_type, content, file_ref

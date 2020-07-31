@@ -41,7 +41,7 @@ async def end_gmute(client, message):
     await message.edit("`Removing duct tape...`")
     user_id, user_first_name = extract_user(message)
 
-    if not db.us_gmuted(user_id):
+    if not db.is_gmuted(user_id):
         await message.edit("`This user is not gmuted!`")
         return
     try:
@@ -59,7 +59,7 @@ async def list_gmuted(client, message):
     users = db.get_gmute_users()
     users_list = "`Currently Gmuted users:`\n"
     for x in users:
-        users_list += "{x.first_name}: {x.id}"
+        users_list += f"{x.first_name}: {x.id}"
     await message.edit(users_list)
 
 

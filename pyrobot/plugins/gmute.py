@@ -59,8 +59,10 @@ async def list_gmuted(client, message):
     users = db.get_gmute_users()
     users_list = "`Currently Gmuted users:`\n"
     for x in users:
-        users_list += f"{x.first_name}: {x.id}"
+        user = client.get_users(x)
+        users_list += f"{user.first_name}: {user.id}"
     await message.edit(users_list)
+    return
 
 
 @Client.on_message(Filters.group, group=5)

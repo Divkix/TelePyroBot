@@ -18,7 +18,7 @@ INSERTION_LOCK = threading.RLock()
 GMUTE_USERS = []
 
 def is_gmuted(sender_id):
-    Global GMUTE_USERS
+    global GMUTE_USERS
     with INSERTION_LOCK:
         if sender_id in GMUTE_USERS:
             return True
@@ -30,7 +30,7 @@ def is_gmuted(sender_id):
 
 
 def gmute(sender):
-    Global GMUTE_USERS
+    global GMUTE_USERS
     with INSERTION_LOCK:
         adder = GMute(str(sender))
         GMUTE_USERS.append(str(sender))
@@ -40,7 +40,7 @@ def gmute(sender):
 
 
 def ungmute(sender):
-    Global GMUTE_USERS
+    global GMUTE_USERS
     with INSERTION_LOCK:
         rem = SESSION.query(GMute).get((str(sender)))
         if rem:

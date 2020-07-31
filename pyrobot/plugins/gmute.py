@@ -65,7 +65,7 @@ async def list_gmuted(client, message):
 
 @Client.on_message(Filters.group, group=5)
 async def watcher(client, message):
-    if is_gmuted(message.from_user.id):
+    if db.is_gmuted(message.from_user.id):
         try:
             await client.delete_messages(
                 chat_id=message.chat.id,

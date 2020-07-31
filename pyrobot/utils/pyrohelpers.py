@@ -12,7 +12,7 @@ def ReplyCheck(message: Message):
 
     return reply_id
 
-def extract_user(client=Client, message: Message) -> (int, str):
+def extract_user(client: Client, message: Message) -> (int, str):
     user_id = None
     user_first_name = None
 

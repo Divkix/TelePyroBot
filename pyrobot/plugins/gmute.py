@@ -21,8 +21,13 @@ They will not be able to speak until you ungmute them!
 @Client.on_message(Filters.command("gmute", COMMAND_HAND_LER) & Filters.me)
 async def start_sgmute(client, message):
     await message.edit("`Putting duct tape...`")
-    user_id, user_first_name = extract_user(message)
 
+    if len(message.command) == 2 and not message.reply_to_message and message.command[1].startswith("@"):
+        user = await client.get_users(message.command[1])
+        user_id = user.id
+        user_first_name = user.first_name
+    else:
+        user_id, user_first_name = extract_user(message)
     if db.is_gmuted(user_id):
         await message.edit("`This user is already gmuted!`")
         return
@@ -39,7 +44,13 @@ async def start_sgmute(client, message):
 @Client.on_message(Filters.command("ungmute", COMMAND_HAND_LER) & Filters.me)
 async def end_gmute(client, message):
     await message.edit("`Removing duct tape...`")
-    user_id, user_first_name = extract_user(message)
+
+    if len(message.command) == 2 and not message.reply_to_message and message.command[1].startswith("@"):
+        user = await client.get_users(message.command[1])
+        user_id = user.id
+        user_first_name = user.first_name
+    else:
+        user_id, user_first_name = extract_user(message)
 
     if not db.is_gmuted(user_id):
         await message.edit("`This user is not gmuted!`")
@@ -68,6 +79,7 @@ async def list_gmuted(client, message):
 @Client.on_message(Filters.group, group=5)
 async def watcher(client, message):
     if db.is_gmuted(message.from_user.id):
+        await asyncio.sleep(0.1)
         try:
             await client.delete_messages(
                 chat_id=message.chat.id,

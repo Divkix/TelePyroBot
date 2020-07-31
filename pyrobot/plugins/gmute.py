@@ -53,12 +53,9 @@ async def end_gmute(client, message):
         await client.send_message(PRIVATE_GROUP_ID, f"#UNGMUTE\nUser:<a herf='tg://user?id={user_id}'>{user_first_name}</a>\nChat: {message.chat.title} (`{message.chat.id}`)")
     return
 
-"""
-@Client.on_message(Filters.group)
+@Client.on_message(Filters.group, group=5)
 async def watcher(client, message):
     if is_gmuted(message.from_user.id):
-        if message.chat.type in ("channel", "private"):
-            return
         try:
             await client.delete_messages(
                 chat_id=message.chat.id,
@@ -67,4 +64,3 @@ async def watcher(client, message):
         except Exception as err:
             print(f"Could not delete message!\nError:\n\n{str(err)}")
     return
-"""

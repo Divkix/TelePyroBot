@@ -46,7 +46,7 @@ async def promote_usr(client, message):
         await asyncio.sleep(2)
         await message.delete()
         return
-    user_id, user_first_name = extract_user(message)
+    user_id, user_first_name = await extract_user(client, message)
     try:
         await message.chat.promote_member(user_id=user_id,
                                         can_change_info=False,
@@ -74,7 +74,7 @@ async def demote_usr(client, message):
         await asyncio.sleep(2)
         await message.delete()
         return
-    user_id, user_first_name = extract_user(message)
+    user_id, user_first_name = await extract_user(client, message)
     try:
         await message.chat.promote_member(user_id=user_id,
                                         can_change_info=False,
@@ -102,7 +102,7 @@ async def ban_usr(client, message):
         await asyncio.sleep(2)
         await message.delete()
         return
-    user_id, user_first_name = extract_user(message)
+    user_id, user_first_name = await extract_user(client, message)
     try:
         await message.chat.kick_member(user_id=user_id)
         if str(user_id).lower().startswith("@"):
@@ -125,7 +125,7 @@ async def restrict_usr(client, message):
         await asyncio.sleep(2)
         await message.delete()
         return
-    user_id, user_first_name = extract_user(message)
+    user_id, user_first_name = await extract_user(client, message)
     try:
         await message.chat.restrict_member(user_id=user_id,
             permisssions=ChatPermissions())
@@ -149,7 +149,7 @@ async def restrict_usr_tmp(client, message):
         await asyncio.sleep(2)
         await message.delete()
         return
-    user_id, user_first_name = extract_user(message)
+    user_id, user_first_name = await extract_user(client, message)
     until_date_val = extract_time(message.command[1])
     try:
         await message.chat.restrict_member(user_id=user_id,
@@ -174,7 +174,7 @@ async def unrestrict_usr(client, message):
         await asyncio.sleep(2)
         await message.delete()
         return
-    user_id, user_first_name = extract_user(message)
+    user_id, user_first_name = await extract_user(client, message)
     try:
         await message.chat.unban_member(user_id)
         if str(user_id).lower().startswith("@"):

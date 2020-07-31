@@ -1,11 +1,11 @@
 from pyrobot.utils.sql_helpers import SESSION, BASE
-from sqlalchemy import Column, String, UnicodeText
+from sqlalchemy import Column, Integer
 import threading
 
 
 class GMute(BASE):
     __tablename__ = "gmute"
-    sender = Column(String(14), primary_key=True)
+    sender = Column(Integer, primary_key=True)
 
     def __init__(self, sender):
         self.sender = str(sender)

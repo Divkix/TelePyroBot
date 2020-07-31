@@ -1,4 +1,4 @@
-from pyrogram import Message
+from pyrogram import Message, Client
 
 
 def ReplyCheck(message: Message):
@@ -12,7 +12,7 @@ def ReplyCheck(message: Message):
 
     return reply_id
 
-def extract_user(message: Message) -> (int, str):
+def extract_user(client=Client, message: Message) -> (int, str):
     user_id = None
     user_first_name = None
 
@@ -21,8 +21,12 @@ def extract_user(message: Message) -> (int, str):
         user_first_name = message.reply_to_message.from_user.first_name
 
     elif len(message.command) > 1:
+        if message.command[-1].startswith ("@"):
+            user = await client.get_users(message.command.split(" ",1)[1])
+            user_id = user.id
+            user_first_name = user.first_name
         if len(message.entities) >= 1:
-            required_entity = message.entities[0]
+            required_entity = message.entities[-1]
             if required_entity.type == "text_mention":
                 user_id = required_entity.user.id
                 user_first_name = required_entity.user.first_name

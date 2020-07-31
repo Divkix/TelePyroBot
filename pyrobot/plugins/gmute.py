@@ -1,4 +1,4 @@
-from pyrobot.utils.sql_helpers.gmute_sql import is_gmuted, gmute, ungmute
+from pyrobot.utils.sql_helpers import gmute_sql as db
 import asyncio
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER, PRIVATE_GROUP_ID
@@ -23,11 +23,11 @@ async def start_sgmute(client, message):
     await message.edit("`Putting duct tape...`")
     user_id, user_first_name = extract_user(message)
 
-    if is_gmuted(user_id):
+    if db.is_gmuted(user_id):
         await message.edit("`This user is already gmuted!`")
         return
     try:
-        gmute(user_id)
+        db.gmute(user_id)
     except Exception as e:
         await message.edit(f"<b>Error:</b>\n\n{str(e)}")
     else:
@@ -41,17 +41,27 @@ async def end_gmute(client, message):
     await message.edit("`Removing duct tape...`")
     user_id, user_first_name = extract_user(message)
 
-    if not is_gmuted(user_id):
+    if not db.us_gmuted(user_id):
         await message.edit("`This user is not gmuted!`")
         return
     try:
-        ungmute(user_id)
+        db.ungmute(user_id)
     except Exception as e:
         await message.edit(f"<b>Error:</b>\n\n{str(e)}")
     else:
         await message.edit("`Successfully ungmuted that person`")
         await client.send_message(PRIVATE_GROUP_ID, f"#UNGMUTE\nUser:<a herf='tg://user?id={user_id}'>{user_first_name}</a>\nChat: {message.chat.title} (`{message.chat.id}`)")
     return
+
+@Client.on_message(Filters.command("gmutelist", COMMAND_HAND_LER) & Filters.me)
+async def list_gmuted(client, message):
+    await message.edit("`Loading users...`")
+    users = db.get_gmute_users()
+    users_list = "`Currently Gmuted users:`\n"
+    for x in users:
+        users_list += "{x.first_name}: {x.id}"
+    await message.edit(users_list)
+
 
 @Client.on_message(Filters.group, group=5)
 async def watcher(client, message):

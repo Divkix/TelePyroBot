@@ -20,7 +20,7 @@ def extract_user(message: Message) -> (int, str):
         user_id = message.reply_to_message.from_user.id
         user_first_name = message.reply_to_message.from_user.first_name
 
-    elif len(message.command) > 1:
+    elif len(message.command) >= 1:
         if len(message.entities) > 1:
             required_entity = message.entities[1]
             if required_entity.type == "text_mention":

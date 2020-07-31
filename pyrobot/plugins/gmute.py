@@ -23,7 +23,7 @@ async def start_sgmute(client, message):
     await message.edit("`Putting duct tape...`")
     user_id, user_first_name = extract_user(message)
 
-    if is_gmuted(user_id,):
+    if is_gmuted(user_id):
         await message.edit("`This user is already gmuted!`")
         return
     try:
@@ -31,7 +31,7 @@ async def start_sgmute(client, message):
     except Exception as e:
         await message.edit(f"<b>Error:</b>\n\n{str(e)}")
     else:
-        await message.edit("Successfully gmuted that person")
+        await message.edit("`Successfully gmuted that person`")
         await client.send_message(PRIVATE_GROUP_ID, f"#GMUTE\nUser:<a herf='tg://user?id={user_id}'>{user_first_name}</a>\nChat: {message.chat.title} (`{message.chat.id}`)")
     return
 
@@ -49,7 +49,7 @@ async def end_gmute(client, message):
     except Exception as e:
         await message.edit(f"<b>Error:</b>\n\n{str(e)}")
     else:
-        await message.edit("Successfully ungmuted that person")
+        await message.edit("`Successfully ungmuted that person`")
         await client.send_message(PRIVATE_GROUP_ID, f"#UNGMUTE\nUser:<a herf='tg://user?id={user_id}'>{user_first_name}</a>\nChat: {message.chat.title} (`{message.chat.id}`)")
     return
 
@@ -59,8 +59,7 @@ async def watcher(client, message):
         try:
             await client.delete_messages(
                 chat_id=message.chat.id,
-                message_ids=message.message_id
-            )
+                message_ids=message.message_id)
         except Exception as err:
             print(f"Could not delete message!\nError:\n\n{str(err)}")
     return

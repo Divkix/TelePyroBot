@@ -27,13 +27,16 @@ async def updatemychats(client, message):
 
 @Client.on_message(Filters.me & Filters.command("chatlist", COMMAND_HAND_LER))
 async def get_chat(client, message):
+    await message.edit("`Exporting Chatlist...`")
     all_chats = get_all_chats()
     chatfile = '<---List of chats that you joined--->\n\n'
+    u = 0
     for chat in all_chats:
+        u += 1
         if str(chat.chat_username) != "None":
-            chatfile += "{} - ({}): @{}\n".format(chat.chat_name, chat.chat_id, chat.chat_username)
+            chatfile += "[u] {} - ({}): @{}\n".format(chat.chat_name, chat.chat_id, chat.chat_username)
         else:
-            chatfile += "{} - ({})\n".format(chat.chat_name, chat.chat_id)
+            chatfile += "[u] {} - ({})\n".format(chat.chat_name, chat.chat_id)
     chatlist_file = "pyrobot/cache/chatlist.txt"
     with open(chatlist_file, "w", encoding="utf-8") as f:
         f.write(str(chatfile))

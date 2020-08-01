@@ -4,7 +4,7 @@ import asyncio
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER, LOGGER, OWNER_ID, PM_PERMIT, PRIVATE_GROUP_ID, OWNER_NAME
 from pyrobot.utils.parser import mention_markdown
-from pyrobot.utils.sql_helpers.pmpermit_db import set_whitelist, get_whitelist, del_whitelist
+from pyrobot.utils.sql_helpers import pmpermit_db as db
 from pyrobot.utils.cust_p_filters import sudo_filter
 from pyrobot.utils.pyrohelpers import extract_user
 
@@ -29,7 +29,12 @@ If you spam, You'll be blocked + reported
 async def pm_block(client, message):
     if not PM_PERMIT:
         return
-    if not get_whitelist(message.chat.id):
+    if not db.get_whitelist(message.chat.id):
+        old_msg_id = db.get_msg_id(message.chat.id)
+        if old_msg_id:
+            await client.delete_messages(
+                chat_id=message.chat.id,
+                message_ids=old_msg_id)
         if message.text:
             for x in message.text.lower().split():
                 if x in BLACKLIST:
@@ -40,6 +45,7 @@ async def pm_block(client, message):
                     return
         
         await message.reply_text(welc_txt)
+        db.set_last_msg_id(message.chat.id, message.message_id)
         await asyncio.sleep(2)
         await client.send_message(PRIVATE_GROUP_ID, "{} **wants to contact you in PM**".format(mention_markdown(message.from_user.id, message.from_user.first_name)))
         return
@@ -51,7 +57,12 @@ async def approve_pm(client, message):
         user_id = message.chat.id
     else:
         user_id, user_first_name = extract_user(message)
-    set_whitelist(user_id, True)
+    db.set_whitelist(user_id, True)
+    old_msg_id = db.get_msg_id(message.chat.id)
+    if old_msg_id:
+        await client.delete_messages(
+            chat_id=message.chat.id,
+            message_ids=old_msg_id)
     user = await client.get_users(user_id)
     await message.edit("**__PM permission was approved__** for {}".format(mention_markdown(user_id, user.first_name)))
     await client.send_message(PRIVATE_GROUP_ID, "{} **is approved to contact you in PM!**".format(mention_markdown(user_id, user.first_name)))
@@ -65,7 +76,7 @@ async def revoke_pm_block(client, message):
         user_id = message.chat.id
     else:
         user_id = message.text.split(" ")[1]
-    del_whitelist(user_id)
+    db.del_whitelist(user_id)
     user = await client.get_users(user_id)
     await message.edit("__**PM permission was revoked for**__ {}".format(mention_markdown(user_id, user.first_name)))
     user_id = message.chat.id

@@ -24,14 +24,14 @@ def set_whitelist(user_id, boolvalue):
         user = SESSION.query(PMTable).get(user_id)
         try:
             if not user:
-                user = PMTable(user_id, boolvalue, msg_id)
+                user = PMTable(user_id, boolvalue, 0)
             else:
                 user.boolvalue = str(boolvalue)
             SESSION.add(user)
             SESSION.commit()
         finally:
             SESSION.close()
-    return user_id, msg_id
+    return user_id
 
 
 def set_last_msg_id(user_id, msg_id):

@@ -34,9 +34,9 @@ async def get_chat(client, message):
     for chat in all_chats:
         u += 1
         if str(chat.chat_username) != "None":
-            chatfile += "[u] {} - ({}): @{}\n".format(chat.chat_name, chat.chat_id, chat.chat_username)
+            chatfile += "[{}] {} - ({}): @{}\n".format(u, chat.chat_name, chat.chat_id, chat.chat_username)
         else:
-            chatfile += "[u] {} - ({})\n".format(chat.chat_name, chat.chat_id)
+            chatfile += "[{}] {} - ({})\n".format(u, chat.chat_name, chat.chat_id)
     chatlist_file = "pyrobot/cache/chatlist.txt"
     with open(chatlist_file, "w", encoding="utf-8") as f:
         f.write(str(chatfile))

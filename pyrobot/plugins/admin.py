@@ -103,7 +103,8 @@ async def ban_usr(client, message):
         await message.delete()
         return
     user_id, user_first_name = await extract_user(client, message)
-    await client.delete_messages(message.chat.id, message.reply_to_message.message_id)
+    if message.reply_to_message:
+        await client.delete_messages(message.chat.id, message.reply_to_message.message_id)
     try:
         await message.chat.kick_member(user_id=user_id)
         if str(user_id).lower().startswith("@"):

@@ -46,8 +46,8 @@ async def pm_block(client, message):
                         await client.send_message(PRIVATE_GROUP_ID, "{} **was blocked due to a blacklist word!**".format(mention_markdown(message.from_user.id, message.from_user.first_name)))
                         return
             
-            await message.reply_text(welc_txt)
-            db.set_last_msg_id(message.chat.id, message.message_id)
+            rply_msg = await message.reply_text(welc_txt)
+            db.set_last_msg_id(message.chat.id, rply_msg.message_id)
             await asyncio.sleep(2)
             await client.send_message(PRIVATE_GROUP_ID, "{} **wants to contact you in PM**".format(mention_markdown(message.from_user.id, message.from_user.first_name)))
             return

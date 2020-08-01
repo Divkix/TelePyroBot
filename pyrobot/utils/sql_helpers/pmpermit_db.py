@@ -7,24 +7,35 @@ class PMTable(BASE):
     __tablename__ = "pmapprove"
     user_id = Column(Integer, primary_key=True)
     boolvalue = Column(String)
-    msg_id = Column(Integer)
 
-    def __init__(self, user_id, boolvalue, msg_id):
-        """initializing db"""
+    def __init__(self, user_id, boolvalue):
         self.user_id = user_id
         self.boolvalue = boolvalue
+
+
+class MsgID(BASE):
+    __tablename__ = "pmapprove"
+    user_id = Column(Integer, primary_key=True)
+    msg_id = Column(Integer)
+
+    def __init__(self, user_id, msg_id):
+        self.user_id = user_id
         self.msg_id = msg_id
 
 
 PMTable.__table__.create(checkfirst=True)
+MsgID.__table__.create(checkfirst=True)
+
+
 INSERTION_LOCK = threading.RLock()
+
 
 def set_whitelist(user_id, boolvalue):
     with INSERTION_LOCK:
         user = SESSION.query(PMTable).get(user_id)
         try:
             if not user:
-                user = PMTable(user_id, boolvalue, 0)
+                user = PMTable(user_id, boolvalue)
             else:
                 user.boolvalue = str(boolvalue)
             SESSION.add(user)
@@ -36,14 +47,27 @@ def set_whitelist(user_id, boolvalue):
 
 def set_last_msg_id(user_id, msg_id):
     with INSERTION_LOCK:
-        user = SESSION.query(PMTable).get(user_id)
-        if not user:
-            user = PMTable(user_id, str(False), msg_id)
-        else:
-            user.msg_id = msg_id
-        SESSION.merge(user)
-        SESSION.commit()
-    return
+        try:
+            user = SESSION.query(MsgID).get(user_id)
+            if not user:
+                user = MsgID(user_id, msg_id)
+            else:
+                user.msg_id = msg_id
+            SESSION.merge(user)
+            SESSION.commit()
+        finally:
+            SESSION.close()
+
+
+def get_msg_id(user_id):
+    try:
+        user = SESSION.query(MsgID).get(user_id)
+        msg_id = None
+        if user:
+            msg_id = user.msg_id
+            return msg_id
+    finally:
+        SESSION.close()
 
 
 def del_whitelist(user_id):
@@ -56,14 +80,6 @@ def del_whitelist(user_id):
         finally:
             SESSION.close()
         return False
-
-def get_msg_id(user_id):
-    user = SESSION.query(PMTable).get(user_id)
-    msg_id = None
-    if user:
-        msg_id = user.msg_id
-    SESSION.close()
-    return msg_id
 
 
 def get_whitelist(user_id):

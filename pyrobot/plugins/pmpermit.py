@@ -63,13 +63,13 @@ async def approve_pm(client, message):
     else:
         user_id, user_first_name = extract_user(message)
     db.set_whitelist(user_id, True)
-    old_msg_id = db.get_msg_id(message.chat.id)
-    if old_msg_id:
+    user = await client.get_users(user_id)
+    await message.edit("**__PM permission was approved__** for {}".format(mention_markdown(user_id, user.first_name)))
+    if db.get_msg_id(message.chat.id):
+        old_msg_id = db.get_msg_id(message.chat.id)
         await client.delete_messages(
             chat_id=message.chat.id,
             message_ids=old_msg_id)
-    user = await client.get_users(user_id)
-    await message.edit("**__PM permission was approved__** for {}".format(mention_markdown(user_id, user.first_name)))
     await client.send_message(PRIVATE_GROUP_ID, "{} **is approved to contact you in PM!**".format(mention_markdown(user_id, user.first_name)))
     await asyncio.sleep(5)
     await message.delete()

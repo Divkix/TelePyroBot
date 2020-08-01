@@ -69,7 +69,7 @@ async def paste_bin(client, message):
     t_w_attempt = bleck_megick(response_jn)
     required_url = json.dumps(t_w_attempt, sort_keys=True, indent=4) + "\n\n #ERROR"
     if t_w_attempt is not None:
-        required_url = paste_store_base_url + "/" + "raw" + "/" + t_w_attempt
+        required_url = paste_store_base_url + "/"  + t_w_attempt
     await message.edit(f"**Pasted to {default_paste}**:\n{required_url}")
 
 

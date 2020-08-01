@@ -29,29 +29,30 @@ If you spam, You'll be blocked + reported
 async def pm_block(client, message):
     if not PM_PERMIT:
         return
-    if not db.get_whitelist(message.chat.id):
-        try:
+    try:
+        if not db.get_whitelist(message.chat.id):
             if db.get_msg_id(message.chat.id):
                 old_msg_id = db.get_msg_id(message.chat.id)
                 await client.delete_messages(
                     chat_id=message.chat.id,
                     message_ids=old_msg_id)
-        except Exception as ef:
-            print("Error!\n\n", ef)
+            
+            if message.text:
+                for x in message.text.lower().split():
+                    if x in BLACKLIST:
+                        await message.reply(
+                            "You triggered a blacklist word\nI'm blocking you mf + reporting, don't contact my master again!")
+                        await client.block_user(message.chat.id)
+                        await client.send_message(PRIVATE_GROUP_ID, "{} **was blocked due to a blacklist word!**".format(mention_markdown(message.from_user.id, message.from_user.first_name)))
+                        return
+            
+            await message.reply_text(welc_txt)
+            db.set_last_msg_id(message.chat.id, message.message_id)
+            await asyncio.sleep(2)
+            await client.send_message(PRIVATE_GROUP_ID, "{} **wants to contact you in PM**".format(mention_markdown(message.from_user.id, message.from_user.first_name)))
             return
-        if message.text:
-            for x in message.text.lower().split():
-                if x in BLACKLIST:
-                    await message.reply(
-                        "You triggered a blacklist word\nI'm blocking you mf + reporting, don't contact my master again!")
-                    await client.block_user(message.chat.id)
-                    await client.send_message(PRIVATE_GROUP_ID, "{} **was blocked due to a blacklist word!**".format(mention_markdown(message.from_user.id, message.from_user.first_name)))
-                    return
-        
-        await message.reply_text(welc_txt)
-        db.set_last_msg_id(message.chat.id, message.message_id)
-        await asyncio.sleep(2)
-        await client.send_message(PRIVATE_GROUP_ID, "{} **wants to contact you in PM**".format(mention_markdown(message.from_user.id, message.from_user.first_name)))
+    except Exception as ef:
+        print("Error!\n\n", ef)
         return
 
 

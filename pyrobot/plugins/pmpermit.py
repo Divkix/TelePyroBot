@@ -25,16 +25,20 @@ Please leave your message and my Owner will contact you shortly!
 If you spam, You'll be blocked + reported
 """
 
-@Client.on_message(Filters.private & (~Filters.me & ~Filters.bot & ~sudo_filter), group=3)
+@Client.on_message(Filters.private & (~Filters.me & ~Filters.bot), group=3)
 async def pm_block(client, message):
     if not PM_PERMIT:
         return
     if not db.get_whitelist(message.chat.id):
-        if db.get_msg_id(message.chat.id):
-            old_msg_id = db.get_msg_id(message.chat.id)
-            await client.delete_messages(
-                chat_id=message.chat.id,
-                message_ids=old_msg_id)
+        try:
+            if db.get_msg_id(message.chat.id):
+                old_msg_id = db.get_msg_id(message.chat.id)
+                await client.delete_messages(
+                    chat_id=message.chat.id,
+                    message_ids=old_msg_id)
+        except Exception as ef:
+            print("Error!\n\n", ef)
+            return
         if message.text:
             for x in message.text.lower().split():
                 if x in BLACKLIST:

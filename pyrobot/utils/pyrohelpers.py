@@ -20,11 +20,12 @@ async def extract_user(client, message: Message) -> (int, str):
         user = await client.get_users(message.command[1])
         user_id = user.id
         user_first_name = user.first_name
-    return user_id, user_first_name
+        return user_id, user_first_name
 
     if message.reply_to_message:
         user_id = message.reply_to_message.from_user.id
         user_first_name = message.reply_to_message.from_user.first_name
+        return user_id, user_first_name
 
     elif len(message.command) > 1 and not message.command[1].startswith("@"):
         if len(message.entities) >= 1:

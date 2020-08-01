@@ -31,7 +31,7 @@ async def pm_block(client, message):
         return
     if not db.get_whitelist(message.chat.id):
         if db.get_msg_id(message.chat.id):
-        	old_msg_id = db.get_msg_id(message.chat.id)
+            old_msg_id = db.get_msg_id(message.chat.id)
             await client.delete_messages(
                 chat_id=message.chat.id,
                 message_ids=old_msg_id)

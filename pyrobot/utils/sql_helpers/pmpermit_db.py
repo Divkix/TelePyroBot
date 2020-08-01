@@ -14,7 +14,7 @@ class PMTable(BASE):
 
 
 class MsgID(BASE):
-    __tablename__ = "pmapprove"
+    __tablename__ = "msgid_pm"
     user_id = Column(Integer, primary_key=True)
     msg_id = Column(Integer)
 

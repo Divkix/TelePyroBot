@@ -57,25 +57,20 @@ async def purge(client, message):
     await asyncio.sleep(3)
     await message.delete()
 
-@Client.on_message(Filters.command("del", COMMAND_HAND_LER) & Filters.me)
+@Client.on_message(Filters.command("del", COMMAND_HAND_LER) & Filters.me, group=3)
 async def del_msg(client, message):
-    if message.chat.type in ("supergroup", "channel"):
-        is_admin = await admin_check(message)
-        if not is_admin:
-            await asyncio.sleep(3)
-            await message.delete()
-            return
-    if message.chat.type in ["private", "bot", "group"]:
-        await message.edit("`You are not allowed to use this command here!`")
-        await asyncio.sleep(2)
-        await message.delete()
-        return
-
     if message.reply_to_message:
+        if message.chat.type in ("supergroup", "channel"):
+            is_admin = await admin_check(message)
+            if not is_admin:
+                await message.reply("`I'm not admin nub Nibba`")
+                await asyncio.sleep(3)
+                await message.delete()
+                return
+
         await client.delete_messages(
             chat_id=message.chat.id,
-            message_id=message.reply_to_message.message_id,
-            revoke=True)
+            message_id=message.reply_to_message.message_id)
 
     else:
         await message.edit(

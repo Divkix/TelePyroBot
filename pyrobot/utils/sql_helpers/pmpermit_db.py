@@ -58,7 +58,7 @@ def del_whitelist(user_id):
         return False
 
 def get_msg_id(user_id):
-    user = SESSION.query(PMTable).get(str(user_id))
+    user = SESSION.query(PMTable).get(user_id)
     msg_id = None
     if user:
         msg_id = user.msg_id

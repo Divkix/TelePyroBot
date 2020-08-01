@@ -36,6 +36,7 @@ async def pm_block(client, message):
                     await message.reply(
                         "You triggered a blacklist word\nI'm blocking you mf + reporting, don't contact my master again!")
                     await client.block_user(message.chat.id)
+                    await client.send_message(PRIVATE_GROUP_ID, "{} **was blocked due to a blacklist word!**".format(mention_markdown(message.from_user.id, message.from_user.first_name)))
                     return
         
         await message.reply_text(welc_txt)

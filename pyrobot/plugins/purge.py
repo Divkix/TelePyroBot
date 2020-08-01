@@ -76,5 +76,5 @@ async def del_msg(client, message):
         await message.edit(
             "`Reply to a message to delete!`")
 
-    await asyncio.sleep(3)
+    await asyncio.sleep(1)
     await message.delete()

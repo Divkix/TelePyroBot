@@ -1,8 +1,8 @@
-from pyrobot.utils.sql_helpers import gmute_sql as db
+import os
 import asyncio
+from pyrobot.utils.sql_helpers import gmute_sql as db
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER, PRIVATE_GROUP_ID
-import os
 from pyrobot.utils.pyrohelpers import extract_user
 
 
@@ -65,7 +65,7 @@ async def list_gmuted(client, message):
 
 
 @Client.on_message(Filters.group, group=5)
-async def watcher(client, message):
+async def watcher_gmute(client, message):
     if db.is_gmuted(message.from_user.id):
         await asyncio.sleep(0.1)
         try:

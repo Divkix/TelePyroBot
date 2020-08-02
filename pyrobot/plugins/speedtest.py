@@ -25,7 +25,7 @@ async def listbots(client, message):
                        "**Upload:** "
                        f"`{speed_convert(result['upload'])}`\n"
                        "**Ping:** "
-                       f"`{result['ping']}`\n"
+                       f"`{result['ping']} ms`\n"
                        "**ISP:** "
                        f"`{result['client']['isp']}`",
                        parse_mode="markdown")

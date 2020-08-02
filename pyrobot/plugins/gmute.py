@@ -73,13 +73,12 @@ async def list_gmuted(client, message):
 
 @Client.on_message(Filters.group, group=5)
 async def watcher_gmute(client, message):
-    if message.from_user.id:
-        if db.is_gmuted(message.from_user.id):
-            await asyncio.sleep(0.1)
-            try:
-                await client.delete_messages(
-                    chat_id=message.chat.id,
-                    message_ids=message.message_id)
-            except Exception as err:
-                print(f"Could not delete message!\nError:\n\n{str(err)}")
-        return
+    if db.is_gmuted(message.from_user.id):
+        await asyncio.sleep(0.1)
+        try:
+            await client.delete_messages(
+                chat_id=message.chat.id,
+                message_ids=message.message_id)
+        except Exception as err:
+            pass
+    return

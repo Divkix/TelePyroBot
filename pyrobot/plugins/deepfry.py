@@ -51,8 +51,8 @@ async def do_deepfry(client, message):
     image.save(fried_io, "JPEG")
     fried_io.seek(0)
 
-    await message.delete()
     await message.reply_photo(fried_io)
+    await message.delete()
     return
 
 

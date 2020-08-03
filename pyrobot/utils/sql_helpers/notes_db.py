@@ -6,28 +6,31 @@ from pyrobot.utils.sql_helpers import BASE, SESSION
 from pyrobot.utils.msg_types import Types
 
 
-class SelfNotes(BASE):
+class Notes(BASE):
     __tablename__ = "self_notes"
     user_id = Column(Integer, primary_key=True)
     name = Column(UnicodeText, primary_key=True)
     value = Column(UnicodeText, nullable=False)
     msgtype = Column(Integer, default=Types.TEXT)
-    file = Column(UnicodeText)
+    file_id = Column(UnicodeText)
+    file_ref = Column(UnicodeText)
 
-    def __init__(self, user_id, name, value, msgtype, file):
+    def __init__(self, user_id, name, value, msgtype, file_id, file_ref):
+
         """initializing db"""
         self.user_id = user_id
         self.name = name
         self.value = value
         self.msgtype = msgtype
-        self.file = file
+        self.file_id = file_id
+        self.file_ref = file_ref
 
     def __repr__(self):
         """get db message"""
         return "<Note %s>" % self.name
 
 
-SelfNotes.__table__.create(checkfirst=True)
+Notes.__table__.create(checkfirst=True)
 
 INSERTION_LOCK = threading.RLock()
 
@@ -47,28 +50,30 @@ SELF_NOTES = {}
 # ANIMATED_STICKER = 10
 # CONTACT = 11
 
-def save_selfnote(user_id, note_name, note_data, msgtype, file=None):
+
+def save_note(user_id, note_name, note_data, msgtype, file_id=None, file_ref=None):
     global SELF_NOTES
     with INSERTION_LOCK:
-        prev = SESSION.query(SelfNotes).get((user_id, note_name))
+        prev = SESSION.query(Notes).get((user_id, note_name))
         if prev:
             SESSION.delete(prev)
-        note = SelfNotes(user_id, note_name, note_data, msgtype=int(msgtype), file=file)
+        note = Notes(user_id, note_name, note_data, msgtype=int(msgtype), file_id=file_id, file_ref=file_ref)
         SESSION.add(note)
         SESSION.commit()
 
         if not SELF_NOTES.get(user_id):
             SELF_NOTES[user_id] = {}
-        SELF_NOTES[user_id][note_name] = {'value': note_data, 'type': msgtype, 'file': file}
+        SELF_NOTES[user_id][note_name] = {'value': note_data, 'type': msgtype, 'file_id': file_id, "file_ref": file_ref}
 
 
-def get_selfnote(user_id, note_name):
+def get_note(user_id, note_name):
+
     if not SELF_NOTES.get(user_id):
         SELF_NOTES[user_id] = {}
     return SELF_NOTES[user_id].get(note_name)
 
 
-def get_all_selfnotes(user_id):
+def get_all_notes(user_id):
     if not SELF_NOTES.get(user_id):
         SELF_NOTES[user_id] = {}
         return None
@@ -79,17 +84,16 @@ def get_all_selfnotes(user_id):
 
 def get_num_notes(user_id):
     try:
-        num_notes = SESSION.query(SelfNotes).count()
+        num_notes = SESSION.query(Notes).count()
         return num_notes
     finally:
         SESSION.close()
 
 
-
-def rm_selfnote(user_id, note_name):
+def rm_note(user_id, note_name):
     global SELF_NOTES
     with INSERTION_LOCK:
-        note = SESSION.query(SelfNotes).get((user_id, note_name))
+        note = SESSION.query(Notes).get((user_id, note_name))
         if note:
             SESSION.delete(note)
             SESSION.commit()
@@ -100,13 +104,27 @@ def rm_selfnote(user_id, note_name):
             return False
 
 
-def __load_allnotes():
+def rm_all_notes(user_id):
     global SELF_NOTES
-    getall = SESSION.query(SelfNotes).distinct().all()
+    getall = SESSION.query(Notes).distinct().all()
+    with INSERTION_LOCK:
+        try:
+            for note in getall:
+                SESSION.delete(note)
+                SESSION.commit()
+                SELF_NOTES[user_id].pop(note)
+        finally:
+            SESSION.close()
+    return True
+
+
+def __load_all_notes():
+    global SELF_NOTES
+    getall = SESSION.query(Notes).distinct().all()
     for x in getall:
         if not SELF_NOTES.get(x.user_id):
             SELF_NOTES[x.user_id] = {}
-        SELF_NOTES[x.user_id][x.name] = {'value': x.value, 'type': x.msgtype, 'file': x.file}
+        SELF_NOTES[x.user_id][x.name] = {'value': x.value, 'type': x.msgtype, 'file_id': x.file_id, 'file_ref': x.file_ref}
 
 
-__load_allnotes()
+__load_all_notes()

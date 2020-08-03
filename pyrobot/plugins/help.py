@@ -24,6 +24,7 @@ async def execution(client, message):
         mod_num += 1
     all_plugins = f"<b><u>{mod_num}</u> Modules Currently Loaded:</b>\n\n" + mods
     await message.edit(all_plugins)
+    return
 
 
 @Client.on_message(Filters.command("help", COMMAND_HAND_LER) & Filters.me)
@@ -40,3 +41,4 @@ async def help_me(client, message):
             await message.edit(f"<b>Error:</b>\n\n{ef}")
     else:
         await message.edit(f"Use `{COMMAND_HAND_LER}help` to view help")
+    return

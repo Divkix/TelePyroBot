@@ -8,27 +8,28 @@ from pyrobot.utils.sql_helpers import notes_db as db
 
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
-__help__ = """
+__help__ = f"""
 Save a note, get that, even you can delete that note.
 This note only avaiable for yourself only!
-Also notes support inline button powered by inline query assistant bot.
 
-──「 **Save Note** 」──
--> `save (note)`
+**Save Note**
+`{COMMAND_HAND_LER}save <note>`
 Save a note, you can get or delete that later.
 
-──「 **Get Note** 」──
--> `get (note)`
+**Get Note**
+`{COMMAND_HAND_LER}get <note>`
 Get that note, if avaiable.
 
-──「 **Delete Note** 」──
--> `clear (note)`
+**Delete Note**
+`{COMMAND_HAND_LER}clear <note>`
 Delete that note, if avaiable.
 
-──「 **All Notes** 」──
--> `saved`
--> `notes`
+**All Notes**
+`{COMMAND_HAND_LER}saved`
+`{COMMAND_HAND_LER}notes`
 Get all your notes, if too much notes, please use this in your saved message instead!
+
+-->**__ANYTHING EXCEPT TEXT IS CURRENTLY NOT SUPPORTED__**<--
 """
 
 GET_FORMAT = {
@@ -48,7 +49,9 @@ GET_FORMAT = {
 
 @Client.on_message(Filters.command("save", COMMAND_HAND_LER) & Filters.me)
 async def save_note(client, message):
-    note_name, text, data_type, content = get_note_type(message)
+
+    note_name, text, data_type, content, file_ref = get_note_type(message)
+
 
     if not note_name:
         await message.edit("```" + message.text + '```\n\nError: You must give a name for this note!')
@@ -60,7 +63,8 @@ async def save_note(client, message):
             await message.edit("```" + message.text + '```\n\nError: There is no text in here!')
             return
 
-    db.save_selfnote(message.from_user.id, note_name, text, data_type, content)
+
+    db.save_note(message.from_user.id, note_name, text, data_type, content, file_ref)
     await message.edit(f'Saved note `{note_name}`!')
 
 
@@ -71,7 +75,8 @@ async def get_note(client, message):
     else:
         await message.edit("`Give me a note tag!`")
 
-    getnotes = db.get_selfnote(message.from_user.id, note)
+
+    getnotes = db.get_note(message.from_user.id, note)
     if not getnotes:
         await message.edit("`This note does not exist!`")
         return
@@ -81,28 +86,33 @@ async def get_note(client, message):
         if teks:
             await message.edit(teks)
     elif getnotes['type'] in (Types.STICKER, Types.VOICE, Types.VIDEO_NOTE, Types.CONTACT, Types.ANIMATED_STICKER):
-        await GET_FORMAT[getnotes['type']](message.chat.id, getnotes['file'], reply_to_message_id=ReplyCheck(message))
+        #type_sent = (GET_FORMAT[getnotes['value']].split("_",1)[1])
+        #await GET_FORMAT[getnotes['type']](chat_id=message.chat.id, type_sent=getnotes['file_id'], file_ref=getnotes['file_ref'], reply_to_message_id=ReplyCheck(message))
+        await message.edit("`Currently not supported!`")
     else:
-        if getnotes.get('value'):
+        """if getnotes.get('value'):
             teks = getnotes.get('value')
         else:
             teks = None
-        await GET_FORMAT[getnotes['type']](message.chat.id, getnotes['file'], caption=teks,
-                                               reply_to_message_id=ReplyCheck(message))
+        await GET_FORMAT[getnotes['type']](message.chat.id, getnotes['file_id'], getnotes['file_ref'], caption=teks,
+                                               reply_to_message_id=ReplyCheck(message))"""
+        await message.edit("`Currently not supported!`")
+    return
 
 
 @Client.on_message(Filters.me & Filters.command(["notes", "saved"], COMMAND_HAND_LER))
 async def local_notes(client, message):
-    getnotes = db.get_all_selfnotes(message.from_user.id)
+
+    getnotes = db.get_all_notes(message.from_user.id)
     if not getnotes:
         await message.edit("`There are no notes!`")
         return
-    rply = "**Local notes:**\n"
+    rply = "**__Notes:__**\n"
     for x in getnotes:
         if len(rply) >= 1800:
             await message.reply(rply)
-            rply = "**Local notes:**\n"
-        rply += f"- `{x}`\n"
+            rply = "**__Notes:__**\n"
+        rply += f"-> `{x}`\n"
 
     await message.edit(rply)
 
@@ -110,11 +120,11 @@ async def local_notes(client, message):
 @Client.on_message(Filters.me & Filters.command("clear", COMMAND_HAND_LER))
 async def clear_note(client, message):
     if len(message.text.split()) <= 1:
-        await message.edit("**What do you want to clear?**")
+        await message.edit(f"**What do you want to clear?**\n**Use** `{COMMAND_HAND_LER}help notes` **to check how to use!**")
         return
 
     note = message.text.split()[1]
-    getnote = db.rm_selfnote(message.from_user.id, note)
+    getnote = db.rm_note(message.from_user.id, note)
     if not getnote:
         await message.edit("`This note does not exist!`")
         return
@@ -122,8 +132,20 @@ async def clear_note(client, message):
     await message.edit(f"**Deleted note** `{note}`!")
 
 
+
+@Client.on_message(Filters.me & Filters.command(["clearall", "clearallnotes"], COMMAND_HAND_LER))
+async def clear_all_notes(client, message):
+    getnote = db.rm_all_notes(message.from_user.id)
+    if not getnote:
+        await message.edit("`Could not clear all notes!`")
+        return
+
+    await message.edit(f"**Deleted all notes!**")
+    return
+
+
 @Client.on_message(Filters.me & Filters.command("numnotes", COMMAND_HAND_LER))
 async def get_num_notes(client, message):
     num_notes = db.get_num_notes(message.from_user.id)
-    await message.edit(f"`There are total {num_notes} stored`")
+    await message.edit(f"`There are total <u>{num_notes}</u> stored`")
     return

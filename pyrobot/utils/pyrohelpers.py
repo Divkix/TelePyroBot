@@ -16,7 +16,7 @@ async def extract_user(client, message: Message) -> (int, str):
     user_id = None
     user_first_name = None
 
-    if len(message.command) == 2 and not message.reply_to_message and message.command[1].startswith("@"):
+    if len(message.command) == 2 and not message.reply_to_message and (message.command[1].startswith("@") or message.command[1].type == "int"):
         user = await client.get_users(message.command[1])
         user_id = user.id
         user_first_name = user.first_name
@@ -27,7 +27,7 @@ async def extract_user(client, message: Message) -> (int, str):
         user_first_name = message.reply_to_message.from_user.first_name
         return user_id, user_first_name
 
-    if len(message.command) > 1 and not message.command[1].startswith("@"):
+    if len(message.command) > 1 and not (message.command[1].startswith("@") or message.command[1].type == int):
         if len(message.entities) >= 1:
             required_entity = message.entities[-1]
             if required_entity.type == "text_mention":
@@ -39,9 +39,6 @@ async def extract_user(client, message: Message) -> (int, str):
                     required_entity.offset + required_entity.length
                 ]
                 user_first_name = user_id
-        else:
-            user_id = message.command[1]
-            user_first_name = user_id
 
     else:
         user_id = message.from_user.id

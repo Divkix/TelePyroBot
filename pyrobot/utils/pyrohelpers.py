@@ -27,7 +27,7 @@ async def extract_user(client, message: Message) -> (int, str):
         user_first_name = message.reply_to_message.from_user.first_name
         return user_id, user_first_name
 
-    elif len(message.command) > 1 and not message.command[1].startswith("@"):
+    if len(message.command) > 1 and not message.command[1].startswith("@"):
         if len(message.entities) >= 1:
             required_entity = message.entities[-1]
             if required_entity.type == "text_mention":

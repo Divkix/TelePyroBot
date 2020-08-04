@@ -55,9 +55,9 @@ async def afk(client, message):
 
     else:
         await message.edit_text(
-            "{} is now AFK!".format(mention_markdown(message.from_user.id, message.from_user.first_name)))
+            "{} is now AFK!".format(mention_markdown(message.from_user.first_name, message.from_user.id)))
         await client.send_message(PRIVATE_GROUP_ID,
-            "{} is now AFK!".format(mention_markdown(message.from_user.id, message.from_user.first_name)))
+            "{} is now AFK!".format(mention_markdown(message.from_user.first_name, message.from_user.id)))
         await asyncio.sleep(2)
         await message.delete()
         await asyncio.sleep(2)
@@ -119,9 +119,9 @@ async def afk_mentioned(client, message):
         AFK_RESTIRECT[cid] = int(time.time()) + DELAY_TIME
         if get['reason']:
             await message.reply_text(
-                "Sorry, My Master {} is AFK right now!\nReason: {}\n\nAFK Since:{}".format(mention_markdown(OWNER_ID, OWNER_NAME), get['reason'], total_afk_time))
+                "Sorry, My Master {} is AFK right now!\nReason: {}\n\nAFK Since:{}".format(mention_markdown(OWNER_NAME, OWNER_ID), get['reason'], total_afk_time))
         else:
-            await message.reply_text("Sorry, My Master {} is AFK right now!\n\nAFK Since:{}".format(mention_markdown(OWNER_ID, OWNER_NAME), total_afk_time))
+            await message.reply_text("Sorry, My Master {} is AFK right now!\n\nAFK Since:{}".format(mention_markdown(OWNER_NAME, OWNER_ID), total_afk_time))
 
         _, message_type = get_message_type(message)
         if message_type == Types.TEXT:
@@ -133,7 +133,7 @@ async def afk_mentioned(client, message):
             {"user": message.from_user.first_name, "user_id": message.from_user.id, "chat": message.chat.title,
              "chat_id": cid, "text": text, "message_id": message.message_id, "time": datetime.now()})
         await client.send_message(PRIVATE_GROUP_ID, "{}({}) mentioned you in {}({})\nText:\n`{}`\n\nTotal count: `{}`".format(
-            mention_markdown(message.from_user.id, message.from_user.first_name), message.from_user.id, message.chat.title, message.chat.id, text[:3500],
+            mention_markdown(message.from_user.first_name, message.from_user.id), message.from_user.id, message.chat.title, message.chat.id, text[:3500],
             len(MENTIONED)))
     await message.stop_propagation()
 

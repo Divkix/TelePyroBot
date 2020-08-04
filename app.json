@@ -1,0 +1,101 @@
+{
+  "name": "TelePyroBot",
+  "description": "PyroGram UserBot",
+  "keywords": [
+    "telegram",
+    "best",
+    "indian",
+    "pyrogram",
+    "userbot",
+    "3",
+    "plugin",
+    "modular",
+    "productivity"
+  ],
+  "repository": "https://github.com/SkuzzyxD/TelePyroBot",
+  "success_url": "https://t.me/DraxRobots",
+  "website": "https://github.com/Skuzzy_xD/TelePyroBot",
+  "env": {
+    "ENV": {
+      "description": "Setting this to ANYTHING will enable webhooks when in env mode",
+      "value": "ANYTHING"
+    },
+    "APP_ID": {
+      "description": "Get this value from https://my.telegram.org",
+      "value": ""
+    },
+    "API_HASH": {
+      "description": "Get this value from https://my.telegram.org",
+      "value": ""
+    },
+    "HU_STRING_SESSION": {
+      "description": "Generate this value by running python3 GenerateStringSession.py locally",
+      "value": ""
+    },
+    "COMMAND_HAND_LER": {
+      "description": "specify command handler that should be used for the plugins",
+      "required": true,
+      "value": "."
+    },
+    "HEROKU_APP_NAME": {
+      "description": "Your App name of heroku",
+      "required": false
+    },
+    "HEROKU_API_KEY": {
+      "description": "get a Heroku API key from http://dashboard.heroku.com/account",
+      "required": false
+    },
+    "G_DRIVE_CLIENT_ID": {
+      "description": "Get your credentials from https://da.gd/so63O",
+      "required": false
+    },
+    "G_DRIVE_CLIENT_SECRET": {
+      "description": "Get your credentials from https://da.gd/so63O",
+      "required": false
+    },
+    "OWNER_ID": {
+      "description": "Goto @Alita_Robot on Telegram and send /id to get your ID and fill it here.",
+      "required": true
+    },
+    "OWNER_NAME": {
+      "description": "Name which you would like to appear when 'alive' or 'start' commands are used.",
+      "required": true
+    },
+    "GBAN_GROUP": {
+      "description": "A group with bots where you have permissions to gban a persion.",
+      "required": false,
+      "value": "-100"
+    },
+    "PRIVATE_GROUP_ID": {
+      "description": "A group where all your userbot messages will be logged!",
+      "required": true,
+      "value": "-100"
+    },
+    "PM_PERMIT": {
+      "description": "Where to send the message, `master is unavailable, would contact you shortly`",
+      "required": true,
+      "value": "True"
+    }
+  },
+  "addons": [{
+    "plan": "heroku-postgresql",
+    "options": {
+      "version": "9.6"
+    }
+  }],
+  "buildpacks": [{
+    "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+  }, {
+    "url": "heroku/python"
+  },{
+    "url": "https://github.com/amivin/aria2-heroku.git"
+  },{
+  	"url": "https://github.com/HasibulKabir/heroku-buildpack-rarlab.git"
+  }],
+  "formation": {
+    "worker": {
+      "quantity": 1,
+      "size": "free"
+    }
+  }
+}

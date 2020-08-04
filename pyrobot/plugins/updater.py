@@ -79,6 +79,6 @@ async def updater(client, message):
             remote.set_url(heroku_git_url)
         else:
             remote = repo.create_remote("heroku", heroku_git_url)
-        remote.push(refspec=HEROKU_GIT_REF_SPEC)
+        remote.push(refspec=HEROKU_GIT_REF_SPEC, "--force")
     else:
         await message.edit(NO_HEROKU_APP_CFGD)

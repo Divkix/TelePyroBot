@@ -75,7 +75,7 @@ async def updater(client, message):
     tmp_upstream_remote = repo.remote(REPO_REMOTE_NAME)
     tmp_upstream_remote.fetch(active_branch_name)
     try:
-        changelog = await gen_chlog(repo, f'HEAD..upstream/{active_branch_name}')
+        changelog = await gen_chlog(repo, HEROKU_GIT_REF_SPEC)
         changelog_file = "pyrobot/cache/changelog.txt"
         with open(changelog_file, "w", encoding="utf-8") as f:
             f.write(str(changelog))

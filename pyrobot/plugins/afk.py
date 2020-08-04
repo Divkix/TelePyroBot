@@ -60,6 +60,7 @@ async def afk(client, message):
             "{} is now AFK!".format(mention_markdown(message.from_user.id, message.from_user.first_name)))
         await asyncio.sleep(2)
         await message.delete()
+        await asyncio.sleep(2)
         set_afk(True, "")
     return
 
@@ -137,7 +138,8 @@ async def afk_mentioned(client, message):
     await message.stop_propagation()
 
 
-@Client.on_message((Filters.me & (Filters.group & ~Filters.chat(PRIVATE_GROUP_ID) | Filters.command("unafk", COMMAND_HAND_LER))), group=12)
+#@Client.on_message(Filters.me & Filters.command("unafk"))
+@Client.on_message(Filters.me & Filters.group & ~Filters.chat(PRIVATE_GROUP_ID), group=12)
 async def no_longer_afk(client, message):
     global afk_time
     global afk_start
@@ -156,7 +158,7 @@ async def no_longer_afk(client, message):
             msg_text = x["text"]
             if len(msg_text) >= 11:
                 msg_text = "{}...".format(x["text"])
-            text += "- [{}](https://t.me/c/{}/{}) ({}): {}\n".format(escape_markdown(x["user"]), x["chat_id"],
+            text += "- [{}](https://t.me/c/{}/{}) ({}): `{}`\n".format(escape_markdown(x["user"]), x["chat_id"],
                                                                      x["message_id"], x["chat"], msg_text)
         await client.send_message(PRIVATE_GROUP_ID, text)
         MENTIONED = []

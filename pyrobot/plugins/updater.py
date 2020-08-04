@@ -74,14 +74,19 @@ async def updater(client, message):
 
     tmp_upstream_remote = repo.remote(REPO_REMOTE_NAME)
     tmp_upstream_remote.fetch(active_branch_name)
-    changelog = await gen_chlog(repo, f'HEAD..upstream/{active_branch_name}')
-    changelog_file = "pyrobot/cache/changelog.txt"
-    with open(changelog_file, "w", encoding="utf-8") as f:
-        f.write(str(changelog))
-        f.close()
-    await message.reply_document(document=changelog_file,
+    try:
+        changelog = await gen_chlog(repo, f'HEAD..upstream/{active_branch_name}')
+        changelog_file = "pyrobot/cache/changelog.txt"
+        with open(changelog_file, "w", encoding="utf-8") as f:
+            f.write(str(changelog))
+            f.close()
+        await message.reply_document(document=changelog_file,
                                caption="Here is the chat list that you joined.")
-    os.remove(changelog_file)
+        os.remove(changelog_file)
+    except Exceptionaserr:
+        if "fatal: bad revision" in str(err):
+            await message.edit("`Cannot send Changelog`")
+            pass
 
     await asyncio.sleep(5)
     await message.edit(UPDATE_IN_PROGRESS)

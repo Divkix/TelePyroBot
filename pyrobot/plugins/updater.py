@@ -83,7 +83,7 @@ async def updater(client, message):
         await message.reply_document(document=changelog_file,
                                caption="Here is the chat list that you joined.")
         os.remove(changelog_file)
-    except Exceptionaserr:
+    except Exception as err:
         if "fatal: bad revision" in str(err):
             await message.edit("`Cannot send Changelog`")
             pass

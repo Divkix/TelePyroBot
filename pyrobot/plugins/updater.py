@@ -13,6 +13,9 @@ from pyrobot import (
     OFFICIAL_UPSTREAM_REPO,
     OFFICIAL_BRANCH)
 
+from git import Repo
+from git.exc import InvalidGitRepositoryError, GitCommandError, NoSuchPathError
+
 # -- Constants -- #
 IS_SELECTED_DIFFERENT_BRANCH = (
     "looks like a custom branch {branch_name} "

@@ -44,7 +44,7 @@ async def gen_chlog(repo, diff):
 
 @Client.on_message(Filters.command("update", COMMAND_HAND_LER) & Filters.me)
 async def updater(client, message):
-    if HEROKU_API_KEY or HEROKU_APP_NAME is None:
+    if (HEROKU_API_KEY or HEROKU_APP_NAME) is None:
         await message.edit("Setup your HEROKU_API_KEY and HEROKU_APP_NAME properly!")
         return
 

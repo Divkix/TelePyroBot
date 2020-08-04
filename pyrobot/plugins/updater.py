@@ -89,7 +89,7 @@ async def updater(client, message):
         tmp_upstream_remote = repo.remote(REPO_REMOTE_NAME)
         changelog = await gen_chlog(repo, HEROKU_GIT_REF_SPEC)
         if not changelog:
-            await msg(message, text=f'TelePyroBot is up-to-date with branch **{brname}**\n')
+            await msg(message, text=f'TelePyroBot is up-to-date with branch **master**\n')
             return
         else:
             tsfileloc = f"{TMP_DOWNLOAD_DIRECTORY}/changelog.txt"

@@ -60,7 +60,6 @@ async def afk(client, message):
             "{} is now AFK!".format(mention_markdown(message.from_user.id, message.from_user.first_name)))
         await asyncio.sleep(2)
         await message.delete()
-        await asyncio.sleep(2)
         set_afk(True, "")
     return
 
@@ -138,7 +137,7 @@ async def afk_mentioned(client, message):
     await message.stop_propagation()
 
 
-@Client.on_message((Filters.me & Filters.group & ~Filters.chat(PRIVATE_GROUP_ID) | Filters.command("unafk", COMMAND_HAND_LER)), group=12)
+@Client.on_message((Filters.me & (Filters.group & ~Filters.chat(PRIVATE_GROUP_ID) | Filters.command("unafk", COMMAND_HAND_LER))), group=12)
 async def no_longer_afk(client, message):
     global afk_time
     global afk_start

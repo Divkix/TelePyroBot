@@ -52,9 +52,9 @@ async def updater(client, message):
         return
     out = ''
     try:
-        for i in repo.iter_commits(f'HEAD..tmp_upstream_repo/{branch}'):
+        for i in repo.iter_commits(f'HEAD..{OFFICIAL_UPSTREAM_REPO}/{branch}'):
             out += (f"🔨 **#{i.count()}** : "
-                    f"[{i.summary}]({"tmp_upstream_repo".rstrip('/')}/commit/{i}) "
+                    f"[{i.summary}]({OFFICIAL_UPSTREAM_REPO.rstrip('/')}/commit/{i}) "
                     f"👷 __{i.committer}__\n\n")
     except GitCommandError as error:
         await message.edit(f"**Error:**\n`{error}`")

@@ -6,6 +6,16 @@ from pyrogram import Filters, Client
 from pyrobot import COMMAND_HAND_LER, REMBG_API_KEY
 from pyrobot.utils.pyrohelpers import ReplyCheck
 
+__PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
+
+__HELP__ = f"""
+Use this remove background from images!
+
+**Usage:**
+`{COMMAND_HAND_LER}rembg` as a reply to photo to get it's removed bg version
+"""
+
+
 DOWN_PATH = 'pyrobot/downloads'
 IMG_PATH = DOWN_PATH + "rembg_img.jpg"
 

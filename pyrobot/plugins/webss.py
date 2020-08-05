@@ -22,7 +22,7 @@ async def weather(client, message):
     if GOOGLE_CHROME_BIN is None:
         await message.edit("You need to install Google Chrome. Module Stopping!!")
         return
-    link_match = match(r'\bhttps?://.*\.\S+', message.split.text(" ",1)[1])
+    link_match = match(r'\bhttps?://.*\.\S+', message.text.split(" ",1)[1])
     if not link_match:
         await message.edit("`I need a valid link to take screenshots from.`")
         return

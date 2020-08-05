@@ -26,7 +26,8 @@ def is_gmuted(sender_id):
                 return None
         finally:
             SESSION.close()
-        return
+    __load_all_gmute_users()
+    return
 
 
 def gmute(sender):
@@ -36,6 +37,7 @@ def gmute(sender):
         GMUTE_USERS.append(sender)
         SESSION.add(adder)
         SESSION.commit()
+    __load_all_gmute_users()
     return
 
 
@@ -47,7 +49,8 @@ def ungmute(sender):
             GMUTE_USERS.remove(sender)
             SESSION.delete(rem)
             SESSION.commit()
-        return
+    __load_all_gmute_users()
+    return
 
 def get_gmute_users():
     return GMUTE_USERS

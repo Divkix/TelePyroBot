@@ -28,13 +28,18 @@ async def zombies_clean(client, message):
     elif len(message.text.split(" ")) == 2 and message.text.split(" ",1)[1] == "clean":
         await message.edit("`Cleaning deleted accounts....`")
         del_users = []
+        u = 0
         async for x in client.iter_chat_members(chat_id=message.chat.id):
             if x.user.is_deleted:
                 del_users.append(x.user.id)
                 a = await client.get_chat_member(message.chat.id, x.user.id)
                 if a.user.status not in ("administrator", "creator"):
-                    await client.kick_chat_member(message.chat.id, x.user.id)
-        await message.edit("**Done Cleaning Group ✅**\n`Removed {} deleted accounts`".format(len(del_users)))
+                    try:
+                        await client.kick_chat_member(message.chat.id, x.user.id)
+                        u += 1
+                    except:
+                        pass
+        await message.edit(f"**Done Cleaning Group ✅**\n`Removed {u} deleted accounts`")
         await client.send_message(PRIVATE_GROUP_ID, f"#ZOMBIES\n\nCleaned {len(del_users)} accounts from **{message.chat.title}** - `{message.chat.id}`")
     else:
         await message.edit(f"__Check__ `{COMMAND_HAND_LER}help zombies` __to see how it works!__")

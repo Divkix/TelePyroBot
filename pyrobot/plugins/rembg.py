@@ -21,7 +21,7 @@ async def remove_bg(client, message):
         if os.path.exists(IMG_PATH):
             os.remove(IMG_PATH)
         await client.download_media(message=replied, file_name=IMG_PATH)
-        await msg(message, text="`Removing Background...`")
+        await message.edit("`Removing Background...`")
         try:
             rmbg = RemoveBg(REMBG_API_KEY, "rembg_error.log")
             rmbg.remove_background_from_img_file(IMG_PATH)
@@ -36,7 +36,7 @@ async def remove_bg(client, message):
             os.remove(IMG_PATH)
         except Exception as e:
             print(e)
-            await msg(message, text="`Something went wrong!`")
+            await message.edit("`Something went wrong!`")
             await sleep(3)
             await message.delete()
     return

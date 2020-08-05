@@ -1,0 +1,16 @@
+venv
+pyrobot/config.py
+__pycache__
+pyrobot/__pycache__
+pyrogrambot/plugins/__pycache__
+**/*.session
+videoplayback
+videoplayback.temp
+pyrobot/cache/*
+!pyrobot/cache/README.md
+pyrobot/downloads/*
+!pyrobot/downloads/README.md
+pyrobot/session/*
+!pyrobot/session/README.md
+unknown_errors.txt
+eval.text

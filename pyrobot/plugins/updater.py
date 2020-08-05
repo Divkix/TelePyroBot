@@ -52,7 +52,7 @@ async def updater(client, message):
         return
     out = ''
     try:
-        for i in repo.iter_commits(f'HEAD..{OFFICIAL_UPSTREAM_REMOTE}/{branch}'):
+        for i in repo.iter_commits(f'HEAD..{OFFICIAL_UPSTREAM_REPO}/{branch}'):
             out += (f"🔨 **#{i.count()}** : "
                     f"[{i.summary}]({OFFICIAL_UPSTREAM_REPO.rstrip('/')}/commit/{i}) "
                     f"👷 __{i.committer}__\n\n")

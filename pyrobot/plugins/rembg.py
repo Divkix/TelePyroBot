@@ -16,7 +16,7 @@ Use this remove background from images!
 """
 
 
-DOWN_PATH = 'pyrobot/downloads'
+DOWN_PATH = 'pyrobot/downloads/'
 IMG_PATH = DOWN_PATH + "rembg_img.jpg"
 
 @Client.on_message(Filters.me & Filters.command("rembg", COMMAND_HAND_LER))

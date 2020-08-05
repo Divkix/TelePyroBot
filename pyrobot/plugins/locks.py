@@ -73,7 +73,7 @@ async def lock_perm(client, message):
                 "#LOCK\n\nCHAT: `{}` (`{}`)\nPERMISSIONS: `All Permissions`".format(get_perm.title, chat_id))
 
         except Exception as e_f:
-            await message.edit(e_f"`I don't have permission to do that ＞︿＜`\n\n**ERROR:** `{e_f}`")
+            await message.edit(f"`I don't have permission to do that ＞︿＜`\n\n**ERROR:** `{e_f}`")
             await asyncio.sleep(5)
             await message.delete()
 

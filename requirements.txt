@@ -33,3 +33,4 @@ bs4
 lxml
 googletrans
 selenium==3.141.0
+removebg

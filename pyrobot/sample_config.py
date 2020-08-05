@@ -23,7 +23,8 @@ class Config():
     GBAN_GROUP = int(os.environ.get("GBAN_GROUP", -100))
     PRIVATE_GROUP_ID = int(os.environ.get("PRIVATE_GROUP_ID", -100))
     PM_PERMIT = bool(os.environ.get("PM_PERMIT", False))
-    GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN", None)
+    GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN", "/app/.apt/opt/google/chrome/chrome")
+    REMBG_API_KEY = os.environ.get("REMBG_API_KEY", None)
 
 class Production(Config):
     LOGGER = False

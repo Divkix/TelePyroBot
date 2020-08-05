@@ -29,7 +29,7 @@ async def weather(client, message):
     link = link_match.group()
     await message.edit("`Processing ...`")
     chrome_options = webdriver.ChromeOptions()
-    chrome_options.binary_location = Config.GOOGLE_CHROME_BIN
+    chrome_options.binary_location = GOOGLE_CHROME_BIN
     chrome_options.add_argument('--ignore-certificate-errors')
     chrome_options.add_argument("--test-type")
     chrome_options.add_argument("--headless")

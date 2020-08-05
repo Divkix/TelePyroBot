@@ -19,7 +19,7 @@ Use this remove background from images!
 DOWN_PATH = 'pyrobot/downloads'
 IMG_PATH = DOWN_PATH + "rembg_img.jpg"
 
-@Client.on_message(Filters.me & Filters.command("rmbg", COMMAND_HAND_LER))
+@Client.on_message(Filters.me & Filters.command("rembg", COMMAND_HAND_LER))
 async def remove_bg(client, message):
     if not REMBG_API_KEY:
         await message.edit("Get the API from [Remove.bg](https://www.remove.bg/b/background-removal-api)",

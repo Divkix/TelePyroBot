@@ -25,7 +25,11 @@ __help__ = f"""
 @Client.on_message(Filters.command("update", COMMAND_HAND_LER) & Filters.me)
 async def updater(client, message):
     await message.edit("`Checking for Update...`")
-    repo = Repo()
+    try:
+        repo = Repo()
+    except git.exc.InvalidGitRepositoryError as error_one:
+        LOGGER.info(str(error_one))
+        repo = Repo.init()
     ups_rem = repo.remote(OFFICIAL_UPSTREAM_REPO)
 
     try:

@@ -31,7 +31,7 @@ async def updater(client, message):
         LOGGER.info(str(error_one))
         repo = Repo.init()
         repo.create_remote("tmp_upstream_repo", OFFICIAL_UPSTREAM_REPO)
-    ups_rem = repo.remote(OFFICIAL_UPSTREAM_REPO)
+    ups_rem = repo.remote("tmp_upstream_repo")
 
     try:
         ups_rem.fetch()
@@ -52,9 +52,9 @@ async def updater(client, message):
         return
     out = ''
     try:
-        for i in repo.iter_commits(f'HEAD..{Config.UPSTREAM_REMOTE}/{branch}'):
+        for i in repo.iter_commits(f'HEAD..{OFFICIAL_UPSTREAM_REMOTE}/{branch}'):
             out += (f"🔨 **#{i.count()}** : "
-                    f"[{i.summary}]({Config.UPSTREAM_REPO.rstrip('/')}/commit/{i}) "
+                    f"[{i.summary}]({OFFICIAL_UPSTREAM_REPO.rstrip('/')}/commit/{i}) "
                     f"👷 __{i.committer}__\n\n")
     except GitCommandError as error:
         await message.edit(f"**Error:**\n`{error}`")

@@ -25,8 +25,8 @@ async def remove_bg(client, message):
     if (replied and replied.media
             and (replied.photo
                  or (replied.document and "image" in replied.document.mime_type))):
-        if os.path.exists(IMG_PATH):
-            os.remove(IMG_PATH)
+        if os.path.exists("./downloads/img.jpg"):
+            os.remove("./downloads/img.jpg")
         orig_pic = await client.download_media(message=replied, file_name="./downloads/img.jpg")
         await message.edit("`Removing Background...`")
         try:

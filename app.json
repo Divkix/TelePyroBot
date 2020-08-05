@@ -67,9 +67,18 @@
       "value": ""
     },
     "PM_PERMIT": {
-      "description": "Where to send the message, `master is unavailable, would contact you shortly`",
+      "description": "Weather to send the message, `master is unavailable, would contact you shortly`",
       "required": true,
       "value": "True"
+    },
+    "REMBG_API_KEY": {
+      "description" :"Ised for removeng plugins to work",
+      "required": false
+    },
+    "GOOGLE_CHROME_BIN": {
+      "description" :"Used for taking webss and other plugins. Leaving as default id recommended!",
+      "required": false,
+      "value" "/app/.apt/opt/google/chrome/chrome"
     }
   },
   "addons": [{

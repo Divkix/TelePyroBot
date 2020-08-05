@@ -32,7 +32,7 @@ async def zombies_clean(client, message):
             if x.user.is_deleted:
                 del_users.append(x.user.id)
                 await client.kick_chat_member(message.chat.id, x.user.id)
-        await message.edit("**Done Cleaning Group ✅**\n`Removed {} deleted accounts`".format(len(del_users))
+        await message.edit("**Done Cleaning Group ✅**\n`Removed {} deleted accounts`".format(len(del_users)))
         await client.send_message(PRIVATE_GROUP_ID, f"#ZOMBIES\n\nCleaned {len(del_users)} accounts from **{message.chat.title}** - `{message.chat.id}`")
     else:
         await message.edit(f"__Check__ `{COMMAND_HAND_LER}help zombies` __to see how it works!__")

@@ -64,7 +64,7 @@ async def lock_perm(client, message):
 
     if lock_type == "all":
         try:
-            await message.client.set_chat_permissions(chat_id, ChatPermissions())
+            await client.set_chat_permissions(chat_id, ChatPermissions())
             await message.edit(
                 text="**🔒 Locked all permission from this Chat!**")
             await asyncio.sleep(5)

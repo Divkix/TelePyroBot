@@ -2,6 +2,7 @@ git+https://github.com/pyrogram/pyrogram@asyncio-dev
 psutil
 tgcrypto
 asyncio
+aiofiles
 aiohttp
 beautifulsoup4
 emoji
@@ -31,3 +32,4 @@ spotdl
 bs4
 lxml
 googletrans
+selenium==3.141.0

@@ -61,15 +61,10 @@
       "description": "Name which you would like to appear when 'alive' or 'start' commands are used.",
       "required": true
     },
-    "GBAN_GROUP": {
-      "description": "A group with bots where you have permissions to gban a persion.",
-      "required": false,
-      "value": "-100"
-    },
     "PRIVATE_GROUP_ID": {
       "description": "A group where all your userbot messages will be logged!",
       "required": true,
-      "value": "-100"
+      "value": ""
     },
     "PM_PERMIT": {
       "description": "Where to send the message, `master is unavailable, would contact you shortly`",
@@ -79,19 +74,18 @@
   },
   "addons": [{
     "plan": "heroku-postgresql",
-    "options": {
-      "version": "9.6"
-    }
+    "options": {"version": "9.6"}
   }],
-  "buildpacks": [{
-    "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
-  }, {
-    "url": "heroku/python"
-  },{
-    "url": "https://github.com/amivin/aria2-heroku.git"
-  },{
-  	"url": "https://github.com/HasibulKabir/heroku-buildpack-rarlab.git"
-  }],
+  "buildpacks":
+  [
+    {"url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"},
+    {"url": "https://github.com/amivin/aria2-heroku.git"},
+    {"url": "https://github.com/HasibulKabir/heroku-buildpack-rarlab.git"},
+    {"url": "https://github.com/opendoor-labs/heroku-buildpack-p7zip"},
+    {"url": "https://github.com/rking32/heroku-buildpack-google-chrome"},
+    {"url": "https://github.com/rking32/heroku-buildpack-chromedriver"},
+    {"url": "heroku/python"}
+  ],
   "formation": {
     "worker": {
       "quantity": 1,

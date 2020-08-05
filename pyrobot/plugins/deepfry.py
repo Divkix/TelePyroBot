@@ -3,7 +3,7 @@ import os
 import asyncio
 from random import randint, uniform
 from pyrogram import Client, Filters
-from pyrobot import COMMAND_HAND_LER, PRIVATE_GROUP_ID
+from pyrobot import COMMAND_HAND_LER
 from pyrobot.utils.msg_types import Types
 from pyrobot.utils.pyrohelpers import extract_user
 from PIL import Image, ImageEnhance, ImageOps

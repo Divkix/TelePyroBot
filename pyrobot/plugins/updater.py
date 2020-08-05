@@ -30,6 +30,7 @@ async def updater(client, message):
     except git.exc.InvalidGitRepositoryError as error_one:
         LOGGER.info(str(error_one))
         repo = Repo.init()
+        repo.create_remote(REPO_REMOTE_NAME, OFFICIAL_UPSTREAM_REPO)
     ups_rem = repo.remote(OFFICIAL_UPSTREAM_REPO)
 
     try:

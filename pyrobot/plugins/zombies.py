@@ -1,0 +1,38 @@
+from pyrogram import Client, Filters
+from pyrobot import COMMAND_HAND_LER
+import os
+
+
+__PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
+
+__help__ =  f"""
+Have lot of deleted account's in your group? Want to get rid of them?
+Then this module is for you!
+
+**Usage:**
+`{COMMAND_HAND_LER}zombies`: Check the number of deleted accounts in a group and display them.
+`{COMMAND_HAND_LER}zombies clean`: Remove all the deleted accounts from the group!
+
+**Note:** Clean only works in groups where you are admin!
+"""
+
+@Client.on_message(Filters.command("zombies", COMMAND_HAND_LER) & Filters.me)
+async def zombies_clean(client, message):
+    if len(message.text.split(" ")) != 2:
+        await message.edit("`Counting deleted accounts!!!`")
+        del_users = []
+        async for x in client.iter_chat_members(chat_id=message.chat.id):
+            if x.user.is_deleted:
+                del_users.append(x.user.id)
+        await message.edit("`Found {len(del_users)} deleted accounts!` **__Use__** `{COMMAND_HAND_LER}zombies clean` __**to remove them from group**__)
+    elif len(message.text.split(" ")) == 2 and message.text.split(" ",1)[1] == "clean":
+        await message.edit("`Cleaning deleted accounts....`")
+        del_users = []
+        async for x in client.iter_chat_members(chat_id=message.chat.id):
+            if x.user.is_deleted:
+                del_users.append(x.user.id)
+                await client.kick_chat_member(message.chat.id, x.user.id)
+        await message.edit("**Done Cleaning Group ✅**\n`Removed {} deleted accounts`".format(len(del_users))
+    else:
+        await message.edit(f"__Check__ `{COMMAND_HAND_LER}help zombies` __to see how it works!__")
+    return

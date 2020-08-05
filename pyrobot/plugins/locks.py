@@ -290,7 +290,7 @@ async def unlock_perm(client, message):
         await asyncio.sleep(5)
         await message.delete()
         await client.send_message(PRIVATE_GROUP_ID,
-            "#UNLOCK\n\nCHAT: `{}` (`{}`)\nPERMISSION: `{} Permission`".format(get_perm.title, chat_id, uperm))
+            "#UNLOCK\n\nCHAT: `{}` (`{}`)\nPERMISSION: `{} Permission`".format(message.chat.title, chat_id, uperm))
 
     except Exception as e_f:
         await message.edit(f"`I don't have permission to do that ＞︿＜`\n\n**ERROR:** `{e_f}`")
@@ -351,7 +351,7 @@ async def view_perm(client, message):
 
             await message.edit(permission_view_str)
             await client.send_message(PRIVATE_GROUP_ID,
-                "#VPERM\n\nCHAT: `{}` (`{}`)".format(get_perm.title, chat_id))
+                "#VPERM\n\nCHAT: `{}` (`{}`)".format(message.chat.title, chat_id))
 
         except Exception as e_f:
             await message.edit(f"`Something went wrong!` 🤔\n\n**ERROR:** `{e_f}`")

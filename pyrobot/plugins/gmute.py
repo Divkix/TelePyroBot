@@ -35,8 +35,7 @@ async def start_sgmute(client, message):
     else:
         await message.edit("`Successfully gmuted that person`")
         await client.send_message(PRIVATE_GROUP_ID,
-            "#GMUTE\nUser:{} in Chat {}".format(mention_markdown(user_first_name, user_id), message.chat.title),
-            parse_mode="html")
+            "#GMUTE\nUser:{} in Chat {}".format(mention_markdown(user_first_name, user_id), message.chat.title))
     GMUTE_USERS = db.get_gmute_users()
     return
 
@@ -57,8 +56,7 @@ async def end_gmute(client, message):
     else:
         await message.edit("`Successfully ungmuted that person`")
         await client.send_message(PRIVATE_GROUP_ID,
-            "#UNGMUTE\nUser:{} in Chat {}".format(mention_markdown(user_first_name, user_id), message.chat.title),
-            parse_mode="html")
+            "#UNGMUTE\nUser: {} in Chat {}".format(mention_markdown(user_first_name, user_id), message.chat.title))
     GMUTE_USERS = db.get_gmute_users()
     return
 
@@ -67,13 +65,13 @@ async def end_gmute(client, message):
 async def list_gmuted(client, message):
     global GMUTE_USERS
     await message.edit("`Loading users...`")
-    GMUTE_USERS = db.get_gmute_users()
-    if not GMUTE_USERS:
+    users = db.get_gmute_users()
+    if not users:
         await message.edit("`No users are gmuted!`")
         return
     users_list = "`Currently Gmuted users:`\n"
     u = 0
-    for x in GMUTE_USERS:
+    for x in users:
         u += 1
         user = await client.get_users(x)
         users_list += f"[{u}] {mention_markdown(user.first_name, user.id)}: {user.id}\n"

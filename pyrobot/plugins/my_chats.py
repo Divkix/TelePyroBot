@@ -11,7 +11,6 @@ __HELP__ = f"""
 This module is to manage your chats, when message was received from unknown chat, and that chat was not in database, then save that chat info to your database.
 **Export chats:**
 `{COMMAND_HAND_LER}chatlist`: Exports the chats which you have joined!
-`{COMMAND_HAND_LER}adminchats`: Exports the chats where you are admin.
 
 Send your chatlist to your saved messages.
 """
@@ -44,8 +43,10 @@ async def get_chat(client, message):
         f.write(str(chatfile))
         f.close()
 
-    await client.send_document("self", document=chatlist_file,
-                               caption="Here is the chat list that you joined.")
+    await client.send_document(
+        "self",
+        document=chatlist_file,
+        caption="Here is the chat list that you joined.")
     await message.edit("`Chat list exported to saved messages.`")
     os.remove(chatlist_file)
     return

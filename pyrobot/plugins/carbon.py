@@ -31,7 +31,7 @@ async def carbon_api(client, message):
         r = message.text.split(" ", 1)[1]
         json["code"] = r
     else:
-        await message.edit("Usage: `.carbon` <reply to a code or text>")
+        await message.edit(f"Usage: `{COMMAND_HAND_LER}carbon` <reply to a code or text>")
     json["language"] = CARBON_LANG
     apiUrl = "http://carbonnowsh.herokuapp.com"
     r = post(apiUrl,json=json,stream=True)
@@ -40,7 +40,11 @@ async def carbon_api(client, message):
         r.raw.decode_content = True
         with open(filename,'wb') as f:
             shutil.copyfileobj(r.raw, f)
-        await client.send_document(message.chat.id, filename, reply_to_message_id=rep_mesg_id)
+        await client.send_document(
+            message.chat.id,
+            filename,
+            caption="Carbon Made by: @TelePyroBot",
+            reply_to_message_id=rep_mesg_id)
         await message.delete()
     else:
         await message.edit('Image Couldn\'t be retreived')

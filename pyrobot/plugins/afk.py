@@ -38,6 +38,9 @@ DELAY_TIME = 60  # seconds
 
 @Client.on_message((Filters.command("afk", COMMAND_HAND_LER)) & Filters.me)
 async def afk(client, message):
+    if PRIVATE_GROUP_ID is None:
+        await message.edit("<b><i>Please set the variable</b></i> `PRIVATE_GROUP_ID` for this to function.")
+        return
     global afk_start
     afk_time = None
     afk_end = {}
@@ -138,8 +141,7 @@ async def afk_mentioned(client, message):
     await message.stop_propagation()
 
 
-#@Client.on_message(Filters.me & Filters.command("unafk"))
-@Client.on_message(Filters.me & Filters.group & ~Filters.chat(PRIVATE_GROUP_ID), group=12)
+@Client.on_message(Filters.me & (Filters.group | Filters.private) & ~Filters.chat(PRIVATE_GROUP_ID), group=12)
 async def no_longer_afk(client, message):
     global afk_time
     global afk_start

@@ -15,6 +15,7 @@ They will not be able to speak until you ungmute them!
 **Commands:**
 `{COMMAND_HAND_LER}gmute` as a reply to user or entering user id
 `{COMMAND_HAND_LER}ungmute` as a reply to user or entering user id
+`{COMMAND_HAND_LER}gmutelist`: To view list of currently gmuted users
 """
 
 
@@ -32,8 +33,7 @@ async def start_sgmute(client, message):
     else:
         await message.edit("`Successfully gmuted that person`")
         await client.send_message(PRIVATE_GROUP_ID,
-            "#GMUTE\nUser:{} in Chat {}".format(mention_markdown(user_first_name, user_id), message.chat.title),
-            parse_mode="html")
+            "#GMUTE\nUser: {} in Chat {}".format(mention_markdown(user_first_name, user_id), message.chat.title))
     return
 
 
@@ -52,8 +52,7 @@ async def end_gmute(client, message):
     else:
         await message.edit("`Successfully ungmuted that person`")
         await client.send_message(PRIVATE_GROUP_ID,
-            "#UNGMUTE\nUser:{} in Chat {}".format(mention_markdown(user_first_name, user_id), message.chat.title),
-            parse_mode="html")
+            "#UNGMUTE\nUser: {} in Chat {}".format(mention_markdown(user_first_name, user_id), message.chat.title))
     return
 
 

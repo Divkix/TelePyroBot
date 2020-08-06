@@ -1,20 +1,21 @@
 {
   "name": "TelePyroBot",
-  "description": "PyroGram UserBot",
+  "description": "PyroGram UserBot made by Skuzzy xD",
   "keywords": [
     "telegram",
     "best",
     "indian",
     "pyrogram",
     "userbot",
-    "3",
     "plugin",
     "modular",
-    "productivity"
+    "productivity",
+    "pyrobot",
+    "telepyrobot"
   ],
-  "repository": "https://github.com/SkuzzyxD/TelePyroBot",
-  "success_url": "https://t.me/DraxRobots",
-  "website": "https://github.com/Skuzzy_xD/TelePyroBot",
+  "repository": "https://github.com/MyAwesomeProjects/TelePyroBot",
+  "success_url": "https://t.me/TelePyroBot",
+  "website": "https://www.skuzzers.xyz/",
   "env": {
     "ENV": {
       "description": "Setting this to ANYTHING will enable webhooks when in env mode",
@@ -38,11 +39,11 @@
       "value": "."
     },
     "HEROKU_APP_NAME": {
-      "description": "Your App name of heroku",
+      "description": "Your App name of heroku, without this you won't be able to use the updater!",
       "required": false
     },
     "HEROKU_API_KEY": {
-      "description": "get a Heroku API key from http://dashboard.heroku.com/account",
+      "description": "Get a Heroku API key from http://dashboard.heroku.com/account, without this you won't be able to use the updater!",
       "required": false
     },
     "G_DRIVE_CLIENT_ID": {
@@ -54,44 +55,41 @@
       "required": false
     },
     "OWNER_ID": {
-      "description": "Goto @Alita_Robot on Telegram and send /id to get your ID and fill it here.",
+      "description": "Goto @MissRose_Bot on Telegram and send /id to get your ID and fill it here.",
       "required": true
     },
     "OWNER_NAME": {
       "description": "Name which you would like to appear when 'alive' or 'start' commands are used.",
       "required": true
     },
-    "GBAN_GROUP": {
-      "description": "A group with bots where you have permissions to gban a persion.",
-      "required": false,
-      "value": "-100"
-    },
     "PRIVATE_GROUP_ID": {
-      "description": "A group where all your userbot messages will be logged!",
+      "description": "A group where all your userbot messages will be logged! Make a new group and add @MissRose_Bot in it, then do /id, copy and paste that number here.",
       "required": true,
-      "value": "-100"
+      "value": ""
     },
     "PM_PERMIT": {
-      "description": "Where to send the message, `master is unavailable, would contact you shortly`",
+      "description": "Weather to send the message, `master is unavailable, would contact you shortly`",
       "required": true,
       "value": "True"
+    },
+    "REMBG_API_KEY": {
+      "description" :"Ised for removeng plugins to work",
+      "required": false
     }
   },
   "addons": [{
     "plan": "heroku-postgresql",
-    "options": {
-      "version": "9.6"
-    }
+    "options": {"version": "9.6"}
   }],
-  "buildpacks": [{
-    "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
-  }, {
-    "url": "heroku/python"
-  },{
-    "url": "https://github.com/amivin/aria2-heroku.git"
-  },{
-  	"url": "https://github.com/HasibulKabir/heroku-buildpack-rarlab.git"
-  }],
+  "buildpacks":
+  [
+    {"url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"},
+    {"url": "https://github.com/HasibulKabir/heroku-buildpack-rarlab.git"},
+    {"url": "https://github.com/opendoor-labs/heroku-buildpack-p7zip"},
+    {"url": "https://github.com/rking32/heroku-buildpack-google-chrome"},
+    {"url": "https://github.com/rking32/heroku-buildpack-chromedriver"},
+    {"url": "heroku/python"}
+  ],
   "formation": {
     "worker": {
       "quantity": 1,

@@ -10,7 +10,7 @@ __help__ = f"""
 Get current weather in your location
 `{COMMAND_HAND_LER}weather <location>`
 
-Powered by `wttr.in`
+Powered by: https://wttr.in
 """
 
 @Client.on_message(Filters.command("weather", COMMAND_HAND_LER) & Filters.me)

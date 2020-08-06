@@ -9,7 +9,8 @@ from pyrobot import (
     HEROKU_APP_NAME,
     LOGGER,
     MAX_MESSAGE_LENGTH,
-    OFFICIAL_UPSTREAM_REPO)
+    OFFICIAL_UPSTREAM_REPO,
+    PRIVATE_GROUP_ID)
 
 # -- Constants -- #
 IS_SELECTED_DIFFERENT_BRANCH = (
@@ -17,7 +18,8 @@ IS_SELECTED_DIFFERENT_BRANCH = (
     "is being used\n"
     "In this case, updater is unable to identify the branch to be updated."
     "Please check out to an official branch, and re-start the updater.\n\n"
-    "Or do {COMMAND_HAND_LER}reinstall to reinstall the bot from official repo!")
+    "Or do {COMMAND_HAND_LER}reinstall to reinstall the bot from official repo!"
+    "Or join @TelePyroBot for help!")
 REPO_REMOTE_NAME = "tmp_upstream_remote"
 IFFUCI_ACTIVE_BRANCH_NAME = "master"
 DIFF_MARKER = "HEAD..{remote_name}/{branch_name}"
@@ -37,12 +39,21 @@ __help__ = f"""
 `{COMMAND_HAND_LER}reinstall`: Reinstall the userbot from  Official Github Repo.
 """
 
+def generate_change_log(git_repo, diff_marker):
+    out_put_str = ""
+    d_form = "%d/%m/%y"
+    for repo_change in git_repo.iter_commits(diff_marker):
+        out_put_str += f"•[{repo_change.committed_datetime.strftime(d_form)}]: {repo_change.summary} <{repo_change.author}>\n"
+    return out_put_str
+
 @Client.on_message(Filters.command("update", COMMAND_HAND_LER) & Filters.me)
 async def updater(client, message):
     await message.edit("`Checking for Update...`")
     if HEROKU_API_KEY is None or HEROKU_APP_NAME is None:
         await message.edit("__Please the Vars__ `HEROKU_API_KEY` __and__ `HEROKU_APP_NAME` __properly!__")
         return
+    if PRIVATE_GROUP_ID is None:
+        await message.edit("__**Please Set**__ `PRIVATE_GROUP_ID` **__to use updater!__**")
     try:
         repo = git.Repo()
     except git.exc.InvalidGitRepositoryError as error_one:
@@ -60,7 +71,7 @@ async def updater(client, message):
             branch_name=active_branch_name,
             COMMAND_HAND_LER=COMMAND_HAND_LER
         ))
-        return False
+        return
 
     try:
         repo.create_remote(REPO_REMOTE_NAME, OFFICIAL_UPSTREAM_REPO)
@@ -109,9 +120,11 @@ async def updater(client, message):
 
     await asyncio.sleep(3)
     tmp_upstream_remote.fetch(active_branch_name)
-    await message.reply(f"**Update Started!**\n__**Type**__ `{COMMAND_HAND_LER}alive` **__to check if I'm alive__**\n\n**It would take upto 5 minutes to update!**")
     repo.git.reset("--hard", "FETCH_HEAD")
-
+    await message.reply(f"**Update Started!**\n__**Type**__ `{COMMAND_HAND_LER}alive` **__to check if I'm alive__**\n\n**It would take upto 5 minutes to update!**")
+    await client.send_message(
+        PRIVATE_GROUP_ID,
+        f"TelePyroBot Update!\n\n**Changelog:**\n`{changelog}``")
     if HEROKU_API_KEY is not None:
         import heroku3
         heroku = heroku3.from_key(HEROKU_API_KEY)
@@ -128,14 +141,6 @@ async def updater(client, message):
         remote.push(refspec=HEROKU_GIT_REF_SPEC, force=True)
     else:
         await message.edit(NO_HEROKU_APP_CFGD)
-
-def generate_change_log(git_repo, diff_marker):
-    out_put_str = ""
-    d_form = "%d/%m/%y"
-    for repo_change in git_repo.iter_commits(diff_marker):
-        out_put_str += f"•[{repo_change.committed_datetime.strftime(d_form)}]: "
-        out_put_str += f"{repo_change.summary} <{repo_change.author}>\n"
-    return out_put_str
 
 
 @Client.on_message(Filters.command("reinstall", COMMAND_HAND_LER) & Filters.me)

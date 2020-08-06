@@ -20,7 +20,7 @@ async def mention(client, message):
     args = message.text.split(" ", 2)
     if len(args) == 3:
         name = args[1]
-        if isinstance(args[3], int):
+        if isinstance(args[2], int):
             user = args[2]
             rep = "{}".format(mention_markdown(name, user))
         else:

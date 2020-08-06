@@ -2,6 +2,7 @@ git+https://github.com/pyrogram/pyrogram@asyncio-dev
 psutil
 tgcrypto
 asyncio
+aiofiles
 aiohttp
 beautifulsoup4
 emoji
@@ -12,7 +13,6 @@ Pillow
 psycopg2-binary
 sqlalchemy
 youtube-dl
-aria2p
 pySmartDL
 requests
 google-api-python-client
@@ -31,3 +31,5 @@ spotdl
 bs4
 lxml
 googletrans
+selenium
+removebg

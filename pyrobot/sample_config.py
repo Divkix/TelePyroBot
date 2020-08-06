@@ -10,7 +10,7 @@ class Config():
     TMP_DOWNLOAD_DIRECTORY = os.environ.get("TMP_DOWNLOAD_DIRECTORY", "./downloads")
     OFFICIAL_UPSTREAM_REPO = os.environ.get(
         "OFFICIAL_UPSTREAM_REPO",
-        "https://github.com/SkuzzyxD/TelePyroBot")
+        "https://github.com/MyAwesomeProjects/TelePyroBot.git")
     DB_URI = os.environ.get("DATABASE_URL", None)
     G_DRIVE_CLIENT_ID = os.environ.get("G_DRIVE_CLIENT_ID", None)
     G_DRIVE_CLIENT_SECRET = os.environ.get("G_DRIVE_CLIENT_SECRET", None)
@@ -23,6 +23,8 @@ class Config():
     GBAN_GROUP = int(os.environ.get("GBAN_GROUP", -100))
     PRIVATE_GROUP_ID = int(os.environ.get("PRIVATE_GROUP_ID", -100))
     PM_PERMIT = bool(os.environ.get("PM_PERMIT", False))
+    GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN", "/app/.apt/opt/google/chrome/chrome")
+    REMBG_API_KEY = os.environ.get("REMBG_API_KEY", None)
 
 class Production(Config):
     LOGGER = False

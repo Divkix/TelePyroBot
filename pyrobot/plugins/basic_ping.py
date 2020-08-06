@@ -18,8 +18,7 @@ ALIVE_TEXT = ("<i><b>TelePyroBot running on</b></i> {}\n"
 IFFUCI_ACTIVE_BRANCH_NAME = "master"
 REPO = ("<b>UserBot is available on GitHub:</b>\n"
         "https://github.com/MyAwesomeProjects/TelePyroBot\n\n"
-        "More info available at: @MyAwesomeProjects\n"
-        "More info: @TelePyroBot")
+        "<b>More info:</b> @TelePyroBot")
 # -- Constants End -- #
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -31,8 +30,6 @@ Basic commands of userbot!
 `{COMMAND_HAND_LER}ping`: Get pinged.
 `{COMMAND_HAND_LER}repo`: Get source of this repo.
 `{COMMAND_HAND_LER}id`: Get the ID of the file/user/group.
-**Usage:** {COMMAND_HAND_LER}id (as a reply to file or user or run to get group id)
-
 `{COMMAND_HAND_LER}json`: Get json of the replied message.
 """
 

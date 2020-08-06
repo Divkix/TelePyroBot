@@ -15,14 +15,14 @@ They will not be able to speak until you ungmute them!
 **Commands:**
 `{COMMAND_HAND_LER}gmute` as a reply to user or entering user id
 `{COMMAND_HAND_LER}ungmute` as a reply to user or entering user id
-`{COMMAND_HAND_LER}gmutelist`: List all the gmute users
+`{COMMAND_HAND_LER}gmutelist`: To view list of currently gmuted users
 """
 
-GMUTE_USERS = []
+GMUTED_LIST = []
 
 @Client.on_message(Filters.command("gmute", COMMAND_HAND_LER) & Filters.me)
 async def start_sgmute(client, message):
-    global GMUTE_USERS
+    global GMUTED_LIST
     await message.edit("`Putting duct tape...`")
     user_id, user_first_name = await extract_user(client, message)
     if db.is_gmuted(user_id):
@@ -35,14 +35,15 @@ async def start_sgmute(client, message):
     else:
         await message.edit("`Successfully gmuted that person`")
         await client.send_message(PRIVATE_GROUP_ID,
-            "#GMUTE\nUser:{} in Chat {}".format(mention_markdown(user_first_name, user_id), message.chat.title))
-    GMUTE_USERS = db.get_gmute_users()
+            "#GMUTE\nUser: {} in Chat {}".format(mention_markdown(user_first_name, user_id), message.chat.title))
+    GMUTED_LIST.clear()
+    GMUTED_LIST = db.get_gmute_users()
     return
 
 
 @Client.on_message(Filters.command("ungmute", COMMAND_HAND_LER) & Filters.me)
 async def end_gmute(client, message):
-    global GMUTE_USERS
+    global GMUTED_LIST
     await message.edit("`Removing duct tape...`")
     user_id, user_first_name = await extract_user(client, message)
 
@@ -57,21 +58,20 @@ async def end_gmute(client, message):
         await message.edit("`Successfully ungmuted that person`")
         await client.send_message(PRIVATE_GROUP_ID,
             "#UNGMUTE\nUser: {} in Chat {}".format(mention_markdown(user_first_name, user_id), message.chat.title))
-    GMUTE_USERS = db.get_gmute_users()
+    GMUTED_LIST.clear()
+    GMUTED_LIST = db.get_gmute_users()
     return
 
 
 @Client.on_message(Filters.command("gmutelist", COMMAND_HAND_LER) & Filters.me)
 async def list_gmuted(client, message):
-    global GMUTE_USERS
     await message.edit("`Loading users...`")
-    GMUTE_USERS = db.get_gmute_users()
-    if not GMUTE_USERS:
+    if not GMUTED_LIST:
         await message.edit("`No users are gmuted!`")
         return
     users_list = "`Currently Gmuted users:`\n"
     u = 0
-    for x in GMUTE_USERS:
+    for x in GMUTED_LIST:
         u += 1
         user = await client.get_users(x)
         users_list += f"[{u}] {mention_markdown(user.first_name, user.id)}: {user.id}\n"
@@ -79,7 +79,7 @@ async def list_gmuted(client, message):
     return
 
 
-@Client.on_message(Filters.user(GMUTE_USERS), group=5)
+@Client.on_message(Filters.user(GMUTED_LIST), group=5)
 async def watcher_gmute(client, message):
     if db.is_gmuted(message.from_user.id):
         try:

@@ -26,8 +26,7 @@ def is_gmuted(sender_id):
                 return None
         finally:
             SESSION.close()
-    __load_all_gmute_users()
-    return
+        return
 
 
 def gmute(sender):
@@ -37,7 +36,6 @@ def gmute(sender):
         GMUTE_USERS.append(sender)
         SESSION.add(adder)
         SESSION.commit()
-    __load_all_gmute_users()
     return
 
 
@@ -49,18 +47,13 @@ def ungmute(sender):
             GMUTE_USERS.remove(sender)
             SESSION.delete(rem)
             SESSION.commit()
-    __load_all_gmute_users()
-    return
-
+        return
 
 def get_gmute_users():
-    __load_all_gmute_users()
     return GMUTE_USERS
-
 
 def __load_all_gmute_users():
     global GMUTE_USERS
-    GMUTE_USERS.clear()
     getall = SESSION.query(GMute).all()
     for x in getall:
         GMUTE_USERS.append(x)

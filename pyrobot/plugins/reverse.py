@@ -97,5 +97,7 @@ async def google_rs(client, message):
         out_str = f"""<b>Time Taken</b>: {ms} seconds
 <b>Possible Related Search</b>: <a href="{prs_url}">{prs_text}</a>
 <b>More Info</b>: Open this <a href="{the_location}">Link</a>
+
+Reverse search by: @TelePyroBot
 """
     await message.edit(out_str, parse_mode="HTML", disable_web_page_preview=True)

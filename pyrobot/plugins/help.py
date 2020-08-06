@@ -10,6 +10,8 @@ To get help for any command, just type `{COMMAND_HAND_LER}help plugin_name`
 
 Get a list of all Plugins using:
 `{COMMAND_HAND_LER}plugins`
+
+More info available at: @TelePyroBot
 """
 
 @Client.on_message(Filters.command("plugins", COMMAND_HAND_LER) & Filters.me)

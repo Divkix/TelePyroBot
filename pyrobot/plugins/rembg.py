@@ -1,6 +1,6 @@
 import os
 from asyncio import sleep
-
+import shutil
 from removebg import RemoveBg
 from pyrogram import Filters, Client
 from pyrobot import COMMAND_HAND_LER, REMBG_API_KEY
@@ -32,14 +32,17 @@ async def remove_bg(client, message):
         try:
             rmbg = RemoveBg(REMBG_API_KEY, "rembg_error.log")
             rmbg.remove_background_from_img_file(orig_pic)
-            remove_img = orig_pic + "_rembg.png"
+            remove_img = orig_pic + "_no_bg.png"
+            new_rembg_file = orig_pic.replace(".jpg", "_rembg_telepyrobot.png")
+            shutil.move(remove_img, new_rembg_file)
             await client.send_document(
                 chat_id=message.chat.id,
-                document=remove_img,
+                document=new_rembg_file,
+                caption="Background removed using @TelePyroBot",
                 reply_to_message_id=ReplyCheck(message),
                 disable_notification=True)
             await message.delete()
-            os.remove(remove_img)
+            os.remove(new_rembg_file)
             os.remove(orig_pic)
         except Exception as ef:
             await message.edit(f"**Error:**\n\n`{ef}")

@@ -24,7 +24,7 @@ async def do_deepfry(client, message):
     try:
         frycount = int(message.text.split(" ",1)[1])
         if frycount < 1:
-            raise ValueError
+            frycount = 1
     except IndexError:
         frycount = 1
 
@@ -51,7 +51,9 @@ async def do_deepfry(client, message):
     image.save(fried_io, "JPEG")
     fried_io.seek(0)
 
-    await message.reply_photo(fried_io)
+    await message.reply_photo(
+        photo=fried_io,
+        caption="Deepfried by @TelePyroBot")
     await message.delete()
     return
 

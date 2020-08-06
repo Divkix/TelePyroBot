@@ -64,10 +64,11 @@ async def weather(client, message):
         await out_file.write(im_png)
     await asyncio.gather(
         message.delete(),
-        client.send_document(chat_id=message.chat.id,
-                                     document=file_path,
-                                     caption=link,
-                                     reply_to_message_id=message_id)
+        client.send_document(
+            chat_id=message.chat.id,
+            document=file_path,
+            caption=f"**Link:** {link}\nWeb SS taken using @TelePyroBot",
+            reply_to_message_id=message_id)
     )
     os.remove(file_path)
     driver.quit()

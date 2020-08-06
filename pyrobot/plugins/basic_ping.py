@@ -13,11 +13,13 @@ ALIVE_TEXT = ("<i><b>TelePyroBot running on</b></i> {}\n"
     "<i><b>Pyrogram Version:</b></i> `{} (Layer {})`\n"
     "<i><b>Python Version:</b></i> `{}`\n"
     "<i><b>UserBot Version:</b></i> `{}`\n\n"
-    "[Deploy TelePyroBot now]({})")
+    "[Deploy TelePyroBot now]({})\n"
+    "More info: @TelePyroBot")
 IFFUCI_ACTIVE_BRANCH_NAME = "master"
 REPO = ("<b>UserBot is available on GitHub:</b>\n"
         "https://github.com/MyAwesomeProjects/TelePyroBot\n\n"
-        "More info available at: @MyAwesomeProjects")
+        "More info available at: @MyAwesomeProjects\n"
+        "More info: @TelePyroBot")
 # -- Constants End -- #
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))

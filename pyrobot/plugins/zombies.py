@@ -30,6 +30,7 @@ async def zombies_clean(client, message):
         del_users = []
         u = 0
         async for x in client.iter_chat_members(chat_id=message.chat.id):
+            await asyncio.sleep(0.5)
             if x.user.is_deleted:
                 del_users.append(x.user.id)
                 a = await client.get_chat_member(message.chat.id, x.user.id)
@@ -37,6 +38,7 @@ async def zombies_clean(client, message):
                     try:
                         await client.kick_chat_member(message.chat.id, x.user.id)
                         u += 1
+                        await asyncio.sleep(0.5)
                     except:
                         pass
         await message.edit(f"**Done Cleaning Group ✅**\n`Removed {u} deleted accounts`")

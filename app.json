@@ -14,7 +14,7 @@
     "telepyrobot"
   ],
   "repository": "https://github.com/MyAwesomeProjects/TelePyroBot",
-  "success_url": "https://t.me/MyAwesomeProjects",
+  "success_url": "https://t.me/TelePyroBot",
   "website": "https://www.skuzzers.xyz/",
   "env": {
     "ENV": {
@@ -39,11 +39,11 @@
       "value": "."
     },
     "HEROKU_APP_NAME": {
-      "description": "Your App name of heroku",
+      "description": "Your App name of heroku, without this you won't be able to use the updater!",
       "required": false
     },
     "HEROKU_API_KEY": {
-      "description": "get a Heroku API key from http://dashboard.heroku.com/account",
+      "description": "Get a Heroku API key from http://dashboard.heroku.com/account, without this you won't be able to use the updater!",
       "required": false
     },
     "G_DRIVE_CLIENT_ID": {
@@ -55,7 +55,7 @@
       "required": false
     },
     "OWNER_ID": {
-      "description": "Goto @Alita_Robot on Telegram and send /id to get your ID and fill it here.",
+      "description": "Goto @MissRose_Bot on Telegram and send /id to get your ID and fill it here.",
       "required": true
     },
     "OWNER_NAME": {
@@ -63,7 +63,7 @@
       "required": true
     },
     "PRIVATE_GROUP_ID": {
-      "description": "A group where all your userbot messages will be logged!",
+      "description": "A group where all your userbot messages will be logged! Make a new group and add @MissRose_Bot in it, then do /id, copy and paste that number here.",
       "required": true,
       "value": ""
     },

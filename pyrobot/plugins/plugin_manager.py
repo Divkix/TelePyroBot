@@ -11,7 +11,7 @@ Used to install, delete or send plugins from userbot local storage!
 **Usage**
 `{COMMAND_HAND_LER}sendpl <plugin name>` to send a plugin
 `{COMMAND_HAND_LER}installpl` as a reply to a valid plugin
-`{COMMAND_HAND_LER}dlpl <plugin name>` to delete a plugin
+`{COMMAND_HAND_LER}delpl <plugin name>` to delete a plugin
 """
 
 
@@ -43,14 +43,14 @@ async def install_plugin(client, message):
         plugin_loc = f"/app/pyrobot/plugins/{message.reply_to_message.document.file_name}"
         await message.edit("`Installing plugin...`")
         if os.path.exists(plugin_loc):
-            await message.edit(f"`Plugin {message.reply_to_message.document.file_name.replace(".py", "")} already exists!`")
+            await message.edit(f"`Plugin {message.reply_to_message.document.file_name} already exists!`")
             return
         try:
             plugin_dl_loc = await client.download_media(
                 message=message.reply_to_message,
                 file_name=plugin_loc)
             if plugin_dl_loc:
-                await message.edit(f"**Installed plugin:** {message.reply_to_message.document.file_name.replace(".py", "")}")
+                await message.edit(f"**Installed plugin:** {message.reply_to_message.document.file_name}")
         except Exception as e_f:
             await message.edit(f"**Error:**\n`{e_f}`")
     return

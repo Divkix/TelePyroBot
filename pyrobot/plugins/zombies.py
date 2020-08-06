@@ -25,9 +25,9 @@ async def zombies_clean(client, message):
             if x.user.is_deleted:
                 del_users.append(x.user.id)
         if del_users:
-        	await message.edit(f"`Found {len(del_users)} deleted accounts!` **__Use__** `{COMMAND_HAND_LER}zombies clean` __**to remove them from group**__")
-    	else:
-    		await message.edit("`No deleted accounts found!\nGroup is clean as Hell!`")
+            await message.edit(f"`Found {len(del_users)} deleted accounts!` **__Use__** `{COMMAND_HAND_LER}zombies clean` __**to remove them from group**__")
+        else:
+            await message.edit("`No deleted accounts found!\nGroup is clean as Hell!`")
     elif len(message.text.split(" ")) == 2 and message.text.split(" ",1)[1] == "clean":
         await message.edit("`Cleaning deleted accounts....`")
         del_users = []

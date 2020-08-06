@@ -141,7 +141,7 @@ async def afk_mentioned(client, message):
     await message.stop_propagation()
 
 
-@Client.on_message(Filters.me & Filters.group & Filters.private & ~Filters.chat(PRIVATE_GROUP_ID), group=12)
+@Client.on_message(Filters.me & (Filters.group | Filters.private) & ~Filters.chat(PRIVATE_GROUP_ID), group=12)
 async def no_longer_afk(client, message):
     global afk_time
     global afk_start

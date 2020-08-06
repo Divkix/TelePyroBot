@@ -46,5 +46,5 @@ async def translate(client, message):
             await message.edit("Error: `{}`".format(str(err)))
             return
 
-    await message.edit(f"Translated from `{detectlang.lang}` to `{target}`:\n```{tekstr.text}```")
+    await message.edit(f"Translated from `{detectlang.lang}` to `{target}`:\n`{tekstr.text}`")
     return

@@ -2,7 +2,7 @@ import asyncio
 import os
 import git
 from pyrogram import Client, Filters
-
+from pyrobot.utils.cust_p_filters import sudo_filter
 from pyrobot import (
     COMMAND_HAND_LER,
     HEROKU_API_KEY,
@@ -46,14 +46,14 @@ def generate_change_log(git_repo, diff_marker):
         out_put_str += f"•[{repo_change.committed_datetime.strftime(d_form)}]: {repo_change.summary} <{repo_change.author}>\n"
     return out_put_str
 
-@Client.on_message(Filters.command("update", COMMAND_HAND_LER) & Filters.me)
+@Client.on_message(Filters.command("update", COMMAND_HAND_LER) & sudo_filter)
 async def updater(client, message):
-    await message.edit("`Checking for Update...`")
+    umsg = await message.reply("`Checking for Update...`")
     if HEROKU_API_KEY is None or HEROKU_APP_NAME is None:
-        await message.edit("__Please the Vars__ `HEROKU_API_KEY` __and__ `HEROKU_APP_NAME` __properly!__")
+        await umsg.edit("__Please the Vars__ `HEROKU_API_KEY` __and__ `HEROKU_APP_NAME` __properly!__")
         return
     if PRIVATE_GROUP_ID is None:
-        await message.edit("__**Please Set**__ `PRIVATE_GROUP_ID` **__to use updater!__**")
+        await umsg.edit("__**Please Set**__ `PRIVATE_GROUP_ID` **__to use updater!__**")
     try:
         repo = git.Repo()
     except git.exc.InvalidGitRepositoryError as error_one:
@@ -67,7 +67,7 @@ async def updater(client, message):
     active_branch_name = repo.active_branch.name
     LOGGER.info(active_branch_name)
     if active_branch_name != IFFUCI_ACTIVE_BRANCH_NAME:
-        await message.edit(IS_SELECTED_DIFFERENT_BRANCH.format(
+        await umsg.edit(IS_SELECTED_DIFFERENT_BRANCH.format(
             branch_name=active_branch_name,
             COMMAND_HAND_LER=COMMAND_HAND_LER
         ))
@@ -115,7 +115,7 @@ async def updater(client, message):
         else:
             await message.reply(message_one)
     else:
-        await message.edit(BOT_IS_UP_TO_DATE)
+        await umsg.edit(BOT_IS_UP_TO_DATE)
         return
 
     await asyncio.sleep(3)
@@ -140,14 +140,14 @@ async def updater(client, message):
             remote = repo.create_remote("heroku", heroku_git_url)
         remote.push(refspec=HEROKU_GIT_REF_SPEC, force=True)
     else:
-        await message.edit(NO_HEROKU_APP_CFGD)
+        await umsg.edit(NO_HEROKU_APP_CFGD)
 
 
-@Client.on_message(Filters.command("reinstall", COMMAND_HAND_LER) & Filters.me)
+@Client.on_message(Filters.command("reinstall", COMMAND_HAND_LER) & sudo_filter)
 async def reinstall_bot(client, message):
-    await message.edit("__Reinstalling!!__\n**Please Wait...**")
+    rmsg = await message.edit("__Reinstalling!!__\n**Please Wait...**")
     if HEROKU_API_KEY is None or HEROKU_APP_NAME is None:
-        await message.edit("__Please the Vars__ `HEROKU_API_KEY` __and__ `HEROKU_APP_NAME` __properly!__")
+        await rmsg.edit("__Please the Vars__ `HEROKU_API_KEY` __and__ `HEROKU_APP_NAME` __properly!__")
         return
     try:
         repo = git.Repo()
@@ -162,7 +162,7 @@ async def reinstall_bot(client, message):
     active_branch_name = repo.active_branch.name
     LOGGER.info(active_branch_name)
     if active_branch_name != IFFUCI_ACTIVE_BRANCH_NAME:
-        await message.edit(IS_SELECTED_DIFFERENT_BRANCH.format(
+        await rmsg.edit(IS_SELECTED_DIFFERENT_BRANCH.format(
             branch_name=active_branch_name,
             COMMAND_HAND_LER=COMMAND_HAND_LER
         ))
@@ -179,6 +179,7 @@ async def reinstall_bot(client, message):
     await asyncio.sleep(3)
     tmp_upstream_remote.fetch(active_branch_name)
     repo.git.reset("--hard", "FETCH_HEAD")
+    await rmsg.edit(f"__**Reinstallation started!**__\n__Please wait upto 5 minutes and then check using__ `{COMMAND_HAND_LER}start` __or__ `{COMMAND_HAND_LER}alive`")
 
     if HEROKU_API_KEY is not None:
         import heroku3
@@ -195,4 +196,4 @@ async def reinstall_bot(client, message):
             remote = repo.create_remote("heroku", heroku_git_url)
         remote.push(refspec=HEROKU_GIT_REF_SPEC, force=True)
     else:
-        await message.edit(NO_HEROKU_APP_CFGD)
+        await rmsg.edit(NO_HEROKU_APP_CFGD)

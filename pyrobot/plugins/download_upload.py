@@ -28,10 +28,6 @@ __help__ = f"""
 Download Telegram Media
 Syntax: `{COMMAND_HAND_LER}dl` / download <link> or as a reply to media
 
-Directly download file from supported links!
-Syntax: `{COMMAND_HAND_LER}direct <link>`
-Supported: __ __
-
 Upload Media to Telegram
 Syntax: `{COMMAND_HAND_LER}upload <file location>`
 

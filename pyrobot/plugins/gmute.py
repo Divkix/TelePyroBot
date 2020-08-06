@@ -1,6 +1,6 @@
 import os
 import asyncio
-from pyrobot.utils.sql_helpers import gmute_sql as db
+from pyrobot.utils.sql_helpers import gmute_db as db
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER, PRIVATE_GROUP_ID
 from pyrobot.utils.pyrohelpers import extract_user

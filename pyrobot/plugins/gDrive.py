@@ -20,7 +20,7 @@ from pyrobot import (
     LOGGER,
     TMP_DOWNLOAD_DIRECTORY
 )
-
+import pyrobot.utils.sql_helpers.gDrive_db as db
 from pyrobot.utils.display_progress_dl_up import progress_for_pyrogram
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -33,9 +33,6 @@ Plugin used to help you manage your **Google Drive**!
 `{COMMAND_HAND_LER}gdrive setup`: To setup GDrive, only needed if reset grive credentials or setting-up first time.
 `{COMMAND_HAND_LER}gdrive search <query>`: To search a file in your GDrive.
 """
-
-if DB_URI is not None:
-    import pyrobot.utils.sql_helpers.gDrive_sql as sql
 
 # Check https://developers.google.com/drive/scopes for all available scopes
 OAUTH_SCOPE = "https://www.googleapis.com/auth/drive"
@@ -55,7 +52,7 @@ async def g_drive_commands(client, message):
         if current_recvd_command == "setup":
             await g_drive_setup(message)
         elif current_recvd_command == "reset":
-            sql.clear_credential(message.from_user.id)
+            db.clear_credential(message.from_user.id)
             await status_message.edit_text(text="cleared saved credentials")
         elif current_recvd_command == "confirm":
             if len(message.command) == 3:
@@ -63,11 +60,11 @@ async def g_drive_commands(client, message):
             else:
                 await status_message.edit_text(text="please give auth_code correctly")
         elif current_recvd_command == "search":
-            creds = sql.get_credential(message.from_user.id)
+            creds = db.get_credential(message.from_user.id)
             if not creds or not creds.invalid:
                 if creds and creds.refresh_token:
                     creds.refresh(get_new_http_instance())
-                    sql.set_credential(message.from_user.id, creds)
+                    db.set_credential(message.from_user.id, creds)
 
                     if len(message.command) > 2:
                         search_query = " ".join(message.command[2:])
@@ -98,11 +95,11 @@ async def g_drive_commands(client, message):
                     text=f"<i>Please run</i> <code>{COMMAND_HAND_LER}gdrive setup</code> <i>first</i>", parse_mode="html"
                 )
         elif current_recvd_command == "upload":
-            creds = sql.get_credential(message.from_user.id)
+            creds = db.get_credential(message.from_user.id)
             if not creds or not creds.invalid:
                 if creds and creds.refresh_token:
                     creds.refresh(get_new_http_instance())
-                    sql.set_credential(message.from_user.id, creds)
+                    db.set_credential(message.from_user.id, creds)
                     if len(message.command) > 2:
                         upload_file_name = " ".join(message.command[2:])
                         if not os.path.exists(upload_file_name):
@@ -180,11 +177,11 @@ async def g_drive_commands(client, message):
 
 
 async def g_drive_setup(message):
-    creds = sql.get_credential(message.from_user.id)
+    creds = db.get_credential(message.from_user.id)
     if not creds or not creds.invalid:
         if creds and creds.refresh_token:
             creds.refresh(get_new_http_instance())
-            sql.set_credential(message.from_user.id, creds)
+            db.set_credential(message.from_user.id, creds)
             #
             await message.edit_text(
                 text="gDrive authentication credentials, refreshed"
@@ -221,7 +218,7 @@ async def AskUserToVisitLinkAndGiveCode(message, code):
         return
     await message.edit_text(text="`Checking received code...``")
     creds = flow.step2_exchange(code)
-    sql.set_credential(
+    db.set_credential(
         message.reply_to_message.from_user.id,
         creds
     )

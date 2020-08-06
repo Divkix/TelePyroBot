@@ -10,7 +10,7 @@ class Config():
     TMP_DOWNLOAD_DIRECTORY = os.environ.get("TMP_DOWNLOAD_DIRECTORY", "./downloads")
     OFFICIAL_UPSTREAM_REPO = os.environ.get(
         "OFFICIAL_UPSTREAM_REPO",
-        "https://github.com/MyAwesomeProjects/TelePyroBot.git")
+        "https://github.com/SkuzzyxD/TelePyroBot.git")
     DB_URI = os.environ.get("DATABASE_URL", None)
     G_DRIVE_CLIENT_ID = os.environ.get("G_DRIVE_CLIENT_ID", None)
     G_DRIVE_CLIENT_SECRET = os.environ.get("G_DRIVE_CLIENT_SECRET", None)

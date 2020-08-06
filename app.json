@@ -13,7 +13,7 @@
     "pyrobot",
     "telepyrobot"
   ],
-  "repository": "https://github.com/MyAwesomeProjects/TelePyroBot",
+  "repository": "https://github.com/SkuzzyxD/TelePyroBot",
   "success_url": "https://t.me/TelePyroBot",
   "website": "https://www.skuzzers.xyz/",
   "env": {

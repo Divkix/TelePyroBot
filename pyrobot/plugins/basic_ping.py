@@ -17,7 +17,7 @@ ALIVE_TEXT = ("<i><b>TelePyroBot running on</b></i> {}\n"
     "More info: @TelePyroBot")
 IFFUCI_ACTIVE_BRANCH_NAME = "master"
 REPO = ("<b>UserBot is available on GitHub:</b>\n"
-        "https://github.com/MyAwesomeProjects/TelePyroBot\n\n"
+        "https://github.com/SkuzzyxD/TelePyroBot\n\n"
         "<b>More info:</b> @TelePyroBot")
 # -- Constants End -- #
 
@@ -46,7 +46,7 @@ async def check_alive(client, message):
 
     master = repo.head.reference
     commit_id = master.commit.hexsha
-    commit_link = f"<a href='https://github.com/MyAwesomeProjects/TelePyroBot/commit/{commit_id}'>{commit_id[:7]}</a>"
+    commit_link = f"<a href='https://github.com/SkuzzyxD/TelePyroBot/commit/{commit_id}'>{commit_id[:7]}</a>"
     await message.edit_text(ALIVE_TEXT.format(commit_link, OWNER_NAME, __version__,
         layer, python_version(), UB_VERSION, OFFICIAL_UPSTREAM_REPO),
         disable_web_page_preview=True)

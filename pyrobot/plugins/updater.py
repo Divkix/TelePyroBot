@@ -122,9 +122,17 @@ async def updater(client, message):
     tmp_upstream_remote.fetch(active_branch_name)
     repo.git.reset("--hard", "FETCH_HEAD")
     await message.reply(f"**Update Started!**\n__**Type**__ `{COMMAND_HAND_LER}alive` **__to check if I'm alive__**\n\n**It would take upto 5 minutes to update!**")
-    await client.send_message(
-        PRIVATE_GROUP_ID,
-        f"TelePyroBot Update!\n\n**Changelog:**\n`{changelog}``")
+    try:
+        remote_head_github = repo.head.reference
+        commit_id = remote_head_github.commit.hexsha
+        commit_link = f"<a href='https://github.com/SkuzzyxD/TelePyroBot/commit/{commit_id}'>{commit_id[:7]}</a>"
+        await client.send_message(
+            PRIVATE_GROUP_ID,
+            f"#UPDATE\n\nTelePyroBot Update {commit_link}\n\n**Changelog:**\n`{changelog}`")
+    except:
+        await client.send_message(
+            PRIVATE_GROUP_ID,
+            f"#UPDATE\n\nTelePyroBot Update!\n**Changelog:**\n`{changelog}`")
     if HEROKU_API_KEY is not None:
         import heroku3
         heroku = heroku3.from_key(HEROKU_API_KEY)
@@ -145,7 +153,7 @@ async def updater(client, message):
 
 @Client.on_message(Filters.command("reinstall", COMMAND_HAND_LER) & sudo_filter)
 async def reinstall_bot(client, message):
-    rmsg = await message.edit("__Reinstalling!!__\n**Please Wait...**")
+    rmsg = await message.reply("__Reinstalling!!__\n**Please Wait...**")
     if HEROKU_API_KEY is None or HEROKU_APP_NAME is None:
         await rmsg.edit("__Please the Vars__ `HEROKU_API_KEY` __and__ `HEROKU_APP_NAME` __properly!__")
         return
@@ -179,6 +187,9 @@ async def reinstall_bot(client, message):
     await asyncio.sleep(3)
     tmp_upstream_remote.fetch(active_branch_name)
     repo.git.reset("--hard", "FETCH_HEAD")
+    await client.send_message(
+        PRIVATE_GROUP_ID,
+        f"#REINSTALL\n\n**TelePyroBot Reinstallation Initiated!**")
     await rmsg.edit(f"__**Reinstallation started!**__\n__Please wait upto 5 minutes and then check using__ `{COMMAND_HAND_LER}start` __or__ `{COMMAND_HAND_LER}alive`")
 
     if HEROKU_API_KEY is not None:

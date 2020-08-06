@@ -59,6 +59,7 @@ def get_gmute_users():
 
 def __load_all_gmute_users():
     global GMUTE_USERS
+    GMUTE_USERS.clear()
     getall = SESSION.query(GMute).all()
     for x in getall:
         GMUTE_USERS.append(x)

@@ -65,13 +65,13 @@ async def end_gmute(client, message):
 async def list_gmuted(client, message):
     global GMUTE_USERS
     await message.edit("`Loading users...`")
-    users = db.get_gmute_users()
+    GMUTE_USERS = db.get_gmute_users()
     if not users:
         await message.edit("`No users are gmuted!`")
         return
     users_list = "`Currently Gmuted users:`\n"
     u = 0
-    for x in users:
+    for x in GMUTE_USERS:
         u += 1
         user = await client.get_users(x)
         users_list += f"[{u}] {mention_markdown(user.first_name, user.id)}: {user.id}\n"

@@ -54,6 +54,7 @@ def ungmute(sender):
 
 
 def get_gmute_users():
+    __load_all_gmute_users()
     return GMUTE_USERS
 
 

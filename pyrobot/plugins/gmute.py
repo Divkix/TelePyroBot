@@ -66,7 +66,7 @@ async def list_gmuted(client, message):
     global GMUTE_USERS
     await message.edit("`Loading users...`")
     GMUTE_USERS = db.get_gmute_users()
-    if not users:
+    if not GMUTE_USERS:
         await message.edit("`No users are gmuted!`")
         return
     users_list = "`Currently Gmuted users:`\n"

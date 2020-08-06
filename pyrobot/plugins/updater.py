@@ -26,7 +26,7 @@ DIFF_MARKER = "HEAD..{remote_name}/{branch_name}"
 NO_HEROKU_APP_CFGD = "no heroku application found, but a key given? 😕 "
 HEROKU_GIT_REF_SPEC = "HEAD:refs/heads/master"
 BOT_IS_UP_TO_DATE = "**__TelePyroBot is already upto date!__**"
-NEW_BOT_UP_DATE_FOUND = "**NEW update found for** __{branch_name}__\n**Chagelog:**\n\n`{changelog}`\n__**Updating...**__"
+NEW_BOT_UP_DATE_FOUND = "**NEW update found for** __{branch_name}__( {commit_link})\n**Chagelog:**\n\n`{changelog}`\n__**Updating...**__"
 NEW_UP_DATE_FOUND = "**NEW Update found for** __{branch_name}__\n__**Updating ...**__"
 # -- Constants End -- #
 
@@ -94,9 +94,17 @@ async def updater(client, message):
     except:
         pass
 
+    try:
+        remote_head_github = repo.head.reference
+        commit_id = remote_head_github.commit.hexsha
+        commit_link = f"<a href='https://github.com/SkuzzyxD/TelePyroBot/commit/{commit_id}'>{commit_id[:7]}</a>"
+    except:
+        commit_link = none
+
     message_one = NEW_BOT_UP_DATE_FOUND.format(
         branch_name=active_branch_name,
-        changelog=changelog
+        changelog=changelog,
+        commit_link=commit_link
     )
     message_two = NEW_UP_DATE_FOUND.format(
         branch_name=active_branch_name
@@ -123,17 +131,10 @@ async def updater(client, message):
     tmp_upstream_remote.fetch(active_branch_name)
     repo.git.reset("--hard", "FETCH_HEAD")
     await message.reply(f"**Update Started!**\n__**Type**__ `{COMMAND_HAND_LER}alive` **__to check if I'm alive__**\n\n**It would take upto 5 minutes to update!**")
-    try:
-        remote_head_github = repo.head.reference
-        commit_id = remote_head_github.commit.hexsha
-        commit_link = f"<a href='https://github.com/SkuzzyxD/TelePyroBot/commit/{commit_id}'>{commit_id[:7]}</a>"
-        await client.send_message(
-            PRIVATE_GROUP_ID,
-            f"#UPDATE\n\nTelePyroBot Update {commit_link}\n\n**Changelog:**\n`{changelog}`")
-    except:
-        await client.send_message(
-            PRIVATE_GROUP_ID,
-            f"#UPDATE\n\nTelePyroBot Update!\n**Changelog:**\n`{changelog}`")
+    await client.send_message(
+        PRIVATE_GROUP_ID,
+        f"#UPDATE\n\n**__TelePyroBot Update__** - {commit_link}\n\n**Changelog:**\n```{changelog}```",
+        disable_web_page_preview=True)
     if HEROKU_API_KEY is not None:
         import heroku3
         heroku = heroku3.from_key(HEROKU_API_KEY)

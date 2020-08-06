@@ -5,7 +5,9 @@ from pyrobot.plugins import ALL_PLUGINS
 from pyrobot.pyrobot import HELP_COMMANDS
 from pyrobot.utils.pyrohelpers import ReplyCheck
 
-HELP_DEFAULT = f"""
+__PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
+
+__help__ = f"""
 Used to install, delete or send plugins from userbot local storage!
 
 **Usage**

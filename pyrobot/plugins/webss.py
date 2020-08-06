@@ -11,10 +11,9 @@ from pyrobot import COMMAND_HAND_LER, GOOGLE_CHROME_BIN, TMP_DOWNLOAD_DIRECTORY
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
-Get current weather in your location
-`{COMMAND_HAND_LER}weather <location>`
+Get screenshot of website using selenium easily using userbot!
 
-Powered by `wttr.in`
+`{COMMAND_HAND_LER}webss <url>`
 """
 
 @Client.on_message(Filters.command("webss", COMMAND_HAND_LER) & Filters.me)

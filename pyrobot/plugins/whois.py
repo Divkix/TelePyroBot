@@ -26,3 +26,4 @@ async def upload_as_document(client, message):
         await message.edit(message_out_str)
     else:
         await message.edit("`**Error:**\nCannot find user or error, please check logs!`")
+    return

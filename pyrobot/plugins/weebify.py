@@ -30,3 +30,4 @@ async def weebify(client, message):
             weebycharacter = weebyfont[normiefont.index(normiecharacter)]
             string = string.replace(normiecharacter, weebycharacter)
     await message.edit(f"**Weebified String:**\n`{string}`")
+    return

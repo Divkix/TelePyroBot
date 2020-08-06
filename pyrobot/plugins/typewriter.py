@@ -8,7 +8,9 @@ from pyrobot import COMMAND_HAND_LER, LOGGER
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
-`{COMMAND_HAND_LER}type <text>` / `{COMMAND_HAND_LER}typewriter <text>`: Get text typed in typewriter format.
+Get text typed in typewriter format.
+
+`{COMMAND_HAND_LER}type <text>` / `{COMMAND_HAND_LER}typewriter <text>`
 """
 
 @Client.on_message(Filters.command(["type", "typewriter"], COMMAND_HAND_LER) & Filters.me)

@@ -36,7 +36,7 @@ __help__ = f"""
 **Update your Userbot easily ✌️**
 
 `{COMMAND_HAND_LER}update`: Update userbot to latest version.
-`{COMMAND_HAND_LER}reinstall`: Reinstall the userbot from  Official Github Repo.
+`{COMMAND_HAND_LER}reinstall`: Reinstall the userbot from Official Github Repo.
 """
 
 def generate_change_log(git_repo, diff_marker):
@@ -45,6 +45,7 @@ def generate_change_log(git_repo, diff_marker):
     for repo_change in git_repo.iter_commits(diff_marker):
         out_put_str += f"•[{repo_change.committed_datetime.strftime(d_form)}]: {repo_change.summary} <{repo_change.author}>\n"
     return out_put_str
+
 
 @Client.on_message(Filters.command("update", COMMAND_HAND_LER) & sudo_filter)
 async def updater(client, message):

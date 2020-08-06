@@ -27,6 +27,8 @@ __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 __help__ = f"""
 Download Telegram Media
 Syntax: `{COMMAND_HAND_LER}dl` / download <link> or as a reply to media
+Use '|' along with command to set a custom filename fro downloaded file,
+Works only on replied media messages!
 
 Upload Media to Telegram
 Syntax: `{COMMAND_HAND_LER}upload <file location>`

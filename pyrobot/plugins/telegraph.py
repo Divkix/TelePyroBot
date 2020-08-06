@@ -8,6 +8,8 @@ from pyrobot import COMMAND_HAND_LER
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
+Paste media to telegraph!
+
 `{COMMAND_HAND_LER}telegraph`: As a reply to a media to paste it to Telegraph.
 """
 

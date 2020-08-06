@@ -36,14 +36,14 @@ async def unblock_pm(client, message):
     if len(message.command) == 2:
         user = message.text.split(" ", 1)[1]
         try:
-            await client.unblock_user(f"{user}")
+            await client.unblock_user(user)
             await message.edit("`Unblocked User`")
         except Exception as ef:
             await message.edit(f"**Error:**\n`{ef}`")
     elif message.reply_to_message:
         user = message.reply_to_message.from_user.id
         try:
-            await client.unblock_user(f"{user}")
+            await client.unblock_user(user)
             await message.edit("`Unblocked User`")
         except Exception as ef:
             await message.edit(f"**Error:**\n`{ef}`")
@@ -55,14 +55,14 @@ async def block_pm(client, message):
     if len(message.command) == 2:
         user = message.text.split(" ", 1)[1]
         try:
-            await client.unblock_user(f"{user}")
+            await client.unblock_user(user)
             await message.edit("`Blocked User`")
         except Exception as ef:
             await message.edit(f"**Error:**\n`{ef}`")
     elif message.reply_to_message:
         user = message.reply_to_message.from_user.id
         try:
-            await client.unblock_user(f"{user}")
+            await client.unblock_user(user)
             await message.edit("`Blocked User`")
         except Exception as ef:
             await message.edit(f"**Error:**\n`{ef}`")
@@ -144,7 +144,7 @@ async def set_username(client, message):
         return
     try:
         await client.update_username(f"{username}")
-        await message.edit(f"**Updated Username to:**\n`@{username}`")
+        await message.edit(f"**Updated Username to:**\n@{username}")
     except Exception as ef:
         await message.edit(f"**Error:**\n{ef}")
         return
@@ -162,9 +162,10 @@ async def remove_username(client, message):
 
 @Client.on_message(Filters.command("rmpfp", COMMAND_HAND_LER) & Filters.me)
 async def remove_pfp(client, message):
+    photos = client.get_profile_photos("me")
     try:
         client.delete_profile_photos([p.file_id for p in photos[1:]])
-        await message.edit(f"**Removed Username**")
+        await message.edit(f"**Removed Profile Pictures**")
     except Exception as ef:
         await message.edit(f"**Error:**\n{ef}")
         return

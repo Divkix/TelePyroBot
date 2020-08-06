@@ -12,7 +12,7 @@ Generate a  hyperlink/permanent link for a profile.
 Usage:
 `{COMMAND_HAND_LER}mention <custom text> <username without @>`
 or
-`{COMMAND_HAND_LER}mention <custom text> user_id`
+`{COMMAND_HAND_LER}mention <custom text> <user id>`
 """
 
 @Client.on_message(Filters.command("mention", COMMAND_HAND_LER) & Filters.me)

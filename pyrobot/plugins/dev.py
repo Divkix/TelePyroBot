@@ -13,13 +13,13 @@ __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
 Evaluate Python Code inside Telegram
-Syntax: `{COMMAND_HAND_LER}py PythonCode`
+**Syntax:** `{COMMAND_HAND_LER}py PythonCode`
 
 Run command on file system from Telegram
-Syntax: `{COMMAND_HAND_LER}sh CommandCode`
+**Syntax:** `{COMMAND_HAND_LER}sh CommandCode`
 
 Get IP Address of userbot server.
-Syntax: `{COMMAND_HAND_LER}ip`
+**Syntax:** `{COMMAND_HAND_LER}ip`
 """
 
 

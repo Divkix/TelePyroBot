@@ -1,4 +1,3 @@
-import re
 import os
 import asyncio
 from pyrogram import Client, Filters
@@ -19,11 +18,13 @@ a message that you are not available
 `{COMMAND_HAND_LER}dispm`: To disallow a user to pm you!
 """
 
-welc_txt = f"""
-Hello, I'm {OWNER_NAME}'s Userbot.
-Please leave your message and my Owner will contact you shortly!
+DEFAULT_USER = str(OWNER_NAME) if OWNER_NAME else "Set `OWNER_NAME` in Config Vars"
 
-If you spam, You'll be blocked + reported
+welc_txt = f"""
+**__Hello! This is__** @TelePyroBot
+`Private Messaging Security Protocol ⚠️`
+**Currently My Master** {DEFAULT_USER} **is busy!**
+__Better not spam his Inbox!__
 """
 
 @Client.on_message(Filters.private & (~Filters.me & ~Filters.bot), group=3)

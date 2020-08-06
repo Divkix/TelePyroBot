@@ -65,14 +65,12 @@ async def del_msg(client, message):
                 await asyncio.sleep(3)
                 await message.delete()
                 return
-
         await client.delete_messages(
             chat_id=message.chat.id,
             message_ids=message.reply_to_message.message_id)
-
     else:
         await message.edit(
             "`Reply to a message to delete!`")
 
-    await asyncio.sleep(1)
+    await asyncio.sleep(0.5)
     await message.delete()

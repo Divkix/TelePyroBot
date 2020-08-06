@@ -19,7 +19,7 @@ Use this remove background from images!
 @Client.on_message(Filters.me & Filters.command("rembg", COMMAND_HAND_LER))
 async def remove_bg(client, message):
     if not REMBG_API_KEY:
-        await message.edit("Get the API from [Remove.bg](https://www.remove.bg/b/background-removal-api)",
+        await message.edit("Get the API from [Remove.bg](https://www.remove.bg/api)",
                            disable_web_page_preview=True, parse_mode="html")
     replied = message.reply_to_message
     if (replied and replied.media

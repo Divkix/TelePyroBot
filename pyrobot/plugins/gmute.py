@@ -15,8 +15,10 @@ They will not be able to speak until you ungmute them!
 **Commands:**
 `{COMMAND_HAND_LER}gmute` as a reply to user or entering user id
 `{COMMAND_HAND_LER}ungmute` as a reply to user or entering user id
+`{COMMAND_HAND_LER}gmutelist`: List all the gmute users
 """
 
+GMUTE_USERS = []
 
 @Client.on_message(Filters.command("gmute", COMMAND_HAND_LER) & Filters.me)
 async def start_sgmute(client, message):
@@ -34,6 +36,7 @@ async def start_sgmute(client, message):
         await client.send_message(PRIVATE_GROUP_ID,
             "#GMUTE\nUser:{} in Chat {}".format(mention_markdown(user_first_name, user_id), message.chat.title),
             parse_mode="html")
+    GMUTE_USERS = db.get_gmute_users()
     return
 
 
@@ -54,19 +57,20 @@ async def end_gmute(client, message):
         await client.send_message(PRIVATE_GROUP_ID,
             "#UNGMUTE\nUser:{} in Chat {}".format(mention_markdown(user_first_name, user_id), message.chat.title),
             parse_mode="html")
+    GMUTE_USERS = db.get_gmute_users()
     return
 
 
 @Client.on_message(Filters.command("gmutelist", COMMAND_HAND_LER) & Filters.me)
 async def list_gmuted(client, message):
     await message.edit("`Loading users...`")
-    users = db.get_gmute_users()
-    if not users:
+    GMUTE_USERS = db.get_gmute_users()
+    if not GMUTE_USERS:
         await message.edit("`No users are gmuted!`")
         return
     users_list = "`Currently Gmuted users:`\n"
     u = 0
-    for x in users:
+    for x in GMUTE_USERS:
         u += 1
         user = await client.get_users(x)
         users_list += f"[{u}] {mention_markdown(user.first_name, user.id)}: {user.id}\n"
@@ -74,10 +78,9 @@ async def list_gmuted(client, message):
     return
 
 
-@Client.on_message(Filters.group, group=5)
+@Client.on_message(Filters.user(GMUTE_USERS), group=5)
 async def watcher_gmute(client, message):
     if db.is_gmuted(message.from_user.id):
-        await asyncio.sleep(0.1)
         try:
             await client.delete_messages(
                 chat_id=message.chat.id,

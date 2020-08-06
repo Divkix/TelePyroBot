@@ -9,6 +9,8 @@ from pyrobot.utils.pyrohelpers import extract_user
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ =  f"""
+Easily Check CAS ban of a user!
+
 `{COMMAND_HAND_LER}cas <user_id>` or as a reply to the message to check the CAS status of the user.
 """
 

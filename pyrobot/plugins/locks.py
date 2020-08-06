@@ -13,7 +13,6 @@ __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 __HELP__ = f"""
 Use this to lock group permissions.
 Allows you to lock some common permission types in the chat.
-**NOTE:** Requires proper admin rights in the chat!!
 
 **Types:** all, msg, media, polls, invite, pin, info,
         webprev, inlinebots, animations, games, stickers
@@ -22,6 +21,8 @@ Allows you to lock some common permission types in the chat.
 `{COMMAND_HAND_LER}lock <type>`: Lock Chat permission
 `{COMMAND_HAND_LER}unlock <type>`: Unlock Chat permission
 `{COMMAND_HAND_LER}vperm`: View Chat permission
+
+**NOTE:** Requires proper admin rights in the chat!!
 """
 
 @Client.on_message(Filters.command("lock", COMMAND_HAND_LER) & Filters.me)

@@ -31,7 +31,7 @@ async def invite_user(client, message):
     if len(message.command) > 2:
         await message.edit(f"__Only one user can be invited at a time,\ncheck__ `{COMMAND_HAND_LER}help` __for more info.__")
         return
-    user_id, user_first_name = extract_user(message)
+    user_id, user_first_name = extract_user(client, message)
     try:
         await message.chat.add_members(user_id=user_id)
         if str(user_id).lower().startswith("@"):

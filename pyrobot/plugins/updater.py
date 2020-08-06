@@ -1,6 +1,7 @@
 import asyncio
 import os
 import git
+import shutil
 from pyrogram import Client, Filters
 from pyrobot.utils.cust_p_filters import sudo_filter
 from pyrobot import (
@@ -25,7 +26,6 @@ IFFUCI_ACTIVE_BRANCH_NAME = "master"
 DIFF_MARKER = "HEAD..{remote_name}/{branch_name}"
 NO_HEROKU_APP_CFGD = "no heroku application found, but a key given? 😕 "
 HEROKU_GIT_REF_SPEC = "HEAD:refs/heads/master"
-BOT_IS_UP_TO_DATE = "**__TelePyroBot is already upto date!__**"
 NEW_BOT_UP_DATE_FOUND = "**NEW update found for** __{branch_name}__( {commit_link})\n**Chagelog:**\n\n`{changelog}`\n__**Updating...**__"
 NEW_UP_DATE_FOUND = "**NEW Update found for** __{branch_name}__\n__**Updating ...**__"
 # -- Constants End -- #
@@ -49,6 +49,8 @@ def generate_change_log(git_repo, diff_marker):
 
 @Client.on_message(Filters.command("update", COMMAND_HAND_LER) & sudo_filter)
 async def updater(client, message):
+    if os.path.exists(".git"):
+        shutil.rmtree(".git")
     umsg = await message.reply("`Checking for Update...`")
     if HEROKU_API_KEY is None or HEROKU_APP_NAME is None:
         await umsg.edit("__Please the Vars__ `HEROKU_API_KEY` __and__ `HEROKU_APP_NAME` __properly!__")
@@ -99,7 +101,7 @@ async def updater(client, message):
         commit_id = remote_head_github.commit.hexsha
         commit_link = f"<a href='https://github.com/SkuzzyxD/TelePyroBot/commit/{commit_id}'>{commit_id[:7]}</a>"
     except:
-        commit_link = none
+        commit_link = "None"
 
     message_one = NEW_BOT_UP_DATE_FOUND.format(
         branch_name=active_branch_name,
@@ -124,8 +126,11 @@ async def updater(client, message):
         else:
             await message.reply(message_one)
     else:
-        await umsg.edit(BOT_IS_UP_TO_DATE)
-        return
+        changelog = "None"
+        await umsg.edit("`Changelog not available!\nDoing force install, might even reinstall from OFFICIAL_REPO`")
+        await client.send_message(
+            PRIVATE_GROUP_ID,
+            f"#FORCEUPDATE\n\n****__TelePyroBot Reinstall/Force Update Started__**")
 
     await asyncio.sleep(3)
     tmp_upstream_remote.fetch(active_branch_name)
@@ -151,62 +156,3 @@ async def updater(client, message):
         remote.push(refspec=HEROKU_GIT_REF_SPEC, force=True)
     else:
         await umsg.edit(NO_HEROKU_APP_CFGD)
-
-
-@Client.on_message(Filters.command("reinstall", COMMAND_HAND_LER) & sudo_filter)
-async def reinstall_bot(client, message):
-    rmsg = await message.reply("__Reinstalling!!__\n**Please Wait...**")
-    if HEROKU_API_KEY is None or HEROKU_APP_NAME is None:
-        await rmsg.edit("__Please the Vars__ `HEROKU_API_KEY` __and__ `HEROKU_APP_NAME` __properly!__")
-        return
-    try:
-        repo = git.Repo()
-    except git.exc.InvalidGitRepositoryError as error_one:
-        LOGGER.info(str(error_one))
-        repo = git.Repo.init()
-        origin = repo.create_remote(REPO_REMOTE_NAME, OFFICIAL_UPSTREAM_REPO)
-        origin.fetch()
-        repo.create_head(IFFUCI_ACTIVE_BRANCH_NAME, origin.refs.master)
-        repo.heads.master.checkout(True)
-
-    active_branch_name = repo.active_branch.name
-    LOGGER.info(active_branch_name)
-    if active_branch_name != IFFUCI_ACTIVE_BRANCH_NAME:
-        await rmsg.edit(IS_SELECTED_DIFFERENT_BRANCH.format(
-            branch_name=active_branch_name,
-            COMMAND_HAND_LER=COMMAND_HAND_LER
-        ))
-        return False
-
-    try:
-        repo.create_remote(REPO_REMOTE_NAME, OFFICIAL_UPSTREAM_REPO)
-    except Exception as error_two:
-        LOGGER.info(str(error_two))
-
-    tmp_upstream_remote = repo.remote(REPO_REMOTE_NAME)
-    tmp_upstream_remote.fetch(active_branch_name)
-
-    await asyncio.sleep(3)
-    tmp_upstream_remote.fetch(active_branch_name)
-    repo.git.reset("--hard", "FETCH_HEAD")
-    await client.send_message(
-        PRIVATE_GROUP_ID,
-        f"#REINSTALL\n\n**TelePyroBot Reinstallation Initiated!**")
-    await rmsg.edit(f"__**Reinstallation started!**__\n__Please wait upto 5 minutes and then check using__ `{COMMAND_HAND_LER}start` __or__ `{COMMAND_HAND_LER}alive`")
-
-    if HEROKU_API_KEY is not None:
-        import heroku3
-        heroku = heroku3.from_key(HEROKU_API_KEY)
-        heroku_app = heroku.apps()[HEROKU_APP_NAME]
-        heroku_git_url = heroku_app.git_url.replace(
-            "https://",
-            "https://api:" + HEROKU_API_KEY + "@"
-        )
-        if "heroku" in repo.remotes:
-            remote = repo.remote("heroku")
-            remote.set_url(heroku_git_url)
-        else:
-            remote = repo.create_remote("heroku", heroku_git_url)
-        remote.push(refspec=HEROKU_GIT_REF_SPEC, force=True)
-    else:
-        await rmsg.edit(NO_HEROKU_APP_CFGD)

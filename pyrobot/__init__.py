@@ -48,7 +48,7 @@ REMBG_API_KEY = Config.REMBG_API_KEY
 
 HELP_COMMANDS = {}
 
-def load_cmds(ALL_PLUGINS, importlib):
+def load_cmds(ALL_PLUGINS):
     for oof in ALL_PLUGINS:
         if oof.lower() == "help":
             continue

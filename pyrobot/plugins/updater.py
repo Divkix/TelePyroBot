@@ -145,7 +145,7 @@ def generate_change_log(git_repo, diff_marker):
     changelog_string = ""
     d_form = "%d/%m/%y"
     for repo_change in git_repo.iter_commits(diff_marker):
-        changelog_string += f"•[{repo_change.committed_datetime.strftime(d_form)}]: {repo_change.summary} <{repo_change.author}>\n"
+        changelog_string += f"•[{repo_change.committed_datetime.strftime(d_form)}]: {repo_change.summary} ({repo_change.author})\n"
     return changelog_string
 
 

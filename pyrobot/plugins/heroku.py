@@ -27,8 +27,6 @@ useragent = (
 
 @Client.on_message(Filters.command("restart", COMMAND_HAND_LER) & Filters.me)
 async def restart(client, message):
-    @Client.on_message(Filters.command("restart", COMMAND_HAND_LER) & Filters.me)
-async def restart(client, message):
     if (HEROKU_API_KEY or HEROKU_APP_NAME) is None:
         await message.edit("Please add `HEROKU_APP_NAME` or `HEROKU_API_KEY` in your Config Vars or file.")
         return

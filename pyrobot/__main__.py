@@ -1,7 +1,6 @@
 from pyrogram import Client
 from pyrogram import __version__
 from pyrogram.api.all import layer
-import importlib
 from pyrobot.plugins import ALL_PLUGINS
 from pyrobot import (
     APP_ID,
@@ -25,7 +24,7 @@ class PyroBot(Client):
 
     async def start(self):
         await super().start()
-        result = load_cmds(ALL_PLUGINS, importlib)
+        result = load_cmds(ALL_PLUGINS)
         LOGGER.info(result)
 
         usr_bot_me = await self.get_me()

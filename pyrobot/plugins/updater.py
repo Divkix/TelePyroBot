@@ -2,6 +2,7 @@ import asyncio
 import os
 import git
 import shutil
+import heroku3
 from pyrogram import Client, Filters
 from pyrobot.utils.cust_p_filters import sudo_filter
 from pyrobot import (
@@ -19,7 +20,6 @@ IS_SELECTED_DIFFERENT_BRANCH = (
     "is being used\n"
     "In this case, updater is unable to identify the branch to be updated."
     "Please check out to an official branch, and re-start the updater.\n\n"
-    "Or do {COMMAND_HAND_LER}reinstall to reinstall the bot from official repo!"
     "Or join @TelePyroBot for help!")
 REPO_REMOTE_NAME = "tmp_upstream_remote"
 IFFUCI_ACTIVE_BRANCH_NAME = "master"
@@ -36,21 +36,14 @@ __help__ = f"""
 **Update your Userbot easily ✌️**
 
 `{COMMAND_HAND_LER}update`: Update userbot to latest version.
-`{COMMAND_HAND_LER}reinstall`: Reinstall the userbot from Official Github Repo.
+`{COMMAND_HAND_LER}update force`: Forcefully update userbot to sync with latest remote source!
 """
-
-def generate_change_log(git_repo, diff_marker):
-    out_put_str = ""
-    d_form = "%d/%m/%y"
-    for repo_change in git_repo.iter_commits(diff_marker):
-        out_put_str += f"•[{repo_change.committed_datetime.strftime(d_form)}]: {repo_change.summary} <{repo_change.author}>\n"
-    return out_put_str
-
 
 @Client.on_message(Filters.command("update", COMMAND_HAND_LER) & sudo_filter)
 async def updater(client, message):
-    if os.path.exists(".git"):
-        shutil.rmtree(".git")
+    if len(message.command) == 2 and message.command[1] == "force":
+        force_update = True
+
     umsg = await message.reply("`Checking for Update...`")
     if HEROKU_API_KEY is None or HEROKU_APP_NAME is None:
         await umsg.edit("__Please the Vars__ `HEROKU_API_KEY` __and__ `HEROKU_APP_NAME` __properly!__")
@@ -84,17 +77,14 @@ async def updater(client, message):
     tmp_upstream_remote = repo.remote(REPO_REMOTE_NAME)
     tmp_upstream_remote.fetch(active_branch_name)
 
-    try:
-        changelog = generate_change_log(
-            repo,
-            DIFF_MARKER.format(
-                remote_name=REPO_REMOTE_NAME,
-                branch_name=active_branch_name
-            )
+    changelog = generate_change_log(
+        repo,
+        DIFF_MARKER.format(
+            remote_name=REPO_REMOTE_NAME,
+            branch_name=active_branch_name
         )
-        LOGGER.info(changelog)
-    except:
-        pass
+    )
+    LOGGER.info(changelog)
 
     try:
         remote_head_github = repo.head.reference
@@ -112,47 +102,51 @@ async def updater(client, message):
         branch_name=active_branch_name
     )
 
-    if changelog:
-        if len(message_one) > MAX_MESSAGE_LENGTH:
-            with open("change.log", "w+", encoding="utf8") as out_file:
-                out_file.write(str(message_one))
-            await message.reply_document(
-                document="change.log",
-                caption=message_two,
-                disable_notification=True,
-                reply_to_message_id=message.message_id
-            )
-            os.remove("change.log")
-        else:
-            await message.reply(message_one)
-    else:
-        changelog = "None"
-        await umsg.edit("`Changelog not available!\nDoing force install, might even reinstall from OFFICIAL_REPO`")
-        await client.send_message(
-            PRIVATE_GROUP_ID,
-            f"#FORCEUPDATE\n\n****__TelePyroBot Reinstall/Force Update Started__**")
+    if len(message_one) > MAX_MESSAGE_LENGTH:
+        with open("change.log", "w+", encoding="utf8") as out_file:
+            out_file.write(str(message_one))
+        await message.reply_document(
+            document="change.log",
+            caption=message_two,
+            disable_notification=True,
+            reply_to_message_id=message.message_id
+        )
+        os.remove("change.log")
 
-    await asyncio.sleep(3)
+    if not changelog and force_update == False:
+        await umsg.edit("`Your userbot is already up-to-date!!`")
+        return
+
+    if force_update == True:
+        await umsg.edit("**Force-Update initiated**\n`Fetching latest version and installing it...`")
+        changelog = "#ForceUpdate"
+
     tmp_upstream_remote.fetch(active_branch_name)
     repo.git.reset("--hard", "FETCH_HEAD")
-    await message.reply(f"**Update Started!**\n__**Type**__ `{COMMAND_HAND_LER}alive` **__to check if I'm alive__**\n\n**It would take upto 5 minutes to update!**")
+
+    heroku = heroku3.from_key(HEROKU_API_KEY)
+    heroku_app = heroku.apps()[HEROKU_APP_NAME]
+    heroku_git_url = heroku_app.git_url.replace("https://", f"https://api:{HEROKU_API_KEY}@")
+    if "heroku" in repo.remotes:
+        remote = repo.remote("heroku")
+        remote.set_url(heroku_git_url)
+    else:
+        remote = repo.create_remote("heroku", heroku_git_url)
+    asyncio.get_event_loop().create_task(deploy_start(client, umsg, changelog, remote, HEROKU_GIT_REF_SPEC))
+
+
+def generate_change_log(git_repo, diff_marker):
+    changelog_string = ""
+    d_form = "%d/%m/%y"
+    for repo_change in git_repo.iter_commits(diff_marker):
+        changelog_string += f"•[{repo_change.committed_datetime.strftime(d_form)}]: {repo_change.summary} <{repo_change.author}>\n"
+    return changelog_string
+
+async def deploy_start(client, umsg, changelog, remote, HEROKU_GIT_REF_SPEC):
+    remote.push(refspec=HEROKU_GIT_REF_SPEC, force=True)
+    await umsg.reply(f"**Update Started!**\n__**Type**__ `{COMMAND_HAND_LER}alive` **__to check if I'm alive__**\n\n**It would take upto 5 minutes to update!**")
     await client.send_message(
         PRIVATE_GROUP_ID,
-        f"#UPDATE\n\n**__TelePyroBot Update__** - {commit_link}\n\n**Changelog:**\n```{changelog}```",
+        f"#UPDATE\n\n**__TelePyroBot Update__** {commit_link}\n\n**Changelog:**\n```{changelog}```",
         disable_web_page_preview=True)
-    if HEROKU_API_KEY is not None:
-        import heroku3
-        heroku = heroku3.from_key(HEROKU_API_KEY)
-        heroku_app = heroku.apps()[HEROKU_APP_NAME]
-        heroku_git_url = heroku_app.git_url.replace(
-            "https://",
-            "https://api:" + HEROKU_API_KEY + "@"
-        )
-        if "heroku" in repo.remotes:
-            remote = repo.remote("heroku")
-            remote.set_url(heroku_git_url)
-        else:
-            remote = repo.create_remote("heroku", heroku_git_url)
-        remote.push(refspec=HEROKU_GIT_REF_SPEC, force=True)
-    else:
-        await umsg.edit(NO_HEROKU_APP_CFGD)
+    await client.restart()

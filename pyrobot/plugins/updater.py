@@ -21,7 +21,7 @@ IS_SELECTED_DIFFERENT_BRANCH = (
     "In this case, updater is unable to identify the branch to be updated."
     "Please check out to an official branch, and re-start the updater.\n\n"
     "Or join @TelePyroBot for help!")
-REPO_REMOTE_NAME = "tmp_upstream_remote"
+REPO_REMOTE_NAME = "official_remote"
 IFFUCI_ACTIVE_BRANCH_NAME = "master"
 DIFF_MARKER = "HEAD..{remote_name}/{branch_name}"
 NO_HEROKU_APP_CFGD = "no heroku application found, but a key given? 😕 "
@@ -81,11 +81,7 @@ async def updater(client, message):
 
     changelog = generate_change_log(
         repo,
-        DIFF_MARKER.format(
-            remote_name=REPO_REMOTE_NAME,
-            branch_name=active_branch_name
-        )
-    )
+        DIFF_MARKER.format(remote_name=REPO_REMOTE_NAME, branch_name=active_branch_name))
     LOGGER.info(changelog)
 
     try:
@@ -134,7 +130,7 @@ async def updater(client, message):
         remote.set_url(heroku_git_url)
     else:
         remote = repo.create_remote("heroku", heroku_git_url)
-    asyncio.get_event_loop().create_task(deploy_start(client, umsg, changelog, remote, HEROKU_GIT_REF_SPEC))
+    asyncio.get_event_loop().create_task(deploy_start(client, umsg, changelog, remote, HEROKU_GIT_REF_SPEC, commit_link))
 
 
 def generate_change_log(git_repo, diff_marker):
@@ -144,7 +140,7 @@ def generate_change_log(git_repo, diff_marker):
         changelog_string += f"•[{repo_change.committed_datetime.strftime(d_form)}]: {repo_change.summary} <{repo_change.author}>\n"
     return changelog_string
 
-async def deploy_start(client, umsg, changelog, remote, HEROKU_GIT_REF_SPEC):
+async def deploy_start(client, umsg, changelog, remote, HEROKU_GIT_REF_SPEC, commit_link):
     remote.push(refspec=HEROKU_GIT_REF_SPEC, force=True)
     await umsg.reply(f"**Update Started!**\n__**Type**__ `{COMMAND_HAND_LER}alive` **__to check if I'm alive__**\n\n**It would take upto 5 minutes to update!**")
     await client.send_message(

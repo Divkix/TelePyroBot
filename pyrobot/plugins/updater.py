@@ -141,10 +141,11 @@ def generate_change_log(git_repo, diff_marker):
     return changelog_string
 
 async def deploy_start(client, umsg, changelog, remote, HEROKU_GIT_REF_SPEC, commit_link):
-    remote.push(refspec=HEROKU_GIT_REF_SPEC, force=True)
-    await umsg.reply(f"**Update Started!**\n__**Type**__ `{COMMAND_HAND_LER}alive` **__to check if I'm alive__**\n\n**It would take upto 5 minutes to update!**")
+    await umsg.edit("**TelePyroBot Update Started!**\n__Please wait until next message!__")
     await client.send_message(
         PRIVATE_GROUP_ID,
         f"#UPDATE\n\n**__TelePyroBot Update__** {commit_link}\n\n**Changelog:**\n```{changelog}```",
         disable_web_page_preview=True)
+    remote.push(refspec=HEROKU_GIT_REF_SPEC, force=True)
     await client.restart()
+    await umsg.reply(f"**Update Done**\n__**Type**__ `{COMMAND_HAND_LER}alive` **__to check if I'm alive__**\n\n**It would take upto 5 minutes to update!**")

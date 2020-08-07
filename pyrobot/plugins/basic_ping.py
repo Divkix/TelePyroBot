@@ -7,7 +7,7 @@ from pyrobot import COMMAND_HAND_LER, OWNER_NAME, UB_VERSION, OFFICIAL_UPSTREAM_
 from pyrogram.api.all import layer
 
 # -- Constants -- #
-REPO_REMOTE_NAME = "tmp_upstream_remote"
+REPO_REMOTE_NAME = "official_remote"
 ALIVE_TEXT = ("<i><b>TelePyroBot running on</b></i> {}\n"
     "<i><b>My Owner:</b></i> `{}`\n"
     "<i><b>Pyrogram Version:</b></i> `{} (Layer {})`\n"

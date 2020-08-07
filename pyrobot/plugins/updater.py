@@ -76,8 +76,8 @@ async def updater(client, message):
     except Exception as error_two:
         LOGGER.info(str(error_two))
 
-    tmp_upstream_remote = repo.remote(REPO_REMOTE_NAME)
-    tmp_upstream_remote.fetch(active_branch_name)
+    temp_remote = repo.remote(REPO_REMOTE_NAME)
+    temp_remote.fetch(active_branch_name)
 
     changelog = generate_change_log(
         repo,
@@ -119,7 +119,7 @@ async def updater(client, message):
         await umsg.edit("**Force-Update initiated**\n`Fetching latest version and installing it...`")
         changelog = "#ForceUpdate"
 
-    tmp_upstream_remote.fetch(active_branch_name)
+    temp_remote.fetch(active_branch_name)
     repo.git.reset("--hard", "FETCH_HEAD")
 
     heroku = heroku3.from_key(HEROKU_API_KEY)

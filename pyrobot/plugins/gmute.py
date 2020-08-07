@@ -20,7 +20,7 @@ They will not be able to speak until you ungmute them!
 
 
 @Client.on_message(Filters.command("gmute", COMMAND_HAND_LER) & Filters.me)
-async def start_sgmute(client, message):
+async def start_gmute(client, message):
     await message.edit("`Putting duct tape...`")
     user_id, user_first_name = await extract_user(client, message)
     if db.is_gmuted(user_id):

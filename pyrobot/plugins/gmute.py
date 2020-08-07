@@ -18,12 +18,9 @@ They will not be able to speak until you ungmute them!
 `{COMMAND_HAND_LER}gmutelist`: To view list of currently gmuted users
 """
 
-GMUTE_USERS = []
 
 @Client.on_message(Filters.command("gmute", COMMAND_HAND_LER) & Filters.me)
 async def start_gmute(client, message):
-    global GMUTE_USERS
-    GMUTE_USERS = db.get_gmute_users()
     await message.edit("`Putting duct tape...`")
     user_id, user_first_name = await extract_user(client, message)
     if db.is_gmuted(user_id):
@@ -42,8 +39,6 @@ async def start_gmute(client, message):
 
 @Client.on_message(Filters.command("ungmute", COMMAND_HAND_LER) & Filters.me)
 async def end_gmute(client, message):
-    global GMUTE_USERS
-    GMUTE_USERS = db.get_gmute_users()
     await message.edit("`Removing duct tape...`")
     user_id, user_first_name = await extract_user(client, message)
 
@@ -78,7 +73,7 @@ async def list_gmuted(client, message):
     return
 
 
-@Client.on_message(Filters.user(GMUTE_USERS), group=5)
+@Client.on_message(Filters.group, group=5)
 async def watcher_gmute(client, message):
     if db.is_gmuted(message.from_user.id):
         await asyncio.sleep(0.1)

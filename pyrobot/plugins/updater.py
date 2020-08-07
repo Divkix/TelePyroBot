@@ -115,6 +115,8 @@ async def updater(client, message):
         await umsg.edit("`Your userbot is already up-to-date!!`")
         return
 
+    await umsg.edit(message_one)
+
     if force_update == True:
         await umsg.edit("**Force-Update initiated**\n`Fetching latest version and installing it...`")
         changelog = "#ForceUpdate"
@@ -130,7 +132,13 @@ async def updater(client, message):
         remote.set_url(heroku_git_url)
     else:
         remote = repo.create_remote("heroku", heroku_git_url)
-    asyncio.get_event_loop().create_task(deploy_start(client, umsg, changelog, remote, HEROKU_GIT_REF_SPEC, commit_link))
+    await umsg.reply(f"**Update Started**\n__**Type**__ `{COMMAND_HAND_LER}alive` **__to check if I'm alive__**\n\n**It would take upto 5 minutes to update!**")
+    await client.send_message(
+        PRIVATE_GROUP_ID,
+        f"#UPDATE\n\n**__TelePyroBot Update__** {commit_link}\n\n**Changelog:**\n```{changelog}```",
+        disable_web_page_preview=True)
+    remote.push(refspec=HEROKU_GIT_REF_SPEC, force=True)
+    asyncio.get_event_loop().create_task(deploy_start(client, umsg))
 
 
 def generate_change_log(git_repo, diff_marker):
@@ -140,12 +148,7 @@ def generate_change_log(git_repo, diff_marker):
         changelog_string += f"•[{repo_change.committed_datetime.strftime(d_form)}]: {repo_change.summary} <{repo_change.author}>\n"
     return changelog_string
 
-async def deploy_start(client, umsg, changelog, remote, HEROKU_GIT_REF_SPEC, commit_link):
-    await umsg.edit("**TelePyroBot Update Started!**\n__Please wait until next message!__")
-    await client.send_message(
-        PRIVATE_GROUP_ID,
-        f"#UPDATE\n\n**__TelePyroBot Update__** {commit_link}\n\n**Changelog:**\n```{changelog}```",
-        disable_web_page_preview=True)
-    remote.push(refspec=HEROKU_GIT_REF_SPEC, force=True)
+
+async def deploy_start(client, message):
+    await message.edit("`Userbot Successfully Updated!! :D`")
     await client.restart()
-    await umsg.reply(f"**Update Done**\n__**Type**__ `{COMMAND_HAND_LER}alive` **__to check if I'm alive__**\n\n**It would take upto 5 minutes to update!**")

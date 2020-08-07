@@ -27,23 +27,16 @@ useragent = (
 
 @Client.on_message(Filters.command("restart", COMMAND_HAND_LER) & Filters.me)
 async def restart(client, message):
-    if HEROKU_API_KEY is not None:
-        if HEROKU_APP_NAME is not None:
-            url = heroku_api + f"/apps/{HEROKU_APP_NAME}/dynos/worker"
-            headers = {
-            'User-Agent': useragent,
-            "Accept" : "application/vnd.heroku+json; version=3",
-            "Authorization" : f"Bearer {HEROKU_API_KEY}"
-                }
-            res = requests.delete(url, headers = headers)
-            await message.reply_text(
-                "Restarted!\n"
-                f"Do `{COMMAND_HAND_LER}alive` or `{COMMAND_HAND_LER}start` to check if I am online...")
-        else:
-            await message.edit("Please add `HEROKU_APP_NAME` in your Config Vars or file.")
-    else:
-        await message.edit("Please add `HEROKU_API_KEY` in your Config Vars or file.")
-
+    @Client.on_message(Filters.command("restart", COMMAND_HAND_LER) & Filters.me)
+async def restart(client, message):
+    if (HEROKU_API_KEY or HEROKU_APP_NAME) is None:
+        await message.edit("Please add `HEROKU_APP_NAME` or `HEROKU_API_KEY` in your Config Vars or file.")
+        return
+    heroku_conn = heroku3.from_key(HEROKU_API_KEY)
+    telepyrobot_app = heroku_conn.apps()[HEROKU_APP_NAME]
+    await message.edit("Restarted...!")
+    telepyrobot_app.restart()
+    return
 
 @Client.on_message(Filters.command("dynostats", COMMAND_HAND_LER) & Filters.me)
 async def dynostats(client, message):

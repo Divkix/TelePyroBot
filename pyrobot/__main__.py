@@ -25,7 +25,7 @@ class PyroBot(Client):
 
     async def start(self):
         await super().start()
-        result = load_cmds()
+        result = load_cmds(ALL_PLUGINS)
         LOGGER.info(result)
 
         usr_bot_me = await self.get_me()

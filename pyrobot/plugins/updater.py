@@ -43,6 +43,8 @@ __help__ = f"""
 async def updater(client, message):
     if len(message.command) == 2 and message.command[1] == "force":
         force_update = True
+    else:
+        force_update = False
 
     umsg = await message.reply("`Checking for Update...`")
     if HEROKU_API_KEY is None or HEROKU_APP_NAME is None:

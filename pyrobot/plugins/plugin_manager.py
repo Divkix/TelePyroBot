@@ -2,7 +2,6 @@ import os
 from pyrogram import Client, Filters
 from pyrobot import COMMAND_HAND_LER
 from pyrobot.plugins import ALL_PLUGINS
-from pyrobot.pyrobot import HELP_COMMANDS
 from pyrobot.utils.pyrohelpers import ReplyCheck
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))

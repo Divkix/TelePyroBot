@@ -2,7 +2,7 @@ import os
 from pyrogram import Client, Filters
 from pyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
 from pyrobot.plugins import ALL_PLUGINS
-from pyrobot.pyrobot import HELP_COMMANDS
+from pyrobot import HELP_COMMANDS
 
 HELP_DEFAULT = f"""
 To get help for any command, just type `{COMMAND_HAND_LER}help plugin_name`

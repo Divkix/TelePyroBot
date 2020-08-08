@@ -1,5 +1,4 @@
 import time
-import git
 import os
 from platform import python_version
 from pyrogram import Client, Filters, __version__

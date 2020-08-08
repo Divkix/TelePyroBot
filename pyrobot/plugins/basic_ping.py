@@ -8,7 +8,7 @@ from pyrogram.api.all import layer
 
 # -- Constants -- #
 REPO_REMOTE_NAME = "official_remote"
-ALIVE_TEXT = ("<i><b>TelePyroBot running on!!!</b>"
+ALIVE_TEXT = ("<i><b>TelePyroBot is running!!!\n</b>"
     "<i><b>My Owner:</b></i> `{}`\n"
     "<i><b>Pyrogram Version:</b></i> `{} (Layer {})`\n"
     "<i><b>Python Version:</b></i> `{}`\n"

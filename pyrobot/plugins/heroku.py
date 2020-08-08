@@ -18,7 +18,6 @@ or even restart your dynos from telegram easily!
 """
 
 heroku_api = "https://api.heroku.com"
-Heroku = heroku3.from_key(HEROKU_API_KEY)
 useragent = (
             'Mozilla/5.0 (Linux; Android 10; SM-G975F) '
             'AppleWebKit/537.36 (KHTML, like Gecko) '
@@ -88,36 +87,23 @@ async def dynostats(client, message):
                                f"\r• `{hours}h  {minutes}m`"
                                f"**|**  [`{percentage}%`]")
 
-@Client.on_message(Filters.command("getvar", COMMAND_HAND_LER) & Filters.me)
-async def getvar(client, message):
-    chat_id = message.chat.id
-    if HEROKU_APP_NAME is not None:
-        app = Heroku.app(HEROKU_APP_NAME)
-    else:
-        getmsg = await message.reply_text("`[HEROKU]:"
-                              "\nPlease setup your` **HEROKU_APP_NAME**")
+@Client.on_message(Filters.command("vars", COMMAND_HAND_LER) & Filters.me)
+async def hetoku_vars(client, message):
+    if (HEROKU_API_KEY or HEROKU_APP_NAME) is None:
+        await message.edit("Please add `HEROKU_APP_NAME` or `HEROKU_API_KEY` in your Config Vars or file.")
         return
-    heroku_var = app.config()
-    getmsg = await message.reply_text("`Getting information...`")
-    await asyncio.sleep(1.5)
-    variable = message.command[1]
-    try:
-        if variable in heroku_var:
-            await getmsg.edit("**Config Var**:"
-                                      f"\n\n**{variable}** = `{heroku_var[variable]}`\n")
-        else:
-            await getmsg.edit("**Config Var**:"
-                                     f"\n\n`Error:\n-> {variable} don't exists`")
-    except IndexError:
-        configs = prettyjson(heroku_var.to_dict(), indent=2)
-        with open("configs.json", "w") as fp:
-            fp.write(configs)
-        with open("configs.json", "r") as fp:
-            result = fp.read()
-            if len(result) >= 4096:
-                await getmsg.edit("File size id big, not sending...")
-            else:
-                await getmsg.edit("`[HEROKU]` Config Vars:\n\n"
-                               "================================"
-                               f"\n```{result}```\n"
-                               "================================")
+    await message.edit("**__Fetching all vars from Heroku__**")
+    heroku_conn = heroku3.from_key(HEROKU_API_KEY)
+    telepyrobot_app = heroku_conn.apps()[HEROKU_APP_NAME]
+    config = telepyrobot_app.config()
+    vars_dict = config.to_dict()
+    vars_keys = list(vars_dict.keys())
+    msg = "**Here are vars setup for TelePyroBot**\n\n"
+    num = 0
+    for i in vars_keys:
+        num += 1
+        msg += f"**{num}**: `{i}`\n"
+
+    msg += f"\n**Total <u>{num}</u> Vars are setup!**"
+    await message.edit(msg)
+    return

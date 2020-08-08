@@ -151,6 +151,4 @@ def generate_change_log(git_repo, diff_marker):
 
 
 async def deploy_start(client):
-    await client.send_message(PRIVATE_GROUP_ID,
-        "`Userbot Successfully Updated!! :D`")
     await client.restart()

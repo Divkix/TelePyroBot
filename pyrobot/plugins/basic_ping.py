@@ -15,7 +15,6 @@ ALIVE_TEXT = ("<i><b>TelePyroBot running on!!!</b>"
     "<i><b>UserBot Version:</b></i> `{}`\n\n"
     "[Deploy TelePyroBot now]({})\n"
     "More info: @TelePyroBot")
-IFFUCI_ACTIVE_BRANCH_NAME = "master"
 REPO = ("<b>UserBot is available on GitHub:</b>\n"
         "https://github.com/SkuzzyxD/TelePyroBot\n\n"
         "<b>More info:</b> @TelePyroBot")

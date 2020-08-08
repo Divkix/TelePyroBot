@@ -8,7 +8,7 @@ from pyrogram.api.all import layer
 
 # -- Constants -- #
 REPO_REMOTE_NAME = "official_remote"
-ALIVE_TEXT = ("<i><b>TelePyroBot running on</b></i> {}\n"
+ALIVE_TEXT = ("<i><b>TelePyroBot running on!!!</b>"
     "<i><b>My Owner:</b></i> `{}`\n"
     "<i><b>Pyrogram Version:</b></i> `{} (Layer {})`\n"
     "<i><b>Python Version:</b></i> `{}`\n"
@@ -35,19 +35,7 @@ Basic commands of userbot!
 
 @Client.on_message(Filters.command(["alive", "start"], COMMAND_HAND_LER) & Filters.me)
 async def check_alive(client, message):
-    try:
-        repo = git.Repo(os.getcwd())
-    except:
-        repo = git.Repo.init()
-        origin = repo.create_remote(REPO_REMOTE_NAME, OFFICIAL_UPSTREAM_REPO)
-        origin.fetch()
-        repo.create_head(IFFUCI_ACTIVE_BRANCH_NAME, origin.refs.master)
-        repo.heads.master.checkout(True)
-
-    master = repo.head.reference
-    commit_id = master.commit.hexsha
-    commit_link = f"<a href='https://github.com/SkuzzyxD/TelePyroBot/commit/{commit_id}'>{commit_id[:7]}</a>"
-    await message.edit_text(ALIVE_TEXT.format(commit_link, OWNER_NAME, __version__,
+    await message.edit_text(ALIVE_TEXT.format(OWNER_NAME, __version__,
         layer, python_version(), UB_VERSION, OFFICIAL_UPSTREAM_REPO),
         disable_web_page_preview=True)
 

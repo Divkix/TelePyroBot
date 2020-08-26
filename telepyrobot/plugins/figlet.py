@@ -51,5 +51,5 @@ async def figlet_font(c: Client, m: Message):
         result = pyfiglet.figlet_format(text, font=font)
     else:
         result = pyfiglet.figlet_format(text)
-    await message.reply_text(f"‌‌‎`{result}`")
+    await m.reply_text(f"‌‌‎`{result}`")
     await m.delete()

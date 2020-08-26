@@ -48,7 +48,7 @@ async def pm_block(c: Client, m: Message):
                     chat_id=message.chat.id, message_ids=old_msg_id
                 )
 
-            rply_msg = await message.reply_text(welc_txt)
+            rply_msg = await m.reply_text(welc_txt)
             db.set_last_msg_id(message.chat.id, rply_msg.message_id)
             await asyncio.sleep(2)
             await c.send_message(

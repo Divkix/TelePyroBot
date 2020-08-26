@@ -45,7 +45,7 @@ flow = None
 
 @Client.on_message(filters.command("gdrive", COMMAND_HAND_LER) & filters.me)
 async def g_drive_commands(c: Client, m: Message):
-    status_message = await message.reply_text("...")
+    status_message = await m.reply_text("...")
     if len(message.command) > 1:
         current_recvd_command = message.command[1]
         if current_recvd_command == "setup":

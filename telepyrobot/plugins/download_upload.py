@@ -118,7 +118,7 @@ async def down_load_media(client, sms):
 
 @Client.on_message(filters.command("upload", COMMAND_HAND_LER) & filters.me)
 async def upload_as_document(c: Client, m: Message):
-    status_message = await message.reply_text("`Uploading...`")
+    status_message = await m.reply_text("`Uploading...`")
     if " " in message.text:
         local_file_name = message.text.split(" ", 1)[1]
         if os.path.exists(local_file_name):
@@ -156,7 +156,7 @@ async def covid(c: Client, m: Message):
         temp_dir = message.text.split(" ", 1)[1]
     else:
         await m.edit(f"__Please check help by using__ `{COMMAND_HAND_LER}help batchup`")
-    status_message = await message.reply_text("`Uploading Files...`")
+    status_message = await m.reply_text("`Uploading Files...`")
     if os.path.exists(temp_dir):
         files = os.listdir(temp_dir)
         files.sort()

@@ -115,7 +115,7 @@ async def local_notes(c: Client, m: Message):
     rply = "**__Notes:__**\n"
     for x in getnotes:
         if len(rply) >= 1800:
-            await message.reply(rply)
+            await m.reply_text(rply)
             rply = "**__Notes:__**\n"
         rply += f"-> `{x}`\n"
 

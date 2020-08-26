@@ -50,7 +50,7 @@ async def updater(c: Client, m: Message):
     else:
         force_update = False
 
-    umsg = await message.reply("`Checking for Update...`")
+    umsg = await m.reply_text("`Checking for Update...`")
     if HEROKU_API_KEY is None or HEROKU_APP_NAME is None:
         await umsg.edit(
             "__Please the Vars__ `HEROKU_API_KEY` __and__ `HEROKU_APP_NAME` __properly!__"

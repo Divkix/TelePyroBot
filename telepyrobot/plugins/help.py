@@ -39,7 +39,7 @@ async def help_me(c: Client, m: Message):
         module_name = message.text.split(" ", 1)[1]
         try:
             HELP = f"**Help for __{module_name}__**\n" + HELP_COMMANDS[f"{module_name}"]
-            await message.reply_text(
+            await m.reply_text(
                 HELP, parse_mode="md", disable_web_page_preview=True
             )
             await m.delete()

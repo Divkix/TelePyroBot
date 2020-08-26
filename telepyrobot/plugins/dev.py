@@ -26,7 +26,7 @@ Get IP Address of userbot server.
 
 @Client.on_message(filters.command(["eval", "py"], COMMAND_HAND_LER) & sudo_filter)
 async def eval(c: Client, m: Message):
-    status_message = await message.reply_text("`Processing...`")
+    status_message = await m.reply_text("`Processing...`")
     cmd = message.text.split(" ", maxsplit=1)[1]
 
     reply_to_id = message.message_id
@@ -122,12 +122,12 @@ async def execution(_, message):
         )
         os.remove("exec.text")
     else:
-        await message.reply_text(OUTPUT)
+        await m.reply_text(OUTPUT)
 
 
 @Client.on_message(filters.command("ip", COMMAND_HAND_LER) & sudo_filter)
 async def public_ip(c: Client, m: Message):
     ip = requests.get("https://api.ipify.org").text
-    await message.reply_text(
+    await m.reply_text(
         f"<b>Bot IP Address:</b>\n<code>{ip}</code>", parse_mode="html"
     )

@@ -42,7 +42,7 @@ async def restart(c: Client, m: Message):
 
 @Client.on_message(filters.command("dynostats", COMMAND_HAND_LER) & filters.me)
 async def dynostats(c: Client, m: Message):
-    msg = await message.reply_text("Processing...!\n")
+    msg = await m.reply_text("Processing...!\n")
 
     u_id = Heroku.account().id
     if HEROKU_API_KEY is not None:

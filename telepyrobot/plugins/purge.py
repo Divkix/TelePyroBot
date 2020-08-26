@@ -61,7 +61,7 @@ async def del_msg(c: Client, m: Message):
         if message.chat.type in ("supergroup", "channel"):
             is_admin = await admin_check(message)
             if not is_admin:
-                await message.reply("`I'm not admin nub Nibba`")
+                await m.reply_text("`I'm not admin nub Nibba`")
                 await asyncio.sleep(3)
                 await m.delete()
                 return

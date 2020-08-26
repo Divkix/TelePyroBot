@@ -55,7 +55,7 @@ async def adminlist(c: Client, m: Message):
     for x in creator:
         teks += "│ • {}\n".format(x)
         if len(teks) >= 4096:
-            await message.reply(
+            await m.reply_text(
                 message.chat.id, teks, reply_to_message_id=replyid, parse_mode="md"
             )
             teks = ""
@@ -64,7 +64,7 @@ async def adminlist(c: Client, m: Message):
     for x in admin:
         teks += "│ • {}\n".format(x)
         if len(teks) >= 4096:
-            await message.reply(
+            await m.reply_text(
                 message.chat.id, teks, reply_to_message_id=replyid, parse_mode="md"
             )
             teks = ""
@@ -73,14 +73,14 @@ async def adminlist(c: Client, m: Message):
     for x in badmin:
         teks += "│ • {}\n".format(x)
         if len(teks) >= 4096:
-            await message.reply(
+            await m.reply_text(
                 message.chat.id, teks, reply_to_message_id=replyid, parse_mode="md"
             )
             teks = ""
             toolong = True
     teks += "「 Total {} Admins 」".format(totaladmins)
     if toolong:
-        await message.reply(
+        await m.reply_text(
             message.chat.id, teks, reply_to_message_id=replyid, parse_mode="md"
         )
     else:

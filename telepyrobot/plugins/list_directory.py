@@ -54,4 +54,4 @@ async def list_directories(_, message):
         )
         os.remove("exec.text")
     else:
-        await message.reply_text(OUTPUT)
+        await m.reply_text(OUTPUT)

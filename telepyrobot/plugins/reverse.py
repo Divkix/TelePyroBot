@@ -7,6 +7,7 @@ from typing import Tuple, Optional
 from os.path import basename
 import asyncio
 from pyrogram import filters, Client
+from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, LOGGER
 from telepyrobot.utils.pyrohelpers import ReplyCheck
 
@@ -48,26 +49,26 @@ async def take_screen_shot(
 
 
 @Client.on_message(filters.command("reverse", COMMAND_HAND_LER) & filters.me)
-async def google_rs(client, message):
-    await message.edit("`Searching...`")
+async def google_rs(c: Client, m: Message):
+    await m.edit("`Searching...`")
     start = datetime.now()
     out_str = "`Reply to an image`"
-    if message.reply_to_message:
-        message_ = message.reply_to_message
+    if m.reply_to_message:
+        message_ = m.reply_to_message
         if message_.sticker and message_.sticker.file_name.endswith(".tgs"):
-            await message.edit("<b><i>Currently Not supported!</b></i>")
+            await m.edit("<b><i>Currently Not supported!</b></i>")
             return
         if message_.photo or message_.animation or message_.sticker:
             dis_loc = await client.download_media(message=message_)
         if message_.animation or message_.video:
-            """await message.edit("`Converting this Gif`")
+            """await m.edit("`Converting this Gif`")
             img_file = os.path.join(screen_shot, "grs.jpg")
             await take_screen_shot(dis_loc, 0, img_file)
             if not os.path.lexists(img_file):
-                await message.edit("`Something went wrong in Conversion`")
+                await m.edit("`Something went wrong in Conversion`")
                 await asyncio.sleep(5)
-                await message.delete()"""
-            await message.edit("<i>Currently not supported!</i>")
+                await m.delete()"""
+            await m.edit("<i>Currently not supported!</i>")
             return
             dis_loc = img_file
         base_url = "http://www.google.com"
@@ -83,9 +84,9 @@ async def google_rs(client, message):
             the_location = google_rs_response.headers.get("Location")
             os.remove(dis_loc)
         else:
-            await message.delete()
+            await m.delete()
             return
-        await message.edit("`Found Google Results...`")
+        await m.edit("`Found Google Results...`")
         headers = {
             "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0"
         }
@@ -103,4 +104,4 @@ async def google_rs(client, message):
 
 Reverse search by: @TelePyroBot
 """
-    await message.edit(out_str, parse_mode="HTML", disable_web_page_preview=True)
+    await m.edit(out_str, parse_mode="HTML", disable_web_page_preview=True)

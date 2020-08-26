@@ -1,5 +1,6 @@
 import os
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 from telepyrobot.utils.parser import mention_markdown
 from telepyrobot.utils.pyrohelpers import extract_user
@@ -12,9 +13,9 @@ __help__ = f"""
 
 
 @Client.on_message(filters.command(["whois", "info"], COMMAND_HAND_LER) & filters.me)
-async def upload_as_document(client, message):
-    await message.edit("`Collecting Whois Info.. Hang on!`")
-    user_id, user_first_name = await extract_user(client, message)
+async def upload_as_document(c: Client, m: Message):
+    await m.edit("`Collecting Whois Info.. Hang on!`")
+    user_id, user_first_name = await extract_user(m)
     if user_id is not None:
         from_user = await client.get_users(user_id)
         message_out_str = (
@@ -30,9 +31,7 @@ async def upload_as_document(client, message):
         message_out_str += f"    <b>Username:</b> @{from_user.username}\n"
         message_out_str += f"    <b>User ID:</b> <code>{from_user.id}</code>\n"
         message_out_str += f"    <b>Permanent Link To Profile:</b> {mention_markdown(from_user.first_name, from_user.id)}"
-        await message.edit(message_out_str)
+        await m.edit(message_out_str)
     else:
-        await message.edit(
-            "`**Error:**\nCannot find user or error, please check logs!`"
-        )
+        await m.edit("`**Error:**\nCannot find user or error, please check logs!`")
     return

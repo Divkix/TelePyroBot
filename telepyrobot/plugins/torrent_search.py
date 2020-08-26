@@ -3,6 +3,7 @@ import json
 import asyncio
 import os
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, TMP_DOWNLOAD_DIRECTORY
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -15,18 +16,18 @@ Get Magnet Links of any search query.
 
 
 @Client.on_message(filters.command("tsearch", COMMAND_HAND_LER) & filters.me)
-async def tor_search(client, message):
+async def tor_search(c: Client, m: Message):
     if len(message.command) == 1:
-        await message.edit("`Check help on how to use this command`")
+        await m.edit("`Check help on how to use this command`")
         return
-    await message.edit("`Please wait, fetching results...`")
+    await m.edit("`Please wait, fetching results...`")
     query = message.text.split(" ", 1)[1]
     response = requests.get(
         f"https://sjprojectsapi.herokuapp.com/torrent/?query={query}"
     )
     ts = json.loads(response.text)
     if not ts == response.json():
-        await message.edit("**Some error occured**\n`Try Again Later`")
+        await m.edit("**Some error occured**\n`Try Again Later`")
         return
     listdata = ""
     run = 0
@@ -49,4 +50,4 @@ async def tor_search(client, message):
         document=tsfileloc, caption=caption, disable_notification=True
     )
     os.remove(tsfileloc)
-    await message.delete()
+    await m.delete()

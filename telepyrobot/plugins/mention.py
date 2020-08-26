@@ -1,5 +1,6 @@
 import os
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 from telepyrobot.utils.parser import mention_markdown
 
@@ -17,7 +18,7 @@ or
 
 
 @Client.on_message(filters.command("mention", COMMAND_HAND_LER) & filters.me)
-async def mention(client, message):
+async def mention(c: Client, m: Message):
     args = message.text.split(" ", 2)
     if len(args) == 3:
         name = args[1]
@@ -27,9 +28,9 @@ async def mention(client, message):
         else:
             user = args[2]
             rep = f'<a href="tg://resolve?domain={name}">{user}</a>'
-        await message.edit(rep, disable_web_page_preview=True, parse_mode="html")
+        await m.edit(rep, disable_web_page_preview=True, parse_mode="html")
     else:
-        await message.edit(
+        await m.edit(
             f"Check `{COMMAND_HAND_LER}help {__PLUGIN__}` for infor on how to use",
             parse_mode="md",
         )

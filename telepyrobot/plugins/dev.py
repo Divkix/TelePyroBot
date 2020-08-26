@@ -6,6 +6,7 @@ import time
 import asyncio
 import requests
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
 from telepyrobot.utils.cust_p_filters import sudo_filter
 
@@ -24,13 +25,13 @@ Get IP Address of userbot server.
 
 
 @Client.on_message(filters.command(["eval", "py"], COMMAND_HAND_LER) & sudo_filter)
-async def eval(client, message):
+async def eval(c: Client, m: Message):
     status_message = await message.reply_text("`Processing...`")
     cmd = message.text.split(" ", maxsplit=1)[1]
 
     reply_to_id = message.message_id
-    if message.reply_to_message:
-        reply_to_id = message.reply_to_message.message_id
+    if m.reply_to_message:
+        reply_to_id = m.reply_to_message.message_id
 
     old_stderr = sys.stderr
     old_stdout = sys.stdout
@@ -72,14 +73,14 @@ async def eval(client, message):
             reply_to_message_id=reply_to_id,
         )
         os.remove("eval.text")
-        await status_message.delete()
+        await status_m.delete()
     else:
-        await status_message.edit(final_output)
+        await status_m.edit(final_output)
 
 
 async def aexec(code, client, message):
     exec(
-        f"async def __aexec(client, message): "
+        f"async def __aexec(c: Client, m: Message): "
         + "".join(f"\n {l}" for l in code.split("\n"))
     )
     return await locals()["__aexec"](client, message)
@@ -90,8 +91,8 @@ async def execution(_, message):
     cmd = message.text.split(" ", maxsplit=1)[1]
 
     reply_to_id = message.message_id
-    if message.reply_to_message:
-        reply_to_id = message.reply_to_message.message_id
+    if m.reply_to_message:
+        reply_to_id = m.reply_to_message.message_id
 
     process = await asyncio.create_subprocess_shell(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
@@ -125,7 +126,7 @@ async def execution(_, message):
 
 
 @Client.on_message(filters.command("ip", COMMAND_HAND_LER) & sudo_filter)
-async def public_ip(client, message):
+async def public_ip(c: Client, m: Message):
     ip = requests.get("https://api.ipify.org").text
     await message.reply_text(
         f"<b>Bot IP Address:</b>\n<code>{ip}</code>", parse_mode="html"

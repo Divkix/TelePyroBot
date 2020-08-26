@@ -4,6 +4,7 @@ import aiofiles
 from selenium import webdriver
 import os
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, GOOGLE_CHROME_BIN, TMP_DOWNLOAD_DIRECTORY
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -16,16 +17,16 @@ Get screenshot of website using selenium easily using userbot!
 
 
 @Client.on_message(filters.command("webss", COMMAND_HAND_LER) & filters.me)
-async def weather(client, message):
+async def weather(c: Client, m: Message):
     if GOOGLE_CHROME_BIN is None:
-        await message.edit("You need to install Google Chrome. Module Stopping!!")
+        await m.edit("You need to install Google Chrome. Module Stopping!!")
         return
     link_match = match(r"\bhttps?://.*\.\S+", message.text.split(" ", 1)[1])
     if not link_match:
-        await message.edit("`I need a valid link to take screenshots from.`")
+        await m.edit("`I need a valid link to take screenshots from.`")
         return
     link = link_match.group()
-    await message.edit("`Processing ...`")
+    await m.edit("`Processing ...`")
     chrome_options = webdriver.ChromeOptions()
     chrome_options.binary_location = GOOGLE_CHROME_BIN
     chrome_options.add_argument("--ignore-certificate-errors")
@@ -49,7 +50,7 @@ async def weather(client, message):
     )
     driver.set_window_size(width + 125, height + 125)
     wait_for = height / 1000
-    await message.edit(
+    await m.edit(
         f"`Generating screenshot of the page...`"
         f"\n`Height of page = {height}px`"
         f"\n`Width of page = {width}px`"
@@ -59,14 +60,14 @@ async def weather(client, message):
     im_png = driver.get_screenshot_as_png()
     driver.close()
     message_id = message.message_id
-    if message.reply_to_message:
-        message_id = message.reply_to_message.message_id
+    if m.reply_to_message:
+        message_id = m.reply_to_message.message_id
     file_path = os.path.join(TMP_DOWNLOAD_DIRECTORY, "webss.png")
     async with aiofiles.open(file_path, "wb") as out_file:
         await out_file.write(im_png)
     await asyncio.gather(
-        message.delete(),
-        client.send_document(
+        m.delete(),
+        c.send_document(
             chat_id=message.chat.id,
             document=file_path,
             caption=f"**Link:** {link}\nWeb SS taken using @TelePyroBot",

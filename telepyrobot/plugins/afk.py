@@ -3,7 +3,7 @@ import time
 import asyncio
 from datetime import datetime
 from pyrogram import Client, filters
-from pyrogram.types import ChatPermissions
+from pyrogram.types import Message, ChatPermissions
 from telepyrobot import (
     COMMAND_HAND_LER,
     TG_MAX_SELECT_LEN,
@@ -44,9 +44,9 @@ DELAY_TIME = 60  # seconds
 
 
 @Client.on_message((filters.command("afk", COMMAND_HAND_LER)) & filters.me)
-async def afk(client, message):
+async def afk(c: Client, m: Message):
     if PRIVATE_GROUP_ID is None:
-        await message.edit(
+        await m.edit(
             "<b><i>Please set the variable</b></i> `PRIVATE_GROUP_ID` for this to function."
         )
         return
@@ -56,34 +56,34 @@ async def afk(client, message):
     start_1 = datetime.now()
     afk_start = start_1.replace(microsecond=0)
     if len(message.text.split()) >= 2:
-        await message.edit_text(
+        await m.edit_text(
             "I am going AFK now...\nBecause of {}".format(
                 message.text.split(None, 1)[1]
             )
         )
-        await client.send_message(
+        await c.send_message(
             PRIVATE_GROUP_ID,
             "You are AFK!\nBecause of {}".format(message.text.split(None, 1)[1]),
         )
         await asyncio.sleep(2)
-        await message.delete()
+        await m.delete()
         await asyncio.sleep(2)
         set_afk(True, message.text.split(None, 1)[1])
 
     else:
-        await message.edit_text(
+        await m.edit_text(
             "{} is now AFK!".format(
-                mention_markdown(message.from_user.first_name, message.from_user.id)
+                mention_markdown(message.from_user.first_name, m.from_user.id)
             )
         )
-        await client.send_message(
+        await c.send_message(
             PRIVATE_GROUP_ID,
             "{} is now AFK!".format(
-                mention_markdown(message.from_user.first_name, message.from_user.id)
+                mention_markdown(message.from_user.first_name, m.from_user.id)
             ),
         )
         await asyncio.sleep(2)
-        await message.delete()
+        await m.delete()
         await asyncio.sleep(2)
         set_afk(True, "")
     return
@@ -92,7 +92,7 @@ async def afk(client, message):
 @Client.on_message(
     filters.mentioned & ~filters.bot & ~filters.chat(PRIVATE_GROUP_ID), group=11
 )
-async def afk_mentioned(client, message):
+async def afk_mentioned(c: Client, m: Message):
     global MENTIONED
     global afk_time
     global afk_start
@@ -165,7 +165,7 @@ async def afk_mentioned(client, message):
         MENTIONED.append(
             {
                 "user": message.from_user.first_name,
-                "user_id": message.from_user.id,
+                "user_id": m.from_user.id,
                 "chat": message.chat.title,
                 "chat_id": cid,
                 "text": text,
@@ -173,11 +173,11 @@ async def afk_mentioned(client, message):
                 "time": datetime.now(),
             }
         )
-        await client.send_message(
+        await c.send_message(
             PRIVATE_GROUP_ID,
             "{}({}) mentioned you in {}({})\nText:\n`{}`\n\nTotal count: `{}`".format(
-                mention_markdown(message.from_user.first_name, message.from_user.id),
-                message.from_user.id,
+                mention_markdown(message.from_user.first_name, m.from_user.id),
+                m.from_user.id,
                 message.chat.title,
                 message.chat.id,
                 text[:3500],
@@ -191,7 +191,7 @@ async def afk_mentioned(client, message):
     filters.me & (filters.group | filters.private) & ~filters.chat(PRIVATE_GROUP_ID),
     group=12,
 )
-async def no_longer_afk(client, message):
+async def no_longer_afk(c: Client, m: Message):
     global afk_time
     global afk_start
     global afk_end
@@ -202,7 +202,7 @@ async def no_longer_afk(client, message):
         afk_end = back_alive.replace(microsecond=0)
         if afk_start != {}:
             total_afk_time = str((afk_end - afk_start))
-        await client.send_message(
+        await c.send_message(
             PRIVATE_GROUP_ID, "`No longer afk!\nWas AFk for: {}`".format(total_afk_time)
         )
         set_afk(False, "")
@@ -218,7 +218,7 @@ async def no_longer_afk(client, message):
                 x["chat"],
                 msg_text,
             )
-        await client.send_message(PRIVATE_GROUP_ID, text)
+        await c.send_message(PRIVATE_GROUP_ID, text)
         MENTIONED = []
         afk_time = None
         await message.stop_propagation()

@@ -1,8 +1,9 @@
 import time
 import os
 import random
-from pyrogram.errors.exceptions import FloodWait
+from pyrogram.errors import FloodWait
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, LOGGER
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -17,15 +18,15 @@ Get text typed in typewriter format.
 @Client.on_message(
     filters.command(["type", "typewriter"], COMMAND_HAND_LER) & filters.me
 )
-async def upload_as_document(client, message):
+async def upload_as_document(c: Client, m: Message):
     text = message.command[1:]
     if not text:
-        await message.edit("`Input not found`")
+        await m.edit("`Input not found`")
         return
     s_time = 0.1
     typing_symbol = "|"
     old_text = ""
-    await message.edit(typing_symbol)
+    await m.edit(typing_symbol)
     time.sleep(s_time)
     for character in text:
         s_t = s_time / random.randint(1, 100)

@@ -1,5 +1,6 @@
 import os
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -68,11 +69,11 @@ weebyfont = [
 
 
 @Client.on_message(filters.command("weebify", COMMAND_HAND_LER) & filters.me)
-async def weebify(client, message):
+async def weebify(c: Client, m: Message):
     if len(message.command) >= 2:
         args = message.text.split(" ", 1)[1]
-    if message.reply_to_message and len(message.command) == 1:
-        args = message.reply_to_message.text
+    if m.reply_to_message and len(message.command) == 1:
+        args = m.reply_to_message.text
     if not args:
         await event.edit("`What I am Supposed to Weebify dumb`")
         return
@@ -81,5 +82,5 @@ async def weebify(client, message):
         if normiecharacter in normiefont:
             weebycharacter = weebyfont[normiefont.index(normiecharacter)]
             string = string.replace(normiecharacter, weebycharacter)
-    await message.edit(f"**Weebified String:**\n`{string}`")
+    await m.edit(f"**Weebified String:**\n`{string}`")
     return

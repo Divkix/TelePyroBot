@@ -1,4 +1,5 @@
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 from requests import post
 import shutil
@@ -15,7 +16,7 @@ CARBON_LANG = "Auto"
 
 
 @Client.on_message(filters.command("carbon", COMMAND_HAND_LER) & filters.me)
-async def carbon_api(client, message):
+async def carbon_api(c: Client, m: Message):
     json = {
         "backgroundColor": "rgba(0, 255, 230, 100)",
         "theme": "Dracula",
@@ -23,18 +24,16 @@ async def carbon_api(client, message):
     }
     cmd = message.command
     rep_mesg_id = message.message_id
-    if message.reply_to_message:
-        rep_mesg_id = message.reply_to_message.message_id
-        r = message.reply_to_message
+    if m.reply_to_message:
+        rep_mesg_id = m.reply_to_message.message_id
+        r = m.reply_to_message
         json["code"] = r.text
-        await message.edit_text("`Carbonizing code...`")
+        await m.edit_text("`Carbonizing code...`")
     elif len(cmd) >= 2:
         r = message.text.split(" ", 1)[1]
         json["code"] = r
     else:
-        await message.edit(
-            f"Usage: `{COMMAND_HAND_LER}carbon` <reply to a code or text>"
-        )
+        await m.edit(f"Usage: `{COMMAND_HAND_LER}carbon` <reply to a code or text>")
     json["language"] = CARBON_LANG
     apiUrl = "http://carbonnowsh.herokuapp.com"
     r = post(apiUrl, json=json, stream=True)
@@ -43,14 +42,14 @@ async def carbon_api(client, message):
         r.raw.decode_content = True
         with open(filename, "wb") as f:
             shutil.copyfileobj(r.raw, f)
-        await client.send_document(
+        await c.send_document(
             message.chat.id,
             filename,
             caption="Carbon Made by: @TelePyroBot",
             reply_to_message_id=rep_mesg_id,
         )
-        await message.delete()
+        await m.delete()
     else:
-        await message.edit("Image Couldn't be retreived")
-        await message.delete()
+        await m.edit("Image Couldn't be retreived")
+        await m.delete()
     os.remove(filename)

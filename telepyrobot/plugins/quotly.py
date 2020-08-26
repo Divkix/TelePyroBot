@@ -1,4 +1,5 @@
 from pyrogram import Client, filters
+from pyrogram.types import Message
 import os
 from telepyrobot import COMMAND_HAND_LER
 import random
@@ -17,12 +18,12 @@ Does not work on images!
 
 
 @Client.on_message(filters.command("qbot", COMMAND_HAND_LER) & filters.me)
-async def quotly(client, message):
-    if not message.reply_to_message:
-        await message.edit("Reply to any users text message")
+async def quotly(c: Client, m: Message):
+    if not m.reply_to_message:
+        await m.edit("Reply to any users text message")
         return
-    await message.edit("`Making a Quote`")
-    await message.reply_to_message.forward("@QuotLyBot")
+    await m.edit("`Making a Quote`")
+    await m.reply_to_message.forward("@QuotLyBot")
     is_sticker = False
     progress = 0
     while not is_sticker:
@@ -34,19 +35,19 @@ async def quotly(client, message):
             time.sleep(0.5)
             progress += random.randint(0, 10)
             try:
-                await message.edit(
+                await m.edit(
                     "```Making a Quote```\nProcessing {}%".format(progress),
                     parse_mode="md",
                 )
                 if progress >= 100:
                     pass
             except Exception as ef:
-                await message.edit(f"**ERROR:**\n{ef}", parse_mode="md")
+                await m.edit(f"**ERROR:**\n{ef}", parse_mode="md")
                 p += 1
                 if p == 3:
                     break
-    await message.edit("`Complete !`", parse_mode="md")
+    await m.edit("`Complete !`", parse_mode="md")
     msg_id = msg[0]["message_id"]
     await client.forward_messages(message.chat.id, "@QuotLyBot", msg_id)
     await client.read_history("@QuotLyBot")
-    await message.delete()
+    await m.delete()

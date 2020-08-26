@@ -1,6 +1,7 @@
 import os
 import asyncio
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot.utils.sql_helpers import gmute_db as db
 from telepyrobot import COMMAND_HAND_LER, PRIVATE_GROUP_ID
 from telepyrobot.utils.pyrohelpers import extract_user
@@ -20,19 +21,19 @@ They will not be able to speak until you ungmute them!
 
 
 @Client.on_message(filters.command("gmute", COMMAND_HAND_LER) & filters.me)
-async def start_gmute(client, message):
-    await message.edit("`Putting duct tape...`")
-    user_id, user_first_name = await extract_user(client, message)
+async def start_gmute(c: Client, m: Message):
+    await m.edit("`Putting duct tape...`")
+    user_id, user_first_name = await extract_user(m)
     if db.is_gmuted(user_id):
-        await message.edit("`This user is already gmuted!`")
+        await m.edit("`This user is already gmuted!`")
         return
     try:
         db.gmute(user_id)
     except Exception as e:
-        await message.edit(f"<b>Error:</b>\n\n{str(e)}")
+        await m.edit(f"<b>Error:</b>\n\n{str(e)}")
     else:
-        await message.edit("`Successfully gmuted that person`")
-        await client.send_message(
+        await m.edit("`Successfully gmuted that person`")
+        await c.send_message(
             PRIVATE_GROUP_ID,
             "#GMUTE\nUser: {} in Chat {}".format(
                 mention_markdown(user_first_name, user_id), message.chat.title
@@ -42,20 +43,20 @@ async def start_gmute(client, message):
 
 
 @Client.on_message(filters.command("ungmute", COMMAND_HAND_LER) & filters.me)
-async def end_gmute(client, message):
-    await message.edit("`Removing duct tape...`")
-    user_id, user_first_name = await extract_user(client, message)
+async def end_gmute(c: Client, m: Message):
+    await m.edit("`Removing duct tape...`")
+    user_id, user_first_name = await extract_user(m)
 
     if not db.is_gmuted(user_id):
-        await message.edit("`This user is not gmuted!`")
+        await m.edit("`This user is not gmuted!`")
         return
     try:
         db.ungmute(user_id)
     except Exception as e:
-        await message.edit(f"<b>Error:</b>\n\n{str(e)}")
+        await m.edit(f"<b>Error:</b>\n\n{str(e)}")
     else:
-        await message.edit("`Successfully ungmuted that person`")
-        await client.send_message(
+        await m.edit("`Successfully ungmuted that person`")
+        await c.send_message(
             PRIVATE_GROUP_ID,
             "#UNGMUTE\nUser: {} in Chat {}".format(
                 mention_markdown(user_first_name, user_id), message.chat.title
@@ -65,11 +66,11 @@ async def end_gmute(client, message):
 
 
 @Client.on_message(filters.command("gmutelist", COMMAND_HAND_LER) & filters.me)
-async def list_gmuted(client, message):
-    await message.edit("`Loading users...`")
+async def list_gmuted(c: Client, m: Message):
+    await m.edit("`Loading users...`")
     users = db.get_gmute_users()
     if not users:
-        await message.edit("`No users are gmuted!`")
+        await m.edit("`No users are gmuted!`")
         return
     users_list = "`Currently Gmuted users:`\n"
     u = 0
@@ -77,13 +78,13 @@ async def list_gmuted(client, message):
         u += 1
         user = await client.get_users(x)
         users_list += f"[{u}] {mention_markdown(user.first_name, user.id)}: {user.id}\n"
-    await message.edit(users_list)
+    await m.edit(users_list)
     return
 
 
 @Client.on_message(filters.group, group=5)
-async def watcher_gmute(client, message):
-    if db.is_gmuted(message.from_user.id):
+async def watcher_gmute(c: Client, m: Message):
+    if db.is_gmuted(m.from_user.id):
         await asyncio.sleep(0.1)
         try:
             await client.delete_messages(

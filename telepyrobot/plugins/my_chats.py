@@ -1,5 +1,6 @@
 import os
 from pyrogram import filters, Client
+from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 from telepyrobot.utils.admin_check import admin_check
 from telepyrobot.utils.sql_helpers import my_chats_db as db
@@ -21,16 +22,16 @@ def get_msgc():
 
 
 @Client.on_message(filters.group, group=10)
-async def updatemychats(client, message):
+async def updatemychats(c: Client, m: Message):
     global MESSAGE_RECOUNTER, ADMIN_RECOUNTER
-    db.update_chat(message.chat)
+    db.update_chat(m.chat)
     MESSAGE_RECOUNTER += 1
     return
 
 
 @Client.on_message(filters.me & filters.command("chatlist", COMMAND_HAND_LER))
-async def get_chat(client, message):
-    await message.edit("`Exporting Chatlist...`")
+async def get_chat(c: Client, m: Message):
+    await m.edit("`Exporting Chatlist...`")
     all_chats = db.get_all_chats()
     chatfile = "<---List of chats that you joined--->\n\n"
     u = 0
@@ -47,9 +48,9 @@ async def get_chat(client, message):
         f.write(str(chatfile))
         f.close()
 
-    await client.send_document(
+    await c.send_document(
         "self", document=chatlist_file, caption="Here is the chat list that you joined."
     )
-    await message.edit("`Chat list exported to saved messages.`")
+    await m.edit("`Chat list exported to saved messages.`")
     os.remove(chatlist_file)
     return

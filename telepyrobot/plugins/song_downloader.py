@@ -2,6 +2,7 @@ import os
 import subprocess
 from spotdl.command_line.core import Spotdl
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -16,8 +17,8 @@ The link should be of spotify or youtube!
 
 
 @Client.on_message(filters.command("song", COMMAND_HAND_LER) & filters.me)
-async def spotify_dl(client, message):
-    await message.edit("`Searching Song...`")
+async def spotify_dl(c: Client, m: Message):
+    await m.edit("`Searching Song...`")
     if len(message.text.split(" ", 1)) >= 2:
         songname = message.text.split(" ", 1)[1]
 
@@ -25,7 +26,7 @@ async def spotify_dl(client, message):
 
     filename = spotdl_handler.download_track(songname)
 
-    rply = await message.edit("`Uploading Song...`")
+    rply = await m.edit("`Uploading Song...`")
     await message.reply_document(
         document=filename,
         parse_mode="html",

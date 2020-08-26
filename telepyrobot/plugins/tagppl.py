@@ -1,5 +1,6 @@
 import os
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 from telepyrobot.utils.parser import mention_html, mention_markdown
 
@@ -17,7 +18,7 @@ Tag people Easily!
 @Client.on_message(
     filters.command(["adminlist", "admins"], COMMAND_HAND_LER) & filters.me
 )
-async def adminlist(client, message):
+async def adminlist(c: Client, m: Message):
     replyid = None
     toolong = False
     if len(message.text.split()) >= 2:
@@ -26,8 +27,8 @@ async def adminlist(client, message):
     else:
         chat = message.chat.id
         grup = await client.get_chat(chat)
-    if message.reply_to_message:
-        replyid = message.reply_to_message.message_id
+    if m.reply_to_message:
+        replyid = m.reply_to_message.message_id
     alladmins = client.iter_chat_members(chat, filter="administrators")
     creator = []
     admin = []
@@ -83,12 +84,12 @@ async def adminlist(client, message):
             message.chat.id, teks, reply_to_message_id=replyid, parse_mode="md"
         )
     else:
-        await message.edit(teks, parse_mode="md")
+        await m.edit(teks, parse_mode="md")
 
 
 @Client.on_message(filters.command(["everyone", "all"], COMMAND_HAND_LER) & filters.me)
-async def everyone(client, message):
-    await message.delete()
+async def everyone(c: Client, m: Message):
+    await m.delete()
     if len(message.text.split()) >= 2:
         text = message.text.split(None, 1)[1]
     else:
@@ -97,19 +98,19 @@ async def everyone(client, message):
     async for a in kek:
         if not a.user.is_bot:
             text += mention_html(a.user.id, "\u200b")
-    if message.reply_to_message:
-        await client.send_message(
+    if m.reply_to_message:
+        await c.send_message(
             message.chat.id,
             text,
-            reply_to_message_id=message.reply_to_message.message_id,
+            reply_to_message_id=m.reply_to_message.message_id,
             parse_mode="html",
         )
     else:
-        await client.send_message(message.chat.id, text, parse_mode="html")
+        await c.send_message(message.chat.id, text, parse_mode="html")
 
 
 @Client.on_message(filters.command(["bots", "listbots"], COMMAND_HAND_LER) & filters.me)
-async def listbots(client, message):
+async def listbots(c: Client, m: Message):
     replyid = None
     if len(message.text.split()) >= 2:
         chat = message.text.split(None, 1)[1]
@@ -117,8 +118,8 @@ async def listbots(client, message):
     else:
         chat = message.chat.id
         grup = await client.get_chat(chat)
-    if message.reply_to_message:
-        replyid = message.reply_to_message.message_id
+    if m.reply_to_message:
+        replyid = m.reply_to_message.message_id
     getbots = client.iter_chat_members(chat)
     bots = []
     async for a in getbots:
@@ -136,8 +137,8 @@ async def listbots(client, message):
         teks += "│ • {}\n".format(x)
     teks += "Total {} Bots".format(len(bots))
     if replyid:
-        await client.send_message(
+        await c.send_message(
             message.chat.id, teks, reply_to_message_id=replyid, parse_mode="md"
         )
     else:
-        await message.edit(teks, parse_mode="md")
+        await m.edit(teks, parse_mode="md")

@@ -3,6 +3,7 @@ import time
 import asyncio
 import requests
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -15,16 +16,16 @@ Search for a query on google using userbot!
 
 
 @Client.on_message(filters.command("gs", COMMAND_HAND_LER) & filters.me)
-async def google_s(client, message):
+async def google_s(c: Client, m: Message):
     input_str = message.text.split(" ", 1)[1]
     sample_url = "https://da.gd/s?url=https://lmgtfy.com/?q={}%26iie=1".format(
         input_str.replace(" ", "+")
     )
     response_api = requests.get(sample_url).text
     if response_api:
-        await message.edit(
+        await m.edit(
             "[{}]({})\n`Thank me Later 🙃` ".format(input_str, response_api.rstrip())
         )
     else:
-        await message.edit("`Something is wrong. please try again later.``")
+        await m.edit("`Something is wrong. please try again later.``")
     return

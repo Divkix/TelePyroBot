@@ -3,7 +3,7 @@ import time
 import asyncio
 from datetime import datetime
 from pyrogram import Client, filters
-from pyrogram.types import ChatPermissions
+from pyrogram.types import Message, ChatPermissions
 from telepyrobot import (
     COMMAND_HAND_LER,
     TG_MAX_SELECT_LEN,
@@ -34,7 +34,7 @@ Allows you to lock some common permission types in the chat.
 
 
 @Client.on_message(filters.command("lock", COMMAND_HAND_LER) & filters.me)
-async def lock_perm(client, message):
+async def lock_perm(c: Client, m: Message):
     msg = ""
     media = ""
     stickers = ""
@@ -52,9 +52,9 @@ async def lock_perm(client, message):
     chat_id = message.chat.id
 
     if not lock_type:
-        await message.edit("`I Can't Lock Nothing! (－‸ლ)`")
+        await m.edit("`I Can't Lock Nothing! (－‸ლ)`")
         await asyncio.sleep(5)
-        await message.delete()
+        await m.delete()
         return
 
     get_perm = await client.get_chat(chat_id)
@@ -74,10 +74,10 @@ async def lock_perm(client, message):
     if lock_type == "all":
         try:
             await client.set_chat_permissions(chat_id, ChatPermissions())
-            await message.edit(text="**🔒 Locked all permission from this Chat!**")
+            await m.edit(text="**🔒 Locked all permission from this Chat!**")
             await asyncio.sleep(5)
-            await message.delete()
-            await client.send_message(
+            await m.delete()
+            await c.send_message(
                 PRIVATE_GROUP_ID,
                 "#LOCK\n\nCHAT: `{}` (`{}`)\nPERMISSIONS: `All Permissions`".format(
                     get_perm.title, chat_id
@@ -85,11 +85,11 @@ async def lock_perm(client, message):
             )
 
         except Exception as e_f:
-            await message.edit(
+            await m.edit(
                 f"`I don't have permission to do that ＞︿＜`\n\n**ERROR:** `{e_f}`"
             )
             await asyncio.sleep(5)
-            await message.delete()
+            await m.delete()
 
         return
 
@@ -138,9 +138,9 @@ async def lock_perm(client, message):
         perm = "pin"
 
     else:
-        await message.edit("`Invalid Lock Type! ¯\_(ツ)_/¯`")
+        await m.edit("`Invalid Lock Type! ¯\_(ツ)_/¯`")
         await asyncio.sleep(5)
-        await message.delete()
+        await m.delete()
         return
 
     try:
@@ -161,10 +161,10 @@ async def lock_perm(client, message):
             ),
         )
 
-        await message.edit(text=f"**🔒 Locked {perm} for this chat!**")
+        await m.edit(text=f"**🔒 Locked {perm} for this chat!**")
         await asyncio.sleep(5)
-        await message.delete()
-        await client.send_message(
+        await m.delete()
+        await c.send_message(
             PRIVATE_GROUP_ID,
             "#LOCK\n\nCHAT: `{}` (`{}`)\nPERMISSIONS: `{} Permission`".format(
                 get_perm.title, chat_id, perm
@@ -172,16 +172,16 @@ async def lock_perm(client, message):
         )
 
     except Exception as e_f:
-        await message.edit(
+        await m.edit(
             text=r"`i don't have permission to do that ＞︿＜`\n\n" f"**ERROR:** `{e_f}`"
         )
         await asyncio.sleep(5)
-        await message.delete()
+        await m.delete()
     return
 
 
 @Client.on_message(filters.command("unlock", COMMAND_HAND_LER) & filters.me)
-async def unlock_perm(client, message):
+async def unlock_perm(c: Client, m: Message):
     umsg = ""
     umedia = ""
     ustickers = ""
@@ -199,9 +199,9 @@ async def unlock_perm(client, message):
     chat_id = message.chat.id
 
     if not unlock_type:
-        await message.edit(text=r"`I Can't Unlock Nothing! (－‸ლ)`")
+        await m.edit(text=r"`I Can't Unlock Nothing! (－‸ლ)`")
         await asyncio.sleep(5)
-        await message.delete()
+        await m.delete()
         return
 
     get_uperm = await client.get_chat(chat_id)
@@ -237,10 +237,10 @@ async def unlock_perm(client, message):
                 ),
             )
 
-            await message.edit("**🔓 Unlocked all permission from this Chat!**")
+            await m.edit("**🔓 Unlocked all permission from this Chat!**")
             await asyncio.sleep(5)
-            await message.delete()
-            await client.send_message(
+            await m.delete()
+            await c.send_message(
                 PRIVATE_GROUP_ID,
                 "#UNLOCK\n\nCHAT: `{}` (`{}`)\nPERMISSIONS: `All Permissions`".format(
                     message.chat.title, message.chat.id
@@ -248,11 +248,11 @@ async def unlock_perm(client, message):
             )
 
         except Exception as e_f:
-            await message.edit(
+            await m.edit(
                 f"`I don't have permission to do that ＞︿＜`\n\n**ERROR:** `{e_f}`"
             )
             await asyncio.sleep(5)
-            await message.delete()
+            await m.delete()
         return
 
     if unlock_type == "msg":
@@ -300,9 +300,9 @@ async def unlock_perm(client, message):
         uperm = "pin"
 
     else:
-        await message.edit("`Invalid Unlock Type! ¯\_(ツ)_/¯`")
+        await m.edit("`Invalid Unlock Type! ¯\_(ツ)_/¯`")
         await asyncio.sleep(5)
-        await message.delete()
+        await m.delete()
         return
 
     try:
@@ -323,10 +323,10 @@ async def unlock_perm(client, message):
             ),
         )
 
-        await message.edit(f"**🔓 Unlocked {uperm} for this chat!**")
+        await m.edit(f"**🔓 Unlocked {uperm} for this chat!**")
         await asyncio.sleep(5)
-        await message.delete()
-        await client.send_message(
+        await m.delete()
+        await c.send_message(
             PRIVATE_GROUP_ID,
             "#UNLOCK\n\nCHAT: `{}` (`{}`)\nPERMISSION: `{} Permission`".format(
                 message.chat.title, message.chat.id, uperm
@@ -334,14 +334,12 @@ async def unlock_perm(client, message):
         )
 
     except Exception as e_f:
-        await message.edit(
-            f"`I don't have permission to do that ＞︿＜`\n\n**ERROR:** `{e_f}`"
-        )
+        await m.edit(f"`I don't have permission to do that ＞︿＜`\n\n**ERROR:** `{e_f}`")
     return
 
 
 @Client.on_message(filters.command("vperm", COMMAND_HAND_LER) & filters.me)
-async def view_perm(client, message):
+async def view_perm(c: Client, m: Message):
     v_perm = ""
     vmsg = ""
     vmedia = ""
@@ -355,7 +353,7 @@ async def view_perm(client, message):
     vinvite = ""
     vpin = ""
 
-    await message.edit("`Checking group permissions... Hang on!! ⏳`")
+    await m.edit("`Checking group permissions... Hang on!! ⏳`")
 
     v_perm = await client.get_chat(message.chat.id)
 
@@ -392,8 +390,8 @@ async def view_perm(client, message):
             permission_view_str += f"<b>👥 Invite Users:</b> {vinvite}\n"
             permission_view_str += f"<b>📌 Pin Messages:</b> {vpin}\n"
 
-            await message.edit(permission_view_str)
-            await client.send_message(
+            await m.edit(permission_view_str)
+            await c.send_message(
                 PRIVATE_GROUP_ID,
                 "#VPERM\n\nCHAT: `{}` (`{}`)".format(
                     message.chat.title, message.chat.id
@@ -401,6 +399,6 @@ async def view_perm(client, message):
             )
 
         except Exception as e_f:
-            await message.edit(f"`Something went wrong!` 🤔\n\n**ERROR:** `{e_f}`")
+            await m.edit(f"`Something went wrong!` 🤔\n\n**ERROR:** `{e_f}`")
 
     return

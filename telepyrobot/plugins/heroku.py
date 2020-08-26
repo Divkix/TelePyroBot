@@ -5,6 +5,7 @@ import asyncio
 import math
 from telepyrobot import COMMAND_HAND_LER, HEROKU_API_KEY, HEROKU_APP_NAME
 from pyrogram import Client, filters
+from pyrogram.types import Message
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -26,21 +27,21 @@ useragent = (
 
 
 @Client.on_message(filters.command("restart", COMMAND_HAND_LER) & filters.me)
-async def restart(client, message):
+async def restart(c: Client, m: Message):
     if (HEROKU_API_KEY or HEROKU_APP_NAME) is None:
-        await message.edit(
+        await m.edit(
             "Please add `HEROKU_APP_NAME` or `HEROKU_API_KEY` in your Config Vars or file."
         )
         return
     heroku_conn = heroku3.from_key(HEROKU_API_KEY)
     telepyrobot_app = heroku_conn.apps()[HEROKU_APP_NAME]
-    await message.edit("Restarted...!")
+    await m.edit("Restarted...!")
     telepyrobot_app.restart()
     return
 
 
 @Client.on_message(filters.command("dynostats", COMMAND_HAND_LER) & filters.me)
-async def dynostats(client, message):
+async def dynostats(c: Client, m: Message):
     msg = await message.reply_text("Processing...!\n")
 
     u_id = Heroku.account().id
@@ -93,13 +94,13 @@ async def dynostats(client, message):
 
 
 @Client.on_message(filters.command("vars", COMMAND_HAND_LER) & filters.me)
-async def hetoku_vars(client, message):
+async def hetoku_vars(c: Client, m: Message):
     if (HEROKU_API_KEY or HEROKU_APP_NAME) is None:
-        await message.edit(
+        await m.edit(
             "Please add `HEROKU_APP_NAME` or `HEROKU_API_KEY` in your Config Vars or file."
         )
         return
-    await message.edit("**__Fetching all vars from Heroku__**")
+    await m.edit("**__Fetching all vars from Heroku__**")
     heroku_conn = heroku3.from_key(HEROKU_API_KEY)
     telepyrobot_app = heroku_conn.apps()[HEROKU_APP_NAME]
     config = telepyrobot_app.config()
@@ -112,5 +113,5 @@ async def hetoku_vars(client, message):
         msg += f"**{num}**: `{i}`\n"
 
     msg += f"\n**Total <u>{num}</u> Vars are setup!**"
-    await message.edit(msg)
+    await m.edit(msg)
     return

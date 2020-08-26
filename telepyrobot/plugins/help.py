@@ -1,5 +1,6 @@
 import os
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
 from telepyrobot.plugins import ALL_PLUGINS
 from telepyrobot import HELP_COMMANDS
@@ -16,7 +17,7 @@ Get a list of all Plugins using:
 
 
 @Client.on_message(filters.command("plugins", COMMAND_HAND_LER) & filters.me)
-async def list_plugins(client, message):
+async def list_plugins(c: Client, m: Message):
     # Some Variables
     mods = ""
     mod_num = 0
@@ -26,14 +27,14 @@ async def list_plugins(client, message):
         mods += f"`{plug}`\n"
         mod_num += 1
     all_plugins = f"<b><u>{mod_num}</u> Modules Currently Loaded:</b>\n\n" + mods
-    await message.edit(all_plugins)
+    await m.edit(all_plugins)
     return
 
 
 @Client.on_message(filters.command("help", COMMAND_HAND_LER) & filters.me)
-async def help_me(client, message):
+async def help_me(c: Client, m: Message):
     if len(message.command) == 1:
-        await message.edit(HELP_DEFAULT)
+        await m.edit(HELP_DEFAULT)
     elif len(message.command) == 2:
         module_name = message.text.split(" ", 1)[1]
         try:
@@ -41,9 +42,9 @@ async def help_me(client, message):
             await message.reply_text(
                 HELP, parse_mode="md", disable_web_page_preview=True
             )
-            await message.delete()
+            await m.delete()
         except Exception as ef:
-            await message.edit(f"<b>Error:</b>\n\n{ef}")
+            await m.edit(f"<b>Error:</b>\n\n{ef}")
     else:
-        await message.edit(f"Use `{COMMAND_HAND_LER}help` to view help")
+        await m.edit(f"Use `{COMMAND_HAND_LER}help` to view help")
     return

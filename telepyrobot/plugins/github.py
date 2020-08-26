@@ -1,5 +1,6 @@
 import aiohttp
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 import os
 
@@ -14,22 +15,18 @@ Get information about a Github Account
 
 
 @Client.on_message(filters.command("github", COMMAND_HAND_LER) & filters.me)
-async def github(client, message):
+async def github(c: Client, m: Message):
     if len(message.text.split(" ")) == 2:
         username = message.text.split(" ", 1)[1]
     else:
-        await message.edit(
-            f"Usage: `{COMMAND_HAND_LER}github <username>`", parse_mode="md"
-        )
+        await m.edit(f"Usage: `{COMMAND_HAND_LER}github <username>`", parse_mode="md")
         return
 
     URL = f"https://api.github.com/users/{username}"
     async with aiohttp.ClientSession() as session:
         async with session.get(URL) as request:
             if request.status == 404:
-                return await message.edit(
-                    "`" + username + " not found`", parse_mode="md"
-                )
+                return await m.edit("`" + username + " not found`", parse_mode="md")
 
             result = await request.json()
 
@@ -46,11 +43,11 @@ async def github(client, message):
             )
 
             if not result.get("repos_url", None):
-                return await message.edit(REPLY, parse_mode="md")
+                return await m.edit(REPLY, parse_mode="md")
             async with session.get(result.get("repos_url", None)) as request:
                 result = request.json
                 if request.status == 404:
-                    return await message.edit(REPLY, parse_mode="md")
+                    return await m.edit(REPLY, parse_mode="md")
 
                 result = await request.json()
 
@@ -59,4 +56,4 @@ async def github(client, message):
                 for nr in range(len(result)):
                     REPLY += f"[{result[nr].get('name', None)}]({result[nr].get('html_url', None)})\n"
 
-                await message.edit(REPLY, parse_mode="md")
+                await m.edit(REPLY, parse_mode="md")

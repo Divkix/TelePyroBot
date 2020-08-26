@@ -1,7 +1,7 @@
 import os
 import asyncio
 from pyrogram import Client, filters
-from pyrogram.types import ChatPermissions
+from pyrogram.types import Message, ChatPermissions
 from telepyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN
 from telepyrobot.utils.admin_check import admin_check
 
@@ -17,28 +17,26 @@ Usage: {COMMAND_HAND_LER}del <as a reply to the message>"""
 
 
 @Client.on_message(filters.command("purge", COMMAND_HAND_LER) & filters.me)
-async def purge(client, message):
+async def purge(c: Client, m: Message):
     if message.chat.type in ("supergroup", "channel"):
-        await message.edit("`Incinerating these useless messages...`")
+        await m.edit("`Incinerating these useless messages...`")
         is_admin = await admin_check(message)
         if not is_admin:
-            await message.edit("I'm not admin nub nibba")
+            await m.edit("I'm not admin nub nibba")
             await asyncio.sleep(2)
-            await message.delete()
+            await m.delete()
             return
     if message.chat.type in ["private", "bot", "group"]:
-        await message.edit("`You are not allowed to use this command here!`")
+        await m.edit("`You are not allowed to use this command here!`")
         await asyncio.sleep(2)
-        await message.delete()
+        await m.delete()
         return
 
     message_ids = []
     count_del_etion_s = 0
 
-    if message.reply_to_message:
-        for a_s_message_id in range(
-            message.reply_to_message.message_id, message.message_id
-        ):
+    if m.reply_to_message:
+        for a_s_message_id in range(m.reply_to_message.message_id, message.message_id):
             message_ids.append(a_s_message_id)
             if len(message_ids) == TG_MAX_SELECT_LEN:
                 await client.delete_messages(
@@ -52,26 +50,26 @@ async def purge(client, message):
             )
             count_del_etion_s += len(message_ids)
 
-    await message.edit(f"`Deleted <u>{count_del_etion_s}</u> messages`")
+    await m.edit(f"`Deleted <u>{count_del_etion_s}</u> messages`")
     await asyncio.sleep(3)
-    await message.delete()
+    await m.delete()
 
 
 @Client.on_message(filters.command("del", COMMAND_HAND_LER) & filters.me, group=3)
-async def del_msg(client, message):
-    if message.reply_to_message:
+async def del_msg(c: Client, m: Message):
+    if m.reply_to_message:
         if message.chat.type in ("supergroup", "channel"):
             is_admin = await admin_check(message)
             if not is_admin:
                 await message.reply("`I'm not admin nub Nibba`")
                 await asyncio.sleep(3)
-                await message.delete()
+                await m.delete()
                 return
         await client.delete_messages(
-            chat_id=message.chat.id, message_ids=message.reply_to_message.message_id
+            chat_id=message.chat.id, message_ids=m.reply_to_message.message_id
         )
     else:
-        await message.edit("`Reply to a message to delete!`")
+        await m.edit("`Reply to a message to delete!`")
 
     await asyncio.sleep(0.5)
-    await message.delete()
+    await m.delete()

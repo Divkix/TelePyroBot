@@ -1,7 +1,7 @@
 import os
 import asyncio
 from pyrogram import Client, filters
-from pyrogram.types import ChatPermissions
+from pyrogram.types import Message, ChatPermissions
 from telepyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN
 from telepyrobot.utils.admin_check import admin_check
 
@@ -31,7 +31,7 @@ Usage: {COMMAND_HAND_LER}setchatdesc (chatdesc or as a reply to the message)
 
 
 @Client.on_message(filters.command("leavechat", COMMAND_HAND_LER) & filters.me)
-async def leavechat(client, message):
+async def leavechat(c: Client, m: Message):
     if message.chat.type in ["group", "supergroup"]:
         chat_id = message.chat.id
         is_admin = await admin_check(message)
@@ -41,85 +41,81 @@ async def leavechat(client, message):
 
 
 @Client.on_message(filters.command("invitelink", COMMAND_HAND_LER) & filters.me)
-async def invitelink(client, message):
+async def invitelink(c: Client, m: Message):
     is_admin = await admin_check(message)
     if not is_admin:
         return
     chat_id = message.chat.id
     link = await client.export_chat_invite_link(chat_id)
-    await message.edit(f"**Link for Chat:**\n`{link}`")
+    await m.edit(f"**Link for Chat:**\n`{link}`")
 
 
 @Client.on_message(filters.command("setchatpic", COMMAND_HAND_LER) & filters.me)
-async def set_picture(client, message):
+async def set_picture(c: Client, m: Message):
     if message.chat.type in ["group", "supergroup"]:
         is_admin = await admin_check(message)
         if not is_admin:
             return
-        await message.edit("`Tring to Change Group Picture....`")
+        await m.edit("`Tring to Change Group Picture....`")
         chat_id = message.chat.id
         try:
-            if message.reply_to_message and message.reply_to_message.media:
-                file_id = message.reply_to_message.photo.file_id
-                file_ref = message.reply_to_message.photo.file_ref
+            if m.reply_to_message and m.reply_to_message.media:
+                file_id = m.reply_to_message.photo.file_id
+                file_ref = m.reply_to_message.photo.file_ref
                 await client.set_chat_photo(chat_id, file_id, file_ref=file_ref)
-                await message.edit(
-                    f"`{message.chat.type.title()} picture has been set.`"
-                )
+                await m.edit(f"`{message.chat.type.title()} picture has been set.`")
             else:
-                await message.edit("`Reply to an image to set that as group pic`")
+                await m.edit("`Reply to an image to set that as group pic`")
         except Exception as ef:
-            await message.edit(f"**Could not Change Chat Pic due to:**\n`{ef}`")
+            await m.edit(f"**Could not Change Chat Pic due to:**\n`{ef}`")
 
 
 @Client.on_message(filters.command("delchatpic", COMMAND_HAND_LER) & filters.me)
-async def delchatpic(client, message):
+async def delchatpic(c: Client, m: Message):
     is_admin = await admin_check(message)
     if not is_admin:
         return
     chat_id = message.chat.id
     try:
         await client.delete_chat_photo(chat_id)
-        await message.edit(f"`Deleted Chat Picture for {message.chat.type.title()}`")
+        await m.edit(f"`Deleted Chat Picture for {message.chat.type.title()}`")
     except Exception as ef:
-        await message.edit(f"Error deleting Chat Pic due to:\n`{ef}`")
+        await m.edit(f"Error deleting Chat Pic due to:\n`{ef}`")
 
 
 @Client.on_message(filters.command("setchatname", COMMAND_HAND_LER) & filters.me)
-async def setchatname(client, message):
-    await message.edit("__Trying to Change Chat Name!__")
+async def setchatname(c: Client, m: Message):
+    await m.edit("__Trying to Change Chat Name!__")
     is_admin = await admin_check(message)
     if not is_admin:
         return
     chat_id = message.chat.id
     chat_title = message.text.split(" ", 1)
-    if message.reply_to_message:
-        chat_title = message.reply_to_message.text
+    if m.reply_to_message:
+        chat_title = m.reply_to_message.text
     else:
         chat_title = chat_title[1]
     try:
         await client.set_chat_title(chat_id, chat_title)
-        await message.edit(f"<b>Changed Chat Name to:</b> <code>{chat_title}</code>")
+        await m.edit(f"<b>Changed Chat Name to:</b> <code>{chat_title}</code>")
     except Exception as ef:
-        await message.edit(f"**Could not Change Chat Title due to:**\n`{ef}`")
+        await m.edit(f"**Could not Change Chat Title due to:**\n`{ef}`")
 
 
 @Client.on_message(filters.command("setchatdesc", COMMAND_HAND_LER) & filters.me)
-async def setchatdesc(client, message):
-    await message.edit("__Trying to Change Chat Desciption!__")
+async def setchatdesc(c: Client, m: Message):
+    await m.edit("__Trying to Change Chat Desciption!__")
     is_admin = await admin_check(message)
     if not is_admin:
         return
     chat_id = message.chat.id
     chat_desc = message.text.split(" ", 1)
-    if message.reply_to_message:
-        chat_desc = message.reply_to_message.text
+    if m.reply_to_message:
+        chat_desc = m.reply_to_message.text
     else:
         chat_desc = chat_desc[1]
     try:
         await client.set_chat_description(chat_id, chat_desc)
-        await message.edit(
-            f"<b>Changed Chat Description to:</b> <code>{chat_desc}</code>"
-        )
+        await m.edit(f"<b>Changed Chat Description to:</b> <code>{chat_desc}</code>")
     except Exception as ef:
-        await message.edit(f"**Could not Change Chat Desciption due to:**\n`{ef}`")
+        await m.edit(f"**Could not Change Chat Desciption due to:**\n`{ef}`")

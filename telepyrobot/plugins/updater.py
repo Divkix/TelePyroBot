@@ -4,6 +4,7 @@ import git
 import shutil
 import heroku3
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot.utils.cust_p_filters import sudo_filter
 from telepyrobot import (
     COMMAND_HAND_LER,
@@ -43,7 +44,7 @@ __help__ = f"""
 
 
 @Client.on_message(filters.command("update", COMMAND_HAND_LER) & sudo_filter)
-async def updater(client, message):
+async def updater(c: Client, m: Message):
     if len(message.command) == 2 and message.command[1] == "force":
         force_update = True
     else:
@@ -144,7 +145,7 @@ async def updater(client, message):
     await umsg.reply(
         f"**Update Started**\n__**Type**__ `{COMMAND_HAND_LER}alive` **__to check if I'm alive__**\n\n**It would take upto 5 minutes to update!**"
     )
-    await client.send_message(
+    await c.send_message(
         PRIVATE_GROUP_ID,
         f"#UPDATE\n\n**__TelePyroBot Update__** {commit_link}\n\n**Changelog:**\n{changelog}",
         disable_web_page_preview=True,

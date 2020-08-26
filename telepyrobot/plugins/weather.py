@@ -2,6 +2,7 @@ from html import escape
 import requests
 import os
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -15,9 +16,9 @@ Powered by: https://wttr.in
 
 
 @Client.on_message(filters.command("weather", COMMAND_HAND_LER) & filters.me)
-async def weather(client, message):
+async def weather(c: Client, m: Message):
     if len(message.text.split()) == 1:
-        await message.edit(
+        await m.edit(
             f"Usage: `{COMMAND_HAND_LER}weather <location>`", parse_mode="markdown"
         )
         return
@@ -28,7 +29,7 @@ async def weather(client, message):
         "Sorry, we processed more than 1M requests today and we ran out of our datasource capacity."
         in a.text
     ):
-        await message.edit("Sorry!\nCannot fetch info, api full!")
+        await m.edit("Sorry!\nCannot fetch info, api full!")
         return
     weather = f"<code>{escape(a.text)}</code>"
-    await message.edit(weather, parse_mode="html")
+    await m.edit(weather, parse_mode="html")

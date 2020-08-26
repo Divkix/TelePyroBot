@@ -1,6 +1,7 @@
 import pyfiglet
 import os
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -16,7 +17,7 @@ https://nekobin.com/hesoyipowo
 
 
 @Client.on_message(filters.command("figlet", COMMAND_HAND_LER) & filters.me)
-async def figlet_font(client, message):
+async def figlet_font(c: Client, m: Message):
     CMD_FIG = {
         "slant": "slant",
         "3D": "3-d",
@@ -39,16 +40,16 @@ async def figlet_font(client, message):
         font_style = None
         text = input_str
     else:
-        await message.edit("`Please add some text to figlet`")
+        await m.edit("`Please add some text to figlet`")
         return
     if font_style is not None:
         try:
             font = CMD_FIG[font_style]
         except KeyError:
-            await message.edit("`Font not available`")
+            await m.edit("`Font not available`")
             return
         result = pyfiglet.figlet_format(text, font=font)
     else:
         result = pyfiglet.figlet_format(text)
     await message.reply_text(f"‌‌‎`{result}`")
-    await message.delete()
+    await m.delete()

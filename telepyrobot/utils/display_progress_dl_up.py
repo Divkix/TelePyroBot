@@ -34,7 +34,7 @@ async def progress_for_pyrogram(current, total, ud_type, message, start):
             )
         )
         try:
-            await message.edit("{}\n {}".format(ud_type, tmp))
+            await m.edit("{}\n {}".format(ud_type, tmp))
         except:
             pass
 

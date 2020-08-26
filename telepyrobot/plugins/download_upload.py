@@ -5,6 +5,7 @@ import time
 from datetime import datetime
 from pySmartDL import SmartDL
 from pyrogram import Client, filters
+from pyrogram.types import Message
 import json
 import logging
 import re
@@ -54,7 +55,7 @@ async def down_load_media(client, sms):
         )
         end_t = datetime.now()
         ms = (end_t - start_t).seconds
-        await message.edit(
+        await m.edit(
             f"Downloaded to <code>{the_real_download_location}</code> in <u>{ms}</u> seconds",
             parse_mode="html",
         )
@@ -98,9 +99,7 @@ async def down_load_media(client, sms):
                 current_message += f"**Download Speed** __{speed}__\n"
                 current_message += f"**ETA:** __{estimated_total_time}__"
                 if round(diff % 10.00) == 0 and current_message != display_message:
-                    await message.edit(
-                        disable_web_page_preview=True, text=current_message
-                    )
+                    await m.edit(disable_web_page_preview=True, text=current_message)
                     display_message = current_message
                     await asyncio.sleep(10)
             except Exception as e:
@@ -109,18 +108,16 @@ async def down_load_media(client, sms):
         if os.path.exists(download_file_path):
             end_t = datetime.now()
             ms = (end_t - start_t).seconds
-            await message.edit(
+            await m.edit(
                 f"Downloaded to <code>{download_file_path}</code> in <u>{ms}</u> seconds",
                 parse_mode="html",
             )
     else:
-        await message.edit(
-            "`Reply to a Telegram Media, to download it to local server.`"
-        )
+        await m.edit("`Reply to a Telegram Media, to download it to local server.`")
 
 
 @Client.on_message(filters.command("upload", COMMAND_HAND_LER) & filters.me)
-async def upload_as_document(client, message):
+async def upload_as_document(c: Client, m: Message):
     status_message = await message.reply_text("`Uploading...`")
     if " " in message.text:
         local_file_name = message.text.split(" ", 1)[1]
@@ -141,38 +138,36 @@ async def upload_as_document(client, message):
             )
             end_t = datetime.now()
             ms = (end_t - start_t).seconds
-            await status_message.edit(f"**Uploaded in {ms} seconds**")
+            await status_m.edit(f"**Uploaded in {ms} seconds**")
         else:
-            await status_message.edit("404: media not found")
+            await status_m.edit("404: media not found")
     else:
-        await status_message.edit(
+        await status_m.edit(
             f"<code>{COMMAND_HAND_LER}upload FILE_PATH</code> to upload to current Telegram chat"
         )
-    await message.delete()
+    await m.delete()
 
 
 @Client.on_message(filters.command("batchup", COMMAND_HAND_LER) & filters.me)
-async def covid(client, message):
+async def covid(c: Client, m: Message):
     if len(message.text.split(" ")) == 1:
-        await message.edit("`Enter a directory location`")
+        await m.edit("`Enter a directory location`")
     elif len(message.text.split(" ", 1)) == 2:
         temp_dir = message.text.split(" ", 1)[1]
     else:
-        await message.edit(
-            f"__Please check help by using__ `{COMMAND_HAND_LER}help batchup`"
-        )
+        await m.edit(f"__Please check help by using__ `{COMMAND_HAND_LER}help batchup`")
     status_message = await message.reply_text("`Uploading Files...`")
     if os.path.exists(temp_dir):
         files = os.listdir(temp_dir)
         files.sort()
-        await status_message.edit("`Uploading Files to Telegram...`")
+        await status_m.edit("`Uploading Files to Telegram...`")
         for file in files:
             c_time = time.time()
             required_file_name = temp_dir + "/" + file
             thumb_image_path = await is_thumb_image_exists(required_file_name)
             doc_caption = os.path.basename(required_file_name)
             LOGGER.info(f"Uploading {required_file_name} from {temp_dir} to Telegram.")
-            await client.send_document(
+            await c.send_document(
                 chat_id=message.chat.id,
                 document=required_file_name,
                 thumb=thumb_image_path,
@@ -187,6 +182,6 @@ async def covid(client, message):
                 ),
             )
     else:
-        await message.edit("Directory Not Found.")
+        await m.edit("Directory Not Found.")
         return
-    await status_message.edit(f"Uploaded all files from Directory `{temp_dir}`")
+    await status_m.edit(f"Uploaded all files from Directory `{temp_dir}`")

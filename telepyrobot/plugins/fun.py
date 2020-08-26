@@ -1,4 +1,5 @@
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 import random
 import os
@@ -38,12 +39,12 @@ Just for fun ;)
 
 
 @Client.on_message(filters.command(["throw", "dart"], COMMAND_HAND_LER) & filters.me)
-async def throw_dart(client, message):
+async def throw_dart(c: Client, m: Message):
     rep_mesg_id = message.message_id
-    if message.reply_to_message:
-        rep_mesg_id = message.reply_to_message.message_id
-    await message.delete()
-    await client.send_dice(
+    if m.reply_to_message:
+        rep_mesg_id = m.reply_to_message.message_id
+    await m.delete()
+    await c.send_dice(
         chat_id=message.chat.id,
         emoji=DART_E_MOJI,
         disable_notification=True,
@@ -52,12 +53,12 @@ async def throw_dart(client, message):
 
 
 @Client.on_message(filters.command(["roll", "dice"], COMMAND_HAND_LER) & filters.me)
-async def roll_dice(client, message):
+async def roll_dice(c: Client, m: Message):
     rep_mesg_id = message.message_id
-    if message.reply_to_message:
-        rep_mesg_id = message.reply_to_message.message_id
-    await message.delete()
-    await client.send_dice(
+    if m.reply_to_message:
+        rep_mesg_id = m.reply_to_message.message_id
+    await m.delete()
+    await c.send_dice(
         chat_id=message.chat.id,
         emoji=DICE_E_MOJI,
         disable_notification=True,
@@ -68,8 +69,8 @@ async def roll_dice(client, message):
 @Client.on_message(filters.command(["runs", "run"], COMMAND_HAND_LER) & filters.me)
 async def runs(_, message):
     run = random.choice(RUN_STRINGS)
-    if message.reply_to_message:
-        await message.reply_to_message.reply_text(run)
-        await message.delete()
+    if m.reply_to_message:
+        await m.reply_to_message.reply_text(run)
+        await m.delete()
     else:
-        await message.edit(run)
+        await m.edit(run)

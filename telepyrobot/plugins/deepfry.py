@@ -3,6 +3,7 @@ import os
 import asyncio
 from random import randint, uniform
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 from telepyrobot.utils.msg_types import Types
 from telepyrobot.utils.pyrohelpers import extract_user
@@ -20,7 +21,7 @@ Burn media files and make them look sick!
 
 
 @Client.on_message(filters.command("deepfry", COMMAND_HAND_LER) & filters.me)
-async def do_deepfry(client, message):
+async def do_deepfry(c: Client, m: Message):
     try:
         frycount = int(message.text.split(" ", 1)[1])
         if frycount < 1:
@@ -28,21 +29,21 @@ async def do_deepfry(client, message):
     except IndexError:
         frycount = 1
 
-    if message.reply_to_message.photo or message.reply_to_message.sticker:
-        reply_message = message.reply_to_message
+    if m.reply_to_message.photo or m.reply_to_message.sticker:
+        reply_message = m.reply_to_message
         data = await check_media(reply_message)
     else:
-        await message.edit("`Reply to an image or sticker to deep fry it!`")
+        await m.edit("`Reply to an image or sticker to deep fry it!`")
         return
 
     # download last photo (highres) as byte array
-    await message.edit("`Downloading media...`")
+    await m.edit("`Downloading media...`")
     image = io.BytesIO()
     image = await client.download_media(data)
     image = Image.open(image)
 
     await asyncio.sleep(3)
-    await message.edit("`Deep frying media...`")
+    await m.edit("`Deep frying media...`")
     for _ in range(frycount):
         image = await deepfry(image)
 
@@ -52,7 +53,7 @@ async def do_deepfry(client, message):
     fried_io.seek(0)
 
     await message.reply_photo(photo=fried_io, caption="Deepfried by @TelePyroBot")
-    await message.delete()
+    await m.delete()
     return
 
 

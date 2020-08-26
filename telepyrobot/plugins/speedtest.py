@@ -1,4 +1,5 @@
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 from speedtest import Speedtest
 import os
@@ -11,15 +12,15 @@ __help__ = f"""
 
 
 @Client.on_message(filters.command("speedtest", COMMAND_HAND_LER) & filters.me)
-async def listbots(client, message):
-    await message.edit("`Running speed test . . .`")
+async def listbots(c: Client, m: Message):
+    await m.edit("`Running speed test . . .`")
     test = Speedtest()
     test.get_best_server()
     test.download()
     test.upload()
     test.results.share()
     result = test.results.dict()
-    await message.edit(
+    await m.edit(
         "**Started at:** "
         f"`{result['timestamp']}`\n\n"
         "**Download:** "

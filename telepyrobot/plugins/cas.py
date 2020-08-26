@@ -3,6 +3,7 @@ from time import sleep
 import asyncio
 import os
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 from telepyrobot.utils.pyrohelpers import extract_user
 
@@ -16,7 +17,7 @@ Easily Check CAS ban of a user!
 
 
 @Client.on_message(filters.command("cas", COMMAND_HAND_LER) & filters.me)
-async def cas(client, message):
+async def cas(c: Client, m: Message):
     user_id, user_first_name = extract_user(message)
     results = requests.get(f"https://api.cas.chat/check?user_id={user_id}").json()
     offenses_cas = results["result"]["offenses"]
@@ -32,4 +33,4 @@ async def cas(client, message):
         )
     except:
         text = "`Not banned in CAS`"
-    await message.edit(text, parse_mode="markdown")
+    await m.edit(text, parse_mode="markdown")

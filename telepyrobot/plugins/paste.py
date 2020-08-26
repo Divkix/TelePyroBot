@@ -3,6 +3,7 @@ import json
 import os
 from urllib.parse import urlparse
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, TMP_DOWNLOAD_DIRECTORY
 import os
 
@@ -16,12 +17,12 @@ __help__ = f"""
 
 
 @Client.on_message(filters.command("paste", COMMAND_HAND_LER))
-async def paste_bin(client, message):
-    await message.edit("`Pasting...`")
+async def paste_bin(c: Client, m: Message):
+    await m.edit("`Pasting...`")
     downloaded_file_name = None
 
-    if message.reply_to_message and message.reply_to_message.media:
-        filename_loc = await message.reply_to_message.download(
+    if m.reply_to_message and m.reply_to_message.media:
+        filename_loc = await m.reply_to_message.download(
             file_name=TMP_DOWNLOAD_DIRECTORY + "/"
         )
         m_list = None
@@ -32,14 +33,14 @@ async def paste_bin(client, message):
             downloaded_file_name += m.decode("UTF-8")
             downloaded_file_name += "\n"
         os.remove(filename_loc)
-    elif message.reply_to_message:
-        downloaded_file_name = message.reply_to_message.text.html
+    elif m.reply_to_message:
+        downloaded_file_name = m.reply_to_message.text.html
     else:
-        await message.edit("What do you want to Paste?")
+        await m.edit("What do you want to Paste?")
         return
 
     if downloaded_file_name is None:
-        await message.edit("What do you want to Paste?")
+        await m.edit("What do you want to Paste?")
         return
 
     json_paste_data = {"content": downloaded_file_name}
@@ -70,7 +71,7 @@ async def paste_bin(client, message):
     required_url = json.dumps(t_w_attempt, sort_keys=True, indent=4) + "\n\n #ERROR"
     if t_w_attempt is not None:
         required_url = paste_store_base_url + "/" + t_w_attempt
-    await message.edit(
+    await m.edit(
         f"**Pasted to {default_paste}**:\n{required_url}", disable_web_page_preview=True
     )
 

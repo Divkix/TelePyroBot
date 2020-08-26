@@ -6,6 +6,7 @@ import time
 import asyncio
 import requests
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
 
 
@@ -27,7 +28,7 @@ async def list_directories(_, message):
         location = message.text.split(" ", 1)[1]
         cmd = "ls " + location
     else:
-        await message.edit("<b>Error:</b>\n<i>Check Help documentaion for Help</i>")
+        await m.edit("<b>Error:</b>\n<i>Check Help documentaion for Help</i>")
 
     reply_to_id = message.message_id
 

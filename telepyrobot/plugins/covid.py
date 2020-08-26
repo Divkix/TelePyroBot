@@ -5,6 +5,7 @@ import asyncio
 from prettytable import PrettyTable
 import requests
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -17,8 +18,8 @@ Check info of cases Covid19 (CoronaVirus) Disease
 
 
 @Client.on_message(filters.command("covid", COMMAND_HAND_LER) & filters.me)
-async def covid(client, message):
-    await message.edit("`Processing...`", parse_mode="md")
+async def covid(c: Client, m: Message):
+    await m.edit("`Processing...`", parse_mode="md")
     cmd = message.text.split(" ", 1)
     if len(cmd) == 1:
         r = requests.get("https://corona.lmao.ninja/v2/all?yesterday=true").json()
@@ -41,6 +42,4 @@ async def covid(client, message):
         ac.add_row(["Tests", f"{r['tests']:,}"])
         ac.add_row(["Tests/Million", f"{r['testsPerOneMillion']:,}"])
         ac.align = "l"
-        await message.edit(
-            f"`{str(ac)}`\nLast updated on: {last_updated}", parse_mode="md"
-        )
+        await m.edit(f"`{str(ac)}`\nLast updated on: {last_updated}", parse_mode="md")

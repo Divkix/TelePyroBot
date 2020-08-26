@@ -1,4 +1,5 @@
 from pyrogram import Client, filters
+from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, PRIVATE_GROUP_ID
 import os
 import asyncio
@@ -19,21 +20,21 @@ Then this module is for you!
 
 
 @Client.on_message(filters.command("zombies", COMMAND_HAND_LER) & filters.me)
-async def zombies_clean(client, message):
+async def zombies_clean(c: Client, m: Message):
     if len(message.text.split(" ")) != 2:
-        await message.edit("`Counting deleted accounts!!!`")
+        await m.edit("`Counting deleted accounts!!!`")
         del_users = []
         async for x in client.iter_chat_members(chat_id=message.chat.id):
             if x.user.is_deleted:
                 del_users.append(x.user.id)
         if del_users:
-            await message.edit(
+            await m.edit(
                 f"`Found {len(del_users)} deleted accounts!` **__Use__** `{COMMAND_HAND_LER}zombies clean` __**to remove them from group**__"
             )
         else:
-            await message.edit("`No deleted accounts found!\nGroup is clean as Hell!`")
+            await m.edit("`No deleted accounts found!\nGroup is clean as Hell!`")
     elif len(message.text.split(" ")) == 2 and message.text.split(" ", 1)[1] == "clean":
-        await message.edit("`Cleaning deleted accounts....`")
+        await m.edit("`Cleaning deleted accounts....`")
         del_users = []
         u = 0
         async for x in client.iter_chat_members(chat_id=message.chat.id):
@@ -48,13 +49,13 @@ async def zombies_clean(client, message):
                         await asyncio.sleep(0.1)
                     except:
                         pass
-        await message.edit(f"**Done Cleaning Group ✅**\n`Removed {u} deleted accounts`")
-        await client.send_message(
+        await m.edit(f"**Done Cleaning Group ✅**\n`Removed {u} deleted accounts`")
+        await c.send_message(
             PRIVATE_GROUP_ID,
             f"#ZOMBIES\n\nCleaned {len(del_users)} accounts from **{message.chat.title}** - `{message.chat.id}`",
         )
     else:
-        await message.edit(
+        await m.edit(
             f"__Check__ `{COMMAND_HAND_LER}help zombies` __to see how it works!__"
         )
     return

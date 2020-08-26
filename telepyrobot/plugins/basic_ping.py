@@ -2,14 +2,14 @@ import time
 import os
 from platform import python_version
 from pyrogram import Client, filters, __version__
+from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, OWNER_NAME, UB_VERSION, OFFICIAL_UPSTREAM_REPO
 from pyrogram.raw.all import layer
 
 # -- Constants -- #
-REPO_REMOTE_NAME = "official_remote"
 ALIVE_TEXT = (
-    "<i><b>TelePyroBot is running!!!\n</b>"
-    "<i><b>My Owner:</b></i> `{}`\n"
+    "<i><b>TelePyroBot is running!!!</b>\n"
+    "<i><b>Owner:</b></i> `{}`\n"
     "<i><b>Pyrogram Version:</b></i> `{} (Layer {})`\n"
     "<i><b>Python Version:</b></i> `{}`\n"
     "<i><b>UserBot Version:</b></i> `{}`\n\n"
@@ -37,8 +37,8 @@ Basic commands of userbot!
 
 
 @Client.on_message(filters.command(["alive", "start"], COMMAND_HAND_LER) & filters.me)
-async def check_alive(client, message):
-    await message.edit_text(
+async def check_alive(c: Client, m: Message):
+    await m.edit_text(
         ALIVE_TEXT.format(
             OWNER_NAME,
             __version__,
@@ -52,26 +52,26 @@ async def check_alive(client, message):
 
 
 @Client.on_message(filters.command("ping", COMMAND_HAND_LER) & filters.me)
-async def ping(client, message):
+async def ping(c: Client, m: Message):
     start_t = time.time()
-    rm = await message.edit("Pinging...")
+    rm = await m.edit("Pinging...")
     end_t = time.time()
     time_taken_s = (end_t - start_t) * 1000
-    await message.edit(f"**Pong!**\n`{time_taken_s:.3f}` ms")
+    await m.edit(f"**Pong!**\n`{time_taken_s:.3f}` ms")
 
 
 @Client.on_message(filters.command("repo", COMMAND_HAND_LER) & filters.me)
-async def repo(client, message):
-    await message.edit(REPO, disable_web_page_preview=True)
+async def repo(c: Client, m: Message):
+    await m.edit(REPO, disable_web_page_preview=True)
 
 
 @Client.on_message(filters.command("id", COMMAND_HAND_LER) & filters.me)
-async def get_id(client, message):
+async def get_id(c: Client, m: Message):
     file_id = None
     user_id = None
 
-    if message.reply_to_message:
-        rep = message.reply_to_message
+    if m.reply_to_message:
+        rep = m.reply_to_message
         if rep.audio:
             file_id = rep.audio.file_id
         elif rep.document:
@@ -113,24 +113,24 @@ async def get_id(client, message):
                 username = rep.from_user.username
 
     if user_id:
-        await message.edit(
+        await m.edit(
             "User Short Info:\n\n**User ID:** `{}`\n**Name:** `{}`\n**Username:** @{}".format(
                 user_id, user_name, username
             )
         )
     elif file_id:
-        await message.edit("**File's ID:** `{}`".format(file_id))
+        await m.edit("**File's ID:** `{}`".format(file_id))
     else:
-        await message.edit("**This Chat's ID:** `{}`".format(message.chat.id))
+        await m.edit("**This Chat's ID:** `{}`".format(message.chat.id))
 
 
 @Client.on_message(filters.command("json", COMMAND_HAND_LER) & filters.me)
-async def jsonify(client, message):
+async def jsonify(c: Client, m: Message):
     the_real_message = None
     reply_to_id = None
 
-    if message.reply_to_message:
-        the_real_message = message.reply_to_message
+    if m.reply_to_message:
+        the_real_message = m.reply_to_message
     else:
         the_real_message = message
     try:

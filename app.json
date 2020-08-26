@@ -10,7 +10,7 @@
     "plugin",
     "modular",
     "productivity",
-    "pyrobot",
+    "telepyrobot",
     "telepyrobot"
   ],
   "repository": "https://github.com/SkuzzyxD/TelePyroBot",
@@ -73,22 +73,37 @@
       "value": "True"
     },
     "REMBG_API_KEY": {
-      "description" :"Ised for removeng plugins to work",
+      "description": "Ised for removeng plugins to work",
       "required": false
     }
   },
-  "addons": [{
-    "plan": "heroku-postgresql",
-    "options": {"version": "9.6"}
-  }],
-  "buildpacks":
-  [
-    {"url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"},
-    {"url": "https://github.com/HasibulKabir/heroku-buildpack-rarlab.git"},
-    {"url": "https://github.com/opendoor-labs/heroku-buildpack-p7zip"},
-    {"url": "https://github.com/rking32/heroku-buildpack-google-chrome"},
-    {"url": "https://github.com/rking32/heroku-buildpack-chromedriver"},
-    {"url": "heroku/python"}
+  "addons": [
+    {
+      "plan": "heroku-postgresql",
+      "options": {
+        "version": "9.6"
+      }
+    }
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+    },
+    {
+      "url": "https://github.com/HasibulKabir/heroku-buildpack-rarlab.git"
+    },
+    {
+      "url": "https://github.com/opendoor-labs/heroku-buildpack-p7zip"
+    },
+    {
+      "url": "https://github.com/rking32/heroku-buildpack-google-chrome"
+    },
+    {
+      "url": "https://github.com/rking32/heroku-buildpack-chromedriver"
+    },
+    {
+      "url": "heroku/python"
+    }
   ],
   "formation": {
     "worker": {

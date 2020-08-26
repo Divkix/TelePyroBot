@@ -28,7 +28,7 @@ cd TelePyroBot
 virtualenv -p /usr/bin/python3 venv
 . ./venv/bin/activate
 pip install -r string-requirements.txt
-python3 -m pyrobot
+python3 -m telepyrobot
 ```
 
 
@@ -41,7 +41,7 @@ An example `config.py` file could be:
 __The UserBot should work by setting only these variables__
 
 ```python3
-from pyrobot.sample_config import Config
+from telepyrobot.sample_config import Config
 
 class Development(Config):
   APP_ID = 6

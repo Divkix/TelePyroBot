@@ -19,7 +19,7 @@ Get text typed in typewriter format.
     filters.command(["type", "typewriter"], COMMAND_HAND_LER) & filters.me
 )
 async def upload_as_document(c: Client, m: Message):
-    text = message.command[1:]
+    text = m.command[1:]
     if not text:
         await m.edit("`Input not found`")
         return

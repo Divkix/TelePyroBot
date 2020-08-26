@@ -46,16 +46,16 @@ flow = None
 @Client.on_message(filters.command("gdrive", COMMAND_HAND_LER) & filters.me)
 async def g_drive_commands(c: Client, m: Message):
     status_message = await m.reply_text("...")
-    if len(message.command) > 1:
-        current_recvd_command = message.command[1]
+    if len(m.command) > 1:
+        current_recvd_command = m.command[1]
         if current_recvd_command == "setup":
             await g_drive_setup(message)
         elif current_recvd_command == "reset":
             db.clear_credential(m.from_user.id)
             await status_m.edit_text(text="cleared saved credentials")
         elif current_recvd_command == "confirm":
-            if len(message.command) == 3:
-                await AskUserToVisitLinkAndGiveCode(status_message, message.command[2])
+            if len(m.command) == 3:
+                await AskUserToVisitLinkAndGiveCode(status_message, m.command[2])
             else:
                 await status_m.edit_text(text="please give auth_code correctly")
         elif current_recvd_command == "search":
@@ -65,8 +65,8 @@ async def g_drive_commands(c: Client, m: Message):
                     creds.refresh(get_new_http_instance())
                     db.set_credential(m.from_user.id, creds)
 
-                    if len(message.command) > 2:
-                        search_query = " ".join(message.command[2:])
+                    if len(m.command) > 2:
+                        search_query = " ".join(m.command[2:])
                         message_string = "<b>gDrive <i>Search Query</i></b>:"
                         message_string += f"<code>{search_query}</code>\n\n"
                         message_string += "<i>Results</i>:\n"
@@ -97,8 +97,8 @@ async def g_drive_commands(c: Client, m: Message):
                 if creds and creds.refresh_token:
                     creds.refresh(get_new_http_instance())
                     db.set_credential(m.from_user.id, creds)
-                    if len(message.command) > 2:
-                        upload_file_name = " ".join(message.command[2:])
+                    if len(m.command) > 2:
+                        upload_file_name = " ".join(m.command[2:])
                         if not os.path.exists(upload_file_name):
                             await status_m.edit_text("invalid file path provided?")
                             return

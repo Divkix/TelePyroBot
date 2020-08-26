@@ -33,15 +33,13 @@ async def list_plugins(c: Client, m: Message):
 
 @Client.on_message(filters.command("help", COMMAND_HAND_LER) & filters.me)
 async def help_me(c: Client, m: Message):
-    if len(message.command) == 1:
+    if len(m.command) == 1:
         await m.edit(HELP_DEFAULT)
-    elif len(message.command) == 2:
+    elif len(m.command) == 2:
         module_name = message.text.split(" ", 1)[1]
         try:
             HELP = f"**Help for __{module_name}__**\n" + HELP_COMMANDS[f"{module_name}"]
-            await m.reply_text(
-                HELP, parse_mode="md", disable_web_page_preview=True
-            )
+            await m.reply_text(HELP, parse_mode="md", disable_web_page_preview=True)
             await m.delete()
         except Exception as ef:
             await m.edit(f"<b>Error:</b>\n\n{ef}")

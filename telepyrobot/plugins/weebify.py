@@ -70,9 +70,9 @@ weebyfont = [
 
 @Client.on_message(filters.command("weebify", COMMAND_HAND_LER) & filters.me)
 async def weebify(c: Client, m: Message):
-    if len(message.command) >= 2:
+    if len(m.command) >= 2:
         args = message.text.split(" ", 1)[1]
-    if m.reply_to_message and len(message.command) == 1:
+    if m.reply_to_message and len(m.command) == 1:
         args = m.reply_to_message.text
     if not args:
         await event.edit("`What I am Supposed to Weebify dumb`")

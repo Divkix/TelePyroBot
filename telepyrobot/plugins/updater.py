@@ -45,7 +45,7 @@ __help__ = f"""
 
 @Client.on_message(filters.command("update", COMMAND_HAND_LER) & sudo_filter)
 async def updater(c: Client, m: Message):
-    if len(message.command) == 2 and message.command[1] == "force":
+    if len(m.command) == 2 and m.command[1] == "force":
         force_update = True
     else:
         force_update = False

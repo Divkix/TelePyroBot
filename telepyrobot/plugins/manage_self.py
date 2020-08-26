@@ -35,7 +35,7 @@ Blocks the user, if you blocked it.
 
 @Client.on_message(filters.command("unblockpm", COMMAND_HAND_LER) & filters.me)
 async def unblock_pm(c: Client, m: Message):
-    if len(message.command) == 2:
+    if len(m.command) == 2:
         user = message.text.split(" ", 1)[1]
         try:
             await client.unblock_user(user)
@@ -54,7 +54,7 @@ async def unblock_pm(c: Client, m: Message):
 
 @Client.on_message(filters.command("blockpm", COMMAND_HAND_LER) & filters.me)
 async def block_pm(c: Client, m: Message):
-    if len(message.command) == 2:
+    if len(m.command) == 2:
         user = message.text.split(" ", 1)[1]
         try:
             await client.unblock_user(user)

@@ -22,7 +22,7 @@ async def carbon_api(c: Client, m: Message):
         "theme": "Dracula",
         "exportSize": "4x",
     }
-    cmd = message.command
+    cmd = m.command
     rep_mesg_id = message.message_id
     if m.reply_to_message:
         rep_mesg_id = m.reply_to_message.message_id

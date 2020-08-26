@@ -17,7 +17,7 @@ Commands:
 
 @Client.on_message(filters.command("creategrp", COMMAND_HAND_LER) & filters.me)
 async def cas(c: Client, m: Message):
-    if len(message.command) < 3:
+    if len(m.command) < 3:
         await m.edit("`Check help, you don't know how to use it`")
         return
 

@@ -17,7 +17,7 @@ Get Magnet Links of any search query.
 
 @Client.on_message(filters.command("tsearch", COMMAND_HAND_LER) & filters.me)
 async def tor_search(c: Client, m: Message):
-    if len(message.command) == 1:
+    if len(m.command) == 1:
         await m.edit("`Check help on how to use this command`")
         return
     await m.edit("`Please wait, fetching results...`")

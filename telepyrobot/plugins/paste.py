@@ -53,7 +53,7 @@ async def paste_bin(c: Client, m: Message):
     }
 
     default_paste = "nekobin"
-    if len(message.command) == 2:
+    if len(m.command) == 2:
         default_paste = message.text.split(" ", 1)[1]
 
     paste_store_url = paste_bin_store_s.get(default_paste, paste_bin_store_s["nekobin"])

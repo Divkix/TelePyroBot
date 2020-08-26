@@ -22,9 +22,9 @@ List the directories of the server.
 
 @Client.on_message(filters.command("ls", COMMAND_HAND_LER) & filters.me)
 async def list_directories(_, message):
-    if len(message.command) == 1:
+    if len(m.command) == 1:
         cmd = "ls"
-    elif len(message.command) >= 2:
+    elif len(m.command) >= 2:
         location = message.text.split(" ", 1)[1]
         cmd = "ls " + location
     else:

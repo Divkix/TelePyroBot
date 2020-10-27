@@ -1,4 +1,5 @@
-from pyrogram import filters, Client
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 import os
 from telepyrobot import COMMAND_HAND_LER
@@ -31,17 +32,17 @@ Get all your notes, if too much notes, please use this in your saved message ins
 """
 
 GET_FORMAT = {
-    Types.TEXT.value: Client.send_message,
-    Types.DOCUMENT.value: Client.send_document,
-    Types.PHOTO.value: Client.send_photo,
-    Types.VIDEO.value: Client.send_video,
-    Types.STICKER.value: Client.send_sticker,
-    Types.AUDIO.value: Client.send_audio,
-    Types.VOICE.value: Client.send_voice,
-    Types.VIDEO_NOTE.value: Client.send_video_note,
-    Types.ANIMATION.value: Client.send_animation,
-    Types.ANIMATED_STICKER.value: Client.send_sticker,
-    Types.CONTACT: Client.send_contact,
+    Types.TEXT.value: TelePyroBot.send_message,
+    Types.DOCUMENT.value: TelePyroBot.send_document,
+    Types.PHOTO.value: TelePyroBot.send_photo,
+    Types.VIDEO.value: TelePyroBot.send_video,
+    Types.STICKER.value: TelePyroBot.send_sticker,
+    Types.AUDIO.value: TelePyroBot.send_audio,
+    Types.VOICE.value: TelePyroBot.send_voice,
+    Types.VIDEO_NOTE.value: TelePyroBot.send_video_note,
+    Types.ANIMATION.value: TelePyroBot.send_animation,
+    Types.ANIMATED_STICKER.value: TelePyroBot.send_sticker,
+    Types.CONTACT: TelePyroBot.send_contact,
 }
 
 

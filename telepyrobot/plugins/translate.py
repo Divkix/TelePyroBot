@@ -1,5 +1,6 @@
 from googletrans import Translator
-from pyrogram import filters, Client
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 import os
 from telepyrobot import COMMAND_HAND_LER

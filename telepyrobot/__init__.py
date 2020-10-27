@@ -26,11 +26,11 @@ MAX_MESSAGE_LENGTH = Config.MAX_MESSAGE_LENGTH
 
 # Ensure Directories
 TMP_DOWNLOAD_DIRECTORY = Config.TMP_DOWNLOAD_DIRECTORY
-if not os.path.isdir(TMP_DOWNLOAD_DIRECTORY):
-    os.makedirs(TMP_DOWNLOAD_DIRECTORY)
-if not os.path.isdir('telepyrobot/cache'):
-    os.makedirs('telepyrobot/cache')
-if not os.path.isdir('telepyrobot/session')
+if not os.path.exists(TMP_DOWNLOAD_DIRECTORY):
+    os.makedir(TMP_DOWNLOAD_DIRECTORY)
+if not os.path.exists('telepyrobot/cache'):
+    os.makedir('telepyrobot/cache')
+if not os.path.exists('telepyrobot/session')
     os.makedirs('telepyrobot/cache')
 
 HEROKU_API_KEY = Config.HEROKU_API_KEY

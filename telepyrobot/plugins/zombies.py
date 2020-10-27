@@ -22,10 +22,10 @@ Then this module is for you!
 
 @TelePyroBot.on_message(filters.command("zombies", COMMAND_HAND_LER) & filters.me)
 async def zombies_clean(c: TelePyroBot, m: Message):
-    if len(message.text.split(" ")) != 2:
+    if len(m.text.split(" ")) != 2:
         await m.edit("`Counting deleted accounts!!!`")
         del_users = []
-        async for x in client.iter_chat_members(chat_id=message.chat.id):
+        async for x in c.iter_chat_members(chat_id=m.chatid):
             if x.user.is_deleted:
                 del_users.append(x.user.id)
         if del_users:
@@ -34,18 +34,18 @@ async def zombies_clean(c: TelePyroBot, m: Message):
             )
         else:
             await m.edit("`No deleted accounts found!\nGroup is clean as Hell!`")
-    elif len(message.text.split(" ")) == 2 and message.text.split(" ", 1)[1] == "clean":
+    elif len(m.text.split(" ")) == 2 and m.text.split(" ", 1)[1] == "clean":
         await m.edit("`Cleaning deleted accounts....`")
         del_users = []
         u = 0
-        async for x in client.iter_chat_members(chat_id=message.chat.id):
+        async for x in c.iter_chat_members(chat_id=m.chatid):
             await asyncio.sleep(0.1)
             if x.user.is_deleted:
                 del_users.append(x.user.id)
-                a = await client.get_chat_member(message.chat.id, x.user.id)
+                a = await c.get_chat_member(m.chatid, x.user.id)
                 if a.user.status not in ("administrator", "creator"):
                     try:
-                        await client.kick_chat_member(message.chat.id, x.user.id)
+                        await c.kick_chat_member(m.chatid, x.user.id)
                         u += 1
                         await asyncio.sleep(0.1)
                     except:
@@ -53,7 +53,7 @@ async def zombies_clean(c: TelePyroBot, m: Message):
         await m.edit(f"**Done Cleaning Group ✅**\n`Removed {u} deleted accounts`")
         await c.send_message(
             PRIVATE_GROUP_ID,
-            f"#ZOMBIES\n\nCleaned {len(del_users)} accounts from **{message.chat.title}** - `{message.chat.id}`",
+            f"#ZOMBIES\n\nCleaned {len(del_users)} accounts from **{m.chattitle}** - `{m.chatid}`",
         )
     else:
         await m.edit(

@@ -37,7 +37,7 @@ async def help_me(c: TelePyroBot, m: Message):
     if len(m.command) == 1:
         await m.edit(HELP_DEFAULT)
     elif len(m.command) == 2:
-        module_name = message.text.split(" ", 1)[1]
+        module_name = m.text.split(" ", 1)[1]
         try:
             HELP = f"**Help for __{module_name}__**\n" + HELP_COMMANDS[f"{module_name}"]
             await m.reply_text(HELP, parse_mode="md", disable_web_page_preview=True)

@@ -39,7 +39,9 @@ The command will upload all files from the directory location to the current Tel
 """
 
 
-@TelePyroBot.on_message(filters.command(["download", "dl"], COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(
+    filters.command(["download", "dl"], COMMAND_HAND_LER) & filters.me
+)
 async def down_load_media(client, sms):
     message = await sms.reply_text("...", quote=True)
     if not os.path.isdir(TMP_DOWNLOAD_DIRECTORY):
@@ -48,7 +50,7 @@ async def down_load_media(client, sms):
         start_t = datetime.now()
         download_location = TMP_DOWNLOAD_DIRECTORY + "/"
         c_time = time.time()
-        the_real_download_location = await client.download_media(
+        the_real_download_location = await c.download_media(
             message=sms.reply_to_message,
             file_name=download_location,
             progress=progress_for_pyrogram,
@@ -120,14 +122,14 @@ async def down_load_media(client, sms):
 @TelePyroBot.on_message(filters.command("upload", COMMAND_HAND_LER) & filters.me)
 async def upload_as_document(c: TelePyroBot, m: Message):
     status_message = await m.reply_text("`Uploading...`")
-    if " " in message.text:
-        local_file_name = message.text.split(" ", 1)[1]
+    if " " in m.text:
+        local_file_name = m.text.split(" ", 1)[1]
         if os.path.exists(local_file_name):
             thumb_image_path = await is_thumb_image_exists(local_file_name)
             start_t = datetime.now()
             c_time = time.time()
             doc_caption = os.path.basename(local_file_name)
-            await message.reply_document(
+            await m.reply_document(
                 document=local_file_name,
                 thumb=thumb_image_path,
                 caption=doc_caption,
@@ -151,10 +153,10 @@ async def upload_as_document(c: TelePyroBot, m: Message):
 
 @TelePyroBot.on_message(filters.command("batchup", COMMAND_HAND_LER) & filters.me)
 async def covid(c: TelePyroBot, m: Message):
-    if len(message.text.split(" ")) == 1:
+    if len(m.text.split(" ")) == 1:
         await m.edit("`Enter a directory location`")
-    elif len(message.text.split(" ", 1)) == 2:
-        temp_dir = message.text.split(" ", 1)[1]
+    elif len(m.text.split(" ", 1)) == 2:
+        temp_dir = m.text.split(" ", 1)[1]
     else:
         await m.edit(f"__Please check help by using__ `{COMMAND_HAND_LER}help batchup`")
     status_message = await m.reply_text("`Uploading Files...`")
@@ -169,7 +171,7 @@ async def covid(c: TelePyroBot, m: Message):
             doc_caption = os.path.basename(required_file_name)
             LOGGER.info(f"Uploading {required_file_name} from {temp_dir} to Telegram.")
             await c.send_document(
-                chat_id=message.chat.id,
+                chat_id=m.chatid,
                 document=required_file_name,
                 thumb=thumb_image_path,
                 caption=doc_caption,

@@ -18,12 +18,12 @@ Powered by: https://wttr.in
 
 @TelePyroBot.on_message(filters.command("weather", COMMAND_HAND_LER) & filters.me)
 async def weather(c: TelePyroBot, m: Message):
-    if len(message.text.split()) == 1:
+    if len(m.text.split()) == 1:
         await m.edit(
             f"Usage: `{COMMAND_HAND_LER}weather <location>`", parse_mode="markdown"
         )
         return
-    location = message.text.split(None, 1)[1]
+    location = m.text.split(None, 1)[1]
     h = {"user-agent": "httpie"}
     a = requests.get(f"https://wttr.in/{location}?mnTC0&lang=en", headers=h)
     if (

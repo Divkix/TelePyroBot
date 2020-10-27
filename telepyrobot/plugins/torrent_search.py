@@ -22,7 +22,7 @@ async def tor_search(c: TelePyroBot, m: Message):
         await m.edit("`Check help on how to use this command`")
         return
     await m.edit("`Please wait, fetching results...`")
-    query = message.text.split(" ", 1)[1]
+    query = m.text.split(" ", 1)[1]
     response = requests.get(
         f"https://sjprojectsapi.herokuapp.com/torrent/?query={query}"
     )
@@ -47,7 +47,7 @@ async def tor_search(c: TelePyroBot, m: Message):
     caption = f"Here are the results for the query: {query}"
     with open(tsfileloc, "w+", encoding="utf8") as out_file:
         out_file.write(str(listdata))
-    await message.reply_document(
+    await m.reply_document(
         document=tsfileloc, caption=caption, disable_notification=True
     )
     os.remove(tsfileloc)

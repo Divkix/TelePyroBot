@@ -34,7 +34,7 @@ async def figlet_font(c: TelePyroBot, m: Message):
         "bulb": "bulbhead",
         "digi": "digital",
     }
-    input_str = message.text.split(" ", 1)[1]
+    input_str = m.text.split(" ", 1)[1]
     if "|" in input_str:
         text, font_style = input_str.split("|", maxsplit=1)
     elif input_str is not None:

@@ -72,9 +72,9 @@ weebyfont = [
 @TelePyroBot.on_message(filters.command("weebify", COMMAND_HAND_LER) & filters.me)
 async def weebify(c: TelePyroBot, m: Message):
     if len(m.command) >= 2:
-        args = message.text.split(" ", 1)[1]
+        args = m.text.split(" ", 1)[1]
     if m.reply_to_message and len(m.command) == 1:
-        args = m.reply_to_message.text
+        args = m.reply_to_m.text
     if not args:
         await event.edit("`What I am Supposed to Weebify dumb`")
         return

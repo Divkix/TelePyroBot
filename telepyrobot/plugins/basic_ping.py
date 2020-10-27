@@ -37,7 +37,9 @@ Basic commands of userbot!
 """
 
 
-@TelePyroBot.on_message(filters.command(["alive", "start"], COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(
+    filters.command(["alive", "start"], COMMAND_HAND_LER) & filters.me
+)
 async def check_alive(c: TelePyroBot, m: Message):
     await m.edit_text(
         ALIVE_TEXT.format(
@@ -122,7 +124,7 @@ async def get_id(c: TelePyroBot, m: Message):
     elif file_id:
         await m.edit("**File's ID:** `{}`".format(file_id))
     else:
-        await m.edit("**This Chat's ID:** `{}`".format(message.chat.id))
+        await m.edit("**This Chat's ID:** `{}`".format(m.chatid))
 
 
 @TelePyroBot.on_message(filters.command("json", COMMAND_HAND_LER) & filters.me)
@@ -139,7 +141,7 @@ async def jsonify(c: TelePyroBot, m: Message):
     except Exception as e:
         with open("json.text", "w+", encoding="utf8") as out_file:
             out_file.write(str(the_real_message))
-        await message.reply_document(
+        await m.reply_document(
             document="json.text",
             caption=str(e),
             disable_notification=True,

@@ -42,7 +42,7 @@ async def telegraph(c: TelePyroBot, m: Message):
     ):
         await m.edit("**Not supported!**", parse_mode="md")
         return
-    download_location = await client.download_media(
+    download_location = await c.download_media(
         message=m.reply_to_message, file_name="telepyrobot/downloads/"
     )
     await m.edit("`Pasting to telegraph...`", parse_mode="md")

@@ -24,14 +24,14 @@ async def carbon_api(c: TelePyroBot, m: Message):
         "exportSize": "4x",
     }
     cmd = m.command
-    rep_mesg_id = message.message_id
+    rep_mesg_id = m.message_id
     if m.reply_to_message:
         rep_mesg_id = m.reply_to_message.message_id
         r = m.reply_to_message
         json["code"] = r.text
         await m.edit_text("`Carbonizing code...`")
     elif len(cmd) >= 2:
-        r = message.text.split(" ", 1)[1]
+        r = m.text.split(" ", 1)[1]
         json["code"] = r
     else:
         await m.edit(f"Usage: `{COMMAND_HAND_LER}carbon` <reply to a code or text>")
@@ -44,7 +44,7 @@ async def carbon_api(c: TelePyroBot, m: Message):
         with open(filename, "wb") as f:
             shutil.copyfileobj(r.raw, f)
         await c.send_document(
-            message.chat.id,
+            m.chatid,
             filename,
             caption="Carbon Made by: @TelePyroBot",
             reply_to_message_id=rep_mesg_id,

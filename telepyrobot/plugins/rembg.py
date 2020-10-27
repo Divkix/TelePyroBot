@@ -37,7 +37,7 @@ async def remove_bg(c: TelePyroBot, m: Message):
     ):
         if os.path.exists("./downloads/img.jpg"):
             os.remove("./downloads/img.jpg")
-        orig_pic = await client.download_media(
+        orig_pic = await c.download_media(
             message=replied, file_name="./downloads/img.jpg"
         )
         await m.edit("`Removing Background...`")
@@ -48,7 +48,7 @@ async def remove_bg(c: TelePyroBot, m: Message):
             new_rembg_file = orig_pic.replace(".jpg", "_rembg_telepyrobot.png")
             shutil.move(remove_img, new_rembg_file)
             await c.send_document(
-                chat_id=message.chat.id,
+                chat_id=m.chatid,
                 document=new_rembg_file,
                 caption="Background removed using @TelePyroBot",
                 reply_to_message_id=ReplyCheck(message),

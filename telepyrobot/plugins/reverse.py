@@ -60,7 +60,7 @@ async def google_rs(c: TelePyroBot, m: Message):
             await m.edit("<b><i>Currently Not supported!</b></i>")
             return
         if message_.photo or message_.animation or message_.sticker:
-            dis_loc = await client.download_media(message=message_)
+            dis_loc = await c.download_media(message=message_)
         if message_.animation or message_.video:
             """await m.edit("`Converting this Gif`")
             img_file = os.path.join(screen_shot, "grs.jpg")

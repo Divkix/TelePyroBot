@@ -34,9 +34,9 @@ async def upload_as_document(c: TelePyroBot, m: Message):
         old_text += character
         typing_text = old_text + typing_symbol
         try:
-            await message.try_to_edit(typing_text, sudo=False)
+            await m.try_to_edit(typing_text, sudo=False)
             time.sleep(s_t)
-            await message.try_to_edit(old_text, sudo=False)
+            await m.try_to_edit(old_text, sudo=False)
             time.sleep(s_t)
         except FloodWait as ef:
             time.sleep(ef.x)

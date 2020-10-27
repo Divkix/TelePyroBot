@@ -24,7 +24,7 @@ Burn media files and make them look sick!
 @TelePyroBot.on_message(filters.command("deepfry", COMMAND_HAND_LER) & filters.me)
 async def do_deepfry(c: TelePyroBot, m: Message):
     try:
-        frycount = int(message.text.split(" ", 1)[1])
+        frycount = int(m.text.split(" ", 1)[1])
         if frycount < 1:
             frycount = 1
     except IndexError:
@@ -40,7 +40,7 @@ async def do_deepfry(c: TelePyroBot, m: Message):
     # download last photo (highres) as byte array
     await m.edit("`Downloading media...`")
     image = io.BytesIO()
-    image = await client.download_media(data)
+    image = await c.download_media(data)
     image = Image.open(image)
 
     await asyncio.sleep(3)
@@ -53,7 +53,7 @@ async def do_deepfry(c: TelePyroBot, m: Message):
     image.save(fried_io, "JPEG")
     fried_io.seek(0)
 
-    await message.reply_photo(photo=fried_io, caption="Deepfried by @TelePyroBot")
+    await m.reply_photo(photo=fried_io, caption="Deepfried by @TelePyroBot")
     await m.delete()
     return
 

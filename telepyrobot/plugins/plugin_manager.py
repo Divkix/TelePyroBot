@@ -20,17 +20,17 @@ Used to install, delete or send plugins from userbot local storage!
 
 @TelePyroBot.on_message(filters.command("sendpl", COMMAND_HAND_LER) & filters.me)
 async def send_plugin(c: TelePyroBot, m: Message):
-    if len(message.text.split(" ")) == 1:
+    if len(m.text.split(" ")) == 1:
         await m.edit("`Please enter a valid plugin name!!`")
         return
     await m.edit("`Sending plugin...`")
-    plugin_name = message.text.split(" ", 1)[1]
+    plugin_name = m.text.split(" ", 1)[1]
     if plugin_name not in ALL_PLUGINS:
         await m.edit(
             f"Please enter a valid plugin name!\nCheck availabe plugins by `{COMMAND_HAND_LER}plugins`."
         )
         return
-    await message.reply_document(
+    await m.reply_document(
         document=f"/app/telepyrobot/plugins/{plugin_name}.py",
         caption=f"**Plugin:** `{plugin_name}.py`\n**Plugin for** @TelePyroBot",
         disable_notification=True,
@@ -54,7 +54,7 @@ async def install_plugin(c: TelePyroBot, m: Message):
             )
             return
         try:
-            plugin_dl_loc = await client.download_media(
+            plugin_dl_loc = await c.download_media(
                 message=m.reply_to_message, file_name=plugin_loc
             )
             if plugin_dl_loc:

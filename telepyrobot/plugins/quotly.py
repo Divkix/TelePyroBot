@@ -29,7 +29,7 @@ async def quotly(c: TelePyroBot, m: Message):
     progress = 0
     while not is_sticker:
         try:
-            msg = await client.get_history("@QuotLyBot", 1)
+            msg = await c.get_history("@QuotLyBot", 1)
             check = msg[0]["sticker"]["file_id"]
             is_sticker = True
         except:
@@ -49,6 +49,6 @@ async def quotly(c: TelePyroBot, m: Message):
                     break
     await m.edit("`Complete !`", parse_mode="md")
     msg_id = msg[0]["message_id"]
-    await client.forward_messages(message.chat.id, "@QuotLyBot", msg_id)
-    await client.read_history("@QuotLyBot")
+    await c.forward_messages(m.chatid, "@QuotLyBot", msg_id)
+    await c.read_history("@QuotLyBot")
     await m.delete()

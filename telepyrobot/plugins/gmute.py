@@ -37,7 +37,7 @@ async def start_gmute(c: TelePyroBot, m: Message):
         await c.send_message(
             PRIVATE_GROUP_ID,
             "#GMUTE\nUser: {} in Chat {}".format(
-                mention_markdown(user_first_name, user_id), message.chat.title
+                mention_markdown(user_first_name, user_id), m.chattitle
             ),
         )
     return
@@ -60,7 +60,7 @@ async def end_gmute(c: TelePyroBot, m: Message):
         await c.send_message(
             PRIVATE_GROUP_ID,
             "#UNGMUTE\nUser: {} in Chat {}".format(
-                mention_markdown(user_first_name, user_id), message.chat.title
+                mention_markdown(user_first_name, user_id), m.chattitle
             ),
         )
     return
@@ -77,7 +77,7 @@ async def list_gmuted(c: TelePyroBot, m: Message):
     u = 0
     for x in users:
         u += 1
-        user = await client.get_users(x)
+        user = await c.get_users(x)
         users_list += f"[{u}] {mention_markdown(user.first_name, user.id)}: {user.id}\n"
     await m.edit(users_list)
     return
@@ -88,9 +88,7 @@ async def watcher_gmute(c: TelePyroBot, m: Message):
     if db.is_gmuted(m.from_user.id):
         await asyncio.sleep(0.1)
         try:
-            await client.delete_messages(
-                chat_id=message.chat.id, message_ids=message.message_id
-            )
+            await c.delete_messages(chat_id=m.chatid, message_ids=m.message_id)
         except:
             pass
     return

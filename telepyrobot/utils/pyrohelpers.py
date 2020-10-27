@@ -25,8 +25,8 @@ async def extract_user(c: TelePyroBot, m: Message) -> (int, str):
         return user_id, user_first_name
 
     if m.reply_to_message:
-        user_id = m.reply_to_message.from_user.id
-        user_first_name = m.reply_to_message.from_user.first_name
+        user_id = m.reply_to_m.from_user.id
+        user_first_name = m.reply_to_m.from_user.first_name
         return user_id, user_first_name
 
     if len(m.command) > 1 and not m.command[1].startswith("@"):

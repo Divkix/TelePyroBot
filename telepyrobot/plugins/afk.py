@@ -56,31 +56,29 @@ async def afk(c: TelePyroBot, m: Message):
     afk_end = {}
     start_1 = datetime.now()
     afk_start = start_1.replace(microsecond=0)
-    if len(message.text.split()) >= 2:
+    if len(m.text.split()) >= 2:
         await m.edit_text(
-            "I am going AFK now...\nBecause of {}".format(
-                message.text.split(None, 1)[1]
-            )
+            "I am going AFK now...\nBecause of {}".format(m.text.split(None, 1)[1])
         )
         await c.send_message(
             PRIVATE_GROUP_ID,
-            "You are AFK!\nBecause of {}".format(message.text.split(None, 1)[1]),
+            "You are AFK!\nBecause of {}".format(m.text.split(None, 1)[1]),
         )
         await asyncio.sleep(2)
         await m.delete()
         await asyncio.sleep(2)
-        set_afk(True, message.text.split(None, 1)[1])
+        set_afk(True, m.text.split(None, 1)[1])
 
     else:
         await m.edit_text(
             "{} is now AFK!".format(
-                mention_markdown(message.from_user.first_name, m.from_user.id)
+                mention_markdown(m.from_user.first_name, m.from_user.id)
             )
         )
         await c.send_message(
             PRIVATE_GROUP_ID,
             "{} is now AFK!".format(
-                mention_markdown(message.from_user.first_name, m.from_user.id)
+                mention_markdown(m.from_user.first_name, m.from_user.id)
             ),
         )
         await asyncio.sleep(2)
@@ -134,10 +132,10 @@ async def afk_mentioned(c: TelePyroBot, m: Message):
             else:
                 afk_since = f"`{int(seconds)}s` **ago**"
 
-        if "-" in str(message.chat.id):
-            cid = str(message.chat.id)[4:]
+        if "-" in str(m.chatid):
+            cid = str(m.chatid)[4:]
         else:
-            cid = str(message.chat.id)
+            cid = str(m.chatid)
 
         if cid in list(AFK_RESTIRECT) and int(AFK_RESTIRECT[cid]) >= int(time.time()):
             return
@@ -159,33 +157,33 @@ async def afk_mentioned(c: TelePyroBot, m: Message):
 
         _, message_type = get_message_type(message)
         if message_type == Types.TEXT:
-            text = message.text if message.text else message.caption
+            text = m.text if m.text else m.caption
         else:
             text = message_type.name
 
         MENTIONED.append(
             {
-                "user": message.from_user.first_name,
+                "user": m.from_user.first_name,
                 "user_id": m.from_user.id,
-                "chat": message.chat.title,
+                "chat": m.chattitle,
                 "chat_id": cid,
                 "text": text,
-                "message_id": message.message_id,
+                "message_id": m.message_id,
                 "time": datetime.now(),
             }
         )
         await c.send_message(
             PRIVATE_GROUP_ID,
             "{}({}) mentioned you in {}({})\nText:\n`{}`\n\nTotal count: `{}`".format(
-                mention_markdown(message.from_user.first_name, m.from_user.id),
+                mention_markdown(m.from_user.first_name, m.from_user.id),
                 m.from_user.id,
-                message.chat.title,
-                message.chat.id,
+                m.chattitle,
+                m.chatid,
                 text[:3500],
                 len(MENTIONED),
             ),
         )
-    await message.stop_propagation()
+    await m.stop_propagation()
 
 
 @TelePyroBot.on_message(
@@ -222,4 +220,4 @@ async def no_longer_afk(c: TelePyroBot, m: Message):
         await c.send_message(PRIVATE_GROUP_ID, text)
         MENTIONED = []
         afk_time = None
-        await message.stop_propagation()
+        await m.stop_propagation()

@@ -26,12 +26,12 @@ async def list_directories(_, message):
     if len(m.command) == 1:
         cmd = "ls"
     elif len(m.command) >= 2:
-        location = message.text.split(" ", 1)[1]
+        location = m.text.split(" ", 1)[1]
         cmd = "ls " + location
     else:
         await m.edit("<b>Error:</b>\n<i>Check Help documentaion for Help</i>")
 
-    reply_to_id = message.message_id
+    reply_to_id = m.message_id
 
     process = await asyncio.create_subprocess_shell(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
@@ -47,7 +47,7 @@ async def list_directories(_, message):
     if len(OUTPUT) > MAX_MESSAGE_LENGTH:
         with open("exec.text", "w+", encoding="utf8") as out_file:
             out_file.write(str(OUTPUT))
-        await message.reply_document(
+        await m.reply_document(
             document="exec.text",
             caption=cmd,
             disable_notification=True,

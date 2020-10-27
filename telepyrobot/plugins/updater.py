@@ -110,11 +110,11 @@ async def updater(c: TelePyroBot, m: Message):
     if len(message_one) > MAX_MESSAGE_LENGTH:
         with open("change.log", "w+", encoding="utf8") as out_file:
             out_file.write(str(message_one))
-        await message.reply_document(
+        await m.reply_document(
             document="change.log",
             caption=message_two,
             disable_notification=True,
-            reply_to_message_id=message.message_id,
+            reply_to_message_id=m.message_id,
         )
         os.remove("change.log")
 
@@ -164,4 +164,4 @@ def generate_change_log(git_repo, diff_marker):
 
 
 async def deploy_start(client):
-    await client.restart()
+    await c.restart()

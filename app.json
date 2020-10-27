@@ -24,7 +24,7 @@
       "description": "Get this value from https://my.telegram.org",
       "value": ""
     },
-    "DB_URI": {
+    "DATABASE_URL": {
       "description": "Get from ElephantSQL.",
       "value": "",
       "required": true
@@ -33,7 +33,7 @@
       "description": "Get this value from https://my.telegram.org",
       "value": ""
     },
-    "HU_STRING_SESSION": {
+    "STRING_SESSION": {
       "description": "Generate this value by running python3 GenerateStringSession.py locally",
       "value": ""
     },

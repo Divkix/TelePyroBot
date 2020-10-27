@@ -23,15 +23,12 @@ async def progress_for_pyrogram(current, total, ud_type, message, start):
             round(percentage, 2),
         )
 
-        tmp = (
-            progress
-            + "**Done:** __{0} of {1}__\n**Speed:** __{2}/s__\n**ETA:** __{3}__\n".format(
-                humanbytes(current),
-                humanbytes(total),
-                humanbytes(speed),
-                # elapsed_time if elapsed_time != '' else "0 s",
-                estimated_total_time if estimated_total_time != "" else "0 s",
-            )
+        tmp = progress + "**Done:** __{0} of {1}__\n**Speed:** __{2}/s__\n**ETA:** __{3}__\n".format(
+            humanbytes(current),
+            humanbytes(total),
+            humanbytes(speed),
+            # elapsed_time if elapsed_time != '' else "0 s",
+            estimated_total_time if estimated_total_time != "" else "0 s",
         )
         try:
             await m.edit("{}\n {}".format(ud_type, tmp))

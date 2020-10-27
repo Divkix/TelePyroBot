@@ -22,7 +22,7 @@ async def cas(c: TelePyroBot, m: Message):
         await m.edit("`Check help, you don't know how to use it`")
         return
 
-    args = message.text.split(" ", 2)
+    args = m.text.split(" ", 2)
     grpname = args[2]
     grptype = args[1]
     user_id = "@Alita_Robot"
@@ -30,7 +30,7 @@ async def cas(c: TelePyroBot, m: Message):
     if grptype == "basic":
         try:
             await m.edit(f"__Trying to make a BasicGroup named:__`{grpname}`")
-            await client.create_group(f"{grpname}", user_id)
+            await c.create_group(f"{grpname}", user_id)
         except Exception as ef:
             await m.edit(f"**Error:**\n`{ef}`")
             return
@@ -38,7 +38,7 @@ async def cas(c: TelePyroBot, m: Message):
     elif grptype == "super":
         try:
             await m.edit(f"__Trying to make a SuperGroup named:__`{grpname}`")
-            await client.create_supergroup(f"{grpname}")
+            await c.create_supergroup(f"{grpname}")
         except Exception as ef:
             await m.edit(f"**Error:**\n`{ef}`")
             return

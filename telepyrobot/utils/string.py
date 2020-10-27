@@ -52,7 +52,6 @@ async def extract_time_str(m, time_val):
     else:
         await m.reply(
             f"Invalid time type specified. Needed m, h, or s. got: {time_val[-1]}"
-            )
         )
         return
 
@@ -104,11 +103,7 @@ def split_quotes(text: str):
 
 
 def extract_text(m):
-    return (
-        m.text
-        or m.caption
-        or (m.sticker.emoji if m.sticker else None)
-    )
+    return m.text or m.caption or (m.sticker.emoji if m.sticker else None)
 
 
 def remove_escapes(text: str) -> str:

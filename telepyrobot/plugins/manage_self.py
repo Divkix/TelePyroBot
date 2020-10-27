@@ -37,16 +37,16 @@ Blocks the user, if you blocked it.
 @TelePyroBot.on_message(filters.command("unblockpm", COMMAND_HAND_LER) & filters.me)
 async def unblock_pm(c: TelePyroBot, m: Message):
     if len(m.command) == 2:
-        user = message.text.split(" ", 1)[1]
+        user = m.text.split(" ", 1)[1]
         try:
-            await client.unblock_user(user)
+            await c.unblock_user(user)
             await m.edit("`Unblocked User`")
         except Exception as ef:
             await m.edit(f"**Error:**\n`{ef}`")
     elif m.reply_to_message:
-        user = m.reply_to_message.from_user.id
+        user = m.reply_to_m.from_user.id
         try:
-            await client.unblock_user(user)
+            await c.unblock_user(user)
             await m.edit("`Unblocked User`")
         except Exception as ef:
             await m.edit(f"**Error:**\n`{ef}`")
@@ -56,16 +56,16 @@ async def unblock_pm(c: TelePyroBot, m: Message):
 @TelePyroBot.on_message(filters.command("blockpm", COMMAND_HAND_LER) & filters.me)
 async def block_pm(c: TelePyroBot, m: Message):
     if len(m.command) == 2:
-        user = message.text.split(" ", 1)[1]
+        user = m.text.split(" ", 1)[1]
         try:
-            await client.unblock_user(user)
+            await c.unblock_user(user)
             await m.edit("`Blocked User`")
         except Exception as ef:
             await m.edit(f"**Error:**\n`{ef}`")
     elif m.reply_to_message:
-        user = m.reply_to_message.from_user.id
+        user = m.reply_to_m.from_user.id
         try:
-            await client.unblock_user(user)
+            await c.unblock_user(user)
             await m.edit("`Blocked User`")
         except Exception as ef:
             await m.edit(f"**Error:**\n`{ef}`")
@@ -74,22 +74,22 @@ async def block_pm(c: TelePyroBot, m: Message):
 
 @TelePyroBot.on_message(filters.command("uprofile", COMMAND_HAND_LER) & filters.me)
 async def update_profile(c: TelePyroBot, m: Message):
-    update = message.txt.split(" ", 2)
+    update = m.text.split(" ", 2)
     msgreply = m.reply_to_message
-    replytxt = m.reply_to_message.text
+    replytxt = m.reply_to_m.text
 
     # Set first_name
     if update[1] == "fname":
         if update[2]:
             try:
-                await client.update_bio(first_name=f"{update[2]}")
+                await c.update_bio(first_name=f"{update[2]}")
                 await m.edit(f"**Updated First name to:**\n`{update[2]}`")
             except Exception as ef:
                 await m.edit(f"**Error:**\n`{ef}`")
                 return
         elif msgreply and not update[2]:
             try:
-                await client.update_bio(first_name=f"{replytxt}")
+                await c.update_bio(first_name=f"{replytxt}")
                 await m.edit(f"**Updated First name to:**\n`{replytxt}`")
             except Exception as ef:
                 await m.edit(f"**Error:**\n`{ef}`")
@@ -99,14 +99,14 @@ async def update_profile(c: TelePyroBot, m: Message):
     elif update[1] == "lname":
         if update[2]:
             try:
-                await client.update_bio(last_name=f"{update[2]}")
+                await c.update_bio(last_name=f"{update[2]}")
                 await m.edit(f"**Updated Last name to:**\n`{update[2]}`")
             except Exception as ef:
                 await m.edit(f"**Error:**\n`{ef}`")
                 return
         elif msgreply and not update[2]:
             try:
-                await client.update_bio(last_name=f"{replytxt}")
+                await c.update_bio(last_name=f"{replytxt}")
                 await m.edit(f"**Updated Last name to:**\n`{replytxt}`")
             except Exception as ef:
                 await m.edit(f"**Error:**\n`{ef}`")
@@ -115,7 +115,7 @@ async def update_profile(c: TelePyroBot, m: Message):
     # Remove last_name
     elif update[1] == "rmlname":
         try:
-            await client.update_bio(last_name="")
+            await c.update_bio(last_name="")
             await m.edit(f"**Removed Last name**")
         except Exception as ef:
             await m.edit(f"**Error:**\n`{ef}`")
@@ -125,14 +125,14 @@ async def update_profile(c: TelePyroBot, m: Message):
     elif update[1] == "bio":
         if update[2]:
             try:
-                await client.update_bio(bio=f"{update[2]}")
+                await c.update_bio(bio=f"{update[2]}")
                 await m.edit(f"**Updated Bio**")
             except Exception as ef:
                 await m.edit(f"**Error:**\n`{ef}`")
                 return
         elif msgreply and not update[2]:
             try:
-                await client.update_bio(bio=f"{replytxt}")
+                await c.update_bio(bio=f"{replytxt}")
                 await m.edit(f"**Updated Bio to replied message**")
             except Exception as ef:
                 await m.edit(f"**Error:**\n`{ef}`")
@@ -141,12 +141,12 @@ async def update_profile(c: TelePyroBot, m: Message):
 
 @TelePyroBot.on_message(filters.command("setusername", COMMAND_HAND_LER) & filters.me)
 async def set_username(c: TelePyroBot, m: Message):
-    username = message.txt.split(" ", 1)
+    username = m.text.split(" ", 1)
     if " " in username:
         await m.edit("`Username cannot contain spaces`")
         return
     try:
-        await client.update_username(f"{username}")
+        await c.update_username(f"{username}")
         await m.edit(f"**Updated Username to:**\n@{username}")
     except Exception as ef:
         await m.edit(f"**Error:**\n{ef}")
@@ -156,7 +156,7 @@ async def set_username(c: TelePyroBot, m: Message):
 @TelePyroBot.on_message(filters.command("rmusername", COMMAND_HAND_LER) & filters.me)
 async def remove_username(c: TelePyroBot, m: Message):
     try:
-        await client.update_username("")
+        await c.update_username("")
         await m.edit(f"**Removed Username**")
     except Exception as ef:
         await m.edit(f"**Error:**\n{ef}")
@@ -165,9 +165,9 @@ async def remove_username(c: TelePyroBot, m: Message):
 
 @TelePyroBot.on_message(filters.command("rmpfp", COMMAND_HAND_LER) & filters.me)
 async def remove_pfp(c: TelePyroBot, m: Message):
-    photos = client.get_profile_photos("me")
+    photos = c.get_profile_photos("me")
     try:
-        client.delete_profile_photos([p.file_id for p in photos[1:]])
+        c.delete_profile_photos([p.file_id for p in photos[1:]])
         await m.edit(f"**Removed Profile Pictures**")
     except Exception as ef:
         await m.edit(f"**Error:**\n{ef}")

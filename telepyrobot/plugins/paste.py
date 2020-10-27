@@ -35,7 +35,7 @@ async def paste_bin(c: TelePyroBot, m: Message):
             downloaded_file_name += "\n"
         os.remove(filename_loc)
     elif m.reply_to_message:
-        downloaded_file_name = m.reply_to_message.text.html
+        downloaded_file_name = m.reply_to_m.text.html
     else:
         await m.edit("What do you want to Paste?")
         return
@@ -55,7 +55,7 @@ async def paste_bin(c: TelePyroBot, m: Message):
 
     default_paste = "nekobin"
     if len(m.command) == 2:
-        default_paste = message.text.split(" ", 1)[1]
+        default_paste = m.text.split(" ", 1)[1]
 
     paste_store_url = paste_bin_store_s.get(default_paste, paste_bin_store_s["nekobin"])
     paste_store_base_url_rp = urlparse(paste_store_url)

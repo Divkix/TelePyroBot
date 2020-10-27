@@ -78,13 +78,13 @@ def get_note_type(msg):
         data_type = Types.TEXT
 
     elif msg.reply_to_message:
-        if msg.reply_to_message.text:
-            text = msg.reply_to_message.text.markdown
+        if msg.reply_to_m.text:
+            text = msg.reply_to_m.text.markdown
         elif msg.reply_to_message.caption:
             text = msg.reply_to_message.caption.markdown
         else:
             text = ""
-        if len(args) >= 2 and msg.reply_to_message.text:  # not caption, text
+        if len(args) >= 2 and msg.reply_to_m.text:  # not caption, text
             data_type = Types.TEXT
 
         elif msg.reply_to_message.sticker:

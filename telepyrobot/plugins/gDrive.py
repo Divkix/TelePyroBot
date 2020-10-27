@@ -14,7 +14,7 @@ from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import (
     COMMAND_HAND_LER,
-    DB_URI,
+    DATABASE_URL,
     G_DRIVE_CLIENT_ID,
     G_DRIVE_CLIENT_SECRET,
     LOGGER,
@@ -122,7 +122,7 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
                             os.makedirs(TMP_DOWNLOAD_DIRECTORY)
                         download_location = TMP_DOWNLOAD_DIRECTORY + "/"
                         c_time = time.time()
-                        the_real_download_location = await client.download_media(
+                        the_real_download_location = await c.download_media(
                             message=m.reply_to_message,
                             file_name=download_location,
                             progress=progress_for_pyrogram,
@@ -212,7 +212,7 @@ async def AskUserToVisitLinkAndGiveCode(message, code):
         return
     await m.edit_text(text="`Checking received code...``")
     creds = flow.step2_exchange(code)
-    db.set_credential(m.reply_to_message.from_user.id, creds)
+    db.set_credential(m.reply_to_m.from_user.id, creds)
     #
     await m.edit_text(text="<b>Saved gDrive credentials</b>")
     flow = None

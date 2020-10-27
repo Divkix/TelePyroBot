@@ -28,9 +28,9 @@ Get IP Address of userbot server.
 @TelePyroBot.on_message(filters.command(["eval", "py"], COMMAND_HAND_LER) & sudo_filter)
 async def eval(c: TelePyroBot, m: Message):
     status_message = await m.reply_text("`Processing...`")
-    cmd = message.text.split(" ", maxsplit=1)[1]
+    cmd = m.text.split(" ", maxsplit=1)[1]
 
-    reply_to_id = message.message_id
+    reply_to_id = m.message_id
     if m.reply_to_message:
         reply_to_id = m.reply_to_message.message_id
 
@@ -60,14 +60,16 @@ async def eval(c: TelePyroBot, m: Message):
     else:
         evaluation = "Success"
 
-    final_output = "<b>EVAL</b>: <code>{}</code>\n\n<b>OUTPUT</b>:\n<code>{}</code> \n".format(
-        cmd, evaluation.strip()
+    final_output = (
+        "<b>EVAL</b>: <code>{}</code>\n\n<b>OUTPUT</b>:\n<code>{}</code> \n".format(
+            cmd, evaluation.strip()
+        )
     )
 
     if len(final_output) > MAX_MESSAGE_LENGTH:
         with open("eval.text", "w+", encoding="utf8") as out_file:
             out_file.write(str(final_output))
-        await message.reply_document(
+        await m.reply_document(
             document="eval.text",
             caption=cmd,
             disable_notification=True,
@@ -89,9 +91,9 @@ async def aexec(code, client, message):
 
 @TelePyroBot.on_message(filters.command(["exec", "sh"], COMMAND_HAND_LER) & sudo_filter)
 async def execution(_, message):
-    cmd = message.text.split(" ", maxsplit=1)[1]
+    cmd = m.text.split(" ", maxsplit=1)[1]
 
-    reply_to_id = message.message_id
+    reply_to_id = m.message_id
     if m.reply_to_message:
         reply_to_id = m.reply_to_message.message_id
 
@@ -115,7 +117,7 @@ async def execution(_, message):
     if len(OUTPUT) > MAX_MESSAGE_LENGTH:
         with open("exec.text", "w+", encoding="utf8") as out_file:
             out_file.write(str(OUTPUT))
-        await message.reply_document(
+        await m.reply_document(
             document="exec.text",
             caption=cmd,
             disable_notification=True,
@@ -129,6 +131,4 @@ async def execution(_, message):
 @TelePyroBot.on_message(filters.command("ip", COMMAND_HAND_LER) & sudo_filter)
 async def public_ip(c: TelePyroBot, m: Message):
     ip = requests.get("https://api.ipify.org").text
-    await m.reply_text(
-        f"<b>Bot IP Address:</b>\n<code>{ip}</code>", parse_mode="html"
-    )
+    await m.reply_text(f"<b>Bot IP Address:</b>\n<code>{ip}</code>", parse_mode="html")

@@ -33,12 +33,12 @@ Usage: {COMMAND_HAND_LER}setchatdesc (chatdesc or as a reply to the message)
 
 @TelePyroBot.on_message(filters.command("leavechat", COMMAND_HAND_LER) & filters.me)
 async def leavechat(c: TelePyroBot, m: Message):
-    if message.chat.type in ["group", "supergroup"]:
-        chat_id = message.chat.id
+    if m.chattype in ["group", "supergroup"]:
+        chat_id = m.chatid
         is_admin = await admin_check(message)
         if not is_admin:
             return
-        await client.leave_chat(chat_id, delete=True)
+        await c.leave_chat(chat_id, delete=True)
 
 
 @TelePyroBot.on_message(filters.command("invitelink", COMMAND_HAND_LER) & filters.me)
@@ -46,25 +46,25 @@ async def invitelink(c: TelePyroBot, m: Message):
     is_admin = await admin_check(message)
     if not is_admin:
         return
-    chat_id = message.chat.id
-    link = await client.export_chat_invite_link(chat_id)
+    chat_id = m.chatid
+    link = await c.export_chat_invite_link(chat_id)
     await m.edit(f"**Link for Chat:**\n`{link}`")
 
 
 @TelePyroBot.on_message(filters.command("setchatpic", COMMAND_HAND_LER) & filters.me)
 async def set_picture(c: TelePyroBot, m: Message):
-    if message.chat.type in ["group", "supergroup"]:
+    if m.chattype in ["group", "supergroup"]:
         is_admin = await admin_check(message)
         if not is_admin:
             return
         await m.edit("`Tring to Change Group Picture....`")
-        chat_id = message.chat.id
+        chat_id = m.chatid
         try:
             if m.reply_to_message and m.reply_to_message.media:
                 file_id = m.reply_to_message.photo.file_id
                 file_ref = m.reply_to_message.photo.file_ref
-                await client.set_chat_photo(chat_id, file_id, file_ref=file_ref)
-                await m.edit(f"`{message.chat.type.title()} picture has been set.`")
+                await c.set_chat_photo(chat_id, file_id, file_ref=file_ref)
+                await m.edit(f"`{m.chattype.title()} picture has been set.`")
             else:
                 await m.edit("`Reply to an image to set that as group pic`")
         except Exception as ef:
@@ -76,10 +76,10 @@ async def delchatpic(c: TelePyroBot, m: Message):
     is_admin = await admin_check(message)
     if not is_admin:
         return
-    chat_id = message.chat.id
+    chat_id = m.chatid
     try:
-        await client.delete_chat_photo(chat_id)
-        await m.edit(f"`Deleted Chat Picture for {message.chat.type.title()}`")
+        await c.delete_chat_photo(chat_id)
+        await m.edit(f"`Deleted Chat Picture for {m.chattype.title()}`")
     except Exception as ef:
         await m.edit(f"Error deleting Chat Pic due to:\n`{ef}`")
 
@@ -90,14 +90,14 @@ async def setchatname(c: TelePyroBot, m: Message):
     is_admin = await admin_check(message)
     if not is_admin:
         return
-    chat_id = message.chat.id
-    chat_title = message.text.split(" ", 1)
+    chat_id = m.chatid
+    chat_title = m.text.split(" ", 1)
     if m.reply_to_message:
-        chat_title = m.reply_to_message.text
+        chat_title = m.reply_to_m.text
     else:
         chat_title = chat_title[1]
     try:
-        await client.set_chat_title(chat_id, chat_title)
+        await c.set_chat_title(chat_id, chat_title)
         await m.edit(f"<b>Changed Chat Name to:</b> <code>{chat_title}</code>")
     except Exception as ef:
         await m.edit(f"**Could not Change Chat Title due to:**\n`{ef}`")
@@ -109,14 +109,14 @@ async def setchatdesc(c: TelePyroBot, m: Message):
     is_admin = await admin_check(message)
     if not is_admin:
         return
-    chat_id = message.chat.id
-    chat_desc = message.text.split(" ", 1)
+    chat_id = m.chatid
+    chat_desc = m.text.split(" ", 1)
     if m.reply_to_message:
-        chat_desc = m.reply_to_message.text
+        chat_desc = m.reply_to_m.text
     else:
         chat_desc = chat_desc[1]
     try:
-        await client.set_chat_description(chat_id, chat_desc)
+        await c.set_chat_description(chat_id, chat_desc)
         await m.edit(f"<b>Changed Chat Description to:</b> <code>{chat_desc}</code>")
     except Exception as ef:
         await m.edit(f"**Could not Change Chat Desciption due to:**\n`{ef}`")

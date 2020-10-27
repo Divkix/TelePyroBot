@@ -13,12 +13,14 @@ __help__ = f"""
 """
 
 
-@TelePyroBot.on_message(filters.command(["whois", "info"], COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(
+    filters.command(["whois", "info"], COMMAND_HAND_LER) & filters.me
+)
 async def upload_as_document(c: TelePyroBot, m: Message):
     await m.edit("`Collecting Whois Info.. Hang on!`")
     user_id, user_first_name = await extract_user(m)
     if user_id is not None:
-        from_user = await client.get_users(user_id)
+        from_user = await c.get_users(user_id)
         message_out_str = (
             "<b>Fetched information from</b> @TelePyroBot <b>Database<!/b>\n"
         )

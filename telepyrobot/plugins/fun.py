@@ -39,28 +39,32 @@ Just for fun ;)
 """
 
 
-@TelePyroBot.on_message(filters.command(["throw", "dart"], COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(
+    filters.command(["throw", "dart"], COMMAND_HAND_LER) & filters.me
+)
 async def throw_dart(c: TelePyroBot, m: Message):
-    rep_mesg_id = message.message_id
+    rep_mesg_id = m.message_id
     if m.reply_to_message:
         rep_mesg_id = m.reply_to_message.message_id
     await m.delete()
     await c.send_dice(
-        chat_id=message.chat.id,
+        chat_id=m.chatid,
         emoji=DART_E_MOJI,
         disable_notification=True,
         reply_to_message_id=rep_mesg_id,
     )
 
 
-@TelePyroBot.on_message(filters.command(["roll", "dice"], COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(
+    filters.command(["roll", "dice"], COMMAND_HAND_LER) & filters.me
+)
 async def roll_dice(c: TelePyroBot, m: Message):
-    rep_mesg_id = message.message_id
+    rep_mesg_id = m.message_id
     if m.reply_to_message:
         rep_mesg_id = m.reply_to_message.message_id
     await m.delete()
     await c.send_dice(
-        chat_id=message.chat.id,
+        chat_id=m.chatid,
         emoji=DICE_E_MOJI,
         disable_notification=True,
         reply_to_message_id=rep_mesg_id,
@@ -71,7 +75,7 @@ async def roll_dice(c: TelePyroBot, m: Message):
 async def runs(_, message):
     run = random.choice(RUN_STRINGS)
     if m.reply_to_message:
-        await m.reply_to_message.reply_text(run)
+        await m.reply_to_m.reply_text(run)
         await m.delete()
     else:
         await m.edit(run)

@@ -21,7 +21,7 @@ Check info of cases Covid19 (CoronaVirus) Disease
 @TelePyroBot.on_message(filters.command("covid", COMMAND_HAND_LER) & filters.me)
 async def covid(c: TelePyroBot, m: Message):
     await m.edit("`Processing...`", parse_mode="md")
-    cmd = message.text.split(" ", 1)
+    cmd = m.text.split(" ", 1)
     if len(cmd) == 1:
         r = requests.get("https://corona.lmao.ninja/v2/all?yesterday=true").json()
         last_updated = datetime.datetime.fromtimestamp(r["updated"] / 1000).strftime(

@@ -17,8 +17,8 @@ Get information about a Github Account
 
 @TelePyroBot.on_message(filters.command("github", COMMAND_HAND_LER) & filters.me)
 async def github(c: TelePyroBot, m: Message):
-    if len(message.text.split(" ")) == 2:
-        username = message.text.split(" ", 1)[1]
+    if len(m.text.split(" ")) == 2:
+        username = m.text.split(" ", 1)[1]
     else:
         await m.edit(f"Usage: `{COMMAND_HAND_LER}github <username>`", parse_mode="md")
         return

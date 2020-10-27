@@ -20,7 +20,7 @@ else:
 LOGGER = logging.getLogger(__name__)
 APP_ID = Config.APP_ID
 API_HASH = Config.API_HASH
-HU_STRING_SESSION = Config.HU_STRING_SESSION
+STRING_SESSION = Config.STRING_SESSION
 COMMAND_HAND_LER = Config.COMMAND_HAND_LER
 MAX_MESSAGE_LENGTH = Config.MAX_MESSAGE_LENGTH
 
@@ -29,12 +29,12 @@ TMP_DOWNLOAD_DIRECTORY = Config.TMP_DOWNLOAD_DIRECTORY
 if not os.path.exists(TMP_DOWNLOAD_DIRECTORY):
     os.makedirs(TMP_DOWNLOAD_DIRECTORY)
 
-if not os.path.exists('telepyrobot/cache'):
-    os.makedirs('telepyrobot/cache')
+if not os.path.exists("telepyrobot/cache"):
+    os.makedirs("telepyrobot/cache")
 
 HEROKU_API_KEY = Config.HEROKU_API_KEY
 OFFICIAL_UPSTREAM_REPO = Config.OFFICIAL_UPSTREAM_REPO
-DB_URI = Config.DB_URI
+DATABASE_URL = Config.DATABASE_URL
 G_DRIVE_CLIENT_ID = Config.G_DRIVE_CLIENT_ID
 G_DRIVE_CLIENT_SECRET = Config.G_DRIVE_CLIENT_SECRET
 SUDO_USERS = list(Config.SUDO_USERS)

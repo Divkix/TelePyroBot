@@ -19,7 +19,7 @@ Usage: {COMMAND_HAND_LER}del <as a reply to the message>"""
 
 @TelePyroBot.on_message(filters.command("purge", COMMAND_HAND_LER) & filters.me)
 async def purge(c: TelePyroBot, m: Message):
-    if message.chat.type in ("supergroup", "channel"):
+    if m.chattype in ("supergroup", "channel"):
         await m.edit("`Incinerating these useless messages...`")
         is_admin = await admin_check(message)
         if not is_admin:
@@ -27,7 +27,7 @@ async def purge(c: TelePyroBot, m: Message):
             await asyncio.sleep(2)
             await m.delete()
             return
-    if message.chat.type in ["private", "bot", "group"]:
+    if m.chattype in ["private", "bot", "group"]:
         await m.edit("`You are not allowed to use this command here!`")
         await asyncio.sleep(2)
         await m.delete()
@@ -37,17 +37,17 @@ async def purge(c: TelePyroBot, m: Message):
     count_del_etion_s = 0
 
     if m.reply_to_message:
-        for a_s_message_id in range(m.reply_to_message.message_id, message.message_id):
+        for a_s_message_id in range(m.reply_to_message.message_id, m.message_id):
             message_ids.append(a_s_message_id)
             if len(message_ids) == TG_MAX_SELECT_LEN:
-                await client.delete_messages(
-                    chat_id=message.chat.id, message_ids=message_ids, revoke=True
+                await c.delete_messages(
+                    chat_id=m.chatid, message_ids=message_ids, revoke=True
                 )
                 count_del_etion_s += len(message_ids)
                 message_ids = []
         if len(message_ids) > 0:
-            await client.delete_messages(
-                chat_id=message.chat.id, message_ids=message_ids, revoke=True
+            await c.delete_messages(
+                chat_id=m.chatid, message_ids=message_ids, revoke=True
             )
             count_del_etion_s += len(message_ids)
 
@@ -59,15 +59,15 @@ async def purge(c: TelePyroBot, m: Message):
 @TelePyroBot.on_message(filters.command("del", COMMAND_HAND_LER) & filters.me, group=3)
 async def del_msg(c: TelePyroBot, m: Message):
     if m.reply_to_message:
-        if message.chat.type in ("supergroup", "channel"):
+        if m.chattype in ("supergroup", "channel"):
             is_admin = await admin_check(message)
             if not is_admin:
                 await m.reply_text("`I'm not admin nub Nibba`")
                 await asyncio.sleep(3)
                 await m.delete()
                 return
-        await client.delete_messages(
-            chat_id=message.chat.id, message_ids=m.reply_to_message.message_id
+        await c.delete_messages(
+            chat_id=m.chatid, message_ids=m.reply_to_message.message_id
         )
     else:
         await m.edit("`Reply to a message to delete!`")

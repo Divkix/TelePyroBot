@@ -41,7 +41,7 @@ async def eval(c: TelePyroBot, m: Message):
     stdout, stderr, exc = None, None, None
 
     try:
-        await aexec(cmd, client, message)
+        await aexec(cmd, c, m)
     except Exception:
         exc = traceback.format_exc()
 

@@ -1,6 +1,6 @@
 {
   "name": "TelePyroBot",
-  "description": "PyroGram UserBot made by Skuzzy xD",
+  "description": "Pyrogram based UserBot made by Skuzzy xD",
   "keywords": [
     "telegram",
     "best",
@@ -14,7 +14,6 @@
     "telepyrobot"
   ],
   "repository": "https://github.com/SkuzzyxD/TelePyroBot",
-  "success_url": "https://t.me/TelePyroBot",
   "stack": "container",
   "env": {
     "ENV": {
@@ -24,6 +23,11 @@
     "APP_ID": {
       "description": "Get this value from https://my.telegram.org",
       "value": ""
+    },
+    "DB_URI": {
+      "description": "Get from ElephantSQL.",
+      "value": "",
+      "required": true
     },
     "API_HASH": {
       "description": "Get this value from https://my.telegram.org",

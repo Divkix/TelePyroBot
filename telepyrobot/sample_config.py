@@ -12,7 +12,7 @@ class Config:
     OFFICIAL_UPSTREAM_REPO = os.environ.get(
         "OFFICIAL_UPSTREAM_REPO", "https://github.com/SkuzzyxD/TelePyroBot.git"
     )
-    DB_URI = os.environ.get("DATABASE_URL", None)
+    DB_URI = os.environ.get("DB_URI", None)
     G_DRIVE_CLIENT_ID = os.environ.get("G_DRIVE_CLIENT_ID", None)
     G_DRIVE_CLIENT_SECRET = os.environ.get("G_DRIVE_CLIENT_SECRET", None)
     OWNER_ID = int(os.environ.get("OWNER_ID", "716243352"))
@@ -23,9 +23,6 @@ class Config:
     OWNER_NAME = os.environ.get("OWNER_NAME", "Skuzzy xD")
     PRIVATE_GROUP_ID = int(os.environ.get("PRIVATE_GROUP_ID", -100))
     PM_PERMIT = bool(os.environ.get("PM_PERMIT", False))
-    GOOGLE_CHROME_BIN = os.environ.get(
-        "GOOGLE_CHROME_BIN", "/app/.apt/opt/google/chrome/chrome"
-    )
     REMBG_API_KEY = os.environ.get("REMBG_API_KEY", None)
 
 

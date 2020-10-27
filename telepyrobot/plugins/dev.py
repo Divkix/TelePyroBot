@@ -82,16 +82,16 @@ async def eval(c: TelePyroBot, m: Message):
     return
 
 
-async def aexec(code, client, message):
+async def aexec(code, c, m):
     exec(
         f"async def __aexec(c: TelePyroBot, m: Message): "
         + "".join(f"\n {l}" for l in code.split("\n"))
     )
-    return await locals()["__aexec"](client, message)
+    return await locals()["__aexec"](c, m)
 
 
 @TelePyroBot.on_message(filters.command(["exec", "sh"], COMMAND_HAND_LER) & sudo_filter)
-async def execution(_, message):
+async def execution(_, m:  Message):
     cmd = m.text.split(" ", maxsplit=1)[1]
 
     reply_to_id = m.message_id

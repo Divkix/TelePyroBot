@@ -3,3 +3,8 @@ build:
       worker: Dockerfile
 run:
    worker: python3 -m telepyrobot
+
+setup:
+  addons:
+  - plan: heroku-postgresql
+    as: DATABASE

@@ -1,5 +1,5 @@
 from pyrogram.types import Message
-from pyrogram import Client
+from telepyrobot.__main__ import TelePyroBot
 
 
 def ReplyCheck(m: Message):

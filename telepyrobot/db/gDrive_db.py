@@ -1,7 +1,7 @@
 import pickle
 import threading
 from sqlalchemy import Column, Integer, String, LargeBinary
-from telepyrobot.utils.sql_helpers import BASE, SESSION
+from telepyrobot.db import BASE, SESSION
 
 
 class gDriveCreds(BASE):

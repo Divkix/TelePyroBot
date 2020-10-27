@@ -1,5 +1,5 @@
 from sqlalchemy import Column, String, Integer
-from telepyrobot.utils.sql_helpers import BASE, SESSION
+from telepyrobot.db import BASE, SESSION
 import threading
 
 

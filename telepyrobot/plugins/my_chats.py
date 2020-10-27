@@ -4,7 +4,7 @@ from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 from telepyrobot.utils.admin_check import admin_check
-from telepyrobot.utils.sql_helpers import my_chats_db as db
+from telepyrobot.db import my_chats_db as db
 
 MESSAGE_RECOUNTER = 0
 

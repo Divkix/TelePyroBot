@@ -20,7 +20,7 @@ from telepyrobot import (
     LOGGER,
     TMP_DOWNLOAD_DIRECTORY,
 )
-import telepyrobot.utils.sql_helpers.gDrive_db as db
+import telepyrobot.db.gDrive_db as db
 from telepyrobot.utils.display_progress_dl_up import progress_for_pyrogram
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))

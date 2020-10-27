@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, Boolean, UnicodeText
 from telepyrobot import OWNER_ID
-from telepyrobot.utils.sql_helpers import BASE, SESSION
+from telepyrobot.db import BASE, SESSION
 
 
 class AFK(BASE):

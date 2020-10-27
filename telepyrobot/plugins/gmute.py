@@ -3,7 +3,7 @@ import asyncio
 from telepyrobot.__main__ import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
-from telepyrobot.utils.sql_helpers import gmute_db as db
+from telepyrobot.db import gmute_db as db
 from telepyrobot import COMMAND_HAND_LER, PRIVATE_GROUP_ID
 from telepyrobot.utils.pyrohelpers import extract_user
 from telepyrobot.utils.parser import mention_markdown

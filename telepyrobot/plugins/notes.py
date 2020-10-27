@@ -6,7 +6,7 @@ from telepyrobot import COMMAND_HAND_LER
 from telepyrobot.utils.msg_types import Types, get_note_type
 from telepyrobot.utils.pyrohelpers import ReplyCheck
 import asyncio
-from telepyrobot.utils.sql_helpers import notes_db as db
+from telepyrobot.db import notes_db as db
 
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))

@@ -12,7 +12,7 @@ from telepyrobot import (
     OWNER_NAME,
 )
 from telepyrobot.utils.parser import mention_markdown
-from telepyrobot.utils.sql_helpers import pmpermit_db as db
+from telepyrobot.db import pmpermit_db as db
 from telepyrobot.utils.cust_p_filters import sudo_filter
 from telepyrobot.utils.pyrohelpers import extract_user
 

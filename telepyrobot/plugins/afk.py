@@ -15,7 +15,7 @@ from telepyrobot import (
 from telepyrobot.utils.admin_check import admin_check
 from telepyrobot.utils.parser import mention_markdown, escape_markdown
 from telepyrobot.utils.msg_types import Types, get_message_type
-from telepyrobot.utils.sql_helpers.afk_db import set_afk, get_afk
+from telepyrobot.db.afk_db import set_afk, get_afk
 
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))

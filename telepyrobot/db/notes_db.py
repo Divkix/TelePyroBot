@@ -1,6 +1,6 @@
 import threading
 from sqlalchemy import Column, UnicodeText, Integer
-from telepyrobot.utils.sql_helpers import BASE, SESSION
+from telepyrobot.db import BASE, SESSION
 from telepyrobot.utils.msg_types import Types
 
 

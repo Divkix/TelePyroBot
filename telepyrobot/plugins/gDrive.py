@@ -212,7 +212,7 @@ async def AskUserToVisitLinkAndGiveCode(message, code):
         return
     await m.edit_text(text="`Checking received code...``")
     creds = flow.step2_exchange(code)
-    db.set_credential(m.reply_to_m.from_user.id, creds)
+    db.set_credential(m.reply_to_message.from_user.id, creds)
     #
     await m.edit_text(text="<b>Saved gDrive credentials</b>")
     flow = None

@@ -21,13 +21,13 @@ Reply a message to translate that.
 
 @TelePyroBot.on_message(filters.me & filters.command("tr", COMMAND_HAND_LER))
 async def translate(c: TelePyroBot, m: Message):
-    if m.reply_to_message and (m.reply_to_m.text or m.reply_to_message.caption):
+    if m.reply_to_message and (m.reply_to_message.text or m.reply_to_message.caption):
         if len(m.text.split()) == 1:
             await m.edit("Usage: Reply to a message, then `tr <lang>`")
             return
         target = m.text.split()[1]
-        if m.reply_to_m.text:
-            text = m.reply_to_m.text
+        if m.reply_to_message.text:
+            text = m.reply_to_message.text
         else:
             text = m.reply_to_message.caption
         detectlang = trl.detect(text)

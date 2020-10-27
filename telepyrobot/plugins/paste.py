@@ -35,7 +35,7 @@ async def paste_bin(c: TelePyroBot, m: Message):
             downloaded_file_name += "\n"
         os.remove(filename_loc)
     elif m.reply_to_message:
-        downloaded_file_name = m.reply_to_m.text.html
+        downloaded_file_name = m.reply_to_message.text.html
     else:
         await m.edit("What do you want to Paste?")
         return

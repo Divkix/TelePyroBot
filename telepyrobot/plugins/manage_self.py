@@ -44,7 +44,7 @@ async def unblock_pm(c: TelePyroBot, m: Message):
         except Exception as ef:
             await m.edit(f"**Error:**\n`{ef}`")
     elif m.reply_to_message:
-        user = m.reply_to_m.from_user.id
+        user = m.reply_to_message.from_user.id
         try:
             await c.unblock_user(user)
             await m.edit("`Unblocked User`")
@@ -63,7 +63,7 @@ async def block_pm(c: TelePyroBot, m: Message):
         except Exception as ef:
             await m.edit(f"**Error:**\n`{ef}`")
     elif m.reply_to_message:
-        user = m.reply_to_m.from_user.id
+        user = m.reply_to_message.from_user.id
         try:
             await c.unblock_user(user)
             await m.edit("`Blocked User`")
@@ -76,7 +76,7 @@ async def block_pm(c: TelePyroBot, m: Message):
 async def update_profile(c: TelePyroBot, m: Message):
     update = m.text.split(" ", 2)
     msgreply = m.reply_to_message
-    replytxt = m.reply_to_m.text
+    replytxt = m.reply_to_message.text
 
     # Set first_name
     if update[1] == "fname":

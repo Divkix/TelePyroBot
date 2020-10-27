@@ -75,7 +75,7 @@ async def roll_dice(c: TelePyroBot, m: Message):
 async def runs(_, message):
     run = random.choice(RUN_STRINGS)
     if m.reply_to_message:
-        await m.reply_to_m.reply_text(run)
+        await m.reply_to_message.reply_text(run)
         await m.delete()
     else:
         await m.edit(run)

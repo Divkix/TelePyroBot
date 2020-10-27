@@ -93,7 +93,7 @@ async def setchatname(c: TelePyroBot, m: Message):
     chat_id = m.chatid
     chat_title = m.text.split(" ", 1)
     if m.reply_to_message:
-        chat_title = m.reply_to_m.text
+        chat_title = m.reply_to_message.text
     else:
         chat_title = chat_title[1]
     try:
@@ -112,7 +112,7 @@ async def setchatdesc(c: TelePyroBot, m: Message):
     chat_id = m.chatid
     chat_desc = m.text.split(" ", 1)
     if m.reply_to_message:
-        chat_desc = m.reply_to_m.text
+        chat_desc = m.reply_to_message.text
     else:
         chat_desc = chat_desc[1]
     try:

@@ -77,14 +77,6 @@
       "required": false
     }
   },
-  "addons": [
-    {
-      "plan": "heroku-postgresql",
-      "options": {
-        "version": "9.6"
-      }
-    }
-  ],
   "formation": {
     "worker": {
       "quantity": 1,

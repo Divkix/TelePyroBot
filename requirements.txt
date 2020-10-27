@@ -1,4 +1,4 @@
-pyrogram>=1.0.0
+pyrogram
 psutil
 tgcrypto
 asyncio
@@ -27,7 +27,6 @@ heroku3
 pafy
 pyDownload
 pyfiglet
-spotdl
 bs4
 lxml
 googletrans

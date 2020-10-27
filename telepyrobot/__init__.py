@@ -28,10 +28,9 @@ MAX_MESSAGE_LENGTH = Config.MAX_MESSAGE_LENGTH
 TMP_DOWNLOAD_DIRECTORY = Config.TMP_DOWNLOAD_DIRECTORY
 if not os.path.exists(TMP_DOWNLOAD_DIRECTORY):
     os.makedir(TMP_DOWNLOAD_DIRECTORY)
+
 if not os.path.exists('telepyrobot/cache'):
     os.makedir('telepyrobot/cache')
-if not os.path.exists('telepyrobot/session')
-    os.makedirs('telepyrobot/cache')
 
 HEROKU_API_KEY = Config.HEROKU_API_KEY
 OFFICIAL_UPSTREAM_REPO = Config.OFFICIAL_UPSTREAM_REPO
@@ -48,7 +47,7 @@ OWNER_ID = Config.OWNER_ID
 OWNER_NAME = Config.OWNER_NAME
 PRIVATE_GROUP_ID = Config.PRIVATE_GROUP_ID
 PM_PERMIT = Config.PM_PERMIT
-UB_VERSION = "v2.1"
+UB_VERSION = "v2.1 Beta"
 GOOGLE_CHROME_BIN = Config.GOOGLE_CHROME_BIN
 REMBG_API_KEY = Config.REMBG_API_KEY
 

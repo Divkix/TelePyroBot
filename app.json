@@ -15,6 +15,7 @@
   ],
   "repository": "https://github.com/SkuzzyxD/TelePyroBot",
   "success_url": "https://t.me/TelePyroBot",
+  "stack": "container",
   "env": {
     "ENV": {
       "description": "Setting this to ANYTHING will enable webhooks when in env mode",

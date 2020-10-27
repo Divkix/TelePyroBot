@@ -1,5 +1,6 @@
 import aiohttp
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 import os
@@ -14,7 +15,7 @@ Get information about a Github Account
 """
 
 
-@Client.on_message(filters.command("github", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("github", COMMAND_HAND_LER) & filters.me)
 async def github(c: Client, m: Message):
     if len(message.text.split(" ")) == 2:
         username = message.text.split(" ", 1)[1]

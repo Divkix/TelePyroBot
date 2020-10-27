@@ -3,7 +3,8 @@ from re import match
 import aiofiles
 from selenium import webdriver
 import os
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, GOOGLE_CHROME_BIN, TMP_DOWNLOAD_DIRECTORY
 
@@ -16,7 +17,7 @@ Get screenshot of website using selenium easily using userbot!
 """
 
 
-@Client.on_message(filters.command("webss", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("webss", COMMAND_HAND_LER) & filters.me)
 async def weather(c: Client, m: Message):
     if GOOGLE_CHROME_BIN is None:
         await m.edit("You need to install Google Chrome. Module Stopping!!")

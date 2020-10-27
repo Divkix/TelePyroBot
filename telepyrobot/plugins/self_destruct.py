@@ -1,6 +1,7 @@
 import os
 import asyncio
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 
@@ -13,7 +14,7 @@ The command will automatically destruct the message after specified time.
 """
 
 
-@Client.on_message(filters.command("sdmsg", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("sdmsg", COMMAND_HAND_LER) & filters.me)
 async def self_destruct(c: Client, m: Message):
     input_str = message.text.split(" ", 1)[1]
     rm = await m.edit("`Meking self-destruct msg...`")

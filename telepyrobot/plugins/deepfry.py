@@ -2,7 +2,8 @@ import io
 import os
 import asyncio
 from random import randint, uniform
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 from telepyrobot.utils.msg_types import Types
@@ -20,7 +21,7 @@ Burn media files and make them look sick!
 """
 
 
-@Client.on_message(filters.command("deepfry", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("deepfry", COMMAND_HAND_LER) & filters.me)
 async def do_deepfry(c: Client, m: Message):
     try:
         frycount = int(message.text.split(" ", 1)[1])

@@ -1,5 +1,6 @@
 import os
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from telepyrobot import COMMAND_HAND_LER
 from pyrogram.types import Message
 from telepyrobot.plugins import ALL_PLUGINS
@@ -17,7 +18,7 @@ Used to install, delete or send plugins from userbot local storage!
 """
 
 
-@Client.on_message(filters.command("sendpl", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("sendpl", COMMAND_HAND_LER) & filters.me)
 async def send_plugin(c: Client, m: Message):
     if len(message.text.split(" ")) == 1:
         await m.edit("`Please enter a valid plugin name!!`")
@@ -39,7 +40,7 @@ async def send_plugin(c: Client, m: Message):
     return
 
 
-@Client.on_message(filters.command("installpl", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("installpl", COMMAND_HAND_LER) & filters.me)
 async def install_plugin(c: Client, m: Message):
     if len(m.command) == 1 and m.reply_to_message.document:
         if m.reply_to_message.document.file_name.split(".")[-1] != "py":
@@ -65,7 +66,7 @@ async def install_plugin(c: Client, m: Message):
     return
 
 
-@Client.on_message(filters.command("delpl", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("delpl", COMMAND_HAND_LER) & filters.me)
 async def delete_plugin(c: Client, m: Message):
     if len(m.command) == 2:
         plugin_loc = f"/app/telepyrobot/plugins/{m.command[1]}.py"

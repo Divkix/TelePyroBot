@@ -1,5 +1,6 @@
 import os
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
 from telepyrobot.plugins import ALL_PLUGINS
@@ -16,7 +17,7 @@ Get a list of all Plugins using:
 """
 
 
-@Client.on_message(filters.command("plugins", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("plugins", COMMAND_HAND_LER) & filters.me)
 async def list_plugins(c: Client, m: Message):
     # Some Variables
     mods = ""
@@ -31,7 +32,7 @@ async def list_plugins(c: Client, m: Message):
     return
 
 
-@Client.on_message(filters.command("help", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("help", COMMAND_HAND_LER) & filters.me)
 async def help_me(c: Client, m: Message):
     if len(m.command) == 1:
         await m.edit(HELP_DEFAULT)

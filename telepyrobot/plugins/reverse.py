@@ -48,7 +48,7 @@ async def take_screen_shot(
     return thumb_image_path if os.path.exists(thumb_image_path) else None
 
 
-@Client.on_message(filters.command("reverse", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("reverse", COMMAND_HAND_LER) & filters.me)
 async def google_rs(c: Client, m: Message):
     await m.edit("`Searching...`")
     start = datetime.now()

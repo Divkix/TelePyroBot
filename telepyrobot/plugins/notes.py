@@ -45,7 +45,7 @@ GET_FORMAT = {
 }
 
 
-@Client.on_message(filters.command("save", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("save", COMMAND_HAND_LER) & filters.me)
 async def save_note(c: Client, m: Message):
 
     note_name, text, data_type, content, file_ref = get_note_type(message)
@@ -68,7 +68,7 @@ async def save_note(c: Client, m: Message):
     await m.edit(f"Saved note `{note_name}`!")
 
 
-@Client.on_message(filters.me & filters.command("get", COMMAND_HAND_LER))
+@TelePyroBot.on_message(filters.me & filters.command("get", COMMAND_HAND_LER))
 async def get_note(c: Client, m: Message):
     if len(message.text.split()) >= 2:
         note = message.text.split()[1]
@@ -105,7 +105,7 @@ async def get_note(c: Client, m: Message):
     return
 
 
-@Client.on_message(filters.me & filters.command(["notes", "saved"], COMMAND_HAND_LER))
+@TelePyroBot.on_message(filters.me & filters.command(["notes", "saved"], COMMAND_HAND_LER))
 async def local_notes(c: Client, m: Message):
 
     getnotes = db.get_all_notes(m.from_user.id)
@@ -122,7 +122,7 @@ async def local_notes(c: Client, m: Message):
     await m.edit(rply)
 
 
-@Client.on_message(filters.me & filters.command("clear", COMMAND_HAND_LER))
+@TelePyroBot.on_message(filters.me & filters.command("clear", COMMAND_HAND_LER))
 async def clear_note(c: Client, m: Message):
     if len(message.text.split()) <= 1:
         await m.edit(
@@ -139,7 +139,7 @@ async def clear_note(c: Client, m: Message):
     await m.edit(f"**Deleted note** `{note}`!")
 
 
-@Client.on_message(
+@TelePyroBot.on_message(
     filters.me & filters.command(["clearall", "clearallnotes"], COMMAND_HAND_LER)
 )
 async def clear_all_notes(c: Client, m: Message):
@@ -153,7 +153,7 @@ async def clear_all_notes(c: Client, m: Message):
     return
 
 
-@Client.on_message(filters.me & filters.command("numnotes", COMMAND_HAND_LER))
+@TelePyroBot.on_message(filters.me & filters.command("numnotes", COMMAND_HAND_LER))
 async def get_num_notes(c: Client, m: Message):
     num_notes = db.get_num_notes(m.from_user.id)
     await m.edit(f"`There are total <u>{num_notes}</u> stored`")

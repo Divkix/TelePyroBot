@@ -4,7 +4,8 @@ import os
 import time
 from datetime import datetime
 from pySmartDL import SmartDL
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 import json
 import logging
@@ -38,7 +39,7 @@ The command will upload all files from the directory location to the current Tel
 """
 
 
-@Client.on_message(filters.command(["download", "dl"], COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command(["download", "dl"], COMMAND_HAND_LER) & filters.me)
 async def down_load_media(client, sms):
     message = await sms.reply_text("...", quote=True)
     if not os.path.isdir(TMP_DOWNLOAD_DIRECTORY):
@@ -116,7 +117,7 @@ async def down_load_media(client, sms):
         await m.edit("`Reply to a Telegram Media, to download it to local server.`")
 
 
-@Client.on_message(filters.command("upload", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("upload", COMMAND_HAND_LER) & filters.me)
 async def upload_as_document(c: Client, m: Message):
     status_message = await m.reply_text("`Uploading...`")
     if " " in message.text:
@@ -148,7 +149,7 @@ async def upload_as_document(c: Client, m: Message):
     await m.delete()
 
 
-@Client.on_message(filters.command("batchup", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("batchup", COMMAND_HAND_LER) & filters.me)
 async def covid(c: Client, m: Message):
     if len(message.text.split(" ")) == 1:
         await m.edit("`Enter a directory location`")

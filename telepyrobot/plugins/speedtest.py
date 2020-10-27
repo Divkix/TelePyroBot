@@ -1,4 +1,5 @@
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 from speedtest import Speedtest
@@ -11,7 +12,7 @@ __help__ = f"""
 """
 
 
-@Client.on_message(filters.command("speedtest", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("speedtest", COMMAND_HAND_LER) & filters.me)
 async def listbots(c: Client, m: Message):
     await m.edit("`Running speed test . . .`")
     test = Speedtest()

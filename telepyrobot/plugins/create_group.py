@@ -1,5 +1,6 @@
 import os
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, LOGGER
 
@@ -15,7 +16,7 @@ Commands:
 """
 
 
-@Client.on_message(filters.command("creategrp", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("creategrp", COMMAND_HAND_LER) & filters.me)
 async def cas(c: Client, m: Message):
     if len(m.command) < 3:
         await m.edit("`Check help, you don't know how to use it`")

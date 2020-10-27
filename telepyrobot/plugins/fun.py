@@ -1,4 +1,5 @@
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 import random
@@ -38,7 +39,7 @@ Just for fun ;)
 """
 
 
-@Client.on_message(filters.command(["throw", "dart"], COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command(["throw", "dart"], COMMAND_HAND_LER) & filters.me)
 async def throw_dart(c: Client, m: Message):
     rep_mesg_id = message.message_id
     if m.reply_to_message:
@@ -52,7 +53,7 @@ async def throw_dart(c: Client, m: Message):
     )
 
 
-@Client.on_message(filters.command(["roll", "dice"], COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command(["roll", "dice"], COMMAND_HAND_LER) & filters.me)
 async def roll_dice(c: Client, m: Message):
     rep_mesg_id = message.message_id
     if m.reply_to_message:
@@ -66,7 +67,7 @@ async def roll_dice(c: Client, m: Message):
     )
 
 
-@Client.on_message(filters.command(["runs", "run"], COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command(["runs", "run"], COMMAND_HAND_LER) & filters.me)
 async def runs(_, message):
     run = random.choice(RUN_STRINGS)
     if m.reply_to_message:

@@ -4,7 +4,8 @@ import datetime
 import asyncio
 from prettytable import PrettyTable
 import requests
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 
@@ -17,7 +18,7 @@ Check info of cases Covid19 (CoronaVirus) Disease
 """
 
 
-@Client.on_message(filters.command("covid", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("covid", COMMAND_HAND_LER) & filters.me)
 async def covid(c: Client, m: Message):
     await m.edit("`Processing...`", parse_mode="md")
     cmd = message.text.split(" ", 1)

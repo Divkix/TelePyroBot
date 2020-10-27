@@ -2,7 +2,8 @@ import os
 import time
 import asyncio
 import requests
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 
@@ -15,7 +16,7 @@ Search for a query on google using userbot!
 """
 
 
-@Client.on_message(filters.command("gs", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("gs", COMMAND_HAND_LER) & filters.me)
 async def google_s(c: Client, m: Message):
     input_str = message.text.split(" ", 1)[1]
     sample_url = "https://da.gd/s?url=https://lmgtfy.com/?q={}%26iie=1".format(

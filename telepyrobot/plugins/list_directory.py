@@ -5,7 +5,8 @@ import traceback
 import time
 import asyncio
 import requests
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
 
@@ -20,7 +21,7 @@ List the directories of the server.
 """
 
 
-@Client.on_message(filters.command("ls", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("ls", COMMAND_HAND_LER) & filters.me)
 async def list_directories(_, message):
     if len(m.command) == 1:
         cmd = "ls"

@@ -1,6 +1,7 @@
 import os
 import asyncio
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message, ChatPermissions
 from telepyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN, PRIVATE_GROUP_ID
 from telepyrobot.utils.admin_check import admin_check
@@ -29,7 +30,7 @@ Usage: {COMMAND_HAND_LER}unmute (Username/User ID or reply to message)
 """
 
 
-@Client.on_message(filters.command("promote", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("promote", COMMAND_HAND_LER) & filters.me)
 async def promote_usr(c: Client, m: Message):
     await m.edit("`Trying to Promote user...`")
     is_admin = await admin_check(message)
@@ -69,7 +70,7 @@ async def promote_usr(c: Client, m: Message):
         await m.edit(f"**Error:**\n\n`{ef}`")
 
 
-@Client.on_message(filters.command("demote", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("demote", COMMAND_HAND_LER) & filters.me)
 async def demote_usr(c: Client, m: Message):
     await m.edit("`Trying to Demote user...`")
     is_admin = await admin_check(message)
@@ -109,7 +110,7 @@ async def demote_usr(c: Client, m: Message):
         await m.edit(f"**Error:**\n\n`{ef}`")
 
 
-@Client.on_message(filters.command("ban", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("ban", COMMAND_HAND_LER) & filters.me)
 async def ban_usr(c: Client, m: Message):
     await m.edit("`Trying to Ban user...`")
     is_admin = await admin_check(message)
@@ -143,7 +144,7 @@ async def ban_usr(c: Client, m: Message):
         await m.edit(f"**Error:**\n\n`{ef}`")
 
 
-@Client.on_message(filters.command("mute", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("mute", COMMAND_HAND_LER) & filters.me)
 async def restrict_usr(c: Client, m: Message):
     await m.edit("`Trying to Mute user...`")
     is_admin = await admin_check(message)
@@ -178,7 +179,7 @@ async def restrict_usr(c: Client, m: Message):
         await m.edit(f"**Error:**\n\n`{ef}`")
 
 
-@Client.on_message(filters.command(["unban", "unmute"], COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command(["unban", "unmute"], COMMAND_HAND_LER) & filters.me)
 async def unrestrict_usr(c: Client, m: Message):
     await m.edit("`Trying to Unrestrict user...`")
     is_admin = await admin_check(message)

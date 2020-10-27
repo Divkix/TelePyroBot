@@ -1,5 +1,6 @@
 import os
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 from telepyrobot.utils.parser import mention_html, mention_markdown
@@ -15,7 +16,7 @@ Tag people Easily!
 """
 
 
-@Client.on_message(
+@TelePyroBot.on_message(
     filters.command(["adminlist", "admins"], COMMAND_HAND_LER) & filters.me
 )
 async def adminlist(c: Client, m: Message):
@@ -87,7 +88,7 @@ async def adminlist(c: Client, m: Message):
         await m.edit(teks, parse_mode="md")
 
 
-@Client.on_message(filters.command(["everyone", "all"], COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command(["everyone", "all"], COMMAND_HAND_LER) & filters.me)
 async def everyone(c: Client, m: Message):
     await m.delete()
     if len(message.text.split()) >= 2:
@@ -109,7 +110,7 @@ async def everyone(c: Client, m: Message):
         await c.send_message(message.chat.id, text, parse_mode="html")
 
 
-@Client.on_message(filters.command(["bots", "listbots"], COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command(["bots", "listbots"], COMMAND_HAND_LER) & filters.me)
 async def listbots(c: Client, m: Message):
     replyid = None
     if len(message.text.split()) >= 2:

@@ -1,6 +1,7 @@
 import os
 import asyncio
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, PRIVATE_GROUP_ID
 from telepyrobot.utils.admin_check import admin_check
@@ -15,7 +16,7 @@ Plugin to help you pin or unpin messages in a group!
 """
 
 
-@Client.on_message(filters.command("pin", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("pin", COMMAND_HAND_LER) & filters.me)
 async def pin_message(c: Client, m: Message):
     if PRIVATE_GROUP_ID is None:
         await m.edit("Please set `PRIVATE_GROUP_ID` variable to make me work!")
@@ -49,7 +50,7 @@ async def pin_message(c: Client, m: Message):
     return
 
 
-@Client.on_message(filters.command("unpin", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("unpin", COMMAND_HAND_LER) & filters.me)
 async def unpin_message(c: Client, m: Message):
     if PRIVATE_GROUP_ID is None:
         await m.edit("Please set `PRIVATE_GROUP_ID` variable to make me work!")

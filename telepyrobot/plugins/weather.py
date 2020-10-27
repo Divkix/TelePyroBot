@@ -1,7 +1,8 @@
 from html import escape
 import requests
 import os
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 
@@ -15,7 +16,7 @@ Powered by: https://wttr.in
 """
 
 
-@Client.on_message(filters.command("weather", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("weather", COMMAND_HAND_LER) & filters.me)
 async def weather(c: Client, m: Message):
     if len(message.text.split()) == 1:
         await m.edit(

@@ -1,6 +1,7 @@
 import os
 import asyncio
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import (
     COMMAND_HAND_LER,
@@ -36,7 +37,7 @@ __Better not spam his Inbox!__
 """
 
 
-@Client.on_message(filters.private & (~filters.me & ~filters.bot), group=3)
+@TelePyroBot.on_message(filters.private & (~filters.me & ~filters.bot), group=3)
 async def pm_block(c: Client, m: Message):
     if not PM_PERMIT:
         return
@@ -63,7 +64,7 @@ async def pm_block(c: Client, m: Message):
         return
 
 
-@Client.on_message(
+@TelePyroBot.on_message(
     filters.me & filters.command(["approve", "pm"], COMMAND_HAND_LER) & filters.private
 )
 async def approve_pm(c: Client, m: Message):
@@ -91,7 +92,7 @@ async def approve_pm(c: Client, m: Message):
     await m.delete()
 
 
-@Client.on_message(
+@TelePyroBot.on_message(
     filters.me
     & filters.command(["revoke", "disapprove", "dispm"], COMMAND_HAND_LER)
     & filters.private

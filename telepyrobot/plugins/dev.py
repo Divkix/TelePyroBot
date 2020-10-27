@@ -5,7 +5,8 @@ import traceback
 import time
 import asyncio
 import requests
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
 from telepyrobot.utils.cust_p_filters import sudo_filter
@@ -24,7 +25,7 @@ Get IP Address of userbot server.
 """
 
 
-@Client.on_message(filters.command(["eval", "py"], COMMAND_HAND_LER) & sudo_filter)
+@TelePyroBot.on_message(filters.command(["eval", "py"], COMMAND_HAND_LER) & sudo_filter)
 async def eval(c: Client, m: Message):
     status_message = await m.reply_text("`Processing...`")
     cmd = message.text.split(" ", maxsplit=1)[1]
@@ -86,7 +87,7 @@ async def aexec(code, client, message):
     return await locals()["__aexec"](client, message)
 
 
-@Client.on_message(filters.command(["exec", "sh"], COMMAND_HAND_LER) & sudo_filter)
+@TelePyroBot.on_message(filters.command(["exec", "sh"], COMMAND_HAND_LER) & sudo_filter)
 async def execution(_, message):
     cmd = message.text.split(" ", maxsplit=1)[1]
 
@@ -125,7 +126,7 @@ async def execution(_, message):
         await m.reply_text(OUTPUT)
 
 
-@Client.on_message(filters.command("ip", COMMAND_HAND_LER) & sudo_filter)
+@TelePyroBot.on_message(filters.command("ip", COMMAND_HAND_LER) & sudo_filter)
 async def public_ip(c: Client, m: Message):
     ip = requests.get("https://api.ipify.org").text
     await m.reply_text(

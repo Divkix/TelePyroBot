@@ -21,7 +21,7 @@ def get_msgc():
     return MESSAGE_RECOUNTER
 
 
-@Client.on_message(filters.group, group=10)
+@TelePyroBot.on_message(filters.group, group=10)
 async def updatemychats(c: Client, m: Message):
     global MESSAGE_RECOUNTER, ADMIN_RECOUNTER
     db.update_chat(m.chat)
@@ -29,7 +29,7 @@ async def updatemychats(c: Client, m: Message):
     return
 
 
-@Client.on_message(filters.me & filters.command("chatlist", COMMAND_HAND_LER))
+@TelePyroBot.on_message(filters.me & filters.command("chatlist", COMMAND_HAND_LER))
 async def get_chat(c: Client, m: Message):
     await m.edit("`Exporting Chatlist...`")
     all_chats = db.get_all_chats()

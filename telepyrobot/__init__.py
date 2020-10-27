@@ -23,9 +23,16 @@ API_HASH = Config.API_HASH
 HU_STRING_SESSION = Config.HU_STRING_SESSION
 COMMAND_HAND_LER = Config.COMMAND_HAND_LER
 MAX_MESSAGE_LENGTH = Config.MAX_MESSAGE_LENGTH
+
+# Ensure Directories
 TMP_DOWNLOAD_DIRECTORY = Config.TMP_DOWNLOAD_DIRECTORY
 if not os.path.isdir(TMP_DOWNLOAD_DIRECTORY):
     os.makedirs(TMP_DOWNLOAD_DIRECTORY)
+if not os.path.isdir('telepyrobot/cache'):
+    os.makedirs('telepyrobot/cache')
+if not os.path.isdir('telepyrobot/session')
+    os.makedirs('telepyrobot/cache')
+
 HEROKU_API_KEY = Config.HEROKU_API_KEY
 OFFICIAL_UPSTREAM_REPO = Config.OFFICIAL_UPSTREAM_REPO
 DB_URI = Config.DB_URI

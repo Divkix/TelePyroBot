@@ -15,11 +15,10 @@
   ],
   "repository": "https://github.com/SkuzzyxD/TelePyroBot",
   "success_url": "https://t.me/TelePyroBot",
-  "website": "https://www.skuzzers.xyz/",
   "env": {
     "ENV": {
       "description": "Setting this to ANYTHING will enable webhooks when in env mode",
-      "value": "ANYTHING"
+      "value": "True"
     },
     "APP_ID": {
       "description": "Get this value from https://my.telegram.org",

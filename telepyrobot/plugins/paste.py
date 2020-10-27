@@ -2,7 +2,8 @@ import aiohttp
 import json
 import os
 from urllib.parse import urlparse
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, TMP_DOWNLOAD_DIRECTORY
 import os
@@ -16,7 +17,7 @@ __help__ = f"""
 """
 
 
-@Client.on_message(filters.command("paste", COMMAND_HAND_LER))
+@TelePyroBot.on_message(filters.command("paste", COMMAND_HAND_LER))
 async def paste_bin(c: Client, m: Message):
     await m.edit("`Pasting...`")
     downloaded_file_name = None

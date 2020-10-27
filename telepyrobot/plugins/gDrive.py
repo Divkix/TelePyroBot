@@ -9,7 +9,8 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 from mimetypes import guess_type
 from oauth2client.client import OAuth2WebServerFlow
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import (
     COMMAND_HAND_LER,
@@ -43,7 +44,7 @@ G_DRIVE_DIR_MIME_TYPE = "application/vnd.google-apps.folder"
 flow = None
 
 
-@Client.on_message(filters.command("gdrive", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("gdrive", COMMAND_HAND_LER) & filters.me)
 async def g_drive_commands(c: Client, m: Message):
     status_message = await m.reply_text("...")
     if len(m.command) > 1:

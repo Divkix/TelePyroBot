@@ -2,7 +2,8 @@ import os
 import time
 import asyncio
 from datetime import datetime
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message, ChatPermissions
 from telepyrobot import (
     COMMAND_HAND_LER,
@@ -33,7 +34,7 @@ Allows you to lock some common permission types in the chat.
 """
 
 
-@Client.on_message(filters.command("lock", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("lock", COMMAND_HAND_LER) & filters.me)
 async def lock_perm(c: Client, m: Message):
     msg = ""
     media = ""
@@ -180,7 +181,7 @@ async def lock_perm(c: Client, m: Message):
     return
 
 
-@Client.on_message(filters.command("unlock", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("unlock", COMMAND_HAND_LER) & filters.me)
 async def unlock_perm(c: Client, m: Message):
     umsg = ""
     umedia = ""
@@ -338,7 +339,7 @@ async def unlock_perm(c: Client, m: Message):
     return
 
 
-@Client.on_message(filters.command("vperm", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("vperm", COMMAND_HAND_LER) & filters.me)
 async def view_perm(c: Client, m: Message):
     v_perm = ""
     vmsg = ""

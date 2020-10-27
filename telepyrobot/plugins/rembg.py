@@ -17,7 +17,7 @@ Use this remove background from images!
 """
 
 
-@Client.on_message(filters.me & filters.command("rembg", COMMAND_HAND_LER))
+@TelePyroBot.on_message(filters.me & filters.command("rembg", COMMAND_HAND_LER))
 async def remove_bg(c: Client, m: Message):
     if not REMBG_API_KEY:
         await m.edit(

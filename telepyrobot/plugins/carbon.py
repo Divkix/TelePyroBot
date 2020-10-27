@@ -1,4 +1,5 @@
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 from requests import post
@@ -15,7 +16,7 @@ __help__ = f"""
 CARBON_LANG = "Auto"
 
 
-@Client.on_message(filters.command("carbon", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("carbon", COMMAND_HAND_LER) & filters.me)
 async def carbon_api(c: Client, m: Message):
     json = {
         "backgroundColor": "rgba(0, 255, 230, 100)",

@@ -1,6 +1,7 @@
 import os
 import asyncio
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message, ChatPermissions
 from telepyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN
 from telepyrobot.utils.admin_check import admin_check
@@ -16,7 +17,7 @@ Usage: {COMMAND_HAND_LER}purge <as a reply to the message>
 Usage: {COMMAND_HAND_LER}del <as a reply to the message>"""
 
 
-@Client.on_message(filters.command("purge", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("purge", COMMAND_HAND_LER) & filters.me)
 async def purge(c: Client, m: Message):
     if message.chat.type in ("supergroup", "channel"):
         await m.edit("`Incinerating these useless messages...`")
@@ -55,7 +56,7 @@ async def purge(c: Client, m: Message):
     await m.delete()
 
 
-@Client.on_message(filters.command("del", COMMAND_HAND_LER) & filters.me, group=3)
+@TelePyroBot.on_message(filters.command("del", COMMAND_HAND_LER) & filters.me, group=3)
 async def del_msg(c: Client, m: Message):
     if m.reply_to_message:
         if message.chat.type in ("supergroup", "channel"):

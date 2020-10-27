@@ -2,7 +2,8 @@ import requests
 import json
 import asyncio
 import os
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, TMP_DOWNLOAD_DIRECTORY
 
@@ -15,7 +16,7 @@ Get Magnet Links of any search query.
 """
 
 
-@Client.on_message(filters.command("tsearch", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("tsearch", COMMAND_HAND_LER) & filters.me)
 async def tor_search(c: Client, m: Message):
     if len(m.command) == 1:
         await m.edit("`Check help on how to use this command`")

@@ -1,4 +1,5 @@
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 import os
 from telepyrobot import COMMAND_HAND_LER
@@ -17,7 +18,7 @@ Does not work on images!
 """
 
 
-@Client.on_message(filters.command("qbot", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("qbot", COMMAND_HAND_LER) & filters.me)
 async def quotly(c: Client, m: Message):
     if not m.reply_to_message:
         await m.edit("Reply to any users text message")

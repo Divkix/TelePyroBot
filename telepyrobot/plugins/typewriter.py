@@ -2,7 +2,8 @@ import time
 import os
 import random
 from pyrogram.errors import FloodWait
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, LOGGER
 
@@ -15,7 +16,7 @@ Get text typed in typewriter format.
 """
 
 
-@Client.on_message(
+@TelePyroBot.on_message(
     filters.command(["type", "typewriter"], COMMAND_HAND_LER) & filters.me
 )
 async def upload_as_document(c: Client, m: Message):

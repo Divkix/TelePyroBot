@@ -3,7 +3,8 @@ import os
 import git
 import shutil
 import heroku3
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot.utils.cust_p_filters import sudo_filter
 from telepyrobot import (
@@ -43,7 +44,7 @@ __help__ = f"""
 """
 
 
-@Client.on_message(filters.command("update", COMMAND_HAND_LER) & sudo_filter)
+@TelePyroBot.on_message(filters.command("update", COMMAND_HAND_LER) & sudo_filter)
 async def updater(c: Client, m: Message):
     if len(m.command) == 2 and m.command[1] == "force":
         force_update = True

@@ -1,7 +1,8 @@
 import time
 import os
 from platform import python_version
-from pyrogram import Client, filters, __version__
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters, __version__
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, OWNER_NAME, UB_VERSION, OFFICIAL_UPSTREAM_REPO
 from pyrogram.raw.all import layer
@@ -36,7 +37,7 @@ Basic commands of userbot!
 """
 
 
-@Client.on_message(filters.command(["alive", "start"], COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command(["alive", "start"], COMMAND_HAND_LER) & filters.me)
 async def check_alive(c: Client, m: Message):
     await m.edit_text(
         ALIVE_TEXT.format(
@@ -51,7 +52,7 @@ async def check_alive(c: Client, m: Message):
     )
 
 
-@Client.on_message(filters.command("ping", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("ping", COMMAND_HAND_LER) & filters.me)
 async def ping(c: Client, m: Message):
     start_t = time.time()
     rm = await m.edit("Pinging...")
@@ -60,12 +61,12 @@ async def ping(c: Client, m: Message):
     await m.edit(f"**Pong!**\n`{time_taken_s:.3f}` ms")
 
 
-@Client.on_message(filters.command("repo", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("repo", COMMAND_HAND_LER) & filters.me)
 async def repo(c: Client, m: Message):
     await m.edit(REPO, disable_web_page_preview=True)
 
 
-@Client.on_message(filters.command("id", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("id", COMMAND_HAND_LER) & filters.me)
 async def get_id(c: Client, m: Message):
     file_id = None
     user_id = None
@@ -124,7 +125,7 @@ async def get_id(c: Client, m: Message):
         await m.edit("**This Chat's ID:** `{}`".format(message.chat.id))
 
 
-@Client.on_message(filters.command("json", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("json", COMMAND_HAND_LER) & filters.me)
 async def jsonify(c: Client, m: Message):
     the_real_message = None
     reply_to_id = None

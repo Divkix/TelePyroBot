@@ -4,7 +4,8 @@ import heroku3
 import asyncio
 import math
 from telepyrobot import COMMAND_HAND_LER, HEROKU_API_KEY, HEROKU_APP_NAME
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -26,7 +27,7 @@ useragent = (
 )
 
 
-@Client.on_message(filters.command("restart", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("restart", COMMAND_HAND_LER) & filters.me)
 async def restart(c: Client, m: Message):
     if (HEROKU_API_KEY or HEROKU_APP_NAME) is None:
         await m.edit(
@@ -40,7 +41,7 @@ async def restart(c: Client, m: Message):
     return
 
 
-@Client.on_message(filters.command("dynostats", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("dynostats", COMMAND_HAND_LER) & filters.me)
 async def dynostats(c: Client, m: Message):
     msg = await m.reply_text("Processing...!\n")
 
@@ -93,7 +94,7 @@ async def dynostats(c: Client, m: Message):
         )
 
 
-@Client.on_message(filters.command("vars", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("vars", COMMAND_HAND_LER) & filters.me)
 async def hetoku_vars(c: Client, m: Message):
     if (HEROKU_API_KEY or HEROKU_APP_NAME) is None:
         await m.edit(

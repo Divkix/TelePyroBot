@@ -1,6 +1,7 @@
 import requests
 import os
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 
@@ -15,7 +16,7 @@ Url Shortner Plugin for https://da.gd
 """
 
 
-@Client.on_message(filters.command("short", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("short", COMMAND_HAND_LER) & filters.me)
 async def short_link(c: Client, m: Message):
     input_str = message.text.split(" ", 1)[1]
     sample_url = "https://da.gd/s?url={}".format(input_str)
@@ -26,7 +27,7 @@ async def short_link(c: Client, m: Message):
         await m.edit("something is wrong. please try again later.")
 
 
-@Client.on_message(filters.command("unshort", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command("unshort", COMMAND_HAND_LER) & filters.me)
 async def unshort_link(c: Client, m: Message):
     input_str = message.text.split(" ", 1)[1]
     if not input_str.startswith("http"):

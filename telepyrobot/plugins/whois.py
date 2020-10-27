@@ -1,5 +1,6 @@
 import os
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 from telepyrobot.utils.parser import mention_markdown
@@ -12,7 +13,7 @@ __help__ = f"""
 """
 
 
-@Client.on_message(filters.command(["whois", "info"], COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(filters.command(["whois", "info"], COMMAND_HAND_LER) & filters.me)
 async def upload_as_document(c: Client, m: Message):
     await m.edit("`Collecting Whois Info.. Hang on!`")
     user_id, user_first_name = await extract_user(m)

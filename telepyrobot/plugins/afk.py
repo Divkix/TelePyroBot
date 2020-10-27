@@ -2,7 +2,8 @@ import os
 import time
 import asyncio
 from datetime import datetime
-from pyrogram import Client, filters
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
 from pyrogram.types import Message, ChatPermissions
 from telepyrobot import (
     COMMAND_HAND_LER,
@@ -43,7 +44,7 @@ AFK_RESTIRECT = {}
 DELAY_TIME = 60  # seconds
 
 
-@Client.on_message((filters.command("afk", COMMAND_HAND_LER)) & filters.me)
+@TelePyroBot.on_message((filters.command("afk", COMMAND_HAND_LER)) & filters.me)
 async def afk(c: Client, m: Message):
     if PRIVATE_GROUP_ID is None:
         await m.edit(
@@ -89,7 +90,7 @@ async def afk(c: Client, m: Message):
     return
 
 
-@Client.on_message(
+@TelePyroBot.on_message(
     filters.mentioned & ~filters.bot & ~filters.chat(PRIVATE_GROUP_ID), group=11
 )
 async def afk_mentioned(c: Client, m: Message):
@@ -187,7 +188,7 @@ async def afk_mentioned(c: Client, m: Message):
     await message.stop_propagation()
 
 
-@Client.on_message(
+@TelePyroBot.on_message(
     filters.me & (filters.group | filters.private) & ~filters.chat(PRIVATE_GROUP_ID),
     group=12,
 )

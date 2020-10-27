@@ -77,7 +77,7 @@
       "value": "True"
     },
     "REMBG_API_KEY": {
-      "description": "Ised for removeng plugins to work",
+      "description": "Used for removeng plugins to work",
       "required": false
     }
   },

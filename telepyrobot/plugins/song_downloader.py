@@ -18,7 +18,7 @@ The link should be of spotify or youtube!
 
 
 @TelePyroBot.on_message(filters.command("song", COMMAND_HAND_LER) & filters.me)
-async def spotify_dl(c: Client, m: Message):
+async def spotify_dl(c: TelePyroBot, m: Message):
     await m.edit("`Searching Song...`")
     if len(message.text.split(" ", 1)) >= 2:
         songname = message.text.split(" ", 1)[1]

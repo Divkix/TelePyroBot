@@ -26,7 +26,7 @@ Get IP Address of userbot server.
 
 
 @TelePyroBot.on_message(filters.command(["eval", "py"], COMMAND_HAND_LER) & sudo_filter)
-async def eval(c: Client, m: Message):
+async def eval(c: TelePyroBot, m: Message):
     status_message = await m.reply_text("`Processing...`")
     cmd = message.text.split(" ", maxsplit=1)[1]
 
@@ -81,7 +81,7 @@ async def eval(c: Client, m: Message):
 
 async def aexec(code, client, message):
     exec(
-        f"async def __aexec(c: Client, m: Message): "
+        f"async def __aexec(c: TelePyroBot, m: Message): "
         + "".join(f"\n {l}" for l in code.split("\n"))
     )
     return await locals()["__aexec"](client, message)
@@ -127,7 +127,7 @@ async def execution(_, message):
 
 
 @TelePyroBot.on_message(filters.command("ip", COMMAND_HAND_LER) & sudo_filter)
-async def public_ip(c: Client, m: Message):
+async def public_ip(c: TelePyroBot, m: Message):
     ip = requests.get("https://api.ipify.org").text
     await m.reply_text(
         f"<b>Bot IP Address:</b>\n<code>{ip}</code>", parse_mode="html"

@@ -38,7 +38,7 @@ Basic commands of userbot!
 
 
 @TelePyroBot.on_message(filters.command(["alive", "start"], COMMAND_HAND_LER) & filters.me)
-async def check_alive(c: Client, m: Message):
+async def check_alive(c: TelePyroBot, m: Message):
     await m.edit_text(
         ALIVE_TEXT.format(
             OWNER_NAME,
@@ -53,7 +53,7 @@ async def check_alive(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("ping", COMMAND_HAND_LER) & filters.me)
-async def ping(c: Client, m: Message):
+async def ping(c: TelePyroBot, m: Message):
     start_t = time.time()
     rm = await m.edit("Pinging...")
     end_t = time.time()
@@ -62,12 +62,12 @@ async def ping(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("repo", COMMAND_HAND_LER) & filters.me)
-async def repo(c: Client, m: Message):
+async def repo(c: TelePyroBot, m: Message):
     await m.edit(REPO, disable_web_page_preview=True)
 
 
 @TelePyroBot.on_message(filters.command("id", COMMAND_HAND_LER) & filters.me)
-async def get_id(c: Client, m: Message):
+async def get_id(c: TelePyroBot, m: Message):
     file_id = None
     user_id = None
 
@@ -126,7 +126,7 @@ async def get_id(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("json", COMMAND_HAND_LER) & filters.me)
-async def jsonify(c: Client, m: Message):
+async def jsonify(c: TelePyroBot, m: Message):
     the_real_message = None
     reply_to_id = None
 

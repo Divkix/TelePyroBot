@@ -17,7 +17,7 @@ Plugin to help you pin or unpin messages in a group!
 
 
 @TelePyroBot.on_message(filters.command("pin", COMMAND_HAND_LER) & filters.me)
-async def pin_message(c: Client, m: Message):
+async def pin_message(c: TelePyroBot, m: Message):
     if PRIVATE_GROUP_ID is None:
         await m.edit("Please set `PRIVATE_GROUP_ID` variable to make me work!")
         return
@@ -51,7 +51,7 @@ async def pin_message(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("unpin", COMMAND_HAND_LER) & filters.me)
-async def unpin_message(c: Client, m: Message):
+async def unpin_message(c: TelePyroBot, m: Message):
     if PRIVATE_GROUP_ID is None:
         await m.edit("Please set `PRIVATE_GROUP_ID` variable to make me work!")
         return

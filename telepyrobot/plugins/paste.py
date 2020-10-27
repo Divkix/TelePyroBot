@@ -18,7 +18,7 @@ __help__ = f"""
 
 
 @TelePyroBot.on_message(filters.command("paste", COMMAND_HAND_LER))
-async def paste_bin(c: Client, m: Message):
+async def paste_bin(c: TelePyroBot, m: Message):
     await m.edit("`Pasting...`")
     downloaded_file_name = None
 

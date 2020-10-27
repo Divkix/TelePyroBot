@@ -19,7 +19,7 @@ Get text typed in typewriter format.
 @TelePyroBot.on_message(
     filters.command(["type", "typewriter"], COMMAND_HAND_LER) & filters.me
 )
-async def upload_as_document(c: Client, m: Message):
+async def upload_as_document(c: TelePyroBot, m: Message):
     text = m.command[1:]
     if not text:
         await m.edit("`Input not found`")

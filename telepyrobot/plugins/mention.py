@@ -19,7 +19,7 @@ or
 
 
 @TelePyroBot.on_message(filters.command("mention", COMMAND_HAND_LER) & filters.me)
-async def mention(c: Client, m: Message):
+async def mention(c: TelePyroBot, m: Message):
     args = message.text.split(" ", 2)
     if len(args) == 3:
         name = args[1]

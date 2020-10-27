@@ -32,7 +32,7 @@ Usage: {COMMAND_HAND_LER}setchatdesc (chatdesc or as a reply to the message)
 
 
 @TelePyroBot.on_message(filters.command("leavechat", COMMAND_HAND_LER) & filters.me)
-async def leavechat(c: Client, m: Message):
+async def leavechat(c: TelePyroBot, m: Message):
     if message.chat.type in ["group", "supergroup"]:
         chat_id = message.chat.id
         is_admin = await admin_check(message)
@@ -42,7 +42,7 @@ async def leavechat(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("invitelink", COMMAND_HAND_LER) & filters.me)
-async def invitelink(c: Client, m: Message):
+async def invitelink(c: TelePyroBot, m: Message):
     is_admin = await admin_check(message)
     if not is_admin:
         return
@@ -52,7 +52,7 @@ async def invitelink(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("setchatpic", COMMAND_HAND_LER) & filters.me)
-async def set_picture(c: Client, m: Message):
+async def set_picture(c: TelePyroBot, m: Message):
     if message.chat.type in ["group", "supergroup"]:
         is_admin = await admin_check(message)
         if not is_admin:
@@ -72,7 +72,7 @@ async def set_picture(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("delchatpic", COMMAND_HAND_LER) & filters.me)
-async def delchatpic(c: Client, m: Message):
+async def delchatpic(c: TelePyroBot, m: Message):
     is_admin = await admin_check(message)
     if not is_admin:
         return
@@ -85,7 +85,7 @@ async def delchatpic(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("setchatname", COMMAND_HAND_LER) & filters.me)
-async def setchatname(c: Client, m: Message):
+async def setchatname(c: TelePyroBot, m: Message):
     await m.edit("__Trying to Change Chat Name!__")
     is_admin = await admin_check(message)
     if not is_admin:
@@ -104,7 +104,7 @@ async def setchatname(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("setchatdesc", COMMAND_HAND_LER) & filters.me)
-async def setchatdesc(c: Client, m: Message):
+async def setchatdesc(c: TelePyroBot, m: Message):
     await m.edit("__Trying to Change Chat Desciption!__")
     is_admin = await admin_check(message)
     if not is_admin:

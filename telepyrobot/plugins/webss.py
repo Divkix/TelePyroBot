@@ -18,7 +18,7 @@ Get screenshot of website using selenium easily using userbot!
 
 
 @TelePyroBot.on_message(filters.command("webss", COMMAND_HAND_LER) & filters.me)
-async def weather(c: Client, m: Message):
+async def weather(c: TelePyroBot, m: Message):
     if GOOGLE_CHROME_BIN is None:
         await m.edit("You need to install Google Chrome. Module Stopping!!")
         return

@@ -22,7 +22,7 @@ They will not be able to speak until you ungmute them!
 
 
 @TelePyroBot.on_message(filters.command("gmute", COMMAND_HAND_LER) & filters.me)
-async def start_gmute(c: Client, m: Message):
+async def start_gmute(c: TelePyroBot, m: Message):
     await m.edit("`Putting duct tape...`")
     user_id, user_first_name = await extract_user(m)
     if db.is_gmuted(user_id):
@@ -44,7 +44,7 @@ async def start_gmute(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("ungmute", COMMAND_HAND_LER) & filters.me)
-async def end_gmute(c: Client, m: Message):
+async def end_gmute(c: TelePyroBot, m: Message):
     await m.edit("`Removing duct tape...`")
     user_id, user_first_name = await extract_user(m)
 
@@ -67,7 +67,7 @@ async def end_gmute(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("gmutelist", COMMAND_HAND_LER) & filters.me)
-async def list_gmuted(c: Client, m: Message):
+async def list_gmuted(c: TelePyroBot, m: Message):
     await m.edit("`Loading users...`")
     users = db.get_gmute_users()
     if not users:
@@ -84,7 +84,7 @@ async def list_gmuted(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.group, group=5)
-async def watcher_gmute(c: Client, m: Message):
+async def watcher_gmute(c: TelePyroBot, m: Message):
     if db.is_gmuted(m.from_user.id):
         await asyncio.sleep(0.1)
         try:

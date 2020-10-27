@@ -21,7 +21,7 @@ Then this module is for you!
 
 
 @TelePyroBot.on_message(filters.command("zombies", COMMAND_HAND_LER) & filters.me)
-async def zombies_clean(c: Client, m: Message):
+async def zombies_clean(c: TelePyroBot, m: Message):
     if len(message.text.split(" ")) != 2:
         await m.edit("`Counting deleted accounts!!!`")
         del_users = []

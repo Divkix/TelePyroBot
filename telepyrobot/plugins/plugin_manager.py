@@ -19,7 +19,7 @@ Used to install, delete or send plugins from userbot local storage!
 
 
 @TelePyroBot.on_message(filters.command("sendpl", COMMAND_HAND_LER) & filters.me)
-async def send_plugin(c: Client, m: Message):
+async def send_plugin(c: TelePyroBot, m: Message):
     if len(message.text.split(" ")) == 1:
         await m.edit("`Please enter a valid plugin name!!`")
         return
@@ -41,7 +41,7 @@ async def send_plugin(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("installpl", COMMAND_HAND_LER) & filters.me)
-async def install_plugin(c: Client, m: Message):
+async def install_plugin(c: TelePyroBot, m: Message):
     if len(m.command) == 1 and m.reply_to_message.document:
         if m.reply_to_message.document.file_name.split(".")[-1] != "py":
             await m.edit("`Can only install python files!`")
@@ -67,7 +67,7 @@ async def install_plugin(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("delpl", COMMAND_HAND_LER) & filters.me)
-async def delete_plugin(c: Client, m: Message):
+async def delete_plugin(c: TelePyroBot, m: Message):
     if len(m.command) == 2:
         plugin_loc = f"/app/telepyrobot/plugins/{m.command[1]}.py"
         if os.path.exists(plugin_loc):

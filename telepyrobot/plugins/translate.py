@@ -19,7 +19,7 @@ Reply a message to translate that.
 
 
 @TelePyroBot.on_message(filters.me & filters.command("tr", COMMAND_HAND_LER))
-async def translate(c: Client, m: Message):
+async def translate(c: TelePyroBot, m: Message):
     if m.reply_to_message and (m.reply_to_message.text or m.reply_to_message.caption):
         if len(message.text.split()) == 1:
             await m.edit("Usage: Reply to a message, then `tr <lang>`")

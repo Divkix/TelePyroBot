@@ -19,7 +19,7 @@ Tag people Easily!
 @TelePyroBot.on_message(
     filters.command(["adminlist", "admins"], COMMAND_HAND_LER) & filters.me
 )
-async def adminlist(c: Client, m: Message):
+async def adminlist(c: TelePyroBot, m: Message):
     replyid = None
     toolong = False
     if len(message.text.split()) >= 2:
@@ -89,7 +89,7 @@ async def adminlist(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command(["everyone", "all"], COMMAND_HAND_LER) & filters.me)
-async def everyone(c: Client, m: Message):
+async def everyone(c: TelePyroBot, m: Message):
     await m.delete()
     if len(message.text.split()) >= 2:
         text = message.text.split(None, 1)[1]
@@ -111,7 +111,7 @@ async def everyone(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command(["bots", "listbots"], COMMAND_HAND_LER) & filters.me)
-async def listbots(c: Client, m: Message):
+async def listbots(c: TelePyroBot, m: Message):
     replyid = None
     if len(message.text.split()) >= 2:
         chat = message.text.split(None, 1)[1]

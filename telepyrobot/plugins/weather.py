@@ -17,7 +17,7 @@ Powered by: https://wttr.in
 
 
 @TelePyroBot.on_message(filters.command("weather", COMMAND_HAND_LER) & filters.me)
-async def weather(c: Client, m: Message):
+async def weather(c: TelePyroBot, m: Message):
     if len(message.text.split()) == 1:
         await m.edit(
             f"Usage: `{COMMAND_HAND_LER}weather <location>`", parse_mode="markdown"

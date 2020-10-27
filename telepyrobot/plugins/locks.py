@@ -35,7 +35,7 @@ Allows you to lock some common permission types in the chat.
 
 
 @TelePyroBot.on_message(filters.command("lock", COMMAND_HAND_LER) & filters.me)
-async def lock_perm(c: Client, m: Message):
+async def lock_perm(c: TelePyroBot, m: Message):
     msg = ""
     media = ""
     stickers = ""
@@ -182,7 +182,7 @@ async def lock_perm(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("unlock", COMMAND_HAND_LER) & filters.me)
-async def unlock_perm(c: Client, m: Message):
+async def unlock_perm(c: TelePyroBot, m: Message):
     umsg = ""
     umedia = ""
     ustickers = ""
@@ -340,7 +340,7 @@ async def unlock_perm(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("vperm", COMMAND_HAND_LER) & filters.me)
-async def view_perm(c: Client, m: Message):
+async def view_perm(c: TelePyroBot, m: Message):
     v_perm = ""
     vmsg = ""
     vmedia = ""

@@ -17,7 +17,7 @@ Url Shortner Plugin for https://da.gd
 
 
 @TelePyroBot.on_message(filters.command("short", COMMAND_HAND_LER) & filters.me)
-async def short_link(c: Client, m: Message):
+async def short_link(c: TelePyroBot, m: Message):
     input_str = message.text.split(" ", 1)[1]
     sample_url = "https://da.gd/s?url={}".format(input_str)
     response_api = requests.get(sample_url).text
@@ -28,7 +28,7 @@ async def short_link(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("unshort", COMMAND_HAND_LER) & filters.me)
-async def unshort_link(c: Client, m: Message):
+async def unshort_link(c: TelePyroBot, m: Message):
     input_str = message.text.split(" ", 1)[1]
     if not input_str.startswith("http"):
         input_str = "http://" + input_str

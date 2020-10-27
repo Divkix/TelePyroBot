@@ -45,7 +45,7 @@ __help__ = f"""
 
 
 @TelePyroBot.on_message(filters.command("update", COMMAND_HAND_LER) & sudo_filter)
-async def updater(c: Client, m: Message):
+async def updater(c: TelePyroBot, m: Message):
     if len(m.command) == 2 and m.command[1] == "force":
         force_update = True
     else:

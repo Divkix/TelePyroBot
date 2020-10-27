@@ -14,7 +14,7 @@ __help__ = f"""
 
 
 @TelePyroBot.on_message(filters.command(["whois", "info"], COMMAND_HAND_LER) & filters.me)
-async def upload_as_document(c: Client, m: Message):
+async def upload_as_document(c: TelePyroBot, m: Message):
     await m.edit("`Collecting Whois Info.. Hang on!`")
     user_id, user_first_name = await extract_user(m)
     if user_id is not None:

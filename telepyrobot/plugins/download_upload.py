@@ -118,7 +118,7 @@ async def down_load_media(client, sms):
 
 
 @TelePyroBot.on_message(filters.command("upload", COMMAND_HAND_LER) & filters.me)
-async def upload_as_document(c: Client, m: Message):
+async def upload_as_document(c: TelePyroBot, m: Message):
     status_message = await m.reply_text("`Uploading...`")
     if " " in message.text:
         local_file_name = message.text.split(" ", 1)[1]
@@ -150,7 +150,7 @@ async def upload_as_document(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("batchup", COMMAND_HAND_LER) & filters.me)
-async def covid(c: Client, m: Message):
+async def covid(c: TelePyroBot, m: Message):
     if len(message.text.split(" ")) == 1:
         await m.edit("`Enter a directory location`")
     elif len(message.text.split(" ", 1)) == 2:

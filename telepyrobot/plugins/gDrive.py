@@ -45,7 +45,7 @@ flow = None
 
 
 @TelePyroBot.on_message(filters.command("gdrive", COMMAND_HAND_LER) & filters.me)
-async def g_drive_commands(c: Client, m: Message):
+async def g_drive_commands(c: TelePyroBot, m: Message):
     status_message = await m.reply_text("...")
     if len(m.command) > 1:
         current_recvd_command = m.command[1]

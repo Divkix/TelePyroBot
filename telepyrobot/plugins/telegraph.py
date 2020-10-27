@@ -17,7 +17,7 @@ Paste media to telegraph!
 
 
 @TelePyroBot.on_message(filters.command("telegraph", COMMAND_HAND_LER) & filters.me)
-async def telegraph(c: Client, m: Message):
+async def telegraph(c: TelePyroBot, m: Message):
     replied = m.reply_to_message
     start_t = datetime.now()
     await m.edit("`Trying to paste to telegraph...`", parse_mode="md")

@@ -18,7 +18,7 @@ Get a list of all Plugins using:
 
 
 @TelePyroBot.on_message(filters.command("plugins", COMMAND_HAND_LER) & filters.me)
-async def list_plugins(c: Client, m: Message):
+async def list_plugins(c: TelePyroBot, m: Message):
     # Some Variables
     mods = ""
     mod_num = 0
@@ -33,7 +33,7 @@ async def list_plugins(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("help", COMMAND_HAND_LER) & filters.me)
-async def help_me(c: Client, m: Message):
+async def help_me(c: TelePyroBot, m: Message):
     if len(m.command) == 1:
         await m.edit(HELP_DEFAULT)
     elif len(m.command) == 2:

@@ -18,7 +18,7 @@ https://nekobin.com/hesoyipowo
 
 
 @TelePyroBot.on_message(filters.command("figlet", COMMAND_HAND_LER) & filters.me)
-async def figlet_font(c: Client, m: Message):
+async def figlet_font(c: TelePyroBot, m: Message):
     CMD_FIG = {
         "slant": "slant",
         "3D": "3-d",

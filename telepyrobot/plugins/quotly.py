@@ -19,7 +19,7 @@ Does not work on images!
 
 
 @TelePyroBot.on_message(filters.command("qbot", COMMAND_HAND_LER) & filters.me)
-async def quotly(c: Client, m: Message):
+async def quotly(c: TelePyroBot, m: Message):
     if not m.reply_to_message:
         await m.edit("Reply to any users text message")
         return

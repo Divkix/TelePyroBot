@@ -45,7 +45,7 @@ DELAY_TIME = 60  # seconds
 
 
 @TelePyroBot.on_message((filters.command("afk", COMMAND_HAND_LER)) & filters.me)
-async def afk(c: Client, m: Message):
+async def afk(c: TelePyroBot, m: Message):
     if PRIVATE_GROUP_ID is None:
         await m.edit(
             "<b><i>Please set the variable</b></i> `PRIVATE_GROUP_ID` for this to function."
@@ -93,7 +93,7 @@ async def afk(c: Client, m: Message):
 @TelePyroBot.on_message(
     filters.mentioned & ~filters.bot & ~filters.chat(PRIVATE_GROUP_ID), group=11
 )
-async def afk_mentioned(c: Client, m: Message):
+async def afk_mentioned(c: TelePyroBot, m: Message):
     global MENTIONED
     global afk_time
     global afk_start
@@ -192,7 +192,7 @@ async def afk_mentioned(c: Client, m: Message):
     filters.me & (filters.group | filters.private) & ~filters.chat(PRIVATE_GROUP_ID),
     group=12,
 )
-async def no_longer_afk(c: Client, m: Message):
+async def no_longer_afk(c: TelePyroBot, m: Message):
     global afk_time
     global afk_start
     global afk_end

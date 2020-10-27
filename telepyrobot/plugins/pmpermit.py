@@ -38,7 +38,7 @@ __Better not spam his Inbox!__
 
 
 @TelePyroBot.on_message(filters.private & (~filters.me & ~filters.bot), group=3)
-async def pm_block(c: Client, m: Message):
+async def pm_block(c: TelePyroBot, m: Message):
     if not PM_PERMIT:
         return
     try:
@@ -67,7 +67,7 @@ async def pm_block(c: Client, m: Message):
 @TelePyroBot.on_message(
     filters.me & filters.command(["approve", "pm"], COMMAND_HAND_LER) & filters.private
 )
-async def approve_pm(c: Client, m: Message):
+async def approve_pm(c: TelePyroBot, m: Message):
     if message.chat.type == "private":
         user_id = message.chat.id
     else:
@@ -97,7 +97,7 @@ async def approve_pm(c: Client, m: Message):
     & filters.command(["revoke", "disapprove", "dispm"], COMMAND_HAND_LER)
     & filters.private
 )
-async def revoke_pm_block(c: Client, m: Message):
+async def revoke_pm_block(c: TelePyroBot, m: Message):
     if message.chat.type == "private":
         user_id = message.chat.id
     else:

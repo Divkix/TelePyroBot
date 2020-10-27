@@ -40,7 +40,7 @@ Just for fun ;)
 
 
 @TelePyroBot.on_message(filters.command(["throw", "dart"], COMMAND_HAND_LER) & filters.me)
-async def throw_dart(c: Client, m: Message):
+async def throw_dart(c: TelePyroBot, m: Message):
     rep_mesg_id = message.message_id
     if m.reply_to_message:
         rep_mesg_id = m.reply_to_message.message_id
@@ -54,7 +54,7 @@ async def throw_dart(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command(["roll", "dice"], COMMAND_HAND_LER) & filters.me)
-async def roll_dice(c: Client, m: Message):
+async def roll_dice(c: TelePyroBot, m: Message):
     rep_mesg_id = message.message_id
     if m.reply_to_message:
         rep_mesg_id = m.reply_to_message.message_id

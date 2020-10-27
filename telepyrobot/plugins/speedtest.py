@@ -13,7 +13,7 @@ __help__ = f"""
 
 
 @TelePyroBot.on_message(filters.command("speedtest", COMMAND_HAND_LER) & filters.me)
-async def listbots(c: Client, m: Message):
+async def listbots(c: TelePyroBot, m: Message):
     await m.edit("`Running speed test . . .`")
     test = Speedtest()
     test.get_best_server()

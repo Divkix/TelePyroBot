@@ -22,7 +22,7 @@ Burn media files and make them look sick!
 
 
 @TelePyroBot.on_message(filters.command("deepfry", COMMAND_HAND_LER) & filters.me)
-async def do_deepfry(c: Client, m: Message):
+async def do_deepfry(c: TelePyroBot, m: Message):
     try:
         frycount = int(message.text.split(" ", 1)[1])
         if frycount < 1:

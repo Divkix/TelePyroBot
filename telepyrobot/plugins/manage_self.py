@@ -35,7 +35,7 @@ Blocks the user, if you blocked it.
 
 
 @TelePyroBot.on_message(filters.command("unblockpm", COMMAND_HAND_LER) & filters.me)
-async def unblock_pm(c: Client, m: Message):
+async def unblock_pm(c: TelePyroBot, m: Message):
     if len(m.command) == 2:
         user = message.text.split(" ", 1)[1]
         try:
@@ -54,7 +54,7 @@ async def unblock_pm(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("blockpm", COMMAND_HAND_LER) & filters.me)
-async def block_pm(c: Client, m: Message):
+async def block_pm(c: TelePyroBot, m: Message):
     if len(m.command) == 2:
         user = message.text.split(" ", 1)[1]
         try:
@@ -73,7 +73,7 @@ async def block_pm(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("uprofile", COMMAND_HAND_LER) & filters.me)
-async def update_profile(c: Client, m: Message):
+async def update_profile(c: TelePyroBot, m: Message):
     update = message.txt.split(" ", 2)
     msgreply = m.reply_to_message
     replytxt = m.reply_to_message.text
@@ -140,7 +140,7 @@ async def update_profile(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("setusername", COMMAND_HAND_LER) & filters.me)
-async def set_username(c: Client, m: Message):
+async def set_username(c: TelePyroBot, m: Message):
     username = message.txt.split(" ", 1)
     if " " in username:
         await m.edit("`Username cannot contain spaces`")
@@ -154,7 +154,7 @@ async def set_username(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("rmusername", COMMAND_HAND_LER) & filters.me)
-async def remove_username(c: Client, m: Message):
+async def remove_username(c: TelePyroBot, m: Message):
     try:
         await client.update_username("")
         await m.edit(f"**Removed Username**")
@@ -164,7 +164,7 @@ async def remove_username(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("rmpfp", COMMAND_HAND_LER) & filters.me)
-async def remove_pfp(c: Client, m: Message):
+async def remove_pfp(c: TelePyroBot, m: Message):
     photos = client.get_profile_photos("me")
     try:
         client.delete_profile_photos([p.file_id for p in photos[1:]])

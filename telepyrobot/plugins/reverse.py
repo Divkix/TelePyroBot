@@ -49,7 +49,7 @@ async def take_screen_shot(
 
 
 @TelePyroBot.on_message(filters.command("reverse", COMMAND_HAND_LER) & filters.me)
-async def google_rs(c: Client, m: Message):
+async def google_rs(c: TelePyroBot, m: Message):
     await m.edit("`Searching...`")
     start = datetime.now()
     out_str = "`Reply to an image`"

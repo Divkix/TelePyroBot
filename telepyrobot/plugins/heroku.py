@@ -28,7 +28,7 @@ useragent = (
 
 
 @TelePyroBot.on_message(filters.command("restart", COMMAND_HAND_LER) & filters.me)
-async def restart(c: Client, m: Message):
+async def restart(c: TelePyroBot, m: Message):
     if (HEROKU_API_KEY or HEROKU_APP_NAME) is None:
         await m.edit(
             "Please add `HEROKU_APP_NAME` or `HEROKU_API_KEY` in your Config Vars or file."
@@ -42,7 +42,7 @@ async def restart(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("dynostats", COMMAND_HAND_LER) & filters.me)
-async def dynostats(c: Client, m: Message):
+async def dynostats(c: TelePyroBot, m: Message):
     msg = await m.reply_text("Processing...!\n")
 
     u_id = Heroku.account().id
@@ -95,7 +95,7 @@ async def dynostats(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("vars", COMMAND_HAND_LER) & filters.me)
-async def hetoku_vars(c: Client, m: Message):
+async def hetoku_vars(c: TelePyroBot, m: Message):
     if (HEROKU_API_KEY or HEROKU_APP_NAME) is None:
         await m.edit(
             "Please add `HEROKU_APP_NAME` or `HEROKU_API_KEY` in your Config Vars or file."

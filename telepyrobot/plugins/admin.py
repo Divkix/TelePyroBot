@@ -31,7 +31,7 @@ Usage: {COMMAND_HAND_LER}unmute (Username/User ID or reply to message)
 
 
 @TelePyroBot.on_message(filters.command("promote", COMMAND_HAND_LER) & filters.me)
-async def promote_usr(c: Client, m: Message):
+async def promote_usr(c: TelePyroBot, m: Message):
     await m.edit("`Trying to Promote user...`")
     is_admin = await admin_check(message)
     if not is_admin:
@@ -71,7 +71,7 @@ async def promote_usr(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("demote", COMMAND_HAND_LER) & filters.me)
-async def demote_usr(c: Client, m: Message):
+async def demote_usr(c: TelePyroBot, m: Message):
     await m.edit("`Trying to Demote user...`")
     is_admin = await admin_check(message)
     if not is_admin:
@@ -111,7 +111,7 @@ async def demote_usr(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("ban", COMMAND_HAND_LER) & filters.me)
-async def ban_usr(c: Client, m: Message):
+async def ban_usr(c: TelePyroBot, m: Message):
     await m.edit("`Trying to Ban user...`")
     is_admin = await admin_check(message)
     if not is_admin:
@@ -145,7 +145,7 @@ async def ban_usr(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("mute", COMMAND_HAND_LER) & filters.me)
-async def restrict_usr(c: Client, m: Message):
+async def restrict_usr(c: TelePyroBot, m: Message):
     await m.edit("`Trying to Mute user...`")
     is_admin = await admin_check(message)
     chat_id = message.chat.id
@@ -180,7 +180,7 @@ async def restrict_usr(c: Client, m: Message):
 
 
 @TelePyroBot.on_message(filters.command(["unban", "unmute"], COMMAND_HAND_LER) & filters.me)
-async def unrestrict_usr(c: Client, m: Message):
+async def unrestrict_usr(c: TelePyroBot, m: Message):
     await m.edit("`Trying to Unrestrict user...`")
     is_admin = await admin_check(message)
     if not is_admin:

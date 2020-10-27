@@ -17,7 +17,7 @@ CARBON_LANG = "Auto"
 
 
 @TelePyroBot.on_message(filters.command("carbon", COMMAND_HAND_LER) & filters.me)
-async def carbon_api(c: Client, m: Message):
+async def carbon_api(c: TelePyroBot, m: Message):
     json = {
         "backgroundColor": "rgba(0, 255, 230, 100)",
         "theme": "Dracula",

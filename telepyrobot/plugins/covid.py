@@ -19,7 +19,7 @@ Check info of cases Covid19 (CoronaVirus) Disease
 
 
 @TelePyroBot.on_message(filters.command("covid", COMMAND_HAND_LER) & filters.me)
-async def covid(c: Client, m: Message):
+async def covid(c: TelePyroBot, m: Message):
     await m.edit("`Processing...`", parse_mode="md")
     cmd = message.text.split(" ", 1)
     if len(cmd) == 1:

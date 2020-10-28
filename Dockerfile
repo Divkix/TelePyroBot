@@ -73,6 +73,6 @@ RUN apt update && apt upgrade -y && \
 
 RUN pip3 install --upgrade pip setuptools
 
-RUN pip install -r requirements.txt
+RUN pip install --upgrade -r requirements.txt
 
 CMD ["python3", "-m", "telepyrobot"]

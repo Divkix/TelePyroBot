@@ -154,17 +154,12 @@ async def upload_as_document(c: TelePyroBot, m: Message):
 
 @TelePyroBot.on_message(filters.command("batchup", COMMAND_HAND_LER) & filters.me)
 async def covid(c: TelePyroBot, m: Message):
-    if len(m.text.split(" ")) == 1:
+    if len(m.text.split()) == 1:
         await m.edit("`Enter a directory location`")
-    elif len(m.text.split(" ", 1)) == 2:
+    elif len(m.text.split()) >= 2:
         temp_dir = m.text.split(" ", 1)[1]
         if not temp_dir.endswith("/"):
-            temp_dir = temp_dir
-    else:
-        await m.edit(
-            f"__Please check help by using__ `{COMMAND_HAND_LER}help {__PLUGIN__}`"
-        )
-        return
+            temp_dir += "/"
     status_message = await m.reply_text("`Uploading Files...`")
     if os.path.exists(temp_dir):
         files = os.listdir(temp_dir)

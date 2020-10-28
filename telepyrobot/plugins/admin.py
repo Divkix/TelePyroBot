@@ -1,17 +1,12 @@
-# import os
-# import asyncio
-# from telepyrobot.__main__ import TelePyroBot
-# from pyrogram import filters
-# from pyrogram.types import Message, ChatPermissions
-# from telepyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN, PRIVATE_GROUP_ID
-# from telepyrobot.utils.admin_check import admin_check
-# from telepyrobot.utils.pyrohelpers import extract_user
-# from telepyrobot.utils.parser import mention_markdown
-
-import smart_imports
-
-smart_imports.all()
-
+import os
+import asyncio
+from telepyrobot.__main__ import TelePyroBot
+from pyrogram import filters
+from pyrogram.types import Message, ChatPermissions
+from telepyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN, PRIVATE_GROUP_ID
+from telepyrobot.utils.admin_check import admin_check
+from telepyrobot.utils.pyrohelpers import extract_user
+from telepyrobot.utils.parser import mention_markdown
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 

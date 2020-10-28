@@ -10,7 +10,7 @@ from telepyrobot.utils.pyrohelpers import ReplyCheck
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
-__HELP__ = f"""
+__help__ = f"""
 Use this remove background from images!
 
 **Usage:**

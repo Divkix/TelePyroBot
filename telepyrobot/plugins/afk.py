@@ -20,7 +20,7 @@ from telepyrobot.db.afk_db import set_afk, get_afk
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
-__HELP__ = f"""
+__help__ = f"""
 Set yourself to afk.
 
 If you're restart your bot, all counter and data in cache will be reset.
@@ -28,7 +28,7 @@ But you will still in afk, and always reply when got mentioned.
 
 **Set AFK status**:
 `{COMMAND_HAND_LER}afk <reason>` Set yourself to afk, give a reason if need.
-* reason is optional
+* Reason is optional
 
 whenever you send any message to any other chat that your `PRIVATE_GROUP_ID`,
 the afk status would be set to False!

@@ -18,7 +18,7 @@ from telepyrobot.utils.parser import mention_markdown, escape_markdown
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
-__HELP__ = f"""
+__help__ = f"""
 Use this to lock group permissions.
 Allows you to lock some common permission types in the chat.
 

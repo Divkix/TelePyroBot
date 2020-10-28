@@ -9,7 +9,7 @@ from telepyrobot.db import my_chats_db as db
 MESSAGE_RECOUNTER = 0
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
-__HELP__ = f"""
+__help__ = f"""
 This module is to manage your chats, when message was received from unknown chat, and that chat was not in database, then save that chat info to your database.
 **Export chats:**
 `{COMMAND_HAND_LER}chatlist`: Exports the chats which you have joined!

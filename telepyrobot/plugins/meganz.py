@@ -14,7 +14,7 @@ from mega import Mega
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
-__HELP__ = f"""
+__help__ = f"""
 `{COMMAND_HAND_LER}megainfo`: Get account info.
 `{COMMAND_HAND_LER}megals`: List files on mega.nz.
 `{COMMAND_HAND_LER}megadl` / `{COMMAND_HAND_LER}dlmega`: Download file from mega.nz link.
@@ -66,7 +66,7 @@ async def mega_info(c: TelePyroBot, m: Message):
 @TelePyroBot.on_message(filters.command("megadl", COMMAND_HAND_LER) & filters.me)
 async def mega_dl(c: TelePyroBot, m: Message):
     megaLogin()
-    if len(m.command) == 2:
+    if len(m.command) >= 2:
         dlurl = m.text.split(" ", 1)[1]
         if ("https://mega.co.nz" or "mega.co.nz", "mega.nz") in dl_url:
             megaC.download_url(dlurl, TMP_DOWNLOAD_DIRECTORY)
@@ -84,7 +84,7 @@ async def mega_find(c: TelePyroBot, m: Message):
         )
         return
     megaLogin()
-    if len(m.command) == 2:
+    if len(m.command) >= 2:
         foldername = m.text.split(" ", 1)[1]
         folder = megaC.find(foldername)
         await m.edit_text(f"Searched for: {foldername}\n\nResults:\n{folder}")
@@ -101,7 +101,7 @@ async def mega_upload(c: TelePyroBot, m: Message):
     megaLogin()
     if len(m.text.split()) >= 2:
         await m.reply_text("Uploading file...")
-        fileLoc = m.text.split(" ", 2)
+        fileLoc = m.text.split(" ", 1)[1]
         try:
             file = megaC.upload(fileLoc)
             link = megaC.get_upload_link(file)

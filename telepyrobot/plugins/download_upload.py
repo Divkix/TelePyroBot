@@ -158,6 +158,8 @@ async def covid(c: TelePyroBot, m: Message):
         await m.edit("`Enter a directory location`")
     elif len(m.text.split(" ", 1)) == 2:
         temp_dir = m.text.split(" ", 1)[1]
+        if not temp_dir.endswith("/"):
+            temp_dir = temp_dir
     else:
         await m.edit(
             f"__Please check help by using__ `{COMMAND_HAND_LER}help {__PLUGIN__}`"
@@ -170,7 +172,7 @@ async def covid(c: TelePyroBot, m: Message):
         await status_message.edit("`Uploading Files to Telegram...`")
         for file in files:
             c_time = time.time()
-            required_file_name = temp_dir + "/" + file
+            required_file_name = temp_dir + file
             thumb_image_path = await is_thumb_image_exists(required_file_name)
             doc_caption = os.path.basename(required_file_name)
             LOGGER.info(f"Uploading {required_file_name} from {temp_dir} to Telegram.")

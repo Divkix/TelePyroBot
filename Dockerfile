@@ -51,6 +51,7 @@ RUN apt update && apt upgrade -y && \
     openssl \
     pv \
     jq \
+    tree \
     wget \
     python3 \
     python3-dev \

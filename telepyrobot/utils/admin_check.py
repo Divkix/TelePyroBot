@@ -1,5 +1,6 @@
 from telepyrobot.__main__ import TelePyroBot
 from pyrogram.types import Message
+import asyncio
 
 
 async def admin_check(c: TelePyroBot, m: Message):

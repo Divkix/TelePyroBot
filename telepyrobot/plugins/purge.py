@@ -9,7 +9,7 @@ from telepyrobot.utils.admin_check import admin_check
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
-__HELP__ = f"""
+__help__ = f"""
 `{COMMAND_HAND_LER}purge`: Deletes messages upto replied message.
 Usage: {COMMAND_HAND_LER}purge <as a reply to the message>
 

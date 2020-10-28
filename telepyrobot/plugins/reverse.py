@@ -13,7 +13,7 @@ from telepyrobot import COMMAND_HAND_LER, LOGGER
 from telepyrobot.utils.pyrohelpers import ReplyCheck
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
-__HELP__ = f"""
+__help__ = f"""
 This module will help you Reverse Search Media
 
 `{COMMAND_HAND_LER} reverse <reply to a media>`

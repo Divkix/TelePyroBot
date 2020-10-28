@@ -12,8 +12,6 @@ To get help for any command, just type `{COMMAND_HAND_LER}help plugin_name`
 
 Get a list of all Plugins using:
 `{COMMAND_HAND_LER}plugins`
-
-**More info available at:** @TelePyroBot
 """
 
 
@@ -39,7 +37,7 @@ async def help_me(c: TelePyroBot, m: Message):
     elif len(m.command) == 2:
         module_name = m.text.split(" ", 1)[1]
         try:
-            HELP = f"**Help for __{module_name}__**\n" + HELP_COMMANDS[f"{module_name}"]
+            HELP = f"**Help for __{module_name}__**\n\n" + HELP_COMMANDS[module_name]
             await m.reply_text(HELP, parse_mode="md", disable_web_page_preview=True)
             await m.delete()
         except Exception as ef:

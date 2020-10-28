@@ -26,6 +26,8 @@ class Config:
     PRIVATE_GROUP_ID = int(os.environ.get("PRIVATE_GROUP_ID", -100))
     PM_PERMIT = bool(os.environ.get("PM_PERMIT", False))
     REMBG_API_KEY = os.environ.get("REMBG_API_KEY", None)
+    MEGANZ_PASSWORD = os.environ.get("MEGANZ_PASSWORD", None)
+    MEGANZ_EMAIL = os.environ.get("MEGANZ_EMAIL", None)
 
 
 class Production(Config):

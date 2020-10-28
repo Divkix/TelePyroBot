@@ -36,7 +36,7 @@ def megaLogin():
                 megaC = mega.login()
         except Exception as ef:
             LOGGER.info(ef)
-   return
+    return
 
 
 @TelePyroBot.on_message(filters.command("megainfo", COMMAND_HAND_LER) & filters.me)

@@ -32,3 +32,4 @@ lxml
 googletrans
 selenium
 removebg
+smart_imports

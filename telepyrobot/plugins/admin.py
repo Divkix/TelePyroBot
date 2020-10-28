@@ -1,12 +1,17 @@
-import os
-import asyncio
-from telepyrobot.__main__ import TelePyroBot
-from pyrogram import filters
-from pyrogram.types import Message, ChatPermissions
-from telepyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN, PRIVATE_GROUP_ID
-from telepyrobot.utils.admin_check import admin_check
-from telepyrobot.utils.pyrohelpers import extract_user
-from telepyrobot.utils.parser import mention_markdown
+# import os
+# import asyncio
+# from telepyrobot.__main__ import TelePyroBot
+# from pyrogram import filters
+# from pyrogram.types import Message, ChatPermissions
+# from telepyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN, PRIVATE_GROUP_ID
+# from telepyrobot.utils.admin_check import admin_check
+# from telepyrobot.utils.pyrohelpers import extract_user
+# from telepyrobot.utils.parser import mention_markdown
+
+import smart_imports
+
+smart_imports.all()
+
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -35,9 +40,7 @@ async def promote_usr(c: TelePyroBot, m: Message):
     await m.edit("`Trying to Promote user...`")
     is_admin = await admin_check(c, m)
     if not is_admin:
-        await m.edit("`I'm not admin nub nibba!`")
-        await asyncio.sleep(2)
-        await m.delete()
+        return
         return
     user_id, user_first_name = await extract_user(c, m)
     try:
@@ -76,9 +79,7 @@ async def demote_usr(c: TelePyroBot, m: Message):
     await m.edit("`Trying to Demote user...`")
     is_admin = await admin_check(c, m)
     if not is_admin:
-        await m.edit("`I'm not admin nub nibba!`")
-        await asyncio.sleep(2)
-        await m.delete()
+        return
         return
     user_id, user_first_name = await extract_user(c, m)
     try:
@@ -116,9 +117,6 @@ async def ban_usr(c: TelePyroBot, m: Message):
     await m.edit("`Trying to Ban user...`")
     is_admin = await admin_check(c, m)
     if not is_admin:
-        await m.edit("`I'm not admin nub nibba!`")
-        await asyncio.sleep(2)
-        await m.delete()
         return
     user_id, user_first_name = await extract_user(c, m)
     if m.reply_to_message:
@@ -185,9 +183,7 @@ async def unrestrict_usr(c: TelePyroBot, m: Message):
     await m.edit("`Trying to Unrestrict user...`")
     is_admin = await admin_check(c, m)
     if not is_admin:
-        await m.edit("`I'm not admin nub nibba!`")
-        await asyncio.sleep(2)
-        await m.delete()
+        return
         return
     user_id, user_first_name = await extract_user(c, m)
     try:

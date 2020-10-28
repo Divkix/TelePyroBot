@@ -1,4 +1,5 @@
 from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.utils.pyrohelpers import ReplyCheck
 from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
@@ -43,15 +44,12 @@ Just for fun ;)
     filters.command(["throw", "dart"], COMMAND_HAND_LER) & filters.me
 )
 async def throw_dart(c: TelePyroBot, m: Message):
-    rep_mesg_id = m.message_id
-    if m.reply_to_message:
-        rep_mesg_id = m.reply_to_message.message_id
     await m.delete()
     await c.send_dice(
         chat_id=m.chat.id,
         emoji=DART_E_MOJI,
         disable_notification=True,
-        reply_to_message_id=rep_mesg_id,
+        reply_to_message_id=ReplyCheck(m),
     )
 
 
@@ -59,15 +57,12 @@ async def throw_dart(c: TelePyroBot, m: Message):
     filters.command(["roll", "dice"], COMMAND_HAND_LER) & filters.me
 )
 async def roll_dice(c: TelePyroBot, m: Message):
-    rep_mesg_id = m.message_id
-    if m.reply_to_message:
-        rep_mesg_id = m.reply_to_message.message_id
     await m.delete()
     await c.send_dice(
         chat_id=m.chat.id,
         emoji=DICE_E_MOJI,
         disable_notification=True,
-        reply_to_message_id=rep_mesg_id,
+        reply_to_message_id=ReplyCheck(m),
     )
 
 

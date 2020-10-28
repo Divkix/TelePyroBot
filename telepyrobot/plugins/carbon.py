@@ -2,6 +2,7 @@ from telepyrobot.__main__ import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
+from telepyrobot.utils.pyrohelpers import ReplyCheck
 from requests import post
 import shutil
 import os
@@ -24,9 +25,7 @@ async def carbon_api(c: TelePyroBot, m: Message):
         "exportSize": "4x",
     }
     cmd = m.command
-    rep_mesg_id = m.message_id
     if m.reply_to_message:
-        rep_mesg_id = m.reply_to_message.message_id
         r = m.reply_to_message
         json["code"] = r.text
         await m.edit_text("`Carbonizing code...`")
@@ -47,7 +46,7 @@ async def carbon_api(c: TelePyroBot, m: Message):
             m.chat.id,
             filename,
             caption="Carbon Made by: @TelePyroBot",
-            reply_to_message_id=rep_mesg_id,
+            reply_to_message_id=ReplyCheck(m),
         )
         await m.delete()
     else:

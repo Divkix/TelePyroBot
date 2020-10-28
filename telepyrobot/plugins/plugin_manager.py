@@ -34,7 +34,7 @@ async def send_plugin(c: TelePyroBot, m: Message):
         document=f"/app/telepyrobot/plugins/{plugin_name}.py",
         caption=f"**Plugin:** `{plugin_name}.py`\n**Plugin for** @TelePyroBot",
         disable_notification=True,
-        reply_to_message_id=ReplyCheck(message),
+        reply_to_message_id=ReplyCheck(m),
     )
     await m.delete()
     return

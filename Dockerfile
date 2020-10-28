@@ -8,6 +8,10 @@ COPY . /root
 
 WORKDIR /root
 
+RUN apt update && apt upgrade -y && apt install software-properties-common -y
+
+RUN add-apt-repository main contrib non-free
+
 # Installing Required Packages
 RUN apt update && apt upgrade -y && \
     apt install --no-install-recommends -y \

@@ -32,3 +32,4 @@ lxml
 googletrans
 selenium
 removebg
+mega.py

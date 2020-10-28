@@ -116,15 +116,15 @@ async def execution(c: TelePyroBot, m: Message):
     OUTPUT += f"<b>stdout</b>: \n<code>{o}</code>"
 
     if len(OUTPUT) > MAX_MESSAGE_LENGTH:
-        with open("exec.text", "w+", encoding="utf8") as out_file:
+        with open("exec.txt", "w+", encoding="utf8") as out_file:
             out_file.write(str(OUTPUT))
         await m.reply_document(
-            document="exec.text",
+            document="exec.txt",
             caption=cmd,
             disable_notification=True,
             reply_to_message_id=reply_to_id,
         )
-        os.remove("exec.text")
+        os.remove("exec.txt")
     else:
         await m.reply_text(OUTPUT)
     return

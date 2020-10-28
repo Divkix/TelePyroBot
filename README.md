@@ -10,14 +10,18 @@ Join [@Skuzzers](https://t.me/Skuzzers)!
 
 ## Installing
 
-### Checkout the Installation tutorial here:
-https://www.skuzzers.xyz/2020/08/how-to-make-a-telegram-userbot/
-
-#### The Easy Way
+#### The Easy Way- Heroku
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/SkuzzyxD/TelePyroBot)
 
 #### GET STRING SESSION FROM REPL RUN!
 [![Repl.it](https://img.shields.io/badge/REPL%20RUN-Run%20Online-blue.svg)](https://telepyrobot.skuzzyxd.repl.run/)
+
+#### Docker way!
+Setup config.py file
+```sh
+docker build -t telepyrobot:v2.1 .
+docker run -d telepyrobot:v2.1
+```
 
 #### The Legacy Way - Manual
 Simply clone the repository and run the main file:
@@ -79,4 +83,4 @@ class Development(Config):
 
 ## Copyright & License
 * Copyright (C) 2020 by [SkuzzyxD](https://github.com/SkuzzyxD) ❤️️
-* Licensed under the terms of the [GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007](https://github.com/SkuzzyxD/TelePyroBot/blob/master/LICENSE)
+* Licensed under the terms of the [GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007](https://github.com/SkuzzyxD/TelePyroBot/blob/master/LICENSE.md)

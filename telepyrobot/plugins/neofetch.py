@@ -14,25 +14,17 @@ from telepyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
-List the directories of the server.
+Get System information!!
+`{COMMAND_HAND_LER}neofetch`
 
-`{COMMAND_HAND_LER}ls`: List files in ./ directory
-`{COMMAND_HAND_LER}ls <diectory name>`: List all the files in the directory.
+Will fetch basic information about your bot's machine.
 """
 
 
-@TelePyroBot.on_message(filters.command("ls", COMMAND_HAND_LER) & filters.me)
-async def list_directories(c: TelePyroBot, m: Message):
-    if len(m.command) == 1:
-        cmd = "ls"
-    elif len(m.command) >= 2:
-        location = m.text.split(" ", 1)[1]
-        cmd = "ls " + location
-    else:
-        await m.edit(
-            "<b>Error:</b>\n<i>Check Help documentaion for directory listing.</i>"
-        )
-
+@TelePyroBot.on_message(filters.command("neofetch", COMMAND_HAND_LER) & filters.me)
+async def neofetch_stats(c: TelePyroBot, m: Message):
+    cmd = "neofetch --stdout"
+    
     reply_to_id = m.message_id
 
     process = await asyncio.create_subprocess_shell(
@@ -57,5 +49,5 @@ async def list_directories(c: TelePyroBot, m: Message):
         )
         os.remove("exec.txt")
     else:
-        await m.reply_text(OUTPUT)
+        await m.edit_text(OUTPUT)
     return

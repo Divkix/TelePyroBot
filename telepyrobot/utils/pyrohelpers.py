@@ -14,7 +14,7 @@ def ReplyCheck(m: Message):
     return reply_id
 
 
-async def extract_user(c: Client, m: Message):
+async def extract_user(c: TelePyroBot, m: Message):
     user_id = None
     user_first_name = None
 

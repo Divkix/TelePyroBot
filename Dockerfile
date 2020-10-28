@@ -10,9 +10,7 @@ RUN apt update && \
 
 # Add repositories
 RUN add-apt-repository main
-RUN add-apt-repository universe
-RUN add-apt-repository restricted
-RUN add-apt-repository multiverse
+RUN add-apt-repository contrib
 
 COPY . /root
 

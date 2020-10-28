@@ -24,7 +24,7 @@ Will fetch basic information about your bot's machine.
 @TelePyroBot.on_message(filters.command("neofetch", COMMAND_HAND_LER) & filters.me)
 async def neofetch_stats(c: TelePyroBot, m: Message):
     cmd = "neofetch --stdout"
-    
+
     reply_to_id = m.message_id
 
     process = await asyncio.create_subprocess_shell(

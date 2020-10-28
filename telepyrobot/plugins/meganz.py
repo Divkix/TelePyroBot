@@ -125,10 +125,10 @@ async def mega_import(c: TelePyroBot, m: Message):
         fileurl = m.text.split(" ", 1)[1]
         try:
             if ("https://mega.co.nz" or "mega.co.nz", "mega.nz") in dl_url:
-            megaC.import_public_url(fileurl)
-            await m.edit_text("Imported file to your mega drive!")
-        else:
-            await m.edit_text("This doesn't seem like a mega link.")
+                megaC.import_public_url(fileurl)
+                await m.edit_text("Imported file to your mega drive!")
+            else:
+                await m.edit_text("This doesn't seem like a mega link.")
         except Exception as ef:
-            await m.edit_text(ef)        
+            await m.edit_text(ef)
     return

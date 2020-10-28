@@ -10,8 +10,8 @@ WORKDIR /root
 
 # Add Extra Repositories
 RUN apt update && apt upgrade -y && apt install software-properties-common -y
-RUN add-apt-repository main contrib non-free
-RUN add-apt-repository main non-free
+RUN add-apt-repository main 
+RUN add-apt-repository contrib
 RUN add-apt-repository non-free
 
 

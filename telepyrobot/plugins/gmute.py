@@ -85,10 +85,11 @@ async def list_gmuted(c: TelePyroBot, m: Message):
 
 @TelePyroBot.on_message(filters.group, group=5)
 async def watcher_gmute(c: TelePyroBot, m: Message):
-    if db.is_gmuted(m.from_user.id):
-        await asyncio.sleep(0.1)
-        try:
+    try:
+        if db.is_gmuted(m.from_user.id):
+            await asyncio.sleep(0.1)
             await c.delete_messages(chat_id=m.chat.id, message_ids=m.message_id)
-        except:
+    except Exception as ef:
+        if ef == "AttributeError: 'NoneType' object has no attribute 'id'":
             pass
     return

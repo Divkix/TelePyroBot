@@ -26,7 +26,7 @@ __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 __help__ = f"""
 Download Telegram Media
 Syntax: `{COMMAND_HAND_LER}dl` / download <link> or as a reply to media
-Use '|' along with command to set a custom filename fro downloaded file,
+Use '|' along with command to set a custom filename for downloaded file,
 Works only on replied media messages!
 
 Upload Media to Telegram
@@ -142,7 +142,7 @@ async def upload_as_document(c: TelePyroBot, m: Message):
                 disable_notification=True,
                 reply_to_message_id=m.message_id,
                 progress=progress_for_pyrogram,
-                progress_args=("trying to upload", status_message, c_time),
+                progress_args=("trying to upload", m, c_time),
             )
             end_t = datetime.now()
             ms = (end_t - start_t).seconds

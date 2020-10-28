@@ -22,14 +22,14 @@ List the directories of the server.
 
 
 @TelePyroBot.on_message(filters.command("ls", COMMAND_HAND_LER) & filters.me)
-async def list_directories(_, message):
+async def list_directories(_, m: Message):
     if len(m.command) == 1:
         cmd = "ls"
     elif len(m.command) >= 2:
         location = m.text.split(" ", 1)[1]
         cmd = "ls " + location
     else:
-        await m.edit("<b>Error:</b>\n<i>Check Help documentaion for Help</i>")
+        await m.edit("<b>Error:</b>\n<i>Check Help documentaion for directory listing.</i>")
 
     reply_to_id = m.message_id
 
@@ -56,3 +56,4 @@ async def list_directories(_, message):
         os.remove("exec.text")
     else:
         await m.reply_text(OUTPUT)
+    return

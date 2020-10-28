@@ -140,7 +140,7 @@ async def upload_as_document(c: TelePyroBot, m: Message):
                 caption=doc_caption,
                 parse_mode="html",
                 disable_notification=True,
-                reply_to_message_id=message.message_id,
+                reply_to_message_id=m.message_id,
                 progress=progress_for_pyrogram,
                 progress_args=("trying to upload", status_message, c_time),
             )

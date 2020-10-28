@@ -44,7 +44,7 @@ async def carbon_api(c: TelePyroBot, m: Message):
         with open(filename, "wb") as f:
             shutil.copyfileobj(r.raw, f)
         await c.send_document(
-            m.chatid,
+            m.chat.id,
             filename,
             caption="Carbon Made by: @TelePyroBot",
             reply_to_message_id=rep_mesg_id,
@@ -54,3 +54,4 @@ async def carbon_api(c: TelePyroBot, m: Message):
         await m.edit("Image Couldn't be retreived")
         await m.delete()
     os.remove(filename)
+    return

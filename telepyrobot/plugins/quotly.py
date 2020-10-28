@@ -49,6 +49,6 @@ async def quotly(c: TelePyroBot, m: Message):
                     break
     await m.edit("`Complete !`", parse_mode="md")
     msg_id = msg[0]["message_id"]
-    await c.forward_messages(m.chatid, "@QuotLyBot", msg_id)
+    await c.forward_messages(m.chat.id, "@QuotLyBot", msg_id)
     await c.read_history("@QuotLyBot")
     await m.delete()

@@ -50,7 +50,7 @@ async def lock_perm(c: TelePyroBot, m: Message):
     perm = ""
 
     lock_type = m.text.split(" ", 1)[1]
-    chat_id = m.chatid
+    chat_id = m.chat.id
 
     if not lock_type:
         await m.edit("`I Can't Lock Nothing! (－‸ლ)`")
@@ -197,7 +197,7 @@ async def unlock_perm(c: TelePyroBot, m: Message):
     uperm = ""
 
     unlock_type = m.text.split(" ", 1)[1]
-    chat_id = m.chatid
+    chat_id = m.chat.id
 
     if not unlock_type:
         await m.edit(text=r"`I Can't Unlock Nothing! (－‸ლ)`")
@@ -244,7 +244,7 @@ async def unlock_perm(c: TelePyroBot, m: Message):
             await c.send_message(
                 PRIVATE_GROUP_ID,
                 "#UNLOCK\n\nCHAT: `{}` (`{}`)\nPERMISSIONS: `All Permissions`".format(
-                    m.chattitle, m.chatid
+                    m.chat.title, m.chat.id
                 ),
             )
 
@@ -330,7 +330,7 @@ async def unlock_perm(c: TelePyroBot, m: Message):
         await c.send_message(
             PRIVATE_GROUP_ID,
             "#UNLOCK\n\nCHAT: `{}` (`{}`)\nPERMISSION: `{} Permission`".format(
-                m.chattitle, m.chatid, uperm
+                m.chat.title, m.chat.id, uperm
             ),
         )
 
@@ -356,7 +356,7 @@ async def view_perm(c: TelePyroBot, m: Message):
 
     await m.edit("`Checking group permissions... Hang on!! ⏳`")
 
-    v_perm = await c.get_chat(m.chatid)
+    v_perm = await c.get_chat(m.chat.id)
 
     def convert_to_emoji(val: bool):
         if val is True:
@@ -394,7 +394,7 @@ async def view_perm(c: TelePyroBot, m: Message):
             await m.edit(permission_view_str)
             await c.send_message(
                 PRIVATE_GROUP_ID,
-                "#VPERM\n\nCHAT: `{}` (`{}`)".format(m.chattitle, m.chatid),
+                "#VPERM\n\nCHAT: `{}` (`{}`)".format(m.chat.title, m.chat.id),
             )
 
         except Exception as e_f:

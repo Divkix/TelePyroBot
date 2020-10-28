@@ -103,7 +103,7 @@ def split_quotes(text: str):
 
 
 def extract_text(m):
-    return m.text or m.caption or (m.sticker.emoji if m.sticker else None)
+    return (m.text or m.caption or (m.sticker.emoji if m.sticker else None))
 
 
 def remove_escapes(text: str) -> str:

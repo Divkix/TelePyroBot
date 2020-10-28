@@ -25,7 +25,7 @@ async def zombies_clean(c: TelePyroBot, m: Message):
     if len(m.text.split(" ")) != 2:
         await m.edit("`Counting deleted accounts!!!`")
         del_users = []
-        async for x in c.iter_chat_members(chat_id=m.chatid):
+        async for x in c.iter_chat_members(chat_id=m.chat.id):
             if x.user.is_deleted:
                 del_users.append(x.user.id)
         if del_users:
@@ -38,14 +38,14 @@ async def zombies_clean(c: TelePyroBot, m: Message):
         await m.edit("`Cleaning deleted accounts....`")
         del_users = []
         u = 0
-        async for x in c.iter_chat_members(chat_id=m.chatid):
+        async for x in c.iter_chat_members(chat_id=m.chat.id):
             await asyncio.sleep(0.1)
             if x.user.is_deleted:
                 del_users.append(x.user.id)
-                a = await c.get_chat_member(m.chatid, x.user.id)
+                a = await c.get_chat_member(m.chat.id, x.user.id)
                 if a.user.status not in ("administrator", "creator"):
                     try:
-                        await c.kick_chat_member(m.chatid, x.user.id)
+                        await c.kick_chat_member(m.chat.id, x.user.id)
                         u += 1
                         await asyncio.sleep(0.1)
                     except:
@@ -53,7 +53,7 @@ async def zombies_clean(c: TelePyroBot, m: Message):
         await m.edit(f"**Done Cleaning Group ✅**\n`Removed {u} deleted accounts`")
         await c.send_message(
             PRIVATE_GROUP_ID,
-            f"#ZOMBIES\n\nCleaned {len(del_users)} accounts from **{m.chattitle}** - `{m.chatid}`",
+            f"#ZOMBIES\n\nCleaned {len(del_users)} accounts from **{m.chat.title}** - `{m.chat.id}`",
         )
     else:
         await m.edit(

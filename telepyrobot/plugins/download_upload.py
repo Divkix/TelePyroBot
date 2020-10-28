@@ -42,30 +42,30 @@ The command will upload all files from the directory location to the current Tel
 @TelePyroBot.on_message(
     filters.command(["download", "dl"], COMMAND_HAND_LER) & filters.me
 )
-async def down_load_media(c: Client, sms: Message):
-    message = await sms.reply_text("...", quote=True)
+async def down_load_media(c: Client, m: Message):
+    sm = await m.reply_text("...", quote=True)
     if not os.path.isdir(TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TMP_DOWNLOAD_DIRECTORY)
-    if sms.reply_to_message is not None:
+    if m.reply_to_message is not None:
         start_t = datetime.now()
         download_location = TMP_DOWNLOAD_DIRECTORY + "/"
         c_time = time.time()
         the_real_download_location = await c.download_media(
-            message=sms.reply_to_message,
+            message=m.reply_to_message,
             file_name=download_location,
             progress=progress_for_pyrogram,
-            progress_args=("**__Trying to download...__**", message, c_time),
+            progress_args=("**__Trying to download...__**", m, c_time),
         )
         end_t = datetime.now()
         ms = (end_t - start_t).seconds
-        await message.edit(
+        await sm.edit(
             f"Downloaded to <code>{the_real_download_location}</code> in <u>{ms}</u> seconds",
             parse_mode="html",
         )
-        await sms.delete()
-    elif len(sms.command) > 1:
+        await m.delete()
+    elif len(m.command) > 1:
         start_t = datetime.now()
-        the_url_parts = " ".join(sms.command[1:])
+        the_url_parts = " ".join(m.command[1:])
         url = the_url_parts.strip()
         custom_file_name = os.path.basename(url)
         if "|" in the_url_parts:
@@ -102,7 +102,9 @@ async def down_load_media(c: Client, sms: Message):
                 current_message += f"**Download Speed** __{speed}__\n"
                 current_message += f"**ETA:** __{estimated_total_time}__"
                 if round(diff % 10.00) == 0 and current_message != display_message:
-                    await message.edit(disable_web_page_preview=True, text=current_message)
+                    await sm.edit(
+                        disable_web_page_preview=True, text=current_message
+                    )
                     display_message = current_message
                     await asyncio.sleep(10)
             except Exception as e:
@@ -111,12 +113,15 @@ async def down_load_media(c: Client, sms: Message):
         if os.path.exists(download_file_path):
             end_t = datetime.now()
             ms = (end_t - start_t).seconds
-            await message.edit(
+            await sm.edit(
                 f"Downloaded to <code>{download_file_path}</code> in <u>{ms}</u> seconds",
                 parse_mode="html",
             )
     else:
-        await message.edit("`Reply to a Telegram Media, to download it to local server.`")
+        await sm.edit(
+            "`Reply to a Telegram Media, to download it to local server.`"
+        )
+    return
 
 
 @TelePyroBot.on_message(filters.command("upload", COMMAND_HAND_LER) & filters.me)
@@ -158,7 +163,8 @@ async def covid(c: TelePyroBot, m: Message):
     elif len(m.text.split(" ", 1)) == 2:
         temp_dir = m.text.split(" ", 1)[1]
     else:
-        await m.edit(f"__Please check help by using__ `{COMMAND_HAND_LER}help batchup`")
+        await m.edit(f"__Please check help by using__ `{COMMAND_HAND_LER}help {__PLUGIN__}`")
+        return
     status_message = await m.reply_text("`Uploading Files...`")
     if os.path.exists(temp_dir):
         files = os.listdir(temp_dir)
@@ -171,7 +177,7 @@ async def covid(c: TelePyroBot, m: Message):
             doc_caption = os.path.basename(required_file_name)
             LOGGER.info(f"Uploading {required_file_name} from {temp_dir} to Telegram.")
             await c.send_document(
-                chat_id=m.chatid,
+                chat_id=m.chat.id,
                 document=required_file_name,
                 thumb=thumb_image_path,
                 caption=doc_caption,

@@ -22,7 +22,7 @@ List the directories of the server.
 
 
 @TelePyroBot.on_message(filters.command("ls", COMMAND_HAND_LER) & filters.me)
-async def list_directories(_, m: Message):
+async def list_directories(c: TelePyroBot, m: Message):
     if len(m.command) == 1:
         cmd = "ls"
     elif len(m.command) >= 2:

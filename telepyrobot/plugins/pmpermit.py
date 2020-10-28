@@ -42,13 +42,13 @@ async def pm_block(c: TelePyroBot, m: Message):
     if not PM_PERMIT:
         return
     try:
-        if not db.get_whitelist(m.chatid):
-            if db.get_msg_id(m.chatid):
-                old_msg_id = db.get_msg_id(m.chatid)
-                await c.delete_messages(chat_id=m.chatid, message_ids=old_msg_id)
+        if not db.get_whitelist(m.chat.id):
+            if db.get_msg_id(m.chat.id):
+                old_msg_id = db.get_msg_id(m.chat.id)
+                await c.delete_messages(chat_id=m.chat.id, message_ids=old_msg_id)
 
             rply_msg = await m.reply_text(welc_txt)
-            db.set_last_msg_id(m.chatid, rply_msg.message_id)
+            db.set_last_msg_id(m.chat.id, rply_msg.message_id)
             await asyncio.sleep(2)
             await c.send_message(
                 PRIVATE_GROUP_ID,
@@ -66,8 +66,8 @@ async def pm_block(c: TelePyroBot, m: Message):
     filters.me & filters.command(["approve", "pm"], COMMAND_HAND_LER) & filters.private
 )
 async def approve_pm(c: TelePyroBot, m: Message):
-    if m.chattype == "private":
-        user_id = m.chatid
+    if m.chat.type == "private":
+        user_id = m.chat.id
     else:
         user_id, user_first_name = extract_user(message)
     db.set_whitelist(user_id, True)
@@ -77,9 +77,9 @@ async def approve_pm(c: TelePyroBot, m: Message):
             mention_markdown(user.first_name, user_id)
         )
     )
-    if db.get_msg_id(m.chatid):
-        old_msg_id = db.get_msg_id(m.chatid)
-        await c.delete_messages(chat_id=m.chatid, message_ids=old_msg_id)
+    if db.get_msg_id(m.chat.id):
+        old_msg_id = db.get_msg_id(m.chat.id)
+        await c.delete_messages(chat_id=m.chat.id, message_ids=old_msg_id)
     await c.send_message(
         PRIVATE_GROUP_ID,
         "{} **is approved to contact you in PM!**".format(
@@ -96,8 +96,8 @@ async def approve_pm(c: TelePyroBot, m: Message):
     & filters.private
 )
 async def revoke_pm_block(c: TelePyroBot, m: Message):
-    if m.chattype == "private":
-        user_id = m.chatid
+    if m.chat.type == "private":
+        user_id = m.chat.id
     else:
         user_id = m.text.split(" ")[1]
     db.del_whitelist(user_id)
@@ -107,7 +107,7 @@ async def revoke_pm_block(c: TelePyroBot, m: Message):
             mention_markdown(user.first_name, user_id)
         )
     )
-    user_id = m.chatid
+    user_id = m.chat.id
     await c.send_message(
         PRIVATE_GROUP_ID,
         "{}'s **permission to contact you in PM has been revoked!**".format(

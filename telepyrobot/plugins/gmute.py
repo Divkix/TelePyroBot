@@ -24,7 +24,7 @@ They will not be able to speak until you ungmute them!
 @TelePyroBot.on_message(filters.command("gmute", COMMAND_HAND_LER) & filters.me)
 async def start_gmute(c: TelePyroBot, m: Message):
     await m.edit("`Putting duct tape...`")
-    user_id, user_first_name = await extract_user(m)
+    user_id, user_first_name = await extract_user(c, m)
     if db.is_gmuted(user_id):
         await m.edit("`This user is already gmuted!`")
         return
@@ -37,7 +37,7 @@ async def start_gmute(c: TelePyroBot, m: Message):
         await c.send_message(
             PRIVATE_GROUP_ID,
             "#GMUTE\nUser: {} in Chat {}".format(
-                mention_markdown(user_first_name, user_id), m.chattitle
+                mention_markdown(user_first_name, user_id), m.chat.title
             ),
         )
     return
@@ -46,7 +46,7 @@ async def start_gmute(c: TelePyroBot, m: Message):
 @TelePyroBot.on_message(filters.command("ungmute", COMMAND_HAND_LER) & filters.me)
 async def end_gmute(c: TelePyroBot, m: Message):
     await m.edit("`Removing duct tape...`")
-    user_id, user_first_name = await extract_user(m)
+    user_id, user_first_name = await extract_user(c, m)
 
     if not db.is_gmuted(user_id):
         await m.edit("`This user is not gmuted!`")
@@ -60,7 +60,7 @@ async def end_gmute(c: TelePyroBot, m: Message):
         await c.send_message(
             PRIVATE_GROUP_ID,
             "#UNGMUTE\nUser: {} in Chat {}".format(
-                mention_markdown(user_first_name, user_id), m.chattitle
+                mention_markdown(user_first_name, user_id), m.chat.title
             ),
         )
     return
@@ -88,7 +88,7 @@ async def watcher_gmute(c: TelePyroBot, m: Message):
     if db.is_gmuted(m.from_user.id):
         await asyncio.sleep(0.1)
         try:
-            await c.delete_messages(chat_id=m.chatid, message_ids=m.message_id)
+            await c.delete_messages(chat_id=m.chat.id, message_ids=m.message_id)
         except:
             pass
     return

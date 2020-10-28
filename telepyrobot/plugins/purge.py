@@ -19,15 +19,15 @@ Usage: {COMMAND_HAND_LER}del <as a reply to the message>"""
 
 @TelePyroBot.on_message(filters.command("purge", COMMAND_HAND_LER) & filters.me)
 async def purge(c: TelePyroBot, m: Message):
-    if m.chattype in ("supergroup", "channel"):
+    if m.chat.type in ("supergroup", "channel"):
         await m.edit("`Incinerating these useless messages...`")
-        is_admin = await admin_check(message)
+        is_admin = await admin_check(c,m)
         if not is_admin:
             await m.edit("I'm not admin nub nibba")
             await asyncio.sleep(2)
             await m.delete()
             return
-    if m.chattype in ["private", "bot", "group"]:
+    if m.chat.type in ["private", "bot", "group"]:
         await m.edit("`You are not allowed to use this command here!`")
         await asyncio.sleep(2)
         await m.delete()
@@ -41,17 +41,17 @@ async def purge(c: TelePyroBot, m: Message):
             message_ids.append(a_s_message_id)
             if len(message_ids) == TG_MAX_SELECT_LEN:
                 await c.delete_messages(
-                    chat_id=m.chatid, message_ids=message_ids, revoke=True
+                    chat_id=m.chat.id, message_ids=message_ids, revoke=True
                 )
                 count_del_etion_s += len(message_ids)
                 message_ids = []
         if len(message_ids) > 0:
             await c.delete_messages(
-                chat_id=m.chatid, message_ids=message_ids, revoke=True
+                chat_id=m.chat.id, message_ids=message_ids, revoke=True
             )
             count_del_etion_s += len(message_ids)
 
-    await m.edit(f"`Deleted <u>{count_del_etion_s}</u> messages`")
+    await m.edit(f"`Deleted <u>{count_del_etion_s}</u> messages.`")
     await asyncio.sleep(3)
     await m.delete()
 
@@ -59,15 +59,15 @@ async def purge(c: TelePyroBot, m: Message):
 @TelePyroBot.on_message(filters.command("del", COMMAND_HAND_LER) & filters.me, group=3)
 async def del_msg(c: TelePyroBot, m: Message):
     if m.reply_to_message:
-        if m.chattype in ("supergroup", "channel"):
-            is_admin = await admin_check(message)
+        if m.chat.type in ("supergroup", "channel"):
+            is_admin = await admin_check(c,m)
             if not is_admin:
                 await m.reply_text("`I'm not admin nub Nibba`")
                 await asyncio.sleep(3)
                 await m.delete()
                 return
         await c.delete_messages(
-            chat_id=m.chatid, message_ids=m.reply_to_message.message_id
+            chat_id=m.chat.id, message_ids=m.reply_to_message.message_id
         )
     else:
         await m.edit("`Reply to a message to delete!`")

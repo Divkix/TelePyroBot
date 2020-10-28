@@ -17,7 +17,7 @@ class Types(IntEnum):
     CONTACT = 11
 
 
-def get_message_type(msg):
+def get_message_type(msg: Message):
     if msg.text or msg.caption:
         content = None
         message_type = Types.TEXT
@@ -62,7 +62,7 @@ def get_message_type(msg):
     return content, message_type
 
 
-def get_note_type(msg):
+def get_note_type(msg: Message):
     if len(msg.text.split()) <= 1:
         return None, None, None, None
     data_type = None

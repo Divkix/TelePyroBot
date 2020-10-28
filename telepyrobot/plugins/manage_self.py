@@ -50,7 +50,7 @@ async def unblock_pm(c: TelePyroBot, m: Message):
             await m.edit("`Unblocked User`")
         except Exception as ef:
             await m.edit(f"**Error:**\n`{ef}`")
-            return
+    return
 
 
 @TelePyroBot.on_message(filters.command("blockpm", COMMAND_HAND_LER) & filters.me)
@@ -69,7 +69,7 @@ async def block_pm(c: TelePyroBot, m: Message):
             await m.edit("`Blocked User`")
         except Exception as ef:
             await m.edit(f"**Error:**\n`{ef}`")
-            return
+    return
 
 
 @TelePyroBot.on_message(filters.command("uprofile", COMMAND_HAND_LER) & filters.me)
@@ -136,7 +136,7 @@ async def update_profile(c: TelePyroBot, m: Message):
                 await m.edit(f"**Updated Bio to replied message**")
             except Exception as ef:
                 await m.edit(f"**Error:**\n`{ef}`")
-                return
+    return
 
 
 @TelePyroBot.on_message(filters.command("setusername", COMMAND_HAND_LER) & filters.me)
@@ -150,7 +150,7 @@ async def set_username(c: TelePyroBot, m: Message):
         await m.edit(f"**Updated Username to:**\n@{username}")
     except Exception as ef:
         await m.edit(f"**Error:**\n{ef}")
-        return
+    return
 
 
 @TelePyroBot.on_message(filters.command("rmusername", COMMAND_HAND_LER) & filters.me)
@@ -160,7 +160,7 @@ async def remove_username(c: TelePyroBot, m: Message):
         await m.edit(f"**Removed Username**")
     except Exception as ef:
         await m.edit(f"**Error:**\n{ef}")
-        return
+    return
 
 
 @TelePyroBot.on_message(filters.command("rmpfp", COMMAND_HAND_LER) & filters.me)
@@ -171,4 +171,4 @@ async def remove_pfp(c: TelePyroBot, m: Message):
         await m.edit(f"**Removed Profile Pictures**")
     except Exception as ef:
         await m.edit(f"**Error:**\n{ef}")
-        return
+    return

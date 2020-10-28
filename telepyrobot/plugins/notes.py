@@ -91,14 +91,14 @@ async def get_note(c: TelePyroBot, m: Message):
         Types.ANIMATED_STICKER,
     ):
         # type_sent = (GET_FORMAT[getnotes['value']].split("_",1)[1])
-        # await GET_FORMAT[getnotes['type']](chat_id=m.chatid, type_sent=getnotes['file_id'], file_ref=getnotes['file_ref'], reply_to_message_id=ReplyCheck(message))
+        # await GET_FORMAT[getnotes['type']](chat_id=m.chat.id, type_sent=getnotes['file_id'], file_ref=getnotes['file_ref'], reply_to_message_id=ReplyCheck(message))
         await m.edit("`Currently not supported!`")
     else:
         """if getnotes.get('value'):
             teks = getnotes.get('value')
         else:
             teks = None
-        await GET_FORMAT[getnotes['type']](m.chatid, getnotes['file_id'], getnotes['file_ref'], caption=teks,
+        await GET_FORMAT[getnotes['type']](m.chat.id, getnotes['file_id'], getnotes['file_ref'], caption=teks,
                                                reply_to_message_id=ReplyCheck(message))"""
         await m.edit("`Currently not supported!`")
     return

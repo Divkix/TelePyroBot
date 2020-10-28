@@ -19,7 +19,7 @@ Easily Check CAS ban of a user!
 
 @TelePyroBot.on_message(filters.command("cas", COMMAND_HAND_LER) & filters.me)
 async def cas(c: TelePyroBot, m: Message):
-    user_id, user_first_name = extract_user(message)
+    user_id, user_first_name = extract_user(c,m)
     results = requests.get(f"https://api.cas.chat/check?user_id={user_id}").json()
     offenses_cas = results["result"]["offenses"]
     offense_msg = results["result"]["messages"]
@@ -35,3 +35,4 @@ async def cas(c: TelePyroBot, m: Message):
     except:
         text = "`Not banned in CAS`"
     await m.edit(text, parse_mode="markdown")
+    return

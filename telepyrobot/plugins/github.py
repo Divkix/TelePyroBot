@@ -27,7 +27,8 @@ async def github(c: TelePyroBot, m: Message):
     async with aiohttp.ClientSession() as session:
         async with session.get(URL) as request:
             if request.status == 404:
-                return await m.edit("`" + username + " not found`", parse_mode="md")
+                return await m.edit(f"`{username} not found`", parse_mode="md")
+                return
 
             result = await request.json()
 
@@ -58,3 +59,4 @@ async def github(c: TelePyroBot, m: Message):
                     REPLY += f"[{result[nr].get('name', None)}]({result[nr].get('html_url', None)})\n"
 
                 await m.edit(REPLY, parse_mode="md")
+    return

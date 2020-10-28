@@ -10,14 +10,14 @@ class AFK(BASE):
     reason = Column(UnicodeText, default=False)
 
     def __init__(self, user_id, is_afk, reason):
-        "initializing db"
+        """initializing db"""
         self.user_id = str(user_id)
         self.is_afk = is_afk
         self.reason = reason
 
     def __repr__(self):
-        "afk message for db"
-        return "<AFK {}>".format(self.user_id)
+        """afk message for db"""
+        return f"<AFK {self.user_id}>"
 
 
 AFK.__table__.create(checkfirst=True)

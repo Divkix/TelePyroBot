@@ -10,9 +10,9 @@ __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 __help__ = f"""
 Tag people Easily!
 
-`{COMMAND_HAND_LER}adminlist` \ admins: Returns the list of admins of group.
+`{COMMAND_HAND_LER}adminlist` / admins: Returns the list of admins of group.
 
-`{COMMAND_HAND_LER}all` \ everyone: Tags All the users of group.
+`{COMMAND_HAND_LER}all` / everyone: Tags All the users of group.
 """
 
 
@@ -26,7 +26,7 @@ async def adminlist(c: TelePyroBot, m: Message):
         chat = m.text.split(None, 1)[1]
         grup = await c.get_chat(chat)
     else:
-        chat = m.chatid
+        chat = m.chat.id
         grup = await c.get_chat(chat)
     if m.reply_to_message:
         replyid = m.reply_to_message.message_id
@@ -57,7 +57,7 @@ async def adminlist(c: TelePyroBot, m: Message):
         teks += "│ • {}\n".format(x)
         if len(teks) >= 4096:
             await m.reply_text(
-                m.chatid, teks, reply_to_message_id=replyid, parse_mode="md"
+                m.chat.id, teks, reply_to_message_id=replyid, parse_mode="md"
             )
             teks = ""
             toolong = True
@@ -66,7 +66,7 @@ async def adminlist(c: TelePyroBot, m: Message):
         teks += "│ • {}\n".format(x)
         if len(teks) >= 4096:
             await m.reply_text(
-                m.chatid, teks, reply_to_message_id=replyid, parse_mode="md"
+                m.chat.id, teks, reply_to_message_id=replyid, parse_mode="md"
             )
             teks = ""
             toolong = True
@@ -75,13 +75,15 @@ async def adminlist(c: TelePyroBot, m: Message):
         teks += "│ • {}\n".format(x)
         if len(teks) >= 4096:
             await m.reply_text(
-                m.chatid, teks, reply_to_message_id=replyid, parse_mode="md"
+                m.chat.id, teks, reply_to_message_id=replyid, parse_mode="md"
             )
             teks = ""
             toolong = True
     teks += "「 Total {} Admins 」".format(totaladmins)
     if toolong:
-        await m.reply_text(m.chatid, teks, reply_to_message_id=replyid, parse_mode="md")
+        await m.reply_text(
+            m.chat.id, teks, reply_to_message_id=replyid, parse_mode="md"
+        )
     else:
         await m.edit(teks, parse_mode="md")
 
@@ -95,19 +97,19 @@ async def everyone(c: TelePyroBot, m: Message):
         text = m.text.split(None, 1)[1]
     else:
         text = "Hi all 🙃"
-    kek = c.iter_chat_members(m.chatid)
+    kek = c.iter_chat_members(m.chat.id)
     async for a in kek:
         if not a.user.is_bot:
             text += mention_html(a.user.id, "\u200b")
     if m.reply_to_message:
         await c.send_message(
-            m.chatid,
+            m.chat.id,
             text,
             reply_to_message_id=m.reply_to_message.message_id,
             parse_mode="html",
         )
     else:
-        await c.send_message(m.chatid, text, parse_mode="html")
+        await c.send_message(m.chat.id, text, parse_mode="html")
 
 
 @TelePyroBot.on_message(
@@ -119,7 +121,7 @@ async def listbots(c: TelePyroBot, m: Message):
         chat = m.text.split(None, 1)[1]
         grup = await c.get_chat(chat)
     else:
-        chat = m.chatid
+        chat = m.chat.id
         grup = await c.get_chat(chat)
     if m.reply_to_message:
         replyid = m.reply_to_message.message_id
@@ -141,7 +143,7 @@ async def listbots(c: TelePyroBot, m: Message):
     teks += "Total {} Bots".format(len(bots))
     if replyid:
         await c.send_message(
-            m.chatid, teks, reply_to_message_id=replyid, parse_mode="md"
+            m.chat.id, teks, reply_to_message_id=replyid, parse_mode="md"
         )
     else:
         await m.edit(teks, parse_mode="md")

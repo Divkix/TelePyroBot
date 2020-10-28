@@ -91,7 +91,7 @@ async def aexec(code, c, m):
 
 
 @TelePyroBot.on_message(filters.command(["exec", "sh"], COMMAND_HAND_LER) & sudo_filter)
-async def execution(_, m:  Message):
+async def execution(c: TelePyroBot, m:  Message):
     cmd = m.text.split(" ", maxsplit=1)[1]
 
     reply_to_id = m.message_id

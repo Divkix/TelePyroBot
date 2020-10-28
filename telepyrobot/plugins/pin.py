@@ -21,9 +21,9 @@ async def pin_message(c: TelePyroBot, m: Message):
     if PRIVATE_GROUP_ID is None:
         await m.edit("Please set `PRIVATE_GROUP_ID` variable to make me work!")
         return
-    if m.chattype in ["group", "supergroup"]:
+    if m.chat.type in ["group", "supergroup"]:
         await m.edit("`Trying to pin message...`")
-        is_admin = await admin_check(message)
+        is_admin = await admin_check(c,m)
         if not is_admin:
             await msg.edit("`I'm not admin nub nibba!`")
             await asyncio.sleep(2)
@@ -37,7 +37,7 @@ async def pin_message(c: TelePyroBot, m: Message):
                 disable_notification = False
 
             pinned_event = await c.pin_chat_message(
-                m.chatid,
+                m.chat.id,
                 m.reply_to_message.message_id,
                 disable_notification=disable_notification,
             )
@@ -45,7 +45,7 @@ async def pin_message(c: TelePyroBot, m: Message):
         else:
             await m.edit("`Reply to a message to which you want to pin...`")
     await c.send_message(
-        PRIVATE_GROUP_ID, f"#PIN\n\nPinned message in **{m.chattitle}**"
+        PRIVATE_GROUP_ID, f"#PIN\n\nPinned message in **{m.chat.title}**"
     )
     return
 
@@ -55,16 +55,16 @@ async def unpin_message(c: TelePyroBot, m: Message):
     if PRIVATE_GROUP_ID is None:
         await m.edit("Please set `PRIVATE_GROUP_ID` variable to make me work!")
         return
-    if m.chattype in ["group", "supergroup"]:
+    if m.chat.type in ["group", "supergroup"]:
         await m.edit("`Trying to unpin message...`")
-        chat_id = m.chatid
-        is_admin = await admin_check(message)
+        chat_id = m.chat.id
+        is_admin = await admin_check(c,m)
         if not is_admin:
             return
         await c.unpin_chat_message(chat_id)
         await m.edit("`Unpinned message!`")
         await c.send_message(
-            PRIVATE_GROUP_ID, f"#UNPIN\\n\nUnpinned message in **{m.chattitle}**"
+            PRIVATE_GROUP_ID, f"#UNPIN\\n\nUnpinned message in **{m.chat.title}**"
         )
         await asyncio.sleep(3)
         await m.delete()

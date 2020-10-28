@@ -54,3 +54,4 @@ async def figlet_font(c: TelePyroBot, m: Message):
         result = pyfiglet.figlet_format(text)
     await m.reply_text(f"‌‌‎`{result}`")
     await m.delete()
+    return

@@ -132,30 +132,45 @@ async def afk_mentioned(c: TelePyroBot, m: Message):
             else:
                 afk_since = f"`{int(seconds)}s` **ago**"
 
-        if "-" in str(m.chatid):
-            cid = str(m.chatid)[4:]
+        if "-" in str(m.chat.id):
+            cid = str(m.chat.id)[4:]
         else:
-            cid = str(m.chatid)
+            cid = str(m.chat.id)
 
         if cid in list(AFK_RESTIRECT) and int(AFK_RESTIRECT[cid]) >= int(time.time()):
             return
         AFK_RESTIRECT[cid] = int(time.time()) + DELAY_TIME
         if get["reason"]:
-            await m.reply_text(
-                "Sorry, My Master {} is AFK right now!\nReason: {}\n\nAFK Since:{}".format(
-                    mention_markdown(OWNER_NAME, OWNER_ID),
-                    get["reason"],
-                    total_afk_time,
+            if total_afk_time:
+                await m.reply_text(
+                    "Sorry, My Master {} is AFK right now!\nReason: {}\n\nAFK Since:{}".format(
+                        mention_markdown(OWNER_NAME, OWNER_ID),
+                        get["reason"],
+                        total_afk_time,
+                    )
                 )
-            )
+            else:
+                await m.reply_text(
+                    "Sorry, My Master {} is AFK right now!\nReason: {}".format(
+                        mention_markdown(OWNER_NAME, OWNER_ID),
+                        get["reason"]
+                    )
+                )
         else:
-            await m.reply_text(
-                "Sorry, My Master {} is AFK right now!\n\nAFK Since:{}".format(
-                    mention_markdown(OWNER_NAME, OWNER_ID), total_afk_time
+            if total_afk_time:
+                await m.reply_text(
+                    "Sorry, My Master {} is AFK right now!\n\nAFK Since:{}".format(
+                        mention_markdown(OWNER_NAME, OWNER_ID), total_afk_time
+                    )
                 )
-            )
+            else:
+                await m.reply_text(
+                    "Sorry, My Master {} is AFK right now!".format(
+                        mention_markdown(OWNER_NAME, OWNER_ID)
+                    )
+                )
 
-        _, message_type = get_message_type(message)
+        _, message_type = get_message_type(m)
         if message_type == Types.TEXT:
             text = m.text if m.text else m.caption
         else:
@@ -165,7 +180,7 @@ async def afk_mentioned(c: TelePyroBot, m: Message):
             {
                 "user": m.from_user.first_name,
                 "user_id": m.from_user.id,
-                "chat": m.chattitle,
+                "chat": m.chat.title,
                 "chat_id": cid,
                 "text": text,
                 "message_id": m.message_id,
@@ -177,8 +192,8 @@ async def afk_mentioned(c: TelePyroBot, m: Message):
             "{}({}) mentioned you in {}({})\nText:\n`{}`\n\nTotal count: `{}`".format(
                 mention_markdown(m.from_user.first_name, m.from_user.id),
                 m.from_user.id,
-                m.chattitle,
-                m.chatid,
+                m.chat.title,
+                m.chat.id,
                 text[:3500],
                 len(MENTIONED),
             ),

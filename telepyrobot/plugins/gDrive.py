@@ -46,11 +46,11 @@ flow = None
 
 @TelePyroBot.on_message(filters.command("gdrive", COMMAND_HAND_LER) & filters.me)
 async def g_drive_commands(c: TelePyroBot, m: Message):
-    status_message = await m.reply_text("...")
+    status_m = await m.reply_text("...")
     if len(m.command) > 1:
         current_recvd_command = m.command[1]
         if current_recvd_command == "setup":
-            await g_drive_setup(message)
+            await g_drive_setup(m)
         elif current_recvd_command == "reset":
             db.clear_credential(m.from_user.id)
             await status_m.edit_text(text="cleared saved credentials")
@@ -174,7 +174,7 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
         )
 
 
-async def g_drive_setup(message):
+async def g_drive_setup(m):
     creds = db.get_credential(m.from_user.id)
     if not creds or not creds.invalid:
         if creds and creds.refresh_token:

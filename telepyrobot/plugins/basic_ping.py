@@ -124,7 +124,7 @@ async def get_id(c: TelePyroBot, m: Message):
     elif file_id:
         await m.edit("**File's ID:** `{}`".format(file_id))
     else:
-        await m.edit("**This Chat's ID:** `{}`".format(m.chatid))
+        await m.edit("**This Chat's ID:** `{}`".format(m.chat.id))
 
 
 @TelePyroBot.on_message(filters.command("json", COMMAND_HAND_LER) & filters.me)
@@ -135,7 +135,7 @@ async def jsonify(c: TelePyroBot, m: Message):
     if m.reply_to_message:
         the_real_message = m.reply_to_message
     else:
-        the_real_message = message
+        the_real_message = m
     try:
         await m.reply_text(f"<code>{the_real_message}</code>")
     except Exception as e:

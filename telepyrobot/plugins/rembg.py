@@ -26,6 +26,7 @@ async def remove_bg(c: TelePyroBot, m: Message):
             disable_web_page_preview=True,
             parse_mode="html",
         )
+        return
     replied = m.reply_to_message
     if (
         replied
@@ -48,10 +49,10 @@ async def remove_bg(c: TelePyroBot, m: Message):
             new_rembg_file = orig_pic.replace(".jpg", "_rembg_telepyrobot.png")
             shutil.move(remove_img, new_rembg_file)
             await c.send_document(
-                chat_id=m.chatid,
+                chat_id=m.chat.id,
                 document=new_rembg_file,
                 caption="Background removed using @TelePyroBot",
-                reply_to_message_id=ReplyCheck(message),
+                reply_to_message_id=ReplyCheck(replied),
                 disable_notification=True,
             )
             await m.delete()

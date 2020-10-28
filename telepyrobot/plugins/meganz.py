@@ -15,13 +15,15 @@ from mega import Mega
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __HELP__ = f"""
-`{COMMAND_HAND_LER}megainfo`: Get account info!
+`{COMMAND_HAND_LER}megainfo`: Get account info.
 `{COMMAND_HAND_LER}megals`: List files on mega.nz.
 `{COMMAND_HAND_LER}megadl` / `{COMMAND_HAND_LER}dlmega`: Download file from mega.nz link.
 `{COMMAND_HAND_LER}megafind <filename>`: Find file or folder in mega drive.
 `{COMMAND_HAND_LER}megaup <file location>`: Upload the file and export its link.
+`{COMMAND_HAND_LER}megaimport <url>`: Download file from mega url to your account.
 """
 mega, megaC = None, None
+
 
 def megaLogin():
     global mega, megaC
@@ -41,29 +43,23 @@ def megaLogin():
 
 @TelePyroBot.on_message(filters.command("megainfo", COMMAND_HAND_LER) & filters.me)
 async def mega_info(c: TelePyroBot, m: Message):
-    if not (MEGANZ_EMAIL and MEGANZ_PASSWORD):
+    if (MEGANZ_EMAIL or MEGANZ_PASSWORD) is None:
         await m.edit_text(
             "Setup `MEGANZ_EMAIL` and `MEGANZ_PASSWORD` vars to use this."
         )
         return
     megaLogin()
-    details = f"User:\n{megaC.get_user()}\n\n"
+    user = megaC.get_user()
+    storage = megaC.get_storage_space(giga=True)
+    details = (
+        "</b>User Details:</b>\n"
+        f"Name: {user['name']}\n"
+        f"Email: {user['email']}\n"
+        f"Joined: {user['since']}\n\n"
+    )
     details += f"Quota:\n{megaC.get_quota()}\n\n"
-    details += f"Storage:\n{megaC.get_storage_space(kilo=True)}"
+    details += f"Used: {round(storage['used'], 3)}GB, Total: {storage['total']}GB"
     await m.edit_text(details)
-    return
-
-
-@TelePyroBot.on_message(filters.command("megals", COMMAND_HAND_LER) & filters.me)
-async def mega_ls(c: TelePyroBot, m: Message):
-    if not (MEGANZ_EMAIL and MEGANZ_PASSWORD):
-        await m.edit_text(
-            "Setup `MEGANZ_EMAIL` and `MEGANZ_PASSWORD` vars to use this."
-        )
-        return
-    megaLogin()
-    files = f"Files\n{megaC.get_files()}"
-    await m.edit_text(files)
     return
 
 
@@ -74,12 +70,15 @@ async def mega_dl(c: TelePyroBot, m: Message):
         dlurl = m.text.split(" ", 1)[1]
         if ("https://mega.co.nz" or "mega.co.nz", "mega.nz") in dl_url:
             megaC.download_url(dlurl, TMP_DOWNLOAD_DIRECTORY)
+            await m.edit_text("Downloaded file to `telepyrobot/downloads` folder")
+        else:
+            await m.edit_text("This doesn't seem like a mega link.")
     return
 
 
 @TelePyroBot.on_message(filters.command("megafind", COMMAND_HAND_LER) & filters.me)
 async def mega_find(c: TelePyroBot, m: Message):
-    if not (MEGANZ_EMAIL and MEGANZ_PASSWORD):
+    if (MEGANZ_EMAIL or MEGANZ_PASSWORD) is None:
         await m.edit_text(
             "Setup `MEGANZ_EMAIL` and `MEGANZ_PASSWORD` vars to use this."
         )
@@ -93,14 +92,14 @@ async def mega_find(c: TelePyroBot, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("megaup", COMMAND_HAND_LER) & filters.me)
-async def mega_find(c: TelePyroBot, m: Message):
-    if not (MEGANZ_EMAIL and MEGANZ_PASSWORD):
+async def mega_upload(c: TelePyroBot, m: Message):
+    if (MEGANZ_EMAIL or MEGANZ_PASSWORD) is None:
         await m.edit_text(
             "Setup `MEGANZ_EMAIL` and `MEGANZ_PASSWORD` vars to use this."
         )
         return
     megaLogin()
-    if len(m.text.split) >= 2:
+    if len(m.text.split()) >= 2:
         await m.reply_text("Uploading file...")
         fileLoc = m.text.split(" ", 2)
         try:
@@ -108,5 +107,28 @@ async def mega_find(c: TelePyroBot, m: Message):
             link = megaC.get_upload_link(file)
         except Exception as ef:
             await m.edit_text(ef)
+            return
         await m.edit_text(f"File <i>{fileLoc}</i> Uploaded!\n\n<b>Link:</b> {link}")
+    return
+
+
+@TelePyroBot.on_message(filters.command("megaimport", COMMAND_HAND_LER) & filters.me)
+async def mega_import(c: TelePyroBot, m: Message):
+    if (MEGANZ_EMAIL or MEGANZ_PASSWORD) is None:
+        await m.edit_text(
+            "Setup `MEGANZ_EMAIL` and `MEGANZ_PASSWORD` vars to use this."
+        )
+        return
+    megaLogin()
+    if len(m.text.split()) >= 2:
+        await m.reply_text("Importing file...")
+        fileurl = m.text.split(" ", 1)[1]
+        try:
+            if ("https://mega.co.nz" or "mega.co.nz", "mega.nz") in dl_url:
+            megaC.import_public_url(fileurl)
+            await m.edit_text("Imported file to your mega drive!")
+        else:
+            await m.edit_text("This doesn't seem like a mega link.")
+        except Exception as ef:
+            await m.edit_text(ef)        
     return

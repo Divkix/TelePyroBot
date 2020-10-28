@@ -1,17 +1,12 @@
-FROM ubuntu:focal
+FROM python:3.8.6-slim-buster
 
-RUN apt update && \
-    apt upgrade -y && \
-    apt install software-properties-common -y
+ENV PIP_NO_CACHE_DIR 1
 
-RUN add-apt-repository universe main restricted multiverse
-RUN apt install python3-dev python3 python3-pip
+RUN sed -i.bak 's/us-west-2\.ec2\.//' /etc/apt/sources.list
 
 COPY . /root
 
 WORKDIR /root
-
-ENV PIP_NO_CACHE_DIR 1
 
 # Installing Required Packages
 RUN apt update && apt upgrade -y && \

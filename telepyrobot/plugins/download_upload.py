@@ -58,7 +58,7 @@ async def down_load_media(client, sms):
         )
         end_t = datetime.now()
         ms = (end_t - start_t).seconds
-        await m.edit(
+        await message.edit(
             f"Downloaded to <code>{the_real_download_location}</code> in <u>{ms}</u> seconds",
             parse_mode="html",
         )
@@ -102,7 +102,7 @@ async def down_load_media(client, sms):
                 current_message += f"**Download Speed** __{speed}__\n"
                 current_message += f"**ETA:** __{estimated_total_time}__"
                 if round(diff % 10.00) == 0 and current_message != display_message:
-                    await m.edit(disable_web_page_preview=True, text=current_message)
+                    await message.edit(disable_web_page_preview=True, text=current_message)
                     display_message = current_message
                     await asyncio.sleep(10)
             except Exception as e:
@@ -111,12 +111,12 @@ async def down_load_media(client, sms):
         if os.path.exists(download_file_path):
             end_t = datetime.now()
             ms = (end_t - start_t).seconds
-            await m.edit(
+            await message.edit(
                 f"Downloaded to <code>{download_file_path}</code> in <u>{ms}</u> seconds",
                 parse_mode="html",
             )
     else:
-        await m.edit("`Reply to a Telegram Media, to download it to local server.`")
+        await message.edit("`Reply to a Telegram Media, to download it to local server.`")
 
 
 @TelePyroBot.on_message(filters.command("upload", COMMAND_HAND_LER) & filters.me)
@@ -141,11 +141,11 @@ async def upload_as_document(c: TelePyroBot, m: Message):
             )
             end_t = datetime.now()
             ms = (end_t - start_t).seconds
-            await status_m.edit(f"**Uploaded in {ms} seconds**")
+            await status_message.edit(f"**Uploaded in {ms} seconds**")
         else:
-            await status_m.edit("404: media not found")
+            await status_message.edit("404: media not found")
     else:
-        await status_m.edit(
+        await status_message.edit(
             f"<code>{COMMAND_HAND_LER}upload FILE_PATH</code> to upload to current Telegram chat"
         )
     await m.delete()
@@ -163,7 +163,7 @@ async def covid(c: TelePyroBot, m: Message):
     if os.path.exists(temp_dir):
         files = os.listdir(temp_dir)
         files.sort()
-        await status_m.edit("`Uploading Files to Telegram...`")
+        await status_message.edit("`Uploading Files to Telegram...`")
         for file in files:
             c_time = time.time()
             required_file_name = temp_dir + "/" + file
@@ -187,4 +187,4 @@ async def covid(c: TelePyroBot, m: Message):
     else:
         await m.edit("Directory Not Found.")
         return
-    await status_m.edit(f"Uploaded all files from Directory `{temp_dir}`")
+    await status_message.edit(f"Uploaded all files from Directory `{temp_dir}`")

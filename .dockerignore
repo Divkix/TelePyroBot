@@ -2,3 +2,6 @@
 .gitignore
 GenerateStringSession.py
 *.md
+string-requirements.txt
+app.json
+heroku.yml

@@ -9,10 +9,10 @@ RUN apt update && \
     apt install software-properties-common -y
 
 # Add repositories
-RUN add-apt-repository main \
-    add-apt-repository universe \
-    add-apt-repository restricted \
-    add-apt-repository multiverse
+RUN add-apt-repository main
+RUN add-apt-repository universe
+RUN add-apt-repository restricted
+RUN add-apt-repository multiverse
 
 COPY . /root
 

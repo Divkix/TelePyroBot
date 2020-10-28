@@ -4,12 +4,15 @@ ENV PIP_NO_CACHE_DIR 1
 
 RUN sed -i.bak 's/us-west-2\.ec2\.//' /etc/apt/sources.list
 
+RUN apt update && \
+    apt upgrade -y && \
+    apt install software-properties-common -y
+
 # Add repositories
-RUN apt update && apt upgrade -y && add-apt-repository main \
+RUN add-apt-repository main \
     add-apt-repository universe \
     add-apt-repository restricted \
-    add-apt-repository multiverse \
-    apt install software-properties-common -y
+    add-apt-repository multiverse
 
 COPY . /root
 

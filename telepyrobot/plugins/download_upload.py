@@ -102,9 +102,7 @@ async def down_load_media(c: TelePyroBot, m: Message):
                 current_message += f"**Download Speed** __{speed}__\n"
                 current_message += f"**ETA:** __{estimated_total_time}__"
                 if round(diff % 10.00) == 0 and current_message != display_message:
-                    await sm.edit(
-                        disable_web_page_preview=True, text=current_message
-                    )
+                    await sm.edit(disable_web_page_preview=True, text=current_message)
                     display_message = current_message
                     await asyncio.sleep(10)
             except Exception as e:
@@ -118,9 +116,7 @@ async def down_load_media(c: TelePyroBot, m: Message):
                 parse_mode="html",
             )
     else:
-        await sm.edit(
-            "`Reply to a Telegram Media, to download it to local server.`"
-        )
+        await sm.edit("`Reply to a Telegram Media, to download it to local server.`")
     return
 
 
@@ -163,7 +159,9 @@ async def covid(c: TelePyroBot, m: Message):
     elif len(m.text.split(" ", 1)) == 2:
         temp_dir = m.text.split(" ", 1)[1]
     else:
-        await m.edit(f"__Please check help by using__ `{COMMAND_HAND_LER}help {__PLUGIN__}`")
+        await m.edit(
+            f"__Please check help by using__ `{COMMAND_HAND_LER}help {__PLUGIN__}`"
+        )
         return
     status_message = await m.reply_text("`Uploading Files...`")
     if os.path.exists(temp_dir):

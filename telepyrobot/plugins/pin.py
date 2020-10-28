@@ -23,7 +23,7 @@ async def pin_message(c: TelePyroBot, m: Message):
         return
     if m.chat.type in ["group", "supergroup"]:
         await m.edit("`Trying to pin message...`")
-        is_admin = await admin_check(c,m)
+        is_admin = await admin_check(c, m)
         if not is_admin:
             await msg.edit("`I'm not admin nub nibba!`")
             await asyncio.sleep(2)
@@ -58,7 +58,7 @@ async def unpin_message(c: TelePyroBot, m: Message):
     if m.chat.type in ["group", "supergroup"]:
         await m.edit("`Trying to unpin message...`")
         chat_id = m.chat.id
-        is_admin = await admin_check(c,m)
+        is_admin = await admin_check(c, m)
         if not is_admin:
             return
         await c.unpin_chat_message(chat_id)

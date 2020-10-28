@@ -114,7 +114,7 @@ async def demote_usr(c: TelePyroBot, m: Message):
 @TelePyroBot.on_message(filters.command("ban", COMMAND_HAND_LER) & filters.me)
 async def ban_usr(c: TelePyroBot, m: Message):
     await m.edit("`Trying to Ban user...`")
-    is_admin = await admin_check(c,m)
+    is_admin = await admin_check(c, m)
     if not is_admin:
         await m.edit("`I'm not admin nub nibba!`")
         await asyncio.sleep(2)
@@ -183,7 +183,7 @@ async def restrict_usr(c: TelePyroBot, m: Message):
 )
 async def unrestrict_usr(c: TelePyroBot, m: Message):
     await m.edit("`Trying to Unrestrict user...`")
-    is_admin = await admin_check(c,m)
+    is_admin = await admin_check(c, m)
     if not is_admin:
         await m.edit("`I'm not admin nub nibba!`")
         await asyncio.sleep(2)

@@ -21,7 +21,7 @@ Usage: {COMMAND_HAND_LER}del <as a reply to the message>"""
 async def purge(c: TelePyroBot, m: Message):
     if m.chat.type in ("supergroup", "channel"):
         await m.edit("`Incinerating these useless messages...`")
-        is_admin = await admin_check(c,m)
+        is_admin = await admin_check(c, m)
         if not is_admin:
             await m.edit("I'm not admin nub nibba")
             await asyncio.sleep(2)
@@ -60,7 +60,7 @@ async def purge(c: TelePyroBot, m: Message):
 async def del_msg(c: TelePyroBot, m: Message):
     if m.reply_to_message:
         if m.chat.type in ("supergroup", "channel"):
-            is_admin = await admin_check(c,m)
+            is_admin = await admin_check(c, m)
             if not is_admin:
                 await m.reply_text("`I'm not admin nub Nibba`")
                 await asyncio.sleep(3)

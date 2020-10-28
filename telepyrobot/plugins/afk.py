@@ -152,8 +152,7 @@ async def afk_mentioned(c: TelePyroBot, m: Message):
             else:
                 await m.reply_text(
                     "Sorry, My Master {} is AFK right now!\nReason: {}".format(
-                        mention_markdown(OWNER_NAME, OWNER_ID),
-                        get["reason"]
+                        mention_markdown(OWNER_NAME, OWNER_ID), get["reason"]
                     )
                 )
         else:

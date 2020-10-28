@@ -29,7 +29,9 @@ async def list_directories(c: TelePyroBot, m: Message):
         location = m.text.split(" ", 1)[1]
         cmd = "ls " + location
     else:
-        await m.edit("<b>Error:</b>\n<i>Check Help documentaion for directory listing.</i>")
+        await m.edit(
+            "<b>Error:</b>\n<i>Check Help documentaion for directory listing.</i>"
+        )
 
     reply_to_id = m.message_id
 

@@ -31,7 +31,7 @@ async def send_plugin(c: TelePyroBot, m: Message):
         )
         return
     await m.reply_document(
-        document=f"/app/telepyrobot/plugins/{plugin_name}.py",
+        document=f"/root/telepyrobot/plugins/{plugin_name}.py",
         caption=f"**Plugin:** `{plugin_name}.py`\n**Plugin for** @TelePyroBot",
         disable_notification=True,
         reply_to_message_id=ReplyCheck(m),
@@ -46,7 +46,7 @@ async def install_plugin(c: TelePyroBot, m: Message):
         if m.reply_to_message.document.file_name.split(".")[-1] != "py":
             await m.edit("`Can only install python files!`")
             return
-        plugin_loc = f"/app/telepyrobot/plugins/{m.reply_to_message.document.file_name}"
+        plugin_loc = f"/root/telepyrobot/plugins/{m.reply_to_message.document.file_name}"
         await m.edit("`Installing plugin...`")
         if os.path.exists(plugin_loc):
             await m.edit(
@@ -69,7 +69,7 @@ async def install_plugin(c: TelePyroBot, m: Message):
 @TelePyroBot.on_message(filters.command("delpl", COMMAND_HAND_LER) & filters.me)
 async def delete_plugin(c: TelePyroBot, m: Message):
     if len(m.command) == 2:
-        plugin_loc = f"/app/telepyrobot/plugins/{m.command[1]}.py"
+        plugin_loc = f"/root/telepyrobot/plugins/{m.command[1]}.py"
         if os.path.exists(plugin_loc):
             os.remove(plugin_loc)
             await m.edit(f"**Deleted plugin:** {m.command[1]}")

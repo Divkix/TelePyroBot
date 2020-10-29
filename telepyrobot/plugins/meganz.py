@@ -123,10 +123,8 @@ async def mega_upload_dir(c: TelePyroBot, m: Message):
     if len(m.text.split()) >= 2:
 
         # Vars
-        success = ""
-        sn = 0
-        fail = ""
-        fn = 0
+        success, fail = "", ""
+        sn, fn = 0, 0
 
         folderLoc = m.text.split(" ", 1)[1]
         if not folderLoc.endswith("/"):
@@ -137,13 +135,12 @@ async def mega_upload_dir(c: TelePyroBot, m: Message):
         # Search for remote folder; if not found, then create it
         try:
             remoteFolder = megaC.find("TelePyroBot_Uploads")[0]
+        except TypeError as ef:
+            nwfl = megaC.create_folder("TelePyroBot_Uploads")
+            remoteFolder = nwfl["TelePyroBot_Uploads"]
         except Exception as ef:
-            if ("NoneType" and "subscriptable") in ef:
-                nwfl = megaC.create_folder('TelePyroBot_Uploads')
-                remoteFolder = nwfl["TelePyroBot_Uploads"]
-            else:
-                await m.edit_text(ef)
-                return
+            await m.edit_text(ef)
+            return
 
         if os.path.exists(folderLoc):
             files = os.listdir(folderLoc)
@@ -151,6 +148,7 @@ async def mega_upload_dir(c: TelePyroBot, m: Message):
             for file in files:
                 try:
                     required_file = folderLoc + file
+                    LOGGER.info(f"Uploaded {required_file} to mega")
                     megaC.upload(required_file, remoteFolder)
                     success += f" - Uploaded {required_file}\n"
                     sn += 1

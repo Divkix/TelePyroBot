@@ -160,11 +160,11 @@ async def covid(c: TelePyroBot, m: Message):
         temp_dir = m.text.split(" ", 1)[1]
         if not temp_dir.endswith("/"):
             temp_dir += "/"
-    status_message = await m.reply_text("`Uploading Files...`")
+    await m.reply_text("`Uploading Files...`")
     if os.path.exists(temp_dir):
         files = os.listdir(temp_dir)
         files.sort()
-        await status_message.edit("`Uploading Files to Telegram...`")
+        await m.edit("`Uploading Files to Telegram...`")
         for file in files:
             c_time = time.time()
             required_file_name = temp_dir + file
@@ -181,11 +181,11 @@ async def covid(c: TelePyroBot, m: Message):
                 progress=progress_for_pyrogram,
                 progress_args=(
                     "Trying to upload multiple files...",
-                    status_message,
+                    m,
                     c_time,
                 ),
             )
     else:
         await m.edit("Directory Not Found.")
         return
-    await status_message.edit(f"Uploaded all files from Directory `{temp_dir}`")
+    await m.edit(f"Uploaded all files from Directory `{temp_dir}`")

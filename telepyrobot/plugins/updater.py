@@ -110,6 +110,7 @@ async def updater(c: TelePyroBot, m: Message):
     if len(message_one) > MAX_MESSAGE_LENGTH:
         with open("change.log", "w+", encoding="utf8") as out_file:
             out_file.write(str(message_one))
+            out_file.close()
         await m.reply_document(
             document="change.log",
             caption=message_two,

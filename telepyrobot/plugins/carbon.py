@@ -42,6 +42,7 @@ async def carbon_api(c: TelePyroBot, m: Message):
         r.raw.decode_content = True
         with open(filename, "wb") as f:
             shutil.copyfileobj(r.raw, f)
+            f.close()
         await c.send_document(
             m.chat.id,
             filename,

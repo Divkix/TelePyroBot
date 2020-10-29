@@ -69,6 +69,7 @@ async def eval(c: TelePyroBot, m: Message):
     if len(final_output) > MAX_MESSAGE_LENGTH:
         with open("eval.text", "w+", encoding="utf8") as out_file:
             out_file.write(str(final_output))
+            out_file.close()
         await m.reply_document(
             document="eval.text",
             caption=cmd,
@@ -118,6 +119,7 @@ async def execution(c: TelePyroBot, m: Message):
     if len(OUTPUT) > MAX_MESSAGE_LENGTH:
         with open("exec.txt", "w+", encoding="utf8") as out_file:
             out_file.write(str(OUTPUT))
+            out_file.close()
         await m.reply_document(
             document="exec.txt",
             caption=cmd,

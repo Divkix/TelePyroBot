@@ -60,8 +60,12 @@ async def mega_info(c: TelePyroBot, m: Message):
 @TelePyroBot.on_message(filters.command("megadl", COMMAND_HAND_LER) & filters.me)
 async def mega_dl(c: TelePyroBot, m: Message):
     if len(m.command) >= 2:
-        dlurl = m.text.split(" ", 1)[1]
+        dl_url = m.text.split(" ", 1)[1]
         if ("https://mega.co.nz" or "mega.co.nz", "mega.nz") in dl_url:
+            if not dl_url.startswith("http"):
+                dl_url = "https://" + dl_url
+            if dl_url.startswith("http://"):
+                dlurl.replace("http://", "https://")
             megaC.download_url(dlurl, TMP_DOWNLOAD_DIRECTORY)
             await m.edit_text(f"Downloaded file to `{TMP_DOWNLOAD_DIRECTORY}` folder")
         else:
@@ -83,7 +87,7 @@ async def mega_find(c: TelePyroBot, m: Message):
         folder = megaC.find(foldername)[0]
         await m.edit_text(f"Searched for: {foldername}\n\nResults:\n{folder}")
     else:
-        await m.edit_text("No link given")
+        await m.edit_text("No such file or folder!")
     return
 
 
@@ -95,7 +99,7 @@ async def mega_upload(c: TelePyroBot, m: Message):
         )
         return
     if len(m.text.split()) >= 2:
-        await m.reply_text("Uploading file...")
+        await m.edit_text("Uploading file...")
         fileLoc = m.text.split(" ", 1)[1]
         try:
             file = megaC.upload(fileLoc)
@@ -117,11 +121,30 @@ async def mega_upload_dir(c: TelePyroBot, m: Message):
         )
         return
     if len(m.text.split()) >= 2:
-        await m.reply_text("Uploading file...")
+
+        # Vars
+        success = ""
+        sn = 0
+        fail = ""
+        fn = 0
+
         folderLoc = m.text.split(" ", 1)[1]
-        remoteFolder = megaC.find("Uploads")[0]
         if not folderLoc.endswith("/"):
             folderLoc += "/"
+
+        await m.edit_text(f"Uploading files from {folderLoc}")
+
+        # Search for remote folder; if not found, then create it
+        try:
+            remoteFolder = megaC.find("TelePyroBot_Uploads")[0]
+        except Exception as ef:
+            if ef == "TypeError: 'NoneType' object is not subscriptable":
+                nwfl = megaC.create_folder('TelePyroBot_Uploads')
+                remoteFolder = nwfl["TelePyroBot_Uploads"]
+            else:
+                await m.edit_text(ef)
+                return
+
         if os.path.exists(folderLoc):
             files = os.listdir(folderLoc)
             files.sort()
@@ -129,13 +152,27 @@ async def mega_upload_dir(c: TelePyroBot, m: Message):
                 try:
                     required_file = folderLoc + file
                     megaC.upload(required_file, remoteFolder)
+                    success += f" - Uploaded {required_file}\n"
+                    sn += 1
                 except Exception as ef:
-                    await m.edit_text(ef)
-                    return
-            await m.reply_text(
-                f"Files from Directory <i>{folderLoc}</i> uploaded to your Mega Cloud Drive!"
+                    fail += f"{required_file} - {ef}\n"
+                    fn += 1
+
+            msg = success + "\n\n" + fail
+            stats_file = f"{folderLoc}uploadstats.text"
+            with open(stats_file, "w+") as f:
+                f.write(("Upload Stats:\n" + msg))
+                f.close()
+            await m.reply_document(
+                document=stats_file,
+                caption=f"Files from <code>{folderLoc}</code> uploaded to your Mega Cloud Drive!\n\nSuccess: {sn}\nFail: {fn}",
+                parse_mode="html",
+                disable_notification=True,
             )
             await m.delete()
+            os.delete(stats_file)
+        else:
+            await m.edit_text(f"Folder {folderLoc} not found!")
     else:
         await m.edit_text("No directory specified for upload!")
     return
@@ -149,7 +186,7 @@ async def mega_import(c: TelePyroBot, m: Message):
         )
         return
     if len(m.text.split()) >= 2:
-        await m.reply_text("Importing file...")
+        await m.edit_text("Importing file...")
         fileurl = m.text.split(" ", 1)[1]
         try:
             if ("https://mega.co.nz" or "mega.co.nz", "mega.nz") in dl_url:

@@ -29,6 +29,7 @@ async def paste_bin(c: TelePyroBot, m: Message):
         m_list = None
         with open(filename_loc, "rb") as fd:
             m_list = fd.readlines()
+            fd.close()
         downloaded_file_name = ""
         for m in m_list:
             downloaded_file_name += m.decode("UTF-8")

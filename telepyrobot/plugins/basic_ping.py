@@ -141,6 +141,7 @@ async def jsonify(c: TelePyroBot, m: Message):
     except Exception as e:
         with open("json.text", "w+", encoding="utf8") as out_file:
             out_file.write(str(the_real_message))
+            out_file.close()
         await m.reply_document(
             document="json.text",
             caption=str(e),

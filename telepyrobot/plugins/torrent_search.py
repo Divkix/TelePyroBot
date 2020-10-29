@@ -47,6 +47,7 @@ async def tor_search(c: TelePyroBot, m: Message):
     caption = f"Here are the results for the query: {query}"
     with open(tsfileloc, "w+", encoding="utf8") as out_file:
         out_file.write(str(listdata))
+        out_file.close()
     await m.reply_document(
         document=tsfileloc, caption=caption, disable_notification=True
     )

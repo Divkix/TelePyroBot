@@ -127,7 +127,7 @@ async def mega_upload_dir(c: TelePyroBot, m: Message):
     if len(m.text.split()) >= 2:
         await m.reply_text("Uploading file...")
         fileLoc = m.text.split(" ", 1)[1]
-        folder = m.find('Uploads')[0]
+        folder = megaC.find('Uploads')[0]
         if not fileLoc.endswith("/"):
             fileLoc += "/"
         if os.path.exists(fileLoc):

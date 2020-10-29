@@ -27,9 +27,7 @@ mega, megaC = None, None
 
 def megaLogin():
     global mega, megaC
-    if not mega or megaC:
-        del mega
-        del megaC
+    if (mega or megaC) is None:
         mega = Mega()
         try:
             if MEGANZ_EMAIL and MEGANZ_PASSWORD:
@@ -73,6 +71,8 @@ async def mega_dl(c: TelePyroBot, m: Message):
             await m.edit_text("Downloaded file to `telepyrobot/downloads` folder")
         else:
             await m.edit_text("This doesn't seem like a mega link.")
+    else:
+        await m.edit_text("No link given")
     return
 
 
@@ -86,8 +86,10 @@ async def mega_find(c: TelePyroBot, m: Message):
     megaLogin()
     if len(m.command) >= 2:
         foldername = m.text.split(" ", 1)[1]
-        folder = megaC.find(foldername)
+        folder = megaC.find(foldername)[0]
         await m.edit_text(f"Searched for: {foldername}\n\nResults:\n{folder}")
+    else:
+        await m.edit_text("No link given")
     return
 
 
@@ -109,6 +111,38 @@ async def mega_upload(c: TelePyroBot, m: Message):
             await m.edit_text(ef)
             return
         await m.edit_text(f"File <i>{fileLoc}</i> Uploaded!\n\n<b>Link:</b> {link}")
+    else:
+        await m.edit_text("No file specified!")
+    return
+
+
+@TelePyroBot.on_message(filters.command("megaupdir", COMMAND_HAND_LER) & filters.me)
+async def mega_upload_dir(c: TelePyroBot, m: Message):
+    if (MEGANZ_EMAIL or MEGANZ_PASSWORD) is None:
+        await m.edit_text(
+            "Setup `MEGANZ_EMAIL` and `MEGANZ_PASSWORD` vars to use this."
+        )
+        return
+    megaLogin()
+    if len(m.text.split()) >= 2:
+        await m.reply_text("Uploading file...")
+        fileLoc = m.text.split(" ", 1)[1]
+        folder = m.find('Uploads')[0]
+        if not fileLoc.endswith("/"):
+            fileLoc += "/"
+        if os.path.exists(fileLoc):
+            files = os.listdir(fileLoc)
+            files.sort()
+            for file in files:
+                try:
+                    megaC.upload(fileLoc, folder)
+                except Exception as ef:
+                    await m.edit_text(ef)
+                    return
+            await m.reply_text(f"Files from Directory <i>{fileLoc}</i> uploaded to your Mega Cloud Drive!")
+            await m.delete()
+    else:
+        await m.edit_text("No directory specified for upload!")
     return
 
 
@@ -131,4 +165,6 @@ async def mega_import(c: TelePyroBot, m: Message):
                 await m.edit_text("This doesn't seem like a mega link.")
         except Exception as ef:
             await m.edit_text(ef)
+    else:
+        await m.edit_text("No link given")
     return

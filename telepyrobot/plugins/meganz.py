@@ -138,7 +138,7 @@ async def mega_upload_dir(c: TelePyroBot, m: Message):
         try:
             remoteFolder = megaC.find("TelePyroBot_Uploads")[0]
         except Exception as ef:
-            if ef == "TypeError: 'NoneType' object is not subscriptable":
+            if ("NoneType" and "subscriptable") in ef:
                 nwfl = megaC.create_folder('TelePyroBot_Uploads')
                 remoteFolder = nwfl["TelePyroBot_Uploads"]
             else:

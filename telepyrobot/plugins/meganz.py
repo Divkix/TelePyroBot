@@ -135,7 +135,7 @@ async def mega_upload_dir(c: TelePyroBot, m: Message):
             files.sort()
             for file in files:
                 try:
-                    megaC.upload(fileLoc, folder)
+                    megaC.upload(file, folder)
                 except Exception as ef:
                     await m.edit_text(ef)
                     return

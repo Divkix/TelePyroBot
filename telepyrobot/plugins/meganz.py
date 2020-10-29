@@ -20,6 +20,7 @@ __help__ = f"""
 `{COMMAND_HAND_LER}megadl` / `{COMMAND_HAND_LER}dlmega`: Download file from mega.nz link.
 `{COMMAND_HAND_LER}megafind <filename>`: Find file or folder in mega drive.
 `{COMMAND_HAND_LER}megaup <file location>`: Upload the file and export its link.
+`{COMMAND_HAND_LER}megaupdir <folder location>`: Upload contents of folder to your mega drive.
 `{COMMAND_HAND_LER}megaimport <url>`: Download file from mega url to your account.
 """
 mega, megaC = None, None
@@ -126,20 +127,21 @@ async def mega_upload_dir(c: TelePyroBot, m: Message):
     megaLogin()
     if len(m.text.split()) >= 2:
         await m.reply_text("Uploading file...")
-        fileLoc = m.text.split(" ", 1)[1]
-        folder = megaC.find('Uploads')[0]
-        if not fileLoc.endswith("/"):
-            fileLoc += "/"
-        if os.path.exists(fileLoc):
-            files = os.listdir(fileLoc)
+        folderLoc = m.text.split(" ", 1)[1]
+        remoteFolder = megaC.find('Uploads')[0]
+        if not folderLoc.endswith("/"):
+            folderLoc += "/"
+        if os.path.exists(folderLoc):
+            files = os.listdir(folderLoc)
             files.sort()
             for file in files:
                 try:
-                    megaC.upload(file, folder)
+                    required_file = folderLoc + file
+                    megaC.upload(required_file, remoteFolder)
                 except Exception as ef:
                     await m.edit_text(ef)
                     return
-            await m.reply_text(f"Files from Directory <i>{fileLoc}</i> uploaded to your Mega Cloud Drive!")
+            await m.reply_text(f"Files from Directory <i>{folderLoc}</i> uploaded to your Mega Cloud Drive!")
             await m.delete()
     else:
         await m.edit_text("No directory specified for upload!")

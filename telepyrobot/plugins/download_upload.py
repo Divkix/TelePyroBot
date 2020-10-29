@@ -48,7 +48,7 @@ async def down_load_media(c: TelePyroBot, m: Message):
         os.makedirs(TMP_DOWNLOAD_DIRECTORY)
     if m.reply_to_message is not None:
         start_t = datetime.now()
-        download_location = TMP_DOWNLOAD_DIRECTORY + "/"
+        download_location = TMP_DOWNLOAD_DIRECTORY
         c_time = time.time()
         the_real_download_location = await c.download_media(
             message=m.reply_to_message,

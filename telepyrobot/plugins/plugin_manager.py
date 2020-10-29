@@ -46,7 +46,9 @@ async def install_plugin(c: TelePyroBot, m: Message):
         if m.reply_to_message.document.file_name.split(".")[-1] != "py":
             await m.edit("`Can only install python files!`")
             return
-        plugin_loc = f"/root/telepyrobot/plugins/{m.reply_to_message.document.file_name}"
+        plugin_loc = (
+            f"/root/telepyrobot/plugins/{m.reply_to_message.document.file_name}"
+        )
         await m.edit("`Installing plugin...`")
         if os.path.exists(plugin_loc):
             await m.edit(

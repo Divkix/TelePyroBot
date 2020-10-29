@@ -17,27 +17,23 @@ __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 __help__ = f"""
 `{COMMAND_HAND_LER}megainfo`: Get account info.
 `{COMMAND_HAND_LER}megals`: List files on mega.nz.
-`{COMMAND_HAND_LER}megadl` / `{COMMAND_HAND_LER}dlmega`: Download file from mega.nz link.
+`{COMMAND_HAND_LER}megadl <link>`: Download file from mega.nz link.
 `{COMMAND_HAND_LER}megafind <filename>`: Find file or folder in mega drive.
 `{COMMAND_HAND_LER}megaup <file location>`: Upload the file and export its link.
-`{COMMAND_HAND_LER}megaupdir <folder location>`: Upload contents of folder to your mega drive.
+`{COMMAND_HAND_LER}megaupdir <folder location>`: Upload contents of folder to mega drive.
 `{COMMAND_HAND_LER}megaimport <url>`: Download file from mega url to your account.
 """
 mega, megaC = None, None
 
 
-def megaLogin():
-    global mega, megaC
-    if (mega or megaC) is None:
-        mega = Mega()
-        try:
-            if MEGANZ_EMAIL and MEGANZ_PASSWORD:
-                megaC = mega.login(MEGANZ_EMAIL, MEGANZ_PASSWORD)
-            else:
-                megaC = mega.login()
-        except Exception as ef:
-            LOGGER.info(ef)
-    return
+try:
+    mega = Mega()
+    if MEGANZ_EMAIL and MEGANZ_PASSWORD:
+        megaC = mega.login(MEGANZ_EMAIL, MEGANZ_PASSWORD)
+    else:
+        megaC = mega.login()
+except Exception as ef:
+    LOGGER.info(ef)
 
 
 @TelePyroBot.on_message(filters.command("megainfo", COMMAND_HAND_LER) & filters.me)
@@ -69,7 +65,7 @@ async def mega_dl(c: TelePyroBot, m: Message):
         dlurl = m.text.split(" ", 1)[1]
         if ("https://mega.co.nz" or "mega.co.nz", "mega.nz") in dl_url:
             megaC.download_url(dlurl, TMP_DOWNLOAD_DIRECTORY)
-            await m.edit_text("Downloaded file to `telepyrobot/downloads` folder")
+            await m.edit_text(f"Downloaded file to `{TMP_DOWNLOAD_DIRECTORY}` folder")
         else:
             await m.edit_text("This doesn't seem like a mega link.")
     else:
@@ -128,7 +124,7 @@ async def mega_upload_dir(c: TelePyroBot, m: Message):
     if len(m.text.split()) >= 2:
         await m.reply_text("Uploading file...")
         folderLoc = m.text.split(" ", 1)[1]
-        remoteFolder = megaC.find('Uploads')[0]
+        remoteFolder = megaC.find("Uploads")[0]
         if not folderLoc.endswith("/"):
             folderLoc += "/"
         if os.path.exists(folderLoc):
@@ -141,7 +137,9 @@ async def mega_upload_dir(c: TelePyroBot, m: Message):
                 except Exception as ef:
                     await m.edit_text(ef)
                     return
-            await m.reply_text(f"Files from Directory <i>{folderLoc}</i> uploaded to your Mega Cloud Drive!")
+            await m.reply_text(
+                f"Files from Directory <i>{folderLoc}</i> uploaded to your Mega Cloud Drive!"
+            )
             await m.delete()
     else:
         await m.edit_text("No directory specified for upload!")

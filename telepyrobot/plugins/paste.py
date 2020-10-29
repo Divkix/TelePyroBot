@@ -24,7 +24,7 @@ async def paste_bin(c: TelePyroBot, m: Message):
 
     if m.reply_to_message and m.reply_to_message.media:
         filename_loc = await m.reply_to_message.download(
-            file_name=TMP_DOWNLOAD_DIRECTORY + "/"
+            file_name=TMP_DOWNLOAD_DIRECTORY
         )
         m_list = None
         with open(filename_loc, "rb") as fd:

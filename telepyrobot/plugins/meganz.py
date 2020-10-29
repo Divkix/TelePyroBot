@@ -43,7 +43,6 @@ async def mega_info(c: TelePyroBot, m: Message):
             "Setup `MEGANZ_EMAIL` and `MEGANZ_PASSWORD` vars to use this."
         )
         return
-    megaLogin()
     user = megaC.get_user()
     storage = megaC.get_storage_space(giga=True)
     details = (
@@ -60,7 +59,6 @@ async def mega_info(c: TelePyroBot, m: Message):
 
 @TelePyroBot.on_message(filters.command("megadl", COMMAND_HAND_LER) & filters.me)
 async def mega_dl(c: TelePyroBot, m: Message):
-    megaLogin()
     if len(m.command) >= 2:
         dlurl = m.text.split(" ", 1)[1]
         if ("https://mega.co.nz" or "mega.co.nz", "mega.nz") in dl_url:
@@ -80,7 +78,6 @@ async def mega_find(c: TelePyroBot, m: Message):
             "Setup `MEGANZ_EMAIL` and `MEGANZ_PASSWORD` vars to use this."
         )
         return
-    megaLogin()
     if len(m.command) >= 2:
         foldername = m.text.split(" ", 1)[1]
         folder = megaC.find(foldername)[0]
@@ -97,7 +94,6 @@ async def mega_upload(c: TelePyroBot, m: Message):
             "Setup `MEGANZ_EMAIL` and `MEGANZ_PASSWORD` vars to use this."
         )
         return
-    megaLogin()
     if len(m.text.split()) >= 2:
         await m.reply_text("Uploading file...")
         fileLoc = m.text.split(" ", 1)[1]
@@ -120,7 +116,6 @@ async def mega_upload_dir(c: TelePyroBot, m: Message):
             "Setup `MEGANZ_EMAIL` and `MEGANZ_PASSWORD` vars to use this."
         )
         return
-    megaLogin()
     if len(m.text.split()) >= 2:
         await m.reply_text("Uploading file...")
         folderLoc = m.text.split(" ", 1)[1]
@@ -153,7 +148,6 @@ async def mega_import(c: TelePyroBot, m: Message):
             "Setup `MEGANZ_EMAIL` and `MEGANZ_PASSWORD` vars to use this."
         )
         return
-    megaLogin()
     if len(m.text.split()) >= 2:
         await m.reply_text("Importing file...")
         fileurl = m.text.split(" ", 1)[1]

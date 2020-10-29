@@ -23,6 +23,7 @@ __help__ = f"""
 `{COMMAND_HAND_LER}megaupdir <folder location>`: Upload contents of folder to mega drive.
 `{COMMAND_HAND_LER}megaimport <url>`: Download file from mega url to your account.
 """
+
 mega, megaC = None, None
 
 
@@ -123,7 +124,7 @@ async def mega_upload_dir(c: TelePyroBot, m: Message):
     if len(m.text.split()) >= 2:
 
         # Vars
-        success, fail = "", ""
+        success, fail = "Success:\n", "Fail:\n"
         sn, fn = 0, 0
 
         folderLoc = m.text.split(" ", 1)[1]
@@ -133,11 +134,12 @@ async def mega_upload_dir(c: TelePyroBot, m: Message):
         await m.edit_text(f"Uploading files from {folderLoc}")
 
         # Search for remote folder; if not found, then create it
+        rmfoldername = "TelePyroBot_Uploads"
         try:
-            remoteFolder = megaC.find("TelePyroBot_Uploads")[0]
+            remoteFolder = megaC.find(rmfoldername)[0]
         except TypeError as ef:
-            nwfl = megaC.create_folder("TelePyroBot_Uploads")
-            remoteFolder = nwfl["TelePyroBot_Uploads"]
+            nwfl = megaC.create_folder(rmfoldername)
+            remoteFolder = nwfl[rmfoldername]
         except Exception as ef:
             await m.edit_text(ef)
             return
@@ -148,7 +150,6 @@ async def mega_upload_dir(c: TelePyroBot, m: Message):
             for file in files:
                 try:
                     required_file = folderLoc + file
-                    LOGGER.info(f"Uploaded {required_file} to mega")
                     megaC.upload(required_file, remoteFolder)
                     success += f" - Uploaded {required_file}\n"
                     sn += 1
@@ -157,9 +158,9 @@ async def mega_upload_dir(c: TelePyroBot, m: Message):
                     fn += 1
 
             msg = success + "\n\n" + fail
-            stats_file = f"{folderLoc}uploadstats.text"
+            stats_file = f"{folderLoc}uploadstats.txt"
             with open(stats_file, "w+") as f:
-                f.write(("Upload Stats:\n" + msg))
+                f.write(str(msg))
                 f.close()
             await m.reply_document(
                 document=stats_file,
@@ -168,7 +169,7 @@ async def mega_upload_dir(c: TelePyroBot, m: Message):
                 disable_notification=True,
             )
             await m.delete()
-            os.delete(stats_file)
+            os.remove(stats_file)
         else:
             await m.edit_text(f"Folder {folderLoc} not found!")
     else:

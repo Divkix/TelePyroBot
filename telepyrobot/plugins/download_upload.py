@@ -105,7 +105,7 @@ async def down_load_media(c: TelePyroBot, m: Message):
                     await m.edit(disable_web_page_preview=True, text=current_message)
                     display_message = current_message
                     await asyncio.sleep(10)
-            except MessageNotMofified:  # Don't log error if Message is not modified
+            except MessageNotModified:  # Don't log error if Message is not modified
                 pass
             except Exception as e:
                 LOGGER.info(str(e))

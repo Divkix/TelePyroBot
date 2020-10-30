@@ -111,7 +111,7 @@ async def down_load_media(c: TelePyroBot, m: Message):
             end_t = datetime.now()
             ms = (end_t - start_t).seconds
             await sm.edit(
-                f"Downloaded to <code>{download_file_path}</code> in <u>{ms}</u> seconds",
+                f"Downloaded to <code>{download_file_path}</code> in <u>{ms}</u> seconds.\nDownload Speed: {round((total_length/ms), 2)}",
                 parse_mode="html",
             )
     else:

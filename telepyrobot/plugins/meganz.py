@@ -62,11 +62,7 @@ async def mega_info(c: TelePyroBot, m: Message):
 async def mega_dl(c: TelePyroBot, m: Message):
     if len(m.command) >= 2:
         dl_url = m.text.split(" ", 1)[1]
-        if ("https://mega.co.nz" or "mega.co.nz" or "mega.nz") in dl_url:
-            if not dl_url.startswith("http"):
-                dl_url = "https://" + dl_url
-            if dl_url.startswith("http://"):
-                dlurl.replace("http://", "https://")
+        if dl_url.startswith(("https://mega.nz" or "http://mega.nz")):
             megaC.download_url(dlurl, TMP_DOWNLOAD_DIRECTORY)
             await m.edit_text(f"Downloaded file to `{TMP_DOWNLOAD_DIRECTORY}` folder")
         else:

@@ -138,7 +138,7 @@ async def upload_as_document(c: TelePyroBot, m: Message):
                 disable_notification=True,
                 reply_to_message_id=m.message_id,
                 progress=progress_for_pyrogram,
-                progress_args=("trying to upload", m, c_time),
+                progress_args=("Uploading file...", m, c_time),
             )
             end_t = datetime.now()
             ms = (end_t - start_t).seconds

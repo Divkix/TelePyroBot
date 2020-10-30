@@ -31,7 +31,7 @@ async def progress_for_pyrogram(current, total, ud_type, message, start):
             estimated_total_time if estimated_total_time != "" else "0 s",
         )
         try:
-            await m.edit(f"{ud_type}\n {tmp}")
+            await message.edit(f"{ud_type}\n {tmp}")
         except (MessageNotModified, FloodWait):
             pass
 

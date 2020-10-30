@@ -5,7 +5,7 @@ import time
 from datetime import datetime
 from pySmartDL import SmartDL
 from telepyrobot.__main__ import TelePyroBot
-from pyrogram import filters
+from pyrogram import filters, errors
 from pyrogram.types import Message
 import json
 import logging
@@ -105,7 +105,7 @@ async def down_load_media(c: TelePyroBot, m: Message):
                     await m.edit(disable_web_page_preview=True, text=current_message)
                     display_message = current_message
                     await asyncio.sleep(10)
-            except MessageNotModified:  # Don't log error if Message is not modified
+            except errors.MessageNotModified:  # Don't log error if Message is not modified
                 pass
             except Exception as e:
                 LOGGER.info(str(e))

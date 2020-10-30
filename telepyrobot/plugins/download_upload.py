@@ -25,7 +25,7 @@ __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
 Download Telegram Media
-Syntax: `{COMMAND_HAND_LER}dl` / download <link> or as a reply to media
+Syntax: `{COMMAND_HAND_LER}dl` / `{COMMAND_HAND_LER}download` <link> or as a reply to media
 Use '|' along with command to set a custom filename for downloaded file,
 Works only on replied media messages!
 
@@ -62,7 +62,6 @@ async def down_load_media(c: TelePyroBot, m: Message):
             f"Downloaded to <code>{the_real_download_location}</code> in <u>{ms}</u> seconds",
             parse_mode="html",
         )
-        await m.delete()
     elif len(m.command) > 1:
         start_t = datetime.now()
         the_url_parts = " ".join(m.command[1:])

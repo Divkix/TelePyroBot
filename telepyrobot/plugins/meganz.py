@@ -98,8 +98,20 @@ async def mega_upload(c: TelePyroBot, m: Message):
     if len(m.text.split()) >= 2:
         await m.edit_text("Uploading file...")
         fileLoc = m.text.split(" ", 1)[1]
+
+        # Search for remote folder; if not found, then create it
+        rmfoldername = "TelePyroBot_Uploads"
         try:
-            file = megaC.upload(fileLoc)
+            remoteFolder = megaC.find(rmfoldername)[0]
+        except TypeError as ef:
+            nwfl = megaC.create_folder(rmfoldername)
+            remoteFolder = nwfl[rmfoldername]
+        except Exception as ef:
+            await m.edit_text(ef)
+            return
+
+        try:
+            file = megaC.upload(fileLoc, remoteFolder)
             link = megaC.get_upload_link(file)
         except Exception as ef:
             await m.edit_text(ef)

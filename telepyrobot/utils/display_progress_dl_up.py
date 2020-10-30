@@ -27,11 +27,10 @@ async def progress_for_pyrogram(current, total, ud_type, message, start):
             humanbytes(current),
             humanbytes(total),
             humanbytes(speed),
-            # elapsed_time if elapsed_time != '' else "0 s",
             estimated_total_time if estimated_total_time != "" else "0 s",
         )
         try:
-            await m.edit("{}\n {}".format(ud_type, tmp))
+            await m.edit(f"{ud_type}\n {tmp}")
         except:
             pass
 
@@ -49,6 +48,7 @@ def humanbytes(size: int) -> str:
         size /= power
         number += 1
     return str(round(size, 2)) + " " + dict_power_n[number] + "B"
+
 
 
 def time_formatter(milliseconds: int) -> str:

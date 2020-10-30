@@ -2,6 +2,7 @@ import asyncio
 import math
 import os
 import time
+import shutil
 from datetime import datetime
 from pySmartDL import SmartDL
 from telepyrobot.__main__ import TelePyroBot

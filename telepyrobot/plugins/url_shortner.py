@@ -36,10 +36,6 @@ async def unshort_link(c: TelePyroBot, m: Message):
         await m.edit("`I can only unshort da.gd links`")
     r = requests.get(input_str, allow_redirects=False)
     if str(r.status_code).startswith("3"):
-        await m.edit(
-            f"Input URL: {input_str}\nReDirected URL: {r.headers['Location']}"
-        )
+        await m.edit(f"Input URL: {input_str}\nReDirected URL: {r.headers['Location']}")
     else:
-        await m.edit(
-            f"Input URL {input_str} returned status_code {r.status_code}"
-        )
+        await m.edit(f"Input URL {input_str} returned status_code {r.status_code}")

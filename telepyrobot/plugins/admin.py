@@ -3,7 +3,7 @@ import asyncio
 from telepyrobot.__main__ import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message, ChatPermissions
-from telepyrobot import COMMAND_HAND_LER, TG_MAX_SELECT_LEN, PRIVATE_GROUP_ID
+from telepyrobot import COMMAND_HAND_LER, PRIVATE_GROUP_ID
 from telepyrobot.utils.admin_check import admin_check
 from telepyrobot.utils.pyrohelpers import extract_user
 from telepyrobot.utils.parser import mention_markdown
@@ -55,9 +55,7 @@ async def promote_usr(c: TelePyroBot, m: Message):
                 f"#PROMOTE\nPromoted {user_first_name} in chat {m.chat.title}",
             )
         else:
-            await m.edit(
-                f"**Promoted** {mention_markdown(user_first_name, user_id)}"
-            )
+            await m.edit(f"**Promoted** {mention_markdown(user_first_name, user_id)}")
             await c.send_message(
                 PRIVATE_GROUP_ID,
                 "#PROMOTE\nPromoted {} in chat {}".format(
@@ -94,9 +92,7 @@ async def demote_usr(c: TelePyroBot, m: Message):
                 f"#DEMOTE\nDemoted {user_first_name} in chat {m.chat.title}",
             )
         else:
-            await m.edit(
-                f"**Demoted** {mention_markdown(user_first_name, user_id)}"
-            )
+            await m.edit(f"**Demoted** {mention_markdown(user_first_name, user_id)}")
             await c.send_message(
                 PRIVATE_GROUP_ID,
                 "#DEMOTE\nDemoted {} in chat {}".format(
@@ -125,9 +121,7 @@ async def ban_usr(c: TelePyroBot, m: Message):
                 f"#BAN\nBanned {user_first_name} in chat {m.chat.title}",
             )
         else:
-            await m.edit(
-                f"**Banned** {mention_markdown(user_first_name, user_id)}"
-            )
+            await m.edit(f"**Banned** {mention_markdown(user_first_name, user_id)}")
             await c.send_message(
                 PRIVATE_GROUP_ID,
                 "#BAN\nBanned {} in chat {}".format(
@@ -158,9 +152,7 @@ async def restrict_usr(c: TelePyroBot, m: Message):
                 f"#MUTE\nMuted {user_first_name} in chat {m.chat.title}",
             )
         else:
-            await m.edit(
-                f"**Muted** {mention_markdown(user_first_name, user_id)}"
-            )
+            await m.edit(f"**Muted** {mention_markdown(user_first_name, user_id)}")
             await c.send_message(
                 PRIVATE_GROUP_ID,
                 "#MUTE\nMuted {} in chat {}".format(

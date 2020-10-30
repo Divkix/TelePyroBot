@@ -39,7 +39,9 @@ async def get_chat(c: TelePyroBot, m: Message):
     for chat in all_chats:
         u += 1
         if str(chat.chat_username) != "None":
-            chatfile += f"[{u}] {chat.chat_name} - ({chat.chat_id}): @{chat.chat_username}\n"
+            chatfile += (
+                f"[{u}] {chat.chat_name} - ({chat.chat_id}): @{chat.chat_username}\n"
+            )
         else:
             chatfile += f"[{u}] {chat.chat_name} - ({chat.chat_id})\n"
     chatlist_file = "telepyrobot/cache/chatlist.txt"

@@ -7,7 +7,6 @@ from pyrogram import filters
 from pyrogram.types import Message, ChatPermissions
 from telepyrobot import (
     COMMAND_HAND_LER,
-    TG_MAX_SELECT_LEN,
     PRIVATE_GROUP_ID,
     OWNER_ID,
     OWNER_NAME,

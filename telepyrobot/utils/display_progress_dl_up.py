@@ -1,5 +1,6 @@
 import math
 import time
+from pyrogram.errors import MessageNotModified, FloodWait
 
 
 async def progress_for_pyrogram(current, total, ud_type, message, start):
@@ -31,7 +32,7 @@ async def progress_for_pyrogram(current, total, ud_type, message, start):
         )
         try:
             await m.edit(f"{ud_type}\n {tmp}")
-        except:
+        except (MessageNotModified, FloodWait):
             pass
 
 
@@ -48,7 +49,6 @@ def humanbytes(size: int) -> str:
         size /= power
         number += 1
     return str(round(size, 2)) + " " + dict_power_n[number] + "B"
-
 
 
 def time_formatter(milliseconds: int) -> str:

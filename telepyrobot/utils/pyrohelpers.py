@@ -36,7 +36,7 @@ async def extract_user(c: TelePyroBot, m: Message):
 """
 
 
-def extract_user(c: Client, message: Message) -> (int, str):
+def extract_user(c: TelePyroBot, message: Message) -> (int, str):
     """extracts the user from a message"""
     user_id = None
     user_first_name = None

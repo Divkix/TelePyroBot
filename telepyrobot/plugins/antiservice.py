@@ -3,6 +3,7 @@ from telepyrobot.__main__ import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot.db import antiservice_db as db
+from telepyrobot import COMMAND_HAND_LER
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 

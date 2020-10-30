@@ -43,7 +43,7 @@ The command will upload all files from the directory location to the current Tel
     filters.command(["download", "dl"], COMMAND_HAND_LER) & filters.me
 )
 async def down_load_media(c: TelePyroBot, m: Message):
-    sm = await m.reply_text("...", quote=True)
+    await m.edit_text("Checking...", quote=True)
     if not os.path.isdir(TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TMP_DOWNLOAD_DIRECTORY)
     if m.reply_to_message is not None:
@@ -58,7 +58,7 @@ async def down_load_media(c: TelePyroBot, m: Message):
         )
         end_t = datetime.now()
         ms = (end_t - start_t).seconds
-        await sm.edit(
+        await m.edit(
             f"Downloaded to <code>{the_real_download_location}</code> in <u>{ms}</u> seconds",
             parse_mode="html",
         )
@@ -99,24 +99,26 @@ async def down_load_media(c: TelePyroBot, m: Message):
                 current_message += (
                     f"__{humanbytes(downloaded)} of {humanbytes(total_length)}__\n"
                 )
-                current_message += f"**Download Speed** __{speed}__\n"
+                current_message += f"**Speed:** __{speed}__\n"
                 current_message += f"**ETA:** __{estimated_total_time}__"
                 if round(diff % 10.00) == 0 and current_message != display_message:
-                    await sm.edit(disable_web_page_preview=True, text=current_message)
+                    await m.edit(disable_web_page_preview=True, text=current_message)
                     display_message = current_message
                     await asyncio.sleep(10)
+            except MessageNotMofified:  # Don't log error if Message is not modified
+                pass
             except Exception as e:
                 LOGGER.info(str(e))
                 pass
         if os.path.exists(download_file_path):
             end_t = datetime.now()
             ms = (end_t - start_t).seconds
-            await sm.edit(
+            await m.edit(
                 f"Downloaded to <code>{download_file_path}</code> in <u>{ms}</u> seconds",
                 parse_mode="html",
             )
     else:
-        await sm.edit("`Reply to a Telegram Media, to download it to local server.`")
+        await m.edit("`Reply to a Telegram Media, to download it to local server.`")
     return
 
 

@@ -221,7 +221,7 @@ async def AskUserToVisitLinkAndGiveCode(message, code):
 async def search_g_drive(creds, search_query):
     service = build("drive", "v3", credentials=creds, cache_discovery=False)
     #
-    query = "name contains '{}'".format(search_query)
+    query = f"name contains '{search_query}'"
     page_token = None
     results = (
         service.files()

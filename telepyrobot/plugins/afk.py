@@ -58,11 +58,11 @@ async def afk(c: TelePyroBot, m: Message):
     afk_start = start_1.replace(microsecond=0)
     if len(m.text.split()) >= 2:
         await m.edit_text(
-            "I am going AFK now...\nBecause of {}".format(m.text.split(None, 1)[1])
+            f"I am going AFK now...\nBecause of {m.text.split(None, 1)[1]}"
         )
         await c.send_message(
             PRIVATE_GROUP_ID,
-            "You are AFK!\nBecause of {}".format(m.text.split(None, 1)[1]),
+            f"You are AFK!\nBecause of {m.text.split(None, 1)[1]}",
         )
         await asyncio.sleep(2)
         await m.delete()
@@ -71,15 +71,11 @@ async def afk(c: TelePyroBot, m: Message):
 
     else:
         await m.edit_text(
-            "{} is now AFK!".format(
-                mention_markdown(m.from_user.first_name, m.from_user.id)
-            )
+            f"{mention_markdown(m.from_user.first_name, m.from_user.id)} is now AFK!"
         )
         await c.send_message(
             PRIVATE_GROUP_ID,
-            "{} is now AFK!".format(
-                mention_markdown(m.from_user.first_name, m.from_user.id)
-            ),
+            f"{mention_markdown(m.from_user.first_name, m.from_user.id)} is now AFK!",
         )
         await asyncio.sleep(2)
         await m.delete()
@@ -216,14 +212,14 @@ async def no_longer_afk(c: TelePyroBot, m: Message):
         if afk_start != {}:
             total_afk_time = str((afk_end - afk_start))
         await c.send_message(
-            PRIVATE_GROUP_ID, "`No longer afk!\nWas AFk for: {}`".format(total_afk_time)
+            PRIVATE_GROUP_ID, f"`No longer afk!\nWas AFk for: {total_afk_time}`"
         )
         set_afk(False, "")
-        text = "**Total {} mentioned you**\n".format(len(MENTIONED))
+        text = f"**Total {len(MENTIONED)} mentioned you**\n"
         for x in MENTIONED:
             msg_text = x["text"]
             if len(msg_text) >= 11:
-                msg_text = "{}...".format(x["text"])
+                msg_text = f"{x['text']}..."
             text += "- [{}](https://t.me/c/{}/{}) ({}): `{}`\n".format(
                 escape_markdown(x["user"]),
                 x["chat_id"],

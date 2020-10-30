@@ -394,7 +394,7 @@ async def view_perm(c: TelePyroBot, m: Message):
             await m.edit(permission_view_str)
             await c.send_message(
                 PRIVATE_GROUP_ID,
-                "#VPERM\n\nCHAT: `{}` (`{}`)".format(m.chat.title, m.chat.id),
+                f"#VPERM\n\nCHAT: `{m.chat.title}` (`{m.chat.id}`)",
             )
 
         except Exception as e_f:

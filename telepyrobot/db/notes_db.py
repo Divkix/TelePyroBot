@@ -25,7 +25,7 @@ class Notes(BASE):
 
     def __repr__(self):
         """get db message"""
-        return "<Note %s>" % self.name
+        return f"<Note {self.name}>"
 
 
 Notes.__table__.create(checkfirst=True)

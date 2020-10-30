@@ -74,7 +74,7 @@ async def google_rs(c: TelePyroBot, m: Message):
             dis_loc = img_file
         base_url = "http://www.google.com"
         if dis_loc:
-            search_url = "{}/searchbyimage/upload".format(base_url)
+            search_url = f"{base_url}/searchbyimage/upload"
             multipart = {
                 "encoded_image": (dis_loc, open(dis_loc, "rb")),
                 "image_content": "",

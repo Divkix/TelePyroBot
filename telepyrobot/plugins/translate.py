@@ -46,7 +46,7 @@ async def translate(c: TelePyroBot, m: Message):
         try:
             tekstr = trl.translate(text, dest=target)
         except ValueError as err:
-            await m.edit("Error: `{}`".format(str(err)))
+            await m.edit(f"Error: `{str(err)}`")
             return
 
     await m.edit(f"Translated from `{detectlang.lang}` to `{target}`:\n`{tekstr.text}`")

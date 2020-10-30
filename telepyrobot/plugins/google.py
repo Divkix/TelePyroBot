@@ -25,7 +25,7 @@ async def google_s(c: TelePyroBot, m: Message):
     response_api = requests.get(sample_url).text
     if response_api:
         await m.edit(
-            "[{}]({})\n`Thank me Later 🙃` ".format(input_str, response_api.rstrip())
+            f"[{input_str}]({response_api.rstrip()})\n`Thank me Later 🙃` "
         )
     else:
         await m.edit("`Something is wrong. please try again later.``")

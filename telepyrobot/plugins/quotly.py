@@ -37,7 +37,7 @@ async def quotly(c: TelePyroBot, m: Message):
             progress += random.randint(0, 10)
             try:
                 await m.edit(
-                    "```Making a Quote```\nProcessing {}%".format(progress),
+                    f"```Making a Quote```\nProcessing {progress}%",
                     parse_mode="md",
                 )
                 if progress >= 100:

@@ -122,9 +122,9 @@ async def get_id(c: TelePyroBot, m: Message):
             )
         )
     elif file_id:
-        await m.edit("**File's ID:** `{}`".format(file_id))
+        await m.edit(f"**File's ID:** `{file_id}`")
     else:
-        await m.edit("**This Chat's ID:** `{}`".format(m.chat.id))
+        await m.edit(f"**This Chat's ID:** `{m.chat.id}`")
 
 
 @TelePyroBot.on_message(filters.command("json", COMMAND_HAND_LER) & filters.me)

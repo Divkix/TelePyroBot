@@ -25,7 +25,7 @@ async def mention(c: TelePyroBot, m: Message):
         name = args[1]
         if isinstance(args[2], int):
             user = args[2]
-            rep = "{}".format(mention_markdown(name, user))
+            rep = f"{mention_markdown(name, user)}"
         else:
             user = args[2]
             rep = f'<a href="tg://resolve?domain={name}">{user}</a>'

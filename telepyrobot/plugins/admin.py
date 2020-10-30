@@ -56,7 +56,7 @@ async def promote_usr(c: TelePyroBot, m: Message):
             )
         else:
             await m.edit(
-                "**Promoted** {}".format(mention_markdown(user_first_name, user_id))
+                f"**Promoted** {mention_markdown(user_first_name, user_id)}"
             )
             await c.send_message(
                 PRIVATE_GROUP_ID,
@@ -95,7 +95,7 @@ async def demote_usr(c: TelePyroBot, m: Message):
             )
         else:
             await m.edit(
-                "**Demoted** {}".format(mention_markdown(user_first_name, user_id))
+                f"**Demoted** {mention_markdown(user_first_name, user_id)}"
             )
             await c.send_message(
                 PRIVATE_GROUP_ID,
@@ -126,7 +126,7 @@ async def ban_usr(c: TelePyroBot, m: Message):
             )
         else:
             await m.edit(
-                "**Banned** {}".format(mention_markdown(user_first_name, user_id))
+                f"**Banned** {mention_markdown(user_first_name, user_id)}"
             )
             await c.send_message(
                 PRIVATE_GROUP_ID,
@@ -159,7 +159,7 @@ async def restrict_usr(c: TelePyroBot, m: Message):
             )
         else:
             await m.edit(
-                "**Muted** {}".format(mention_markdown(user_first_name, user_id))
+                f"**Muted** {mention_markdown(user_first_name, user_id)}"
             )
             await c.send_message(
                 PRIVATE_GROUP_ID,
@@ -191,7 +191,7 @@ async def unrestrict_usr(c: TelePyroBot, m: Message):
             )
         else:
             await m.edit(
-                "**UnRestricted** {}".format(mention_markdown(user_first_name, user_id))
+                f"**UnRestricted** {mention_markdown(user_first_name, user_id)}"
             )
             await c.send_message(
                 PRIVATE_GROUP_ID,

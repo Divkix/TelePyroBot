@@ -51,35 +51,35 @@ async def adminlist(c: TelePyroBot, m: Message):
     admin.sort()
     badmin.sort()
     totaladmins = len(creator) + len(admin) + len(badmin)
-    teks = "**Admins in {}**\n".format(grup.title)
+    teks = f"**Admins in {grup.title}**\n"
     teks += "「 Creator 」\n"
     for x in creator:
-        teks += "│ • {}\n".format(x)
+        teks += f"│ • {x}\n"
         if len(teks) >= 4096:
             await m.reply_text(
                 m.chat.id, teks, reply_to_message_id=replyid, parse_mode="md"
             )
             teks = ""
             toolong = True
-    teks += "「 {} Human Administrator 」\n".format(len(admin))
+    teks += f"「 {len(admin)} Human Administrator 」\n"
     for x in admin:
-        teks += "│ • {}\n".format(x)
+        teks += f"│ • {x}\n"
         if len(teks) >= 4096:
             await m.reply_text(
                 m.chat.id, teks, reply_to_message_id=replyid, parse_mode="md"
             )
             teks = ""
             toolong = True
-    teks += "「 {} Bot Administrator 」\n".format(len(badmin))
+    teks += f"「 {len(badmin)} Bot Administrator 」\n"
     for x in badmin:
-        teks += "│ • {}\n".format(x)
+        teks += f"│ • {x}\n"
         if len(teks) >= 4096:
             await m.reply_text(
                 m.chat.id, teks, reply_to_message_id=replyid, parse_mode="md"
             )
             teks = ""
             toolong = True
-    teks += "「 Total {} Admins 」".format(totaladmins)
+    teks += f"「 Total {totaladmins} Admins 」"
     if toolong:
         await m.reply_text(
             m.chat.id, teks, reply_to_message_id=replyid, parse_mode="md"
@@ -136,11 +136,11 @@ async def listbots(c: TelePyroBot, m: Message):
             nama = "☠️ Deleted account"
         if a.user.is_bot:
             bots.append(mention_markdown(nama, a.user.id))
-    teks = "**All bots in group {}**\n".format(grup.title)
+    teks = f"**All bots in group {grup.title}**\n"
     teks += "Bots\n"
     for x in bots:
-        teks += "│ • {}\n".format(x)
-    teks += "Total {} Bots".format(len(bots))
+        teks += f"│ • {x}\n"
+    teks += f"Total {len(bots)} Bots"
     if replyid:
         await c.send_message(
             m.chat.id, teks, reply_to_message_id=replyid, parse_mode="md"

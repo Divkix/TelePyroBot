@@ -43,7 +43,7 @@ The command will upload all files from the directory location to the current Tel
     filters.command(["download", "dl"], COMMAND_HAND_LER) & filters.me
 )
 async def down_load_media(c: TelePyroBot, m: Message):
-    await m.edit_text("Checking...", quote=True)
+    await m.edit_text("Checking...")
     if not os.path.isdir(TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TMP_DOWNLOAD_DIRECTORY)
     if m.reply_to_message is not None:

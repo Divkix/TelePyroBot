@@ -130,6 +130,7 @@ async def upload_as_document(c: TelePyroBot, m: Message):
             start_t = datetime.now()
             c_time = time.time()
             doc_caption = os.path.basename(local_file_name)
+            await sm.edit_text(f"Uploading __{doc_caption}__...")
             await m.reply_document(
                 document=local_file_name,
                 thumb=thumb_image_path,
@@ -180,7 +181,7 @@ async def covid(c: TelePyroBot, m: Message):
                 disable_notification=True,
                 progress=progress_for_pyrogram,
                 progress_args=(
-                    f"Trying to upload {file}",
+                    f"Trying to upload __{file}__",
                     sm,
                     c_time,
                 ),

@@ -18,12 +18,13 @@ List the directories of the server.
 @TelePyroBot.on_message(filters.command("ls", COMMAND_HAND_LER) & filters.me)
 async def list_directories(c: TelePyroBot, m: Message):
     if len(m.command) == 1:
-        cmd = "ls"
+        location = "."
     elif len(m.command) >= 2:
         location = m.text.split(" ", 1)[1]
-        files = os.listdir(location)
+
+    files = os.listdir(location)
     reply_to_id = m.message_id
-    files.sort()
+    files.sort()  # Sort the files
 
     OUTPUT = f"Files in {location}:\n\n"
 

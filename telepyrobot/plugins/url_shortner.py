@@ -22,9 +22,9 @@ async def short_link(c: TelePyroBot, m: Message):
     sample_url = f"https://da.gd/s?url={input_str}"
     response_api = requests.get(sample_url).text
     if response_api:
-        await m.edit(f"**Generated Link:**\n {response_api} for {input_str}.")
+        await m.edit_text(f"**Generated Link:**\n {response_api} for {input_str}.")
     else:
-        await m.edit("something is wrong. please try again later.")
+        await m.edit_text("something is wrong. please try again later.")
 
 
 @TelePyroBot.on_message(filters.command("unshort", COMMAND_HAND_LER) & filters.me)
@@ -33,9 +33,11 @@ async def unshort_link(c: TelePyroBot, m: Message):
     if not input_str.startswith("http"):
         input_str = "http://" + input_str
     if not input_str.startswith("http://da.gd"):
-        await m.edit("`I can only unshort da.gd links`")
+        await m.edit_text("`I can only unshort da.gd links`")
     r = requests.get(input_str, allow_redirects=False)
     if str(r.status_code).startswith("3"):
-        await m.edit(f"Input URL: {input_str}\nReDirected URL: {r.headers['Location']}")
+        await m.edit_text(
+            f"Input URL: {input_str}\nReDirected URL: {r.headers['Location']}"
+        )
     else:
-        await m.edit(f"Input URL {input_str} returned status_code {r.status_code}")
+        await m.edit_text(f"Input URL {input_str} returned status_code {r.status_code}")

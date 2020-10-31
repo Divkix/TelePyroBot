@@ -20,7 +20,7 @@ Check info of cases Covid19 (CoronaVirus) Disease
 
 @TelePyroBot.on_message(filters.command("covid", COMMAND_HAND_LER) & filters.me)
 async def covid(c: TelePyroBot, m: Message):
-    await m.edit("`Processing...`", parse_mode="md")
+    await m.edit_text("`Processing...`", parse_mode="md")
     cmd = m.text.split(" ", 1)
     if len(cmd) == 1:
         r = requests.get("https://corona.lmao.ninja/v2/all?yesterday=true").json()
@@ -43,5 +43,7 @@ async def covid(c: TelePyroBot, m: Message):
         ac.add_row(["Tests", f"{r['tests']:,}"])
         ac.add_row(["Tests/Million", f"{r['testsPerOneMillion']:,}"])
         ac.align = "l"
-        await m.edit(f"`{str(ac)}`\nLast updated on: {last_updated}", parse_mode="md")
+        await m.edit_text(
+            f"`{str(ac)}`\nLast updated on: {last_updated}", parse_mode="md"
+        )
     return

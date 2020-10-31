@@ -83,5 +83,5 @@ async def weebify(c: TelePyroBot, m: Message):
         if normiecharacter in normiefont:
             weebycharacter = weebyfont[normiefont.index(normiecharacter)]
             string = string.replace(normiecharacter, weebycharacter)
-    await m.edit(f"**Weebified String:**\n`{string}`")
+    await m.edit_text(f"**Weebified String:**\n`{string}`")
     return

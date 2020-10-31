@@ -32,7 +32,7 @@ async def updatemychats(c: TelePyroBot, m: Message):
 
 @TelePyroBot.on_message(filters.me & filters.command("chatlist", COMMAND_HAND_LER))
 async def get_chat(c: TelePyroBot, m: Message):
-    await m.edit("`Exporting Chatlist...`")
+    await m.edit_text("`Exporting Chatlist...`")
     all_chats = db.get_all_chats()
     chatfile = "<---List of chats that you joined--->\n\n"
     u = 0
@@ -52,6 +52,6 @@ async def get_chat(c: TelePyroBot, m: Message):
     await c.send_document(
         "self", document=chatlist_file, caption="Here is the chat list that you joined."
     )
-    await m.edit("`Chat list exported to saved messages.`")
+    await m.edit_text("`Chat list exported to saved messages.`")
     os.remove(chatlist_file)
     return

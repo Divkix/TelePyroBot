@@ -46,7 +46,7 @@ DELAY_TIME = 60  # seconds
 @TelePyroBot.on_message((filters.command("afk", COMMAND_HAND_LER)) & filters.me)
 async def afk(c: TelePyroBot, m: Message):
     if PRIVATE_GROUP_ID is None:
-        await m.edit(
+        await m.edit_text(
             "<b><i>Please set the variable</b></i> `PRIVATE_GROUP_ID` for this to function."
         )
         return

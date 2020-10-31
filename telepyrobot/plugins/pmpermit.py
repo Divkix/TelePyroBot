@@ -72,7 +72,7 @@ async def approve_pm(c: TelePyroBot, m: Message):
         user_id, user_first_name = extract_user(message)
     db.set_whitelist(user_id, True)
     user = await c.get_users(user_id)
-    await m.edit(
+    await m.edit_text(
         "**__PM permission was approved__** for {}".format(
             mention_markdown(user.first_name, user_id)
         )
@@ -102,7 +102,7 @@ async def revoke_pm_block(c: TelePyroBot, m: Message):
         user_id = m.text.split(" ")[1]
     db.del_whitelist(user_id)
     user = await c.get_users(user_id)
-    await m.edit(
+    await m.edit_text(
         "__**PM permission was revoked for**__ {}".format(
             mention_markdown(user.first_name, user_id)
         )

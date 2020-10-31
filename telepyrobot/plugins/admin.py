@@ -32,7 +32,7 @@ Usage: {COMMAND_HAND_LER}unmute (Username/User ID or reply to message)
 
 @TelePyroBot.on_message(filters.command("promote", COMMAND_HAND_LER) & filters.me)
 async def promote_usr(c: TelePyroBot, m: Message):
-    await m.edit("`Trying to Promote user...`")
+    await m.edit_text("`Trying to Promote user...`")
     is_admin = await admin_check(c, m)
     if not is_admin:
         return
@@ -49,13 +49,15 @@ async def promote_usr(c: TelePyroBot, m: Message):
         )
         await asyncio.sleep(2)
         if str(user_id).lower().startswith("@"):
-            await m.edit(f"**Promoted** {user_first_name}")
+            await m.edit_text(f"**Promoted** {user_first_name}")
             await c.send_message(
                 PRIVATE_GROUP_ID,
                 f"#PROMOTE\nPromoted {user_first_name} in chat {m.chat.title}",
             )
         else:
-            await m.edit(f"**Promoted** {mention_markdown(user_first_name, user_id)}")
+            await m.edit_text(
+                f"**Promoted** {mention_markdown(user_first_name, user_id)}"
+            )
             await c.send_message(
                 PRIVATE_GROUP_ID,
                 "#PROMOTE\nPromoted {} in chat {}".format(
@@ -63,13 +65,13 @@ async def promote_usr(c: TelePyroBot, m: Message):
                 ),
             )
     except Exception as ef:
-        await m.edit(f"**Error:**\n\n`{ef}`")
+        await m.edit_text(f"**Error:**\n\n`{ef}`")
     return
 
 
 @TelePyroBot.on_message(filters.command("demote", COMMAND_HAND_LER) & filters.me)
 async def demote_usr(c: TelePyroBot, m: Message):
-    await m.edit("`Trying to Demote user...`")
+    await m.edit_text("`Trying to Demote user...`")
     is_admin = await admin_check(c, m)
     if not is_admin:
         return
@@ -86,13 +88,15 @@ async def demote_usr(c: TelePyroBot, m: Message):
         )
         await asyncio.sleep(2)
         if str(user_id).lower().startswith("@"):
-            await m.edit(f"**Demoted** {user_first_name}")
+            await m.edit_text(f"**Demoted** {user_first_name}")
             await c.send_message(
                 PRIVATE_GROUP_ID,
                 f"#DEMOTE\nDemoted {user_first_name} in chat {m.chat.title}",
             )
         else:
-            await m.edit(f"**Demoted** {mention_markdown(user_first_name, user_id)}")
+            await m.edit_text(
+                f"**Demoted** {mention_markdown(user_first_name, user_id)}"
+            )
             await c.send_message(
                 PRIVATE_GROUP_ID,
                 "#DEMOTE\nDemoted {} in chat {}".format(
@@ -100,12 +104,12 @@ async def demote_usr(c: TelePyroBot, m: Message):
                 ),
             )
     except Exception as ef:
-        await m.edit(f"**Error:**\n\n`{ef}`")
+        await m.edit_text(f"**Error:**\n\n`{ef}`")
 
 
 @TelePyroBot.on_message(filters.command("ban", COMMAND_HAND_LER) & filters.me)
 async def ban_usr(c: TelePyroBot, m: Message):
-    await m.edit("`Trying to Ban user...`")
+    await m.edit_text("`Trying to Ban user...`")
     is_admin = await admin_check(c, m)
     if not is_admin:
         return
@@ -115,13 +119,15 @@ async def ban_usr(c: TelePyroBot, m: Message):
     try:
         await m.chat.kick_member(user_id=user_id)
         if str(user_id).lower().startswith("@"):
-            await m.edit(f"**Banned** {user_first_name}")
+            await m.edit_text(f"**Banned** {user_first_name}")
             await c.send_message(
                 PRIVATE_GROUP_ID,
                 f"#BAN\nBanned {user_first_name} in chat {m.chat.title}",
             )
         else:
-            await m.edit(f"**Banned** {mention_markdown(user_first_name, user_id)}")
+            await m.edit_text(
+                f"**Banned** {mention_markdown(user_first_name, user_id)}"
+            )
             await c.send_message(
                 PRIVATE_GROUP_ID,
                 "#BAN\nBanned {} in chat {}".format(
@@ -129,16 +135,16 @@ async def ban_usr(c: TelePyroBot, m: Message):
                 ),
             )
     except Exception as ef:
-        await m.edit(f"**Error:**\n\n`{ef}`")
+        await m.edit_text(f"**Error:**\n\n`{ef}`")
 
 
 @TelePyroBot.on_message(filters.command("mute", COMMAND_HAND_LER) & filters.me)
 async def restrict_usr(c: TelePyroBot, m: Message):
-    await m.edit("`Trying to Mute user...`")
+    await m.edit_text("`Trying to Mute user...`")
     is_admin = await admin_check(c, m)
     chat_id = m.chat.id
     if not is_admin:
-        await m.edit("`I'm not admin nub nibba!`")
+        await m.edit_text("`I'm not admin nub nibba!`")
         await asyncio.sleep(2)
         await m.delete()
         return
@@ -146,13 +152,13 @@ async def restrict_usr(c: TelePyroBot, m: Message):
     try:
         await m.chat.restrict_member(user_id=user_id, permisssions=ChatPermissions())
         if str(user_id).lower().startswith("@"):
-            await m.edit(f"**Muted** {user_first_name}")
+            await m.edit_text(f"**Muted** {user_first_name}")
             await c.send_message(
                 PRIVATE_GROUP_ID,
                 f"#MUTE\nMuted {user_first_name} in chat {m.chat.title}",
             )
         else:
-            await m.edit(f"**Muted** {mention_markdown(user_first_name, user_id)}")
+            await m.edit_text(f"**Muted** {mention_markdown(user_first_name, user_id)}")
             await c.send_message(
                 PRIVATE_GROUP_ID,
                 "#MUTE\nMuted {} in chat {}".format(
@@ -160,14 +166,14 @@ async def restrict_usr(c: TelePyroBot, m: Message):
                 ),
             )
     except Exception as ef:
-        await m.edit(f"**Error:**\n\n`{ef}`")
+        await m.edit_text(f"**Error:**\n\n`{ef}`")
 
 
 @TelePyroBot.on_message(
     filters.command(["unban", "unmute"], COMMAND_HAND_LER) & filters.me
 )
 async def unrestrict_usr(c: TelePyroBot, m: Message):
-    await m.edit("`Trying to Unrestrict user...`")
+    await m.edit_text("`Trying to Unrestrict user...`")
     is_admin = await admin_check(c, m)
     if not is_admin:
         return
@@ -176,13 +182,13 @@ async def unrestrict_usr(c: TelePyroBot, m: Message):
     try:
         await m.chat.unban_member(user_id)
         if str(user_id).lower().startswith("@"):
-            await m.edit(f"**UnRestricted** {user_first_name}")
+            await m.edit_text(f"**UnRestricted** {user_first_name}")
             await c.send_message(
                 PRIVATE_GROUP_ID,
                 f"#UNRESTRICT\nUnrestricted {user_first_name} in chat {m.chat.title}",
             )
         else:
-            await m.edit(
+            await m.edit_text(
                 f"**UnRestricted** {mention_markdown(user_first_name, user_id)}"
             )
             await c.send_message(
@@ -192,4 +198,4 @@ async def unrestrict_usr(c: TelePyroBot, m: Message):
                 ),
             )
     except Exception as ef:
-        await m.edit(f"**Error:**\n\n`{ef}`")
+        await m.edit_text(f"**Error:**\n\n`{ef}`")

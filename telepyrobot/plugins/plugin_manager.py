@@ -21,12 +21,12 @@ Used to install, delete or send plugins from userbot local storage!
 @TelePyroBot.on_message(filters.command("sendpl", COMMAND_HAND_LER) & filters.me)
 async def send_plugin(c: TelePyroBot, m: Message):
     if len(m.text.split(" ")) == 1:
-        await m.edit("`Please enter a valid plugin name!!`")
+        await m.edit_text("`Please enter a valid plugin name!!`")
         return
-    await m.edit("`Sending plugin...`")
+    await m.edit_text("`Sending plugin...`")
     plugin_name = m.text.split(" ", 1)[1]
     if plugin_name not in ALL_PLUGINS:
-        await m.edit(
+        await m.edit_text(
             f"Please enter a valid plugin name!\nCheck availabe plugins by `{COMMAND_HAND_LER}plugins`."
         )
         return
@@ -44,14 +44,14 @@ async def send_plugin(c: TelePyroBot, m: Message):
 async def install_plugin(c: TelePyroBot, m: Message):
     if len(m.command) == 1 and m.reply_to_message.document:
         if m.reply_to_message.document.file_name.split(".")[-1] != "py":
-            await m.edit("`Can only install python files!`")
+            await m.edit_text("`Can only install python files!`")
             return
         plugin_loc = (
             f"/root/telepyrobot/plugins/{m.reply_to_message.document.file_name}"
         )
-        await m.edit("`Installing plugin...`")
+        await m.edit_text("`Installing plugin...`")
         if os.path.exists(plugin_loc):
-            await m.edit(
+            await m.edit_text(
                 f"`Plugin {m.reply_to_message.document.file_name} already exists!`"
             )
             return
@@ -60,11 +60,11 @@ async def install_plugin(c: TelePyroBot, m: Message):
                 message=m.reply_to_message, file_name=plugin_loc
             )
             if plugin_dl_loc:
-                await m.edit(
+                await m.edit_text(
                     f"**Installed plugin:** {m.reply_to_message.document.file_name}"
                 )
         except Exception as e_f:
-            await m.edit(f"**Error:**\n`{e_f}`")
+            await m.edit_text(f"**Error:**\n`{e_f}`")
     return
 
 
@@ -74,9 +74,9 @@ async def delete_plugin(c: TelePyroBot, m: Message):
         plugin_loc = f"/root/telepyrobot/plugins/{m.command[1]}.py"
         if os.path.exists(plugin_loc):
             os.remove(plugin_loc)
-            await m.edit(f"**Deleted plugin:** {m.command[1]}")
+            await m.edit_text(f"**Deleted plugin:** {m.command[1]}")
             return
-        await m.edit("`Plugin does not exist!`")
+        await m.edit_text("`Plugin does not exist!`")
         return
-    await m.edit("`Enter a valid plugin name!`")
+    await m.edit_text("`Enter a valid plugin name!`")
     return

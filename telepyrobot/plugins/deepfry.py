@@ -34,17 +34,17 @@ async def do_deepfry(c: TelePyroBot, m: Message):
         reply_message = m.reply_to_message
         data = await check_media(reply_message)
     else:
-        await m.edit("`Reply to an image or sticker to deep fry it!`")
+        await m.edit_text("`Reply to an image or sticker to deep fry it!`")
         return
 
     # download last photo (highres) as byte array
-    await m.edit("`Downloading media...`")
+    await m.edit_text("`Downloading media...`")
     image = io.BytesIO()
     image = await c.download_media(data)
     image = Image.open(image)
 
     await asyncio.sleep(3)
-    await m.edit("`Deep frying media...`")
+    await m.edit_text("`Deep frying media...`")
     for _ in range(frycount):
         image = await deepfry(image)
 

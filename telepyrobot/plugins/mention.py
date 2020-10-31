@@ -29,9 +29,9 @@ async def mention(c: TelePyroBot, m: Message):
         else:
             user = args[2]
             rep = f'<a href="tg://resolve?domain={name}">{user}</a>'
-        await m.edit(rep, disable_web_page_preview=True, parse_mode="html")
+        await m.edit_text(rep, disable_web_page_preview=True, parse_mode="html")
     else:
-        await m.edit(
+        await m.edit_text(
             f"Check `{COMMAND_HAND_LER}help {__PLUGIN__}` for infor on how to use",
             parse_mode="md",
         )

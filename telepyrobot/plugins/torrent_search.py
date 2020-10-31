@@ -19,16 +19,16 @@ Get Magnet Links of any search query.
 @TelePyroBot.on_message(filters.command("tsearch", COMMAND_HAND_LER) & filters.me)
 async def tor_search(c: TelePyroBot, m: Message):
     if len(m.command) == 1:
-        await m.edit("`Check help on how to use this command`")
+        await m.edit_text("`Check help on how to use this command`")
         return
-    await m.edit("`Please wait, fetching results...`")
+    await m.edit_text("`Please wait, fetching results...`")
     query = m.text.split(" ", 1)[1]
     response = requests.get(
         f"https://sjprojectsapi.herokuapp.com/torrent/?query={query}"
     )
     ts = json.loads(response.text)
     if not ts == response.json():
-        await m.edit("**Some error occured**\n`Try Again Later`")
+        await m.edit_text("**Some error occured**\n`Try Again Later`")
         return
     listdata = ""
     run = 0

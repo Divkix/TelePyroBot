@@ -19,10 +19,10 @@ Plugin to help you pin or unpin messages in a group!
 @TelePyroBot.on_message(filters.command("pin", COMMAND_HAND_LER) & filters.me)
 async def pin_message(c: TelePyroBot, m: Message):
     if PRIVATE_GROUP_ID is None:
-        await m.edit("Please set `PRIVATE_GROUP_ID` variable to make me work!")
+        await m.edit_text("Please set `PRIVATE_GROUP_ID` variable to make me work!")
         return
     if m.chat.type in ["group", "supergroup"]:
-        await m.edit("`Trying to pin message...`")
+        await m.edit_text("`Trying to pin message...`")
         is_admin = await admin_check(c, m)
         if not is_admin:
             await msg.edit("`I'm not admin nub nibba!`")
@@ -41,9 +41,9 @@ async def pin_message(c: TelePyroBot, m: Message):
                 m.reply_to_message.message_id,
                 disable_notification=disable_notification,
             )
-            await m.edit("`Pinned message!`")
+            await m.edit_text("`Pinned message!`")
         else:
-            await m.edit("`Reply to a message to which you want to pin...`")
+            await m.edit_text("`Reply to a message to which you want to pin...`")
     await c.send_message(
         PRIVATE_GROUP_ID, f"#PIN\n\nPinned message in **{m.chat.title}**"
     )
@@ -53,16 +53,16 @@ async def pin_message(c: TelePyroBot, m: Message):
 @TelePyroBot.on_message(filters.command("unpin", COMMAND_HAND_LER) & filters.me)
 async def unpin_message(c: TelePyroBot, m: Message):
     if PRIVATE_GROUP_ID is None:
-        await m.edit("Please set `PRIVATE_GROUP_ID` variable to make me work!")
+        await m.edit_text("Please set `PRIVATE_GROUP_ID` variable to make me work!")
         return
     if m.chat.type in ["group", "supergroup"]:
-        await m.edit("`Trying to unpin message...`")
+        await m.edit_text("`Trying to unpin message...`")
         chat_id = m.chat.id
         is_admin = await admin_check(c, m)
         if not is_admin:
             return
         await c.unpin_chat_message(chat_id)
-        await m.edit("`Unpinned message!`")
+        await m.edit_text("`Unpinned message!`")
         await c.send_message(
             PRIVATE_GROUP_ID, f"#UNPIN\\n\nUnpinned message in **{m.chat.title}**"
         )

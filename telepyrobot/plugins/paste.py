@@ -19,7 +19,7 @@ __help__ = f"""
 
 @TelePyroBot.on_message(filters.command("paste", COMMAND_HAND_LER))
 async def paste_bin(c: TelePyroBot, m: Message):
-    await m.edit("`Pasting...`")
+    await m.edit_text("`Pasting...`")
     downloaded_file_name = None
 
     if m.reply_to_message and m.reply_to_message.media:
@@ -38,11 +38,11 @@ async def paste_bin(c: TelePyroBot, m: Message):
     elif m.reply_to_message:
         downloaded_file_name = m.reply_to_message.text.html
     else:
-        await m.edit("What do you want to Paste?")
+        await m.edit_text("What do you want to Paste?")
         return
 
     if downloaded_file_name is None:
-        await m.edit("What do you want to Paste?")
+        await m.edit_text("What do you want to Paste?")
         return
 
     json_paste_data = {"content": downloaded_file_name}
@@ -73,7 +73,7 @@ async def paste_bin(c: TelePyroBot, m: Message):
     required_url = json.dumps(t_w_attempt, sort_keys=True, indent=4) + "\n\n #ERROR"
     if t_w_attempt is not None:
         required_url = paste_store_base_url + "/" + t_w_attempt
-    await m.edit(
+    await m.edit_text(
         f"**Pasted to {default_paste}**:\n{required_url}", disable_web_page_preview=True
     )
 

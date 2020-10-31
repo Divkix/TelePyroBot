@@ -85,7 +85,7 @@ async def adminlist(c: TelePyroBot, m: Message):
             m.chat.id, teks, reply_to_message_id=replyid, parse_mode="md"
         )
     else:
-        await m.edit(teks, parse_mode="md")
+        await m.edit_text(teks, parse_mode="md")
 
 
 @TelePyroBot.on_message(
@@ -146,4 +146,4 @@ async def listbots(c: TelePyroBot, m: Message):
             m.chat.id, teks, reply_to_message_id=replyid, parse_mode="md"
         )
     else:
-        await m.edit(teks, parse_mode="md")
+        await m.edit_text(teks, parse_mode="md")

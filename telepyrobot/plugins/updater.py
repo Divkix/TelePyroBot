@@ -26,33 +26,22 @@ __help__ = f"""
 `{COMMAND_HAND_LER}update force`: Forcefully update userbot to sync with latest remote source!
 """
 
+# -- Constants -- #
+IS_SELECTED_DIFFERENT_BRANCH = (
+    "Looks like a custom branch {branch_name} "
+    "is being used\n"
+    "In this case, updater is unable to identify the branch to be updated."
+    "Please check out to an official branch, and re-start the updater.\n\n"
+    "Or join @TelePyroBot for help!"
+)
+REMOTE_NAME = "official_remote"
+ACTIVE_BRANCH = "master"
+DIFF_MARKER = "HEAD..{remote_name}/{branch_name}"
+NO_HEROKU_APP_CFGD = "No heroku application found! 😕 "
+HEROKU_GIT_REF_SPEC = "HEAD:refs/heads/master"
+NEW_BOT_UP_DATE_FOUND = "**NEW update found for** __{branch_name}__({commit_link})\n**Chagelog:**\n\n`{changelog}`\n__**Updating...**__"
+# -- Constants End -- #
 
-"""
-async def gen_chlog(repo, diff):
-    changelog = ""
-    d_form = "%H:%M - %d/%m/%y"
-    for cl in repo.iter_commits(diff):
-        changelog += f'• [{cl.committed_datetime.strftime(d_form)}]: {cl.summary} <{cl.author}>\n'
-    return changelog
-
-async def initial_git(repo):
-    isexist = os.path.exists('telepyro-old')
-    if isexist:
-        shutil.rmtree('telepyro-old')
-    os.mkdir('telepyro-old')
-    os.rename('nana', 'telepyro-old')
-    os.rename('.gitignore', 'nana-old/.gitignore')
-    os.rename('LICENSE', 'nana-old/LICENSE')
-    os.rename('README.md', 'nana-old/README.md')
-    os.rename('requirements.txt', 'nana-old/requirements.txt')
-    os.rename('Procfile', 'nana-old/Procfile')
-    os.rename('runtime.txt', 'nana-old/runtime.txt')
-    update = repo.create_remote('master', REPOSITORY)
-    update.pull('master')
-    os.rename('nana-old/nana/config.py', 'nana/config.py')
-    shutil.rmtree('nana/session/')
-    os.rename('nana-old/nana/session/', 'nana/session/')
-"""
 
 @TelePyroBot.on_message(filters.command("update", COMMAND_HAND_LER) & sudo_filter)
 async def updater(c: TelePyroBot, m: Message):
@@ -61,7 +50,6 @@ async def updater(c: TelePyroBot, m: Message):
     else:
         force_update = False
 
-    umsg = await m.reply_text("`Checking for Update...`")
     if HEROKU_API_KEY is None or HEROKU_APP_NAME is None:
         await umsg.edit(
             "__Please the Vars__ `HEROKU_API_KEY` __and__ `HEROKU_APP_NAME` __properly!__"
@@ -69,68 +57,68 @@ async def updater(c: TelePyroBot, m: Message):
         return
     if PRIVATE_GROUP_ID is None:
         await umsg.edit("__**Please Set**__ `PRIVATE_GROUP_ID` **__to use updater!__**")
+
+    umsg = await m.reply_text("`Checking for Update...`")
+
     try:
         repo = git.Repo()
     except git.exc.InvalidGitRepositoryError as error_one:
         LOGGER.info(str(error_one))
         repo = git.Repo.init()
-        origin = repo.create_remote(REPO_REMOTE_NAME, OFFICIAL_UPSTREAM_REPO)
+        origin = repo.create_remote(REMOTE_NAME, OFFICIAL_UPSTREAM_REPO)
         origin.fetch()
-        repo.create_head(IFFUCI_ACTIVE_BRANCH_NAME, origin.refs.master)
+        repo.create_head(ACTIVE_BRANCH, origin.refs.master)
         repo.heads.master.checkout(True)
 
     active_branch_name = repo.active_branch.name
-    LOGGER.info(active_branch_name)
-    if active_branch_name != IFFUCI_ACTIVE_BRANCH_NAME:
+    if active_branch_name != ACTIVE_BRANCH:
         await umsg.edit(
-            IS_SELECTED_DIFFERENT_BRANCH.format(
-                branch_name=active_branch_name, COMMAND_HAND_LER=COMMAND_HAND_LER
-            )
+            IS_SELECTED_DIFFERENT_BRANCH.format(branch_name=active_branch_name)
         )
         return
 
     try:
-        repo.create_remote(REPO_REMOTE_NAME, OFFICIAL_UPSTREAM_REPO)
+        repo.create_remote(REMOTE_NAME, OFFICIAL_UPSTREAM_REPO)
     except Exception as error_two:
+        await m.edit_text(error_two)
         LOGGER.info(str(error_two))
+        return
 
-    temp_remote = repo.remote(REPO_REMOTE_NAME)
+    temp_remote = repo.remote(REMOTE_NAME)
     temp_remote.fetch(active_branch_name)
 
     changelog = generate_change_log(
         repo,
-        DIFF_MARKER.format(
-            remote_name=REPO_REMOTE_NAME, branch_name=active_branch_name
-        ),
+        DIFF_MARKER.format(remote_name=REMOTE_NAME, branch_name=active_branch_name),
     )
-    LOGGER.info(changelog)
 
     try:
-        remote_head_github = repo.head.reference
-        commit_id = remote_head_github.commit.hexsha
+        remote_head = repo.head.reference
+        commit_id = remote_head.commit.hexsha
         commit_link = f"<a href='https://github.com/SkuzzyxD/TelePyroBot/commit/{commit_id}'>{commit_id[:7]}</a>"
     except:
         commit_link = "None"
 
+    if changelog == "" or not changelog:
+        changelog = "Not found!"
+    else:
+        changelog = changelog
+    LOGGER.info(changelog)
+
+    # Changelog
     message_one = NEW_BOT_UP_DATE_FOUND.format(
         branch_name=active_branch_name, changelog=changelog, commit_link=commit_link
     )
-    message_two = NEW_UP_DATE_FOUND.format(branch_name=active_branch_name)
 
     if len(message_one) > MAX_MESSAGE_LENGTH:
-        with open("change.log", "w+", encoding="utf8") as out_file:
-            out_file.write(str(message_one))
-            out_file.close()
-        await m.reply_document(
-            document="change.log",
-            caption=message_two,
-            disable_notification=True,
-            reply_to_message_id=m.message_id,
-        )
-        os.remove("change.log")
+        with open("changelog.txt", "w+", encoding="utf8") as f:
+            f.write(str(message_one))
+        await m.reply_document(document="changelog.txt", caption="Update.txt")
+        os.remove("changelog.txt")
 
-    if not changelog and force_update == False:
+    if changelog == "Not found!" and force_update == False:
         await umsg.edit("`Your userbot is already up-to-date!!`")
+        await m.delete()
         return
 
     await umsg.edit(message_one, disable_web_page_preview=True)
@@ -163,7 +151,7 @@ async def updater(c: TelePyroBot, m: Message):
         disable_web_page_preview=True,
     )
     remote.push(refspec=HEROKU_GIT_REF_SPEC, force=True)
-    asyncio.get_event_loop().create_task(deploy_start(client))
+    asyncio.get_event_loop().create_task(deploy_start(c))
 
 
 def generate_change_log(git_repo, diff_marker):
@@ -174,5 +162,5 @@ def generate_change_log(git_repo, diff_marker):
     return changelog_string
 
 
-async def deploy_start(client):
+async def deploy_start(c: TelePyroBot):
     await c.restart()

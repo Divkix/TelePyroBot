@@ -41,13 +41,13 @@ async def figlet_font(c: TelePyroBot, m: Message):
         font_style = None
         text = input_str
     else:
-        await m.edit("`Please add some text to figlet`")
+        await m.edit_text("`Please add some text to figlet`")
         return
     if font_style is not None:
         try:
             font = CMD_FIG[font_style]
         except KeyError:
-            await m.edit("`Font not available`")
+            await m.edit_text("`Font not available`")
             return
         result = pyfiglet.figlet_format(text, font=font)
     else:

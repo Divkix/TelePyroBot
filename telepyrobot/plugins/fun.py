@@ -73,5 +73,5 @@ async def runs(c: TelePyroBot, m: Message):
         await m.reply_to_message.reply_text(run)
         await m.delete()
     else:
-        await m.edit(run)
+        await m.edit_text(run)
     return

@@ -21,7 +21,7 @@ Use this remove background from images!
 @TelePyroBot.on_message(filters.me & filters.command("rembg", COMMAND_HAND_LER))
 async def remove_bg(c: TelePyroBot, m: Message):
     if not REMBG_API_KEY:
-        await m.edit(
+        await m.edit_text(
             "Get the API from [Remove.bg](https://www.remove.bg/api)",
             disable_web_page_preview=True,
             parse_mode="html",
@@ -41,7 +41,7 @@ async def remove_bg(c: TelePyroBot, m: Message):
         orig_pic = await c.download_media(
             message=replied, file_name="./downloads/img.jpg"
         )
-        await m.edit("`Removing Background...`")
+        await m.edit_text("`Removing Background...`")
         try:
             rmbg = RemoveBg(REMBG_API_KEY, "rembg_error.log")
             rmbg.remove_background_from_img_file(orig_pic)
@@ -59,5 +59,5 @@ async def remove_bg(c: TelePyroBot, m: Message):
             os.remove(new_rembg_file)
             os.remove(orig_pic)
         except Exception as ef:
-            await m.edit(f"**Error:**\n\n`{ef}")
+            await m.edit_text(f"**Error:**\n\n`{ef}")
     return

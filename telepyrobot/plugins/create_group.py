@@ -19,7 +19,7 @@ Commands:
 @TelePyroBot.on_message(filters.command("creategrp", COMMAND_HAND_LER) & filters.me)
 async def cas(c: TelePyroBot, m: Message):
     if len(m.command) < 3:
-        await m.edit("`Check help, you don't know how to use it`")
+        await m.edit_text("`Check help, you don't know how to use it`")
         return
 
     args = m.text.split(" ", 2)
@@ -29,18 +29,18 @@ async def cas(c: TelePyroBot, m: Message):
 
     if grptype == "basic":
         try:
-            await m.edit(f"__Trying to make a BasicGroup named:__`{grpname}`")
+            await m.edit_text(f"__Trying to make a BasicGroup named:__`{grpname}`")
             await c.create_group(f"{grpname}", user_id)
         except Exception as ef:
-            await m.edit(f"**Error:**\n`{ef}`")
+            await m.edit_text(f"**Error:**\n`{ef}`")
             return
-        await m.edit(f"**Created new __BasicGroup__ named:**\n`{grpname}`")
+        await m.edit_text(f"**Created new __BasicGroup__ named:**\n`{grpname}`")
     elif grptype == "super":
         try:
-            await m.edit(f"__Trying to make a SuperGroup named:__`{grpname}`")
+            await m.edit_text(f"__Trying to make a SuperGroup named:__`{grpname}`")
             await c.create_supergroup(f"{grpname}")
         except Exception as ef:
-            await m.edit(f"**Error:**\n`{ef}`")
+            await m.edit_text(f"**Error:**\n`{ef}`")
             return
-        await m.edit(f"**Created new __SuperGroup__ named:**\n`{grpname}`")
+        await m.edit_text(f"**Created new __SuperGroup__ named:**\n`{grpname}`")
     return

@@ -22,12 +22,12 @@ Get text typed in typewriter format.
 async def upload_as_document(c: TelePyroBot, m: Message):
     text = m.command[1:]
     if not text:
-        await m.edit("`Input not found`")
+        await m.edit_text("`Input not found`")
         return
     s_time = 0.1
     typing_symbol = "|"
     old_text = ""
-    await m.edit(typing_symbol)
+    await m.edit_text(typing_symbol)
     time.sleep(s_time)
     for character in text:
         s_t = s_time / random.randint(1, 100)

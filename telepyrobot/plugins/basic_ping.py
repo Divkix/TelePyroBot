@@ -57,15 +57,15 @@ async def check_alive(c: TelePyroBot, m: Message):
 @TelePyroBot.on_message(filters.command("ping", COMMAND_HAND_LER) & filters.me)
 async def ping(c: TelePyroBot, m: Message):
     start_t = time.time()
-    rm = await m.edit("Pinging...")
+    rm = await m.edit_text("Pinging...")
     end_t = time.time()
     time_taken_s = (end_t - start_t) * 1000
-    await m.edit(f"**Pong!**\n`{time_taken_s:.3f}` ms")
+    await m.edit_text(f"**Pong!**\n`{time_taken_s:.3f}` ms")
 
 
 @TelePyroBot.on_message(filters.command("repo", COMMAND_HAND_LER) & filters.me)
 async def repo(c: TelePyroBot, m: Message):
-    await m.edit(REPO, disable_web_page_preview=True)
+    await m.edit_text(REPO, disable_web_page_preview=True)
 
 
 @TelePyroBot.on_message(filters.command("id", COMMAND_HAND_LER) & filters.me)
@@ -116,15 +116,15 @@ async def get_id(c: TelePyroBot, m: Message):
                 username = rep.from_user.username
 
     if user_id:
-        await m.edit(
+        await m.edit_text(
             "User Short Info:\n\n**User ID:** `{}`\n**Name:** `{}`\n**Username:** @{}".format(
                 user_id, user_name, username
             )
         )
     elif file_id:
-        await m.edit(f"**File's ID:** `{file_id}`")
+        await m.edit_text(f"**File's ID:** `{file_id}`")
     else:
-        await m.edit(f"**This Chat's ID:** `{m.chat.id}`")
+        await m.edit_text(f"**This Chat's ID:** `{m.chat.id}`")
 
 
 @TelePyroBot.on_message(filters.command("json", COMMAND_HAND_LER) & filters.me)

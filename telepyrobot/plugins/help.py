@@ -26,14 +26,14 @@ async def list_plugins(c: TelePyroBot, m: Message):
         mods += f"`{plug}`\n"
         mod_num += 1
     all_plugins = f"<b><u>{mod_num}</u> Modules Currently Loaded:</b>\n\n" + mods
-    await m.edit(all_plugins)
+    await m.edit_text(all_plugins)
     return
 
 
 @TelePyroBot.on_message(filters.command("help", COMMAND_HAND_LER) & filters.me)
 async def help_me(c: TelePyroBot, m: Message):
     if len(m.command) == 1:
-        await m.edit(HELP_DEFAULT)
+        await m.edit_text(HELP_DEFAULT)
     elif len(m.command) == 2:
         module_name = m.text.split(" ", 1)[1]
         try:
@@ -41,7 +41,7 @@ async def help_me(c: TelePyroBot, m: Message):
             await m.reply_text(HELP, parse_mode="md", disable_web_page_preview=True)
             await m.delete()
         except Exception as ef:
-            await m.edit(f"<b>Error:</b>\n\n{ef}")
+            await m.edit_text(f"<b>Error:</b>\n\n{ef}")
     else:
-        await m.edit(f"Use `{COMMAND_HAND_LER}help` to view help")
+        await m.edit_text(f"Use `{COMMAND_HAND_LER}help` to view help")
     return

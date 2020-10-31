@@ -13,6 +13,7 @@ def ReplyCheck(m: Message):
 
     return reply_id
 
+
 """
 async def extract_user(c: TelePyroBot, m: Message):
     user_id = None
@@ -55,8 +56,8 @@ def extract_user(c: TelePyroBot, message: Message) -> (int, str):
                 user_first_name = required_entity.user.first_name
             elif required_entity.type == "mention":
                 user_id = message.text[
-                    required_entity.offset:
-                    required_entity.offset + required_entity.length
+                    required_entity.offset : required_entity.offset
+                    + required_entity.length
                 ]
                 # don't want to make a request -_-
                 user_first_name = user_id

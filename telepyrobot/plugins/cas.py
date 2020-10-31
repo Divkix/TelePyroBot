@@ -34,5 +34,5 @@ async def cas(c: TelePyroBot, m: Message):
         )
     except:
         text = "`Not banned in CAS`"
-    await m.edit(text, parse_mode="markdown")
+    await m.edit_text(text, parse_mode="markdown")
     return

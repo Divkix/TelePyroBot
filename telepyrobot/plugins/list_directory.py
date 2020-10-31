@@ -15,6 +15,7 @@ List the directories of the server.
 `{COMMAND_HAND_LER}ls <diectory name>`: List all the files in the directory.
 """
 
+
 def get_directory_size(directory):
     """Returns the `directory` size in bytes."""
     total = 0
@@ -57,8 +58,8 @@ async def list_directories(c: TelePyroBot, m: Message):
         with open("ls.txt", "w+", encoding="utf8") as out_file:
             out_file.write(OUTPUT)
         await m.reply_document(
-            document="ls.txt",
-            caption=f"{location} ({get_directory_size(location)})")
+            document="ls.txt", caption=f"{location} ({get_directory_size(location)})"
+        )
         await m.delete()
         os.remove("ls.txt")
     else:

@@ -40,16 +40,16 @@ async def unblock_pm(c: TelePyroBot, m: Message):
         user = m.text.split(" ", 1)[1]
         try:
             await c.unblock_user(user)
-            await m.edit("`Unblocked User`")
+            await m.edit_text("`Unblocked User`")
         except Exception as ef:
-            await m.edit(f"**Error:**\n`{ef}`")
+            await m.edit_text(f"**Error:**\n`{ef}`")
     elif m.reply_to_message:
         user = m.reply_to_message.from_user.id
         try:
             await c.unblock_user(user)
-            await m.edit("`Unblocked User`")
+            await m.edit_text("`Unblocked User`")
         except Exception as ef:
-            await m.edit(f"**Error:**\n`{ef}`")
+            await m.edit_text(f"**Error:**\n`{ef}`")
     return
 
 
@@ -59,16 +59,16 @@ async def block_pm(c: TelePyroBot, m: Message):
         user = m.text.split(" ", 1)[1]
         try:
             await c.unblock_user(user)
-            await m.edit("`Blocked User`")
+            await m.edit_text("`Blocked User`")
         except Exception as ef:
-            await m.edit(f"**Error:**\n`{ef}`")
+            await m.edit_text(f"**Error:**\n`{ef}`")
     elif m.reply_to_message:
         user = m.reply_to_message.from_user.id
         try:
             await c.unblock_user(user)
-            await m.edit("`Blocked User`")
+            await m.edit_text("`Blocked User`")
         except Exception as ef:
-            await m.edit(f"**Error:**\n`{ef}`")
+            await m.edit_text(f"**Error:**\n`{ef}`")
     return
 
 
@@ -83,16 +83,16 @@ async def update_profile(c: TelePyroBot, m: Message):
         if update[2]:
             try:
                 await c.update_bio(first_name=f"{update[2]}")
-                await m.edit(f"**Updated First name to:**\n`{update[2]}`")
+                await m.edit_text(f"**Updated First name to:**\n`{update[2]}`")
             except Exception as ef:
-                await m.edit(f"**Error:**\n`{ef}`")
+                await m.edit_text(f"**Error:**\n`{ef}`")
                 return
         elif msgreply and not update[2]:
             try:
                 await c.update_bio(first_name=f"{replytxt}")
-                await m.edit(f"**Updated First name to:**\n`{replytxt}`")
+                await m.edit_text(f"**Updated First name to:**\n`{replytxt}`")
             except Exception as ef:
-                await m.edit(f"**Error:**\n`{ef}`")
+                await m.edit_text(f"**Error:**\n`{ef}`")
                 return
 
     # Set last_name
@@ -100,25 +100,25 @@ async def update_profile(c: TelePyroBot, m: Message):
         if update[2]:
             try:
                 await c.update_bio(last_name=f"{update[2]}")
-                await m.edit(f"**Updated Last name to:**\n`{update[2]}`")
+                await m.edit_text(f"**Updated Last name to:**\n`{update[2]}`")
             except Exception as ef:
-                await m.edit(f"**Error:**\n`{ef}`")
+                await m.edit_text(f"**Error:**\n`{ef}`")
                 return
         elif msgreply and not update[2]:
             try:
                 await c.update_bio(last_name=f"{replytxt}")
-                await m.edit(f"**Updated Last name to:**\n`{replytxt}`")
+                await m.edit_text(f"**Updated Last name to:**\n`{replytxt}`")
             except Exception as ef:
-                await m.edit(f"**Error:**\n`{ef}`")
+                await m.edit_text(f"**Error:**\n`{ef}`")
                 return
 
     # Remove last_name
     elif update[1] == "rmlname":
         try:
             await c.update_bio(last_name="")
-            await m.edit(f"**Removed Last name**")
+            await m.edit_text(f"**Removed Last name**")
         except Exception as ef:
-            await m.edit(f"**Error:**\n`{ef}`")
+            await m.edit_text(f"**Error:**\n`{ef}`")
             return
 
     # Set bio
@@ -126,16 +126,16 @@ async def update_profile(c: TelePyroBot, m: Message):
         if update[2]:
             try:
                 await c.update_bio(bio=f"{update[2]}")
-                await m.edit(f"**Updated Bio**")
+                await m.edit_text(f"**Updated Bio**")
             except Exception as ef:
-                await m.edit(f"**Error:**\n`{ef}`")
+                await m.edit_text(f"**Error:**\n`{ef}`")
                 return
         elif msgreply and not update[2]:
             try:
                 await c.update_bio(bio=f"{replytxt}")
-                await m.edit(f"**Updated Bio to replied message**")
+                await m.edit_text(f"**Updated Bio to replied message**")
             except Exception as ef:
-                await m.edit(f"**Error:**\n`{ef}`")
+                await m.edit_text(f"**Error:**\n`{ef}`")
     return
 
 
@@ -143,13 +143,13 @@ async def update_profile(c: TelePyroBot, m: Message):
 async def set_username(c: TelePyroBot, m: Message):
     username = m.text.split(" ", 1)
     if " " in username:
-        await m.edit("`Username cannot contain spaces`")
+        await m.edit_text("`Username cannot contain spaces`")
         return
     try:
         await c.update_username(f"{username}")
-        await m.edit(f"**Updated Username to:**\n@{username}")
+        await m.edit_text(f"**Updated Username to:**\n@{username}")
     except Exception as ef:
-        await m.edit(f"**Error:**\n{ef}")
+        await m.edit_text(f"**Error:**\n{ef}")
     return
 
 
@@ -157,9 +157,9 @@ async def set_username(c: TelePyroBot, m: Message):
 async def remove_username(c: TelePyroBot, m: Message):
     try:
         await c.update_username("")
-        await m.edit(f"**Removed Username**")
+        await m.edit_text(f"**Removed Username**")
     except Exception as ef:
-        await m.edit(f"**Error:**\n{ef}")
+        await m.edit_text(f"**Error:**\n{ef}")
     return
 
 
@@ -168,7 +168,7 @@ async def remove_pfp(c: TelePyroBot, m: Message):
     photos = c.get_profile_photos("me")
     try:
         c.delete_profile_photos([p.file_id for p in photos[1:]])
-        await m.edit(f"**Removed Profile Pictures**")
+        await m.edit_text(f"**Removed Profile Pictures**")
     except Exception as ef:
-        await m.edit(f"**Error:**\n{ef}")
+        await m.edit_text(f"**Error:**\n{ef}")
     return

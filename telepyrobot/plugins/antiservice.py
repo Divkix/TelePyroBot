@@ -26,7 +26,7 @@ async def anti_service_enable(c: TelePyroBot, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("asdisable", COMMAND_HAND_LER) & filters.me)
-async def anti_service_enable(c: TelePyroBot, m: Message):
+async def anti_service_disable(c: TelePyroBot, m: Message):
     try:
         db.disable_antiservice(m.chat.id)
         await m.edit_text("Disabled AntiService for this chat.")
@@ -37,6 +37,9 @@ async def anti_service_enable(c: TelePyroBot, m: Message):
 
 @TelePyroBot.on_message(filters.service, group=11)
 async def anti_service_check(c: TelePyroBot, m: Message):
-    if db.get_antiservice(m.chat.id):
-        await m.delete()
-        return
+    try:
+        if db.get_antiservice(m.chat.id):
+            await m.delete()
+            return
+    except:  # Pass at any other error
+        pass

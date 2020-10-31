@@ -17,7 +17,7 @@ List the directories of the server.
 
 def size(loc):
     t = 0
-    for  dirpath, dirnames, filenames in os.walk(path):
+    for  dirpath, dirnames, filenames in os.walk(loc):
         for i in filenames:
             f = os.path.join(dirpath, i)
             t += os.path.getsize(f)

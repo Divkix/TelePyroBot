@@ -49,7 +49,7 @@ GET_FORMAT = {
 @TelePyroBot.on_message(filters.command("save", COMMAND_HAND_LER) & filters.me)
 async def save_note(c: TelePyroBot, m: Message):
 
-    note_name, text, data_type, content, file_ref = get_note_type(message)
+    note_name, text, data_type, content, file_ref = get_note_type(m)
 
     if not note_name:
         await m.edit(
@@ -91,7 +91,7 @@ async def get_note(c: TelePyroBot, m: Message):
         Types.ANIMATED_STICKER,
     ):
         # type_sent = (GET_FORMAT[getnotes['value']].split("_",1)[1])
-        # await GET_FORMAT[getnotes['type']](chat_id=m.chat.id, type_sent=getnotes['file_id'], file_ref=getnotes['file_ref'], reply_to_message_id=ReplyCheck(message))
+        # await GET_FORMAT[getnotes['type']](chat_id=m.chat.id, type_sent=getnotes['file_id'], file_ref=getnotes['file_ref'], reply_to_message_id=ReplyCheck(m))
         await m.edit("`Currently not supported!`")
     else:
         """if getnotes.get('value'):
@@ -99,7 +99,7 @@ async def get_note(c: TelePyroBot, m: Message):
         else:
             teks = None
         await GET_FORMAT[getnotes['type']](m.chat.id, getnotes['file_id'], getnotes['file_ref'], caption=teks,
-                                               reply_to_message_id=ReplyCheck(message))"""
+                                               reply_to_message_id=ReplyCheck(m))"""
         await m.edit("`Currently not supported!`")
     return
 

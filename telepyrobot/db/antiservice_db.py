@@ -23,7 +23,7 @@ AntiService.__table__.create(checkfirst=True)
 ANTISERVICE_CHATS = []
 
 
-def enable_antiservice(chat_id, vbool: True):
+def enable_antiservice(chat_id, vbool=True):
     try:
         enabled = SESSION.query(AntiService).get(str(chat_id))
         if enabled:
@@ -35,7 +35,7 @@ def enable_antiservice(chat_id, vbool: True):
         SESSION.close()
 
 
-def disable_antiservice(chat_id, vbool: False):
+def disable_antiservice(chat_id, vbool=False):
     try:
         enabled = SESSION.query(AntiService).get(str(chat_id))
         if enabled:

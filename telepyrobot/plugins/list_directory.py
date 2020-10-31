@@ -6,7 +6,6 @@ from telepyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
 from telepyrobot.utils.clear_string import clear_string
 from telepyrobot.utils.check_size import get_size_format
 
-
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""

@@ -1,4 +1,5 @@
 import os
+from io import BytesIO
 from telepyrobot.__main__ import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
@@ -33,13 +34,12 @@ async def list_directories(c: TelePyroBot, m: Message):
 
     if len(OUTPUT) > MAX_MESSAGE_LENGTH:
         OUTPUT = clear_string(OUTPUT)  # Remove the html elements using regex
-        with open("ls.txt", "w+", encoding="utf8") as out_file:
-            out_file.write(OUTPUT)
-        await m.reply_document(
-            document="ls.txt", caption=f"{location} ({get_directory_size(location)})"
-        )
+        with BytesIO(str.encode(OUTPUT)) as f:
+            f.name = "ls.txt"
+            await m.reply_document(
+                document=f, caption=f"{location} ({get_directory_size(location)})"
+            )
         await m.delete()
-        os.remove("ls.txt")
     else:
         await m.edit_text(OUTPUT)
     return

@@ -1,6 +1,6 @@
 import os
 
-def get_directory_size(directory):
+def get_size_recursive(directory):
     """Returns the `directory` size in bytes."""
     total = 0
     try:
@@ -11,7 +11,7 @@ def get_directory_size(directory):
                 total += entry.stat().st_size
             elif entry.is_dir():
                 # if it's a directory, recursively call this function
-                total += get_directory_size(entry.path)
+                total += get_size_recursive(entry.path)
     except NotADirectoryError:
         # if `directory` isn't a directory, get the file size then
         return os.path.getsize(directory)
@@ -20,6 +20,9 @@ def get_directory_size(directory):
         return 0
     return total
 
+def get_directory_size(location):
+    size = get_size_recursive(location)
+    return get_size_format(size)
 
 def get_size_format(b, factor=1024, suffix="B"):
     """

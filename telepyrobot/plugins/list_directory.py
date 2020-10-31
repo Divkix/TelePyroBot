@@ -45,7 +45,7 @@ async def list_directories(c: TelePyroBot, m: Message):
             out_file.write(OUTPUT)
         await m.reply_document(
             document="ls.txt",
-            caption=f"{location} ({size(location)}))
+            caption=f"{location} ({size(location)})")
         await m.delete()
         os.remove("ls.txt")
     else:

@@ -26,6 +26,8 @@ __help__ = f"""
 `{COMMAND_HAND_LER}update force`: Forcefully update userbot to sync with latest remote source!
 """
 
+
+"""
 async def gen_chlog(repo, diff):
     changelog = ""
     d_form = "%H:%M - %d/%m/%y"
@@ -50,7 +52,7 @@ async def initial_git(repo):
     os.rename('nana-old/nana/config.py', 'nana/config.py')
     shutil.rmtree('nana/session/')
     os.rename('nana-old/nana/session/', 'nana/session/')
-
+"""
 
 @TelePyroBot.on_message(filters.command("update", COMMAND_HAND_LER) & sudo_filter)
 async def updater(c: TelePyroBot, m: Message):

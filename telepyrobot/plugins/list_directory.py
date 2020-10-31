@@ -19,19 +19,20 @@ List the directories of the server.
 async def list_directories(c: TelePyroBot, m: Message):
     if len(m.command) == 1:
         location = "."
+        OUTPUT = f"Files in <code>/root/</code>:\n\n"
     elif len(m.command) >= 2:
         location = m.text.split(" ", 1)[1]
+        OUTPUT = f"Files in <code>{location}</code>:\n\n"
 
     files = os.listdir(location)
     reply_to_id = m.message_id
     files.sort()  # Sort the files
 
-    OUTPUT = f"Files in __{location}__:\n\n"
-
     for file in files:
         OUTPUT += f"<code>{file}</code>\n"
 
     if len(OUTPUT) > MAX_MESSAGE_LENGTH:
+        OUTPUT.replace("<code","").replace("</code>","")  # Remove html code elements.
         with open("ls.txt", "w+", encoding="utf8") as out_file:
             out_file.write(OUTPUT)
         await m.reply_document(

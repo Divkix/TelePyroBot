@@ -17,23 +17,6 @@ from telepyrobot import (
     PRIVATE_GROUP_ID,
 )
 
-# -- Constants -- #
-IS_SELECTED_DIFFERENT_BRANCH = (
-    "Looks like a custom branch {branch_name} "
-    "is being used\n"
-    "In this case, updater is unable to identify the branch to be updated."
-    "Please check out to an official branch, and re-start the updater.\n\n"
-    "Or join @TelePyroBot for help!"
-)
-REPO_REMOTE_NAME = "official_remote"
-IFFUCI_ACTIVE_BRANCH_NAME = "master"
-DIFF_MARKER = "HEAD..{remote_name}/{branch_name}"
-NO_HEROKU_APP_CFGD = "no heroku application found, but a key given? 😕 "
-HEROKU_GIT_REF_SPEC = "HEAD:refs/heads/master"
-NEW_BOT_UP_DATE_FOUND = "**NEW update found for** __{branch_name}__( {commit_link})\n**Chagelog:**\n\n`{changelog}`\n__**Updating...**__"
-NEW_UP_DATE_FOUND = "**NEW Update found for** __{branch_name}__\n__**Updating ...**__"
-# -- Constants End -- #
-
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
@@ -42,6 +25,31 @@ __help__ = f"""
 `{COMMAND_HAND_LER}update`: Update userbot to latest version.
 `{COMMAND_HAND_LER}update force`: Forcefully update userbot to sync with latest remote source!
 """
+
+async def gen_chlog(repo, diff):
+    changelog = ""
+    d_form = "%H:%M - %d/%m/%y"
+    for cl in repo.iter_commits(diff):
+        changelog += f'• [{cl.committed_datetime.strftime(d_form)}]: {cl.summary} <{cl.author}>\n'
+    return changelog
+
+async def initial_git(repo):
+    isexist = os.path.exists('telepyro-old')
+    if isexist:
+        shutil.rmtree('telepyro-old')
+    os.mkdir('telepyro-old')
+    os.rename('nana', 'telepyro-old')
+    os.rename('.gitignore', 'nana-old/.gitignore')
+    os.rename('LICENSE', 'nana-old/LICENSE')
+    os.rename('README.md', 'nana-old/README.md')
+    os.rename('requirements.txt', 'nana-old/requirements.txt')
+    os.rename('Procfile', 'nana-old/Procfile')
+    os.rename('runtime.txt', 'nana-old/runtime.txt')
+    update = repo.create_remote('master', REPOSITORY)
+    update.pull('master')
+    os.rename('nana-old/nana/config.py', 'nana/config.py')
+    shutil.rmtree('nana/session/')
+    os.rename('nana-old/nana/session/', 'nana/session/')
 
 
 @TelePyroBot.on_message(filters.command("update", COMMAND_HAND_LER) & sudo_filter)

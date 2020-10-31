@@ -3,6 +3,7 @@ from telepyrobot.__main__ import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
+from telepyrobot.utils.clear_string import clear_string
 
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -32,7 +33,7 @@ async def list_directories(c: TelePyroBot, m: Message):
         OUTPUT += f"<code>{file}</code>\n"
 
     if len(OUTPUT) > MAX_MESSAGE_LENGTH:
-        OUTPUT.replace("<code","").replace("</code>","")  # Remove html code elements.
+        OUTPUT = clear_string(OUTPUT)  # Remove the html elements using regex
         with open("ls.txt", "w+", encoding="utf8") as out_file:
             out_file.write(OUTPUT)
         await m.reply_document(

@@ -1,6 +1,6 @@
 import os
 
-
+"""
 def get_directory_size(directory):
     """Returns the `directory` size in bytes."""
     total = 0
@@ -20,6 +20,15 @@ def get_directory_size(directory):
         # if for whatever reason we can't open the folder, return 0
         return 0
     return get_size_format(total)
+"""
+
+def get_directory_size(directory):
+    t = 0
+    for  dirpath, dirnames, filenames in os.walk(directory):
+        for i in filenames:
+            f = os.path.join(dirpath, i)
+            t += os.path.getsize(f)
+    return get_size_format(t)
 
 
 def get_size_format(b, factor=1024, suffix="B"):

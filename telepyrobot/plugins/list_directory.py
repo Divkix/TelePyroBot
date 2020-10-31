@@ -26,10 +26,10 @@ async def list_directories(c: TelePyroBot, m: Message):
     reply_to_id = m.message_id
     files.sort()  # Sort the files
 
-    OUTPUT = f"Files in {location}:\n\n"
+    OUTPUT = f"Files in __{location}__:\n\n"
 
     for file in files:
-        OUTPUT += file + "\n"
+        OUTPUT += f"<code>{file}</code>\n"
 
     if len(OUTPUT) > MAX_MESSAGE_LENGTH:
         with open("ls.txt", "w+", encoding="utf8") as out_file:

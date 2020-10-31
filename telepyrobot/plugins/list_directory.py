@@ -15,6 +15,13 @@ List the directories of the server.
 `{COMMAND_HAND_LER}ls <diectory name>`: List all the files in the directory.
 """
 
+def size(loc):
+    t = 0
+    for  dirpath, dirnames, filenames in os.walk(path):
+        for i in filenames:
+            f = os.path.join(dirpath, i)
+            t += os.path.getsize(f)
+    return t
 
 @TelePyroBot.on_message(filters.command("ls", COMMAND_HAND_LER) & filters.me)
 async def list_directories(c: TelePyroBot, m: Message):
@@ -33,12 +40,12 @@ async def list_directories(c: TelePyroBot, m: Message):
         OUTPUT += f"<code>{file}</code>\n"
 
     if len(OUTPUT) > MAX_MESSAGE_LENGTH:
-        OUTPUT = clear_string(OUTPUT)  # Remove the html elements using regex
+        # OUTPUT = clear_string(OUTPUT)  # Remove the html elements using regex
         with open("ls.txt", "w+", encoding="utf8") as out_file:
             out_file.write(OUTPUT)
         await m.reply_document(
             document="ls.txt",
-            caption=location)
+            caption=f"{location} ({size(location)}))
         await m.delete()
         os.remove("ls.txt")
     else:

@@ -180,7 +180,7 @@ async def covid(c: TelePyroBot, m: Message):
                 disable_notification=True,
                 progress=progress_for_pyrogram,
                 progress_args=(
-                    "Trying to upload multiple files...",
+                    f"Trying to upload {file}",
                     sm,
                     c_time,
                 ),

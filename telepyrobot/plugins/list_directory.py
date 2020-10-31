@@ -1,10 +1,4 @@
-import io
 import os
-import sys
-import traceback
-import time
-import asyncio
-import requests
 from telepyrobot.__main__ import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
@@ -27,35 +21,23 @@ async def list_directories(c: TelePyroBot, m: Message):
         cmd = "ls"
     elif len(m.command) >= 2:
         location = m.text.split(" ", 1)[1]
-        cmd = "ls " + location
-    else:
-        await m.edit(
-            "<b>Error:</b>\n<i>Check Help documentaion for directory listing.</i>"
-        )
-
+        files = os.listdir(location)
     reply_to_id = m.message_id
+    files.sort()
 
-    process = await asyncio.create_subprocess_shell(
-        cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
-    )
-    stdout, stderr = await process.communicate()
-    e = stderr.decode()
-    if not e:
-        e = "No Error"
-    OUTPUT = stdout.decode()
-    if not OUTPUT:
-        OUTPUT = "No Output"
+    OUTPUT = f"Files in {location}:\n\n"
+
+    for file in files:
+        OUTPUT += file + "\n"
 
     if len(OUTPUT) > MAX_MESSAGE_LENGTH:
-        with open("exec.txt", "w+", encoding="utf8") as out_file:
-            out_file.write(str(OUTPUT))
+        with open("ls.txt", "w+", encoding="utf8") as out_file:
+            out_file.write(OUTPUT)
         await m.reply_document(
-            document="exec.txt",
-            caption=cmd,
-            disable_notification=True,
-            reply_to_message_id=reply_to_id,
-        )
-        os.remove("exec.txt")
+            document="ls.txt",
+            caption=location)
+        await m.delete()
+        os.remove("ls.txt")
     else:
-        await m.reply_text(OUTPUT)
+        await m.edit_text(OUTPUT)
     return

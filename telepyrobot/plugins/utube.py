@@ -119,6 +119,7 @@ async def ytv_dl(c: TelePyroBot, m: Message):
             await m.reply_text(exc)
 
         if os.path.exists(dl_location):
+            print("uploading")
             files = os.listdir(temp_dir)
             files.sort()
             for file in files:
@@ -136,4 +137,4 @@ async def ytv_dl(c: TelePyroBot, m: Message):
                     progress=progress_for_pyrogram,
                     progress_args=("Uploading file...", m, c_time),
                 )
-            return
+    return

@@ -52,10 +52,10 @@ def get_size_format(b, factor=1024, suffix="B"):
 @TelePyroBot.on_message(filters.command("ls", COMMAND_HAND_LER) & filters.me)
 async def list_directories(c: TelePyroBot, m: Message):
     if len(m.text.split()) == 1:
-        location = "."
+        location = os.path.abspath(".")
         OUTPUT = f"Files in <code>/root/</code>:\n\n"
     elif len(m.text.split()) >= 2:
-        location = m.text.split(" ", 1)[1]
+        location = os.path.abspath(m.text.split(None, 1)[1])
         OUTPUT = f"Files in <code>{location}</code>:\n\n"
 
     files = os.listdir(location)

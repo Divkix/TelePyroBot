@@ -54,17 +54,10 @@ async def GetVidInfo(link):
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
-Set yourself to afk.
+Youtube Downloader using youtube-dl python library!
 
-If you're restart your bot, all counter and data in cache will be reset.
-But you will still in afk, and always reply when got mentioned.
-
-**Set AFK status**:
-`{COMMAND_HAND_LER}afk <reason>` Set yourself to afk, give a reason if need.
-* Reason is optional
-
-whenever you send any message to any other chat that your `PRIVATE_GROUP_ID`,
-the afk status would be set to False!
+**Commands:**
+`{COMMAND_HAND_LER}ytv <link>`: Download Video from YouTube.
 """
 
 yt_opts = {
@@ -81,7 +74,7 @@ yt_opts = {
 
 @TelePyroBot.on_message(filters.command("ytv", COMMAND_HAND_LER) & filters.me)
 async def tor_search(c: TelePyroBot, m: Message):
-    link = str(m.text.split(None, 1)[1]).lowercase()
+    link = m.text.split(None, 1)[1]
     if ("youtube.com", "youtu.be") in link:
         await m.edit_text("<code>Getting Video Information...</code>")
         artist, duration, title = await GetVidInfo(link)  # Get information about video!

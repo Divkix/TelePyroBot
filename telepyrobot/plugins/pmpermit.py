@@ -99,7 +99,7 @@ async def revoke_pm_block(c: TelePyroBot, m: Message):
     if m.chat.type == "private":
         user_id = m.chat.id
     else:
-        user_id = m.text.split(" ")[1]
+        user_id = m.text.split()[1]
     db.del_whitelist(user_id)
     user = await c.get_users(user_id)
     await m.edit_text(

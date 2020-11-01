@@ -20,7 +20,7 @@ Used to install, delete or send plugins from userbot local storage!
 
 @TelePyroBot.on_message(filters.command("sendpl", COMMAND_HAND_LER) & filters.me)
 async def send_plugin(c: TelePyroBot, m: Message):
-    if len(m.text.split(" ")) == 1:
+    if len(m.text.split()) == 1:
         await m.edit_text("`Please enter a valid plugin name!!`")
         return
     await m.edit_text("`Sending plugin...`")

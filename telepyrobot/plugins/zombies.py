@@ -22,7 +22,7 @@ Then this module is for you!
 
 @TelePyroBot.on_message(filters.command("zombies", COMMAND_HAND_LER) & filters.me)
 async def zombies_clean(c: TelePyroBot, m: Message):
-    if len(m.text.split(" ")) != 2:
+    if len(m.text.split()) != 2:
         await m.edit_text("`Counting deleted accounts!!!`")
         del_users = []
         async for x in c.iter_chat_members(chat_id=m.chat.id):
@@ -34,7 +34,7 @@ async def zombies_clean(c: TelePyroBot, m: Message):
             )
         else:
             await m.edit_text("`No deleted accounts found!\nGroup is clean as Hell!`")
-    elif len(m.text.split(" ")) == 2 and m.text.split(None, 1)[1] == "clean":
+    elif len(m.text.split()) == 2 and m.text.split(None, 1)[1] == "clean":
         await m.edit_text("`Cleaning deleted accounts....`")
         del_users = []
         u = 0

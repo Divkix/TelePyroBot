@@ -56,7 +56,7 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
             await status_m.edit_text(text="cleared saved credentials")
         elif current_recvd_command == "confirm":
             if len(m.command) == 3:
-                await AskUserToVisitLinkAndGiveCode(status_message, m.command[2])
+                await AskUserToVisitLinkAndGiveCode(status_m, m.command[2])
             else:
                 await status_m.edit_text(text="please give auth_code correctly")
         elif current_recvd_command == "search":
@@ -104,7 +104,7 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
                             await status_m.edit_text("invalid file path provided?")
                             return
                         gDrive_file_id = await gDrive_upload_file(
-                            creds, upload_file_name, status_message
+                            creds, upload_file_name, status_m
                         )
                         reply_message_text = ""
                         if gDrive_file_id is not None:
@@ -128,7 +128,7 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
                             progress=progress_for_pyrogram,
                             progress_args=(
                                 "`Trying to download to Local Storage...`",
-                                status_message,
+                                status_mes,
                                 c_time,
                             ),
                         )
@@ -139,7 +139,7 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
                             await m.edit_text("invalid file path provided?")
                             return
                         gDrive_file_id = await gDrive_upload_file(
-                            creds, the_real_download_location, status_message
+                            creds, the_real_download_location, status_m
                         )
                         reply_message_text = ""
                         if gDrive_file_id is not None:

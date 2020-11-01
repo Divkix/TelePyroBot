@@ -38,11 +38,11 @@ async def tor_search(c: TelePyroBot, m: Message):
             "'telepyrobot/downloads/%(title)s.%(ext)s'",  # Download Location
             "--write-description",  # Write Description file, if available
             "--write-auto-sub",  # Write auto subtitle file, if available
-            "--merge-output-format mkv"  # Use mkv format
-            link  # Youtube link
+            "--merge-output-format mkv",  # Use mkv format
+            link,  # Youtube link
         ]
         stdout, stderr = await run_command(ytdlv_cmd)
-    
+
     OUTPUT += f"<b>stderr</b>: \n<code>{stderr}</code>\n\n"
     OUTPUT += f"<b>stdout</b>: \n<code>{stdout}</code>"
 

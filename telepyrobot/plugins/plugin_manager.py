@@ -52,7 +52,7 @@ async def install_plugin(c: TelePyroBot, m: Message):
         await m.edit_text("`Installing plugin...`")
         if os.path.exists(plugin_loc):
             await m.edit_text(
-                f"`Plugin {m.reply_to_message.document.file_name} already exists!`"
+                f"`Plugin <i>{m.reply_to_message.document.file_name}</i> already exists!`"
             )
             return
         try:

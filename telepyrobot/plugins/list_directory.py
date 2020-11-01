@@ -45,5 +45,9 @@ async def list_directories(c: TelePyroBot, m: Message):
             )
         await m.delete()
     else:
+        if OUTPUT.endswith("\n\n"):
+            await m.edit_text(f"No files in {location}")
+            return
         await m.edit_text(OUTPUT)
+
     return

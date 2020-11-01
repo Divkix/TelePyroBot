@@ -29,7 +29,7 @@ REPO = (
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
-Basic commands of userbot!
+Basic Commands of Userbot!
 
 `{COMMAND_HAND_LER}alive` / start: Check if bot is alive or not.
 `{COMMAND_HAND_LER}ping`: Get pinged.

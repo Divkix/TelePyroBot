@@ -33,9 +33,7 @@ __help__ = f"""
 Just for fun ;)
 
 `{COMMAND_HAND_LER}throw` / dart Throw an Animated Dart.
-
 `{COMMAND_HAND_LER}roll` / dice Throw an Animated Dice.
-
 `{COMMAND_HAND_LER}run` / runs Check and watch yourself.
 """
 

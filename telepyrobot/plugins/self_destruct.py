@@ -16,7 +16,7 @@ The command will automatically destruct the message after specified time.
 
 @TelePyroBot.on_message(filters.command("sdmsg", COMMAND_HAND_LER) & filters.me)
 async def self_destruct(c: TelePyroBot, m: Message):
-    input_str = m.text.split(" ", 1)[1]
+    input_str = m.text.split(None, 1)[1]
     rm = await m.edit_text("`Meking self-destruct msg...`")
     ttl = 0
     if input_str:

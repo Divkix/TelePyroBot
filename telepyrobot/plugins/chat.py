@@ -94,7 +94,7 @@ async def setchatname(c: TelePyroBot, m: Message):
     if not is_admin:
         return
     chat_id = m.chat.id
-    chat_title = m.text.split(" ", 1)
+    chat_title = m.text.split(None, 1)
     if m.reply_to_message:
         chat_title = m.reply_to_message.text
     else:
@@ -113,7 +113,7 @@ async def setchatdesc(c: TelePyroBot, m: Message):
     if not is_admin:
         return
     chat_id = m.chat.id
-    chat_desc = m.text.split(" ", 1)
+    chat_desc = m.text.split(None, 1)
     if m.reply_to_message:
         chat_desc = m.reply_to_message.text
     else:

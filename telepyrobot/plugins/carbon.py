@@ -33,7 +33,7 @@ async def carbon_api(c: TelePyroBot, m: Message):
         json["code"] = urllib.parse.quote(r)
         await m.edit_text("`Carbonizing code...`")
     elif len(cmd) >= 2:
-        r = m.text.split(" ", 1)[1]
+        r = m.text.split(None, 1)[1]
         json["code"] = urllib.parse.quote(r)
     else:
         await m.edit_text(

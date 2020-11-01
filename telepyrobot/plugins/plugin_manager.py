@@ -24,7 +24,7 @@ async def send_plugin(c: TelePyroBot, m: Message):
         await m.edit_text("`Please enter a valid plugin name!!`")
         return
     await m.edit_text("`Sending plugin...`")
-    plugin_name = m.text.split(" ", 1)[1]
+    plugin_name = m.text.split(None, 1)[1]
     if plugin_name not in ALL_PLUGINS:
         await m.edit_text(
             f"Please enter a valid plugin name!\nCheck availabe plugins by `{COMMAND_HAND_LER}plugins`."

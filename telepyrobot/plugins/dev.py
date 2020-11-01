@@ -31,7 +31,7 @@ Get IP Address of userbot server.
 @TelePyroBot.on_message(filters.command(["eval", "py"], COMMAND_HAND_LER) & sudo_filter)
 async def eval(c: TelePyroBot, m: Message):
     status_m = await m.reply_text("`Processing...`")
-    cmd = m.text.split(" ", maxsplit=1)[1]
+    cmd = m.text.split(None, maxsplit=1)[1]
 
     reply_to_id = m.message_id
     if m.reply_to_message:
@@ -95,7 +95,7 @@ async def aexec(code, c, m):
 @TelePyroBot.on_message(filters.command(["exec", "sh"], COMMAND_HAND_LER) & sudo_filter)
 async def execution(c: TelePyroBot, m: Message):
     await m.edit_text("Processing...")
-    cmd = m.text.split(" ", maxsplit=1)[1]
+    cmd = m.text.split(None, maxsplit=1)[1]
 
     reply_to_id = m.message_id
     if m.reply_to_message:

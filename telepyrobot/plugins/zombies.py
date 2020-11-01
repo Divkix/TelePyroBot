@@ -34,7 +34,7 @@ async def zombies_clean(c: TelePyroBot, m: Message):
             )
         else:
             await m.edit_text("`No deleted accounts found!\nGroup is clean as Hell!`")
-    elif len(m.text.split(" ")) == 2 and m.text.split(" ", 1)[1] == "clean":
+    elif len(m.text.split(" ")) == 2 and m.text.split(None, 1)[1] == "clean":
         await m.edit_text("`Cleaning deleted accounts....`")
         del_users = []
         u = 0

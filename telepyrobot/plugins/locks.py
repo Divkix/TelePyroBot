@@ -48,7 +48,7 @@ async def lock_perm(c: TelePyroBot, m: Message):
     pin = ""
     perm = ""
 
-    lock_type = m.text.split(" ", 1)[1]
+    lock_type = m.text.split(None, 1)[1]
     chat_id = m.chat.id
 
     if not lock_type:
@@ -195,7 +195,7 @@ async def unlock_perm(c: TelePyroBot, m: Message):
     upin = ""
     uperm = ""
 
-    unlock_type = m.text.split(" ", 1)[1]
+    unlock_type = m.text.split(None, 1)[1]
     chat_id = m.chat.id
 
     if not unlock_type:

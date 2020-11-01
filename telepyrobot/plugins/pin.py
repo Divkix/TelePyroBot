@@ -29,7 +29,7 @@ async def pin_message(c: TelePyroBot, m: Message):
             await asyncio.sleep(2)
             await m.delete()
             return
-        pin_loud = m.text.split(" ", 1)
+        pin_loud = m.text.split(None, 1)
         if m.reply_to_message:
             disable_notification = True
 

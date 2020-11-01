@@ -24,7 +24,7 @@ async def tor_search(c: TelePyroBot, m: Message):
         await m.edit_text("`Check help on how to use this command`")
         return
     await m.edit_text("`Please wait, fetching results...`")
-    query = m.text.split(" ", 1)[1]
+    query = m.text.split(None, 1)[1]
     response = requests.get(
         f"https://sjprojectsapi.herokuapp.com/torrent/?query={query}"
     )

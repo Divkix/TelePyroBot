@@ -24,7 +24,7 @@ Burn media files and make them look sick!
 @TelePyroBot.on_message(filters.command("deepfry", COMMAND_HAND_LER) & filters.me)
 async def do_deepfry(c: TelePyroBot, m: Message):
     try:
-        frycount = int(m.text.split(" ", 1)[1])
+        frycount = int(m.text.split(None, 1)[1])
         if frycount < 1:
             frycount = 1
     except IndexError:

@@ -124,7 +124,7 @@ async def down_load_media(c: TelePyroBot, m: Message):
 async def upload_as_document(c: TelePyroBot, m: Message):
     sm = await m.reply_text("`Uploading...`")
     if len(m.command) > 1:
-        local_file_name = m.text.split(" ", 1)[1]
+        local_file_name = m.text.split(None, 1)[1]
         if os.path.exists(local_file_name):
             thumb_image_path = await is_thumb_image_exists(local_file_name)
             start_t = datetime.now()
@@ -159,7 +159,7 @@ async def covid(c: TelePyroBot, m: Message):
     if len(m.text.split()) == 1:
         await m.edit_text("`Enter a directory location`")
     elif len(m.text.split()) >= 2:
-        temp_dir = m.text.split(" ", 1)[1]
+        temp_dir = m.text.split(None, 1)[1]
         if not temp_dir.endswith("/"):
             temp_dir += "/"
     sm = await m.reply_text("`Uploading Files to Telegram...`")

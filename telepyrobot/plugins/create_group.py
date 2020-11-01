@@ -22,7 +22,7 @@ async def cas(c: TelePyroBot, m: Message):
         await m.edit_text("`Check help, you don't know how to use it`")
         return
 
-    args = m.text.split(" ", 2)
+    args = m.text.split(None, 2)
     grpname = args[2]
     grptype = args[1]
     user_id = "@Alita_Robot"

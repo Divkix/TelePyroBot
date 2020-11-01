@@ -21,7 +21,7 @@ async def self_destruct(c: TelePyroBot, m: Message):
     if len(m.command) >= 2:
         await m.edit_text("Processing ...")
         sample_url = "https://www.fileext.com/file-extension/{}.html"
-        input_str = m.text.split(" ", 1)[1]
+        input_str = m.text.split(None, 1)[1]
         response_api = requests.get(sample_url.format(input_str))
         status_code = response_api.status_code
         if status_code == 200:

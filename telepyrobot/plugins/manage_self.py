@@ -37,7 +37,7 @@ Blocks the user, if you blocked it.
 @TelePyroBot.on_message(filters.command("unblockpm", COMMAND_HAND_LER) & filters.me)
 async def unblock_pm(c: TelePyroBot, m: Message):
     if len(m.command) == 2:
-        user = m.text.split(" ", 1)[1]
+        user = m.text.split(None, 1)[1]
         try:
             await c.unblock_user(user)
             await m.edit_text("`Unblocked User`")
@@ -56,7 +56,7 @@ async def unblock_pm(c: TelePyroBot, m: Message):
 @TelePyroBot.on_message(filters.command("blockpm", COMMAND_HAND_LER) & filters.me)
 async def block_pm(c: TelePyroBot, m: Message):
     if len(m.command) == 2:
-        user = m.text.split(" ", 1)[1]
+        user = m.text.split(None, 1)[1]
         try:
             await c.unblock_user(user)
             await m.edit_text("`Blocked User`")
@@ -74,7 +74,7 @@ async def block_pm(c: TelePyroBot, m: Message):
 
 @TelePyroBot.on_message(filters.command("uprofile", COMMAND_HAND_LER) & filters.me)
 async def update_profile(c: TelePyroBot, m: Message):
-    update = m.text.split(" ", 2)
+    update = m.text.split(None, 2)
     msgreply = m.reply_to_message
     replytxt = m.reply_to_message.text
 
@@ -141,7 +141,7 @@ async def update_profile(c: TelePyroBot, m: Message):
 
 @TelePyroBot.on_message(filters.command("setusername", COMMAND_HAND_LER) & filters.me)
 async def set_username(c: TelePyroBot, m: Message):
-    username = m.text.split(" ", 1)
+    username = m.text.split(None, 1)
     if " " in username:
         await m.edit_text("`Username cannot contain spaces`")
         return

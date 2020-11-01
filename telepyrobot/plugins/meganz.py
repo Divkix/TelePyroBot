@@ -63,7 +63,7 @@ async def mega_info(c: TelePyroBot, m: Message):
 @TelePyroBot.on_message(filters.command("megadl", COMMAND_HAND_LER) & filters.me)
 async def mega_dl(c: TelePyroBot, m: Message):
     if len(m.command) >= 2:
-        dl_url = m.text.split(" ", 1)[1]
+        dl_url = m.text.split(None, 1)[1]
         if dl_url.startswith(("https://mega.nz" or "http://mega.nz")):
             megaC.download_url(dl_url, TMP_DOWNLOAD_DIRECTORY)
             await m.edit_text(f"Downloaded file to `{TMP_DOWNLOAD_DIRECTORY}` folder")
@@ -82,7 +82,7 @@ async def mega_find(c: TelePyroBot, m: Message):
         )
         return
     if len(m.command) >= 2:
-        foldername = m.text.split(" ", 1)[1]
+        foldername = m.text.split(None, 1)[1]
         folder = megaC.find(foldername)[0]
         await m.edit_text(f"Searched for: {foldername}\n\nResults:\n{folder}")
     else:
@@ -99,7 +99,7 @@ async def mega_upload(c: TelePyroBot, m: Message):
         return
     if len(m.text.split()) >= 2:
         await m.edit_text("Uploading file...")
-        fileLoc = m.text.split(" ", 1)[1]
+        fileLoc = m.text.split(None, 1)[1]
 
         # Search for remote folder; if not found, then create it
         rmfoldername = "TelePyroBot_Uploads"
@@ -137,7 +137,7 @@ async def mega_upload_dir(c: TelePyroBot, m: Message):
         success, fail = "Success:\n", "Fail:\n"
         sn, fn = 0, 0
 
-        folderLoc = m.text.split(" ", 1)[1]
+        folderLoc = m.text.split(None, 1)[1]
         if not folderLoc.endswith("/"):
             folderLoc += "/"
 
@@ -192,7 +192,7 @@ async def mega_import(c: TelePyroBot, m: Message):
         return
     if len(m.text.split()) >= 2:
         await m.edit_text("Importing file...")
-        fileurl = m.text.split(" ", 1)[1]
+        fileurl = m.text.split(None, 1)[1]
         try:
             if ("https://mega.co.nz" or "mega.co.nz", "mega.nz") in dl_url:
                 megaC.import_public_url(fileurl)

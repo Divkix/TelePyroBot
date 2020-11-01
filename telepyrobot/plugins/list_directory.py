@@ -33,7 +33,7 @@ async def list_directories(c: TelePyroBot, m: Message):
         OUTPUT += f"<code>{filer}</code> ({get_directory_size(filer)})\n"
 
     if len(OUTPUT) > MAX_MESSAGE_LENGTH:
-        # OUTPUT = clear_string(OUTPUT)  # Remove the html elements using regex
+        OUTPUT = clear_string(OUTPUT)  # Remove the html elements using regex
         with BytesIO(str.encode(OUTPUT)) as f:
             f.name = "ls.txt"
             await m.reply_document(

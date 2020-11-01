@@ -5,6 +5,7 @@ from telepyrobot import COMMAND_HAND_LER
 from telepyrobot.utils.pyrohelpers import ReplyCheck
 from requests import post
 import shutil
+import urllib
 import os
 from time import sleep
 
@@ -27,11 +28,11 @@ async def carbon_api(c: TelePyroBot, m: Message):
     cmd = m.command
     if m.reply_to_message:
         r = m.reply_to_message
-        json["code"] = r.text
+        json["code"] = urllib.parse.quote(r)
         await m.edit_text("`Carbonizing code...`")
     elif len(cmd) >= 2:
         r = m.text.split(" ", 1)[1]
-        json["code"] = r
+        json["code"] = urllib.parse.quote(r)
     else:
         await m.edit_text(
             f"Usage: `{COMMAND_HAND_LER}carbon` <reply to a code or text>"

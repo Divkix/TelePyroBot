@@ -29,8 +29,8 @@ async def list_directories(c: TelePyroBot, m: Message):
     files = os.listdir(location)
     files.sort()  # Sort the files
 
-    for filer in files:
-        OUTPUT += f"<code>{filer}</code> ({get_directory_size(filer)})\n"
+    for file in files:
+        OUTPUT += f"<code>{filer}</code> ({get_directory_size(file)})\n"
 
     if len(OUTPUT) > MAX_MESSAGE_LENGTH:
         OUTPUT = clear_string(OUTPUT)  # Remove the html elements using regex

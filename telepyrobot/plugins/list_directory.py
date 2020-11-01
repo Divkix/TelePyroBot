@@ -18,7 +18,6 @@ List the directories of the server.
 
 """
 def get_size_recursive(directory):
-    """Returns the `directory` size in bytes."""
     total = 0
     try:
         LOGGER.info("[+] Getting the size of", directory)

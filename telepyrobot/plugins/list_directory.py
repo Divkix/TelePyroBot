@@ -5,7 +5,7 @@ from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
 from telepyrobot.utils.clear_string import clear_string
-# from telepyrobot.utils.check_size import get_directory_size
+from telepyrobot.utils.check_size import get_directory_size
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -16,6 +16,7 @@ List the directories of the server.
 `{COMMAND_HAND_LER}ls <directory name>`: List all the files in the directory.
 """
 
+"""
 def get_size_recursive(directory):
     """Returns the `directory` size in bytes."""
     total = 0
@@ -46,7 +47,7 @@ def get_size_format(b, factor=1024, suffix="B"):
             return f"{b:.2f}{unit}{suffix}"
         b /= factor
     return f"{b:.2f}Y{suffix}"
-
+"""
 
 @TelePyroBot.on_message(filters.command("ls", COMMAND_HAND_LER) & filters.me)
 async def list_directories(c: TelePyroBot, m: Message):
@@ -61,7 +62,7 @@ async def list_directories(c: TelePyroBot, m: Message):
     files.sort()  # Sort the files
 
     for file in files:
-        OUTPUT += f"<code>{filer}</code> ({get_directory_size(file)})\n"
+        OUTPUT += f"<code>{file}</code> ({get_directory_size(file)})\n"
 
     if len(OUTPUT) > MAX_MESSAGE_LENGTH:
         OUTPUT = clear_string(OUTPUT)  # Remove the html elements using regex

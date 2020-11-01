@@ -29,8 +29,12 @@ async def list_directories(c: TelePyroBot, m: Message):
         location += "/"
     OUTPUT = f"Files in <code>{location}</code>:\n\n"
 
-    files = os.listdir(location)
-    files.sort()  # Sort the files
+    try:
+        files = os.listdir(location)
+        files.sort()  # Sort the files
+    except FileNotFoundError:
+        await m.edit_text(f"No such file or directory {location}")
+        return
 
     for file in files:
         OUTPUT += f"<code>{file}</code> ({get_directory_size(os.path.abspath(location+file))})\n"

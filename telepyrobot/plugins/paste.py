@@ -1,11 +1,13 @@
 import aiohttp
 import json
 import os
+from io import BytesIO
 from urllib.parse import urlparse
 from telepyrobot.__main__ import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, TMP_DOWNLOAD_DIRECTORY
+from telepyrobot.utils.clear_string import clear_string
 import os
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))

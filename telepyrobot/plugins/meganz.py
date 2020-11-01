@@ -1,4 +1,5 @@
 import os
+from io import BytesIO
 from telepyrobot.__main__ import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
@@ -9,6 +10,7 @@ from telepyrobot import (
     LOGGER,
     TMP_DOWNLOAD_DIRECTORY,
 )
+from telepyrobot.utils.clear_string import clear_string
 from mega import Mega
 
 
@@ -166,18 +168,14 @@ async def mega_upload_dir(c: TelePyroBot, m: Message):
                     fn += 1
 
             msg = success + "\n\n" + fail
-            stats_file = f"{folderLoc}uploadstats.txt"
-            with open(stats_file, "w+") as f:
-                f.write(str(msg))
-                f.close()
-            await m.reply_document(
-                document=stats_file,
-                caption=f"Files from <code>{folderLoc}</code> uploaded to your Mega Cloud Drive!\n\nSuccess: {sn}\nFail: {fn}",
-                parse_mode="html",
-                disable_notification=True,
-            )
+            OUTPUT = clear_string(msg)  # Remove the html elements using regex
+            with BytesIO(str.encode(OUTPUT)) as f:
+                f.name = "MegaUploadStats.txt"
+                await m.reply_document(
+                    document=f,
+                    caption=f"Files from <code>{folderLoc}</code> uploaded to your Mega Cloud Drive!\n\nSuccess: {sn}\nFail: {fn}",
+                )
             await m.delete()
-            os.remove(stats_file)
         else:
             await m.edit_text(f"Folder {folderLoc} not found!")
     else:

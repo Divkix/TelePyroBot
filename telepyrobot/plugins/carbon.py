@@ -7,6 +7,8 @@ from requests import post
 import shutil
 import urllib
 import os
+from io import BytesIO
+from telepyrobot.utils.clear_string import clear_string
 from time import sleep
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))

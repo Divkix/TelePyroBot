@@ -16,6 +16,7 @@ List the directories of the server.
 `{COMMAND_HAND_LER}ls <directory name>`: List all the files in the directory.
 """
 
+
 @TelePyroBot.on_message(filters.command("ls", COMMAND_HAND_LER) & filters.me)
 async def list_directories(c: TelePyroBot, m: Message):
     if len(m.text.split()) == 1:
@@ -39,7 +40,8 @@ async def list_directories(c: TelePyroBot, m: Message):
         with BytesIO(str.encode(OUTPUT)) as f:
             f.name = "ls.txt"
             await m.reply_document(
-                document=f, caption=f"{location} ({get_directory_size(os.path.abspath(location))})"
+                document=f,
+                caption=f"{location} ({get_directory_size(os.path.abspath(location))})",
             )
         await m.delete()
     else:

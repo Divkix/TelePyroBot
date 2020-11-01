@@ -1,5 +1,6 @@
 import os
 
+
 def get_size_recursive(directory):
     """Returns the `directory` size in bytes."""
     total = 0
@@ -20,9 +21,11 @@ def get_size_recursive(directory):
         return 0
     return total
 
+
 def get_directory_size(location):
     size = get_size_recursive(location)
     return get_size_format(size)
+
 
 def get_size_format(b, factor=1024, suffix="B"):
     for unit in ["", "K", "M", "G", "T", "P", "E", "Z"]:

@@ -1,11 +1,13 @@
 import time
 import os
+from io import BytesIO
 from platform import python_version
 from telepyrobot.__main__ import TelePyroBot
 from pyrogram import filters, __version__
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, OWNER_NAME, UB_VERSION, OFFICIAL_UPSTREAM_REPO
 from pyrogram.raw.all import layer
+from telepyrobot.utils.clear_string import clear_string
 
 # -- Constants -- #
 ALIVE_TEXT = (
@@ -139,13 +141,9 @@ async def jsonify(c: TelePyroBot, m: Message):
     try:
         await m.reply_text(f"<code>{the_real_message}</code>")
     except Exception as e:
-        with open("json.text", "w+", encoding="utf8") as out_file:
-            out_file.write(str(the_real_message))
-            out_file.close()
-        await m.reply_document(
-            document="json.text",
-            caption=str(e),
-            disable_notification=True,
-            reply_to_message_id=reply_to_id,
-        )
-        os.remove("json.text")
+        OUTPUT = clear_string(the_real_message)  # Remove the html elements using regex
+        with BytesIO(str.encode(OUTPUT)) as f:
+            f.name = "json.text"
+            await m.reply_document(document=f, caption=str(e))
+        await m.delete()
+    return

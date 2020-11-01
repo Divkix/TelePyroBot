@@ -1,11 +1,13 @@
 import requests
 import json
+from io import BytesIO
 import asyncio
 import os
 from telepyrobot.__main__ import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, TMP_DOWNLOAD_DIRECTORY
+from telepyrobot.utils.clear_string import clear_string
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -43,13 +45,10 @@ async def tor_search(c: TelePyroBot, m: Message):
         except:
             break
 
-    tsfileloc = f"{TMP_DOWNLOAD_DIRECTORY}torrent_search.txt"
-    caption = f"Here are the results for the query: {query}"
-    with open(tsfileloc, "w+", encoding="utf8") as out_file:
-        out_file.write(str(listdata))
-        out_file.close()
-    await m.reply_document(
-        document=tsfileloc, caption=caption, disable_notification=True
-    )
-    os.remove(tsfileloc)
+    OUTPUT = clear_string(listdata)  # Remove the html elements using regex
+    with BytesIO(str.encode(OUTPUT)) as f:
+        f.name = "ls.txt"
+        await m.reply_document(
+            document=f, caption=f"Here are the results for the query: {query}"
+        )
     await m.delete()

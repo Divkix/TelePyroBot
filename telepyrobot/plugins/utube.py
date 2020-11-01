@@ -87,22 +87,14 @@ async def ytv_dl(c: TelePyroBot, m: Message):
             exc = traceback.format_exc()
             await m.reply_text(exc)
 
-        # if os.path.exists(dl_location):
-        files = os.listdir(temp_dir)
+        files = os.listdir(dl_location)
         files.sort()
         for file in files:
             c_time = time.time()
-            if file.endswith(".mkv"):
-                try:
-                    thumb_image_path = await is_thumb_image_exists(i)
-                except Exception:
-                    exc = traceback.format_exc()
-                    await m.reply_text(exc)
             await m.reply_document(
                 document=file,
-                thumb=thumb_image_path,
                 caption=f"Uploader: {artist}\nDuration: {duration}\nTitle: {title}\nLink: {link}",
                 progress=progress_for_pyrogram,
-                progress_args=("Uploading file...", m, c_time),
+                progress_args=(f"Uploading __{file}__...", m, c_time),
             )
     return

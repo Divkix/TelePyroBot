@@ -40,7 +40,7 @@ async def time_length(seconds):
 
 
 async def GetVidInfo(link):
-    with youtube_dl.YoutubeDL(ydl_search_opts) as ydl:
+    with YoutubeDL(ydl_search_opts) as ydl:
         infoSearched = ydl.extract_info(link)
 
     duration = await time_length(infoSearched["duration"])

@@ -86,19 +86,19 @@ async def ytv_dl(c: TelePyroBot, m: Message):
             f"/root/telepyrobot/downloads/{title}.mkv",
             f"/root/telepyrobot/downloads/{title}.en.vtt",
         ]
-        # Commenting
-        #     ytdlv_cmd = [
-        #         "youtube-dl",  # Main command
-        #         "-f",  # Format
-        #         "'(bestvideo[height>=720]+bestaudio/bestvideo+bestaudio)'",  # Best Video + best video
-        #         "-vcio",  # Verbose, Continue download, Ignore errors, output format
-        #         "'telepyrobot/downloads/%(title)s.%(ext)s'",  # Download Location
-        #         "--write-description",  # Write Description file, if available
-        #         "--write-auto-sub",  # Write auto subtitle file, if available
-        #         "--merge-output-format mkv",  # Use mkv format
-        #         link,  # Youtube link
-        #     ]
-        #     stdout, stderr = await run_command(ytdlv_cmd)
+
+        # ytdlv_cmd = [
+        #     "youtube-dl",  # Main command
+        #     "-f",  # Format
+        #     "'(bestvideo[height>=720]+bestaudio/bestvideo+bestaudio)'",  # Best Video + best video
+        #     "-vcio",  # Verbose, Continue download, Ignore errors, output format
+        #     "'telepyrobot/downloads/%(title)s.%(ext)s'",  # Download Location
+        #     "--write-description",  # Write Description file, if available
+        #     "--write-auto-sub",  # Write auto subtitle file, if available
+        #     "--merge-output-format mkv",  # Use mkv format
+        #     link,  # Youtube link
+        # ]
+        # stdout, stderr = await run_command(ytdlv_cmd)
 
         # OUTPUT += f"<b>stderr</b>: \n<code>{stderr}</code>\n\n"
         # OUTPUT += f"<b>stdout</b>: \n<code>{stdout}</code>"

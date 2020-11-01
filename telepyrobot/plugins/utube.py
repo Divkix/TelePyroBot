@@ -73,35 +73,36 @@ ytv_opts = {
 async def ytv_dl(c: TelePyroBot, m: Message):
     link = m.text.split(None, 1)[1]
     if "youtube.com" or "youtu.be" in link:
-        await m.edit_text("<code>Getting Video Information...</code>")
+        await m.edit_text("<i>Getting Video Information...</i>")
         artist, duration, title = await GetVidInfo(link)  # Get information about video!
         await m.edit_text(
-            f"<code>Downloading Video...</code>\n\nUploader: {artist}\nDuration: {duration}\nTitle: {title}"
+            f"<code>Downloading Video...</code>\n\n<b>Uploader:</b> {artist}\n<b>Duration:</b> {duration}\n<b>Title:</b> {title}"
         )
         dl_location = f"/root/telepyrobot/downloads/youtube-videos/{title}/"
         try:
             with YoutubeDL(ytv_opts) as ydl:
                 ydl.download([link])  # Use link in list!
+                print("Downloaded!")
         except Exception:
             exc = traceback.format_exc()
             await m.reply_text(exc)
 
-        if os.path.exists(dl_location):
-            files = os.listdir(temp_dir)
-            files.sort()
-            for file in files:
-                c_time = time.time()
-                if file.endswith(".mkv"):
-                    try:
-                        thumb_image_path = await is_thumb_image_exists(i)
-                    except Exception:
-                        exc = traceback.format_exc()
-                        await m.reply_text(exc)
-                await m.reply_document(
-                    document=file,
-                    thumb=thumb_image_path,
-                    caption=f"Uploader: {artist}\nDuration: {duration}\nTitle: {title}\nLink: {link}",
-                    progress=progress_for_pyrogram,
-                    progress_args=("Uploading file...", m, c_time),
-                )
+        # if os.path.exists(dl_location):
+        files = os.listdir(temp_dir)
+        files.sort()
+        for file in files:
+            c_time = time.time()
+            if file.endswith(".mkv"):
+                try:
+                    thumb_image_path = await is_thumb_image_exists(i)
+                except Exception:
+                    exc = traceback.format_exc()
+                    await m.reply_text(exc)
+            await m.reply_document(
+                document=file,
+                thumb=thumb_image_path,
+                caption=f"Uploader: {artist}\nDuration: {duration}\nTitle: {title}\nLink: {link}",
+                progress=progress_for_pyrogram,
+                progress_args=("Uploading file...", m, c_time),
+            )
     return

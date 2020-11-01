@@ -75,7 +75,7 @@ ytv_opts = {
 @TelePyroBot.on_message(filters.command("ytv", COMMAND_HAND_LER) & filters.me)
 async def ytv_dl(c: TelePyroBot, m: Message):
     link = m.text.split(None, 1)[1]
-    if ("youtube.com" or "youtu.be") in link:
+    if "youtube.com" or "youtu.be" in link:
         await m.edit_text("<code>Getting Video Information...</code>")
         artist, duration, title = await GetVidInfo(link)  # Get information about video!
         await m.edit_text(

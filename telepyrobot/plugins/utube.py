@@ -64,7 +64,7 @@ ytv_opts = {
     "verbose": True,
     "merge_output_format": "mkv",
     "geo_bypass": True,
-    "outtmpl": "/root/telepyrobot/downloads/%(title)s.%(ext)s",
+    "outtmpl": "/root/telepyrobot/downloads/%(title)s/%(title)s.%(ext)s",
     "restrictfilenames": True,
     "writeautomaticsub": True,
     "writedescription": True,
@@ -82,9 +82,9 @@ async def ytv_dl(c: TelePyroBot, m: Message):
             f"Downloading Video...!\n\nUploader: {artist}\nDuration: {duration}\nTitle: {title}"
         )
         dl_location = [
-            f"/root/telepyrobot/downloads/{title}.description",
-            f"/root/telepyrobot/downloads/{title}.mkv",
-            f"/root/telepyrobot/downloads/{title}.en.vtt",
+            f"/root/telepyrobot/downloads/{title}/{title}.description",
+            f"/root/telepyrobot/downloads/{title}/{title}.mkv",
+            f"/root/telepyrobot/downloads/{title}/{title}.en.vtt",
         ]
 
         # ytdlv_cmd = [
@@ -117,7 +117,7 @@ async def ytv_dl(c: TelePyroBot, m: Message):
         # return
         try:
             with YoutubeDL(ytv_opts) as ydl:
-                ydl.download(link)
+                ydl.download([link])  # Use link in list!
         except Exception:
             exc = traceback.format_exc()
             await m.reply_text(exc)

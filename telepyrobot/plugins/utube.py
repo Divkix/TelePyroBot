@@ -79,13 +79,9 @@ async def ytv_dl(c: TelePyroBot, m: Message):
         await m.edit_text("<code>Getting Video Information...</code>")
         artist, duration, title = await GetVidInfo(link)  # Get information about video!
         await m.edit_text(
-            f"Downloading Video...!\n\nUploader: {artist}\nDuration: {duration}\nTitle: {title}"
+            f"<code>Downloading Video...</code>\n\nUploader: {artist}\nDuration: {duration}\nTitle: {title}"
         )
-        dl_location = [
-            f"/root/telepyrobot/downloads/{title}/{title}.description",
-            f"/root/telepyrobot/downloads/{title}/{title}.mkv",
-            f"/root/telepyrobot/downloads/{title}/{title}.en.vtt",
-        ]
+        dl_location = "/root/telepyrobot/downloads/%(title)s/"
 
         # ytdlv_cmd = [
         #     "youtube-dl",  # Main command
@@ -122,22 +118,22 @@ async def ytv_dl(c: TelePyroBot, m: Message):
             exc = traceback.format_exc()
             await m.reply_text(exc)
 
-        for i in dl_location:  # Iterate through list!
-            if os.path.exists(i):
+        if os.path.exists(dl_location):
+            files = os.listdir(temp_dir)
+            files.sort()
+            for file in files:
                 c_time = time.time()
-                try:
-                    thumb_image_path = await is_thumb_image_exists(i)
-                except Exception:
-                    exc = traceback.format_exc()
-                    await m.reply_text(exc)
-
+                if file.endswith(".mkv"):
+                    try:
+                        thumb_image_path = await is_thumb_image_exists(i)
+                    except Exception:
+                        exc = traceback.format_exc()
+                        await m.reply_text(exc)
                 await m.reply_document(
-                    document=i,
+                    document=file,
                     thumb=thumb_image_path,
                     caption=f"Uploader: {artist}\nDuration: {duration}\nTitle: {title}\nLink: {link}",
                     progress=progress_for_pyrogram,
                     progress_args=("Uploading file...", m, c_time),
                 )
-            else:
-                await m.reply_text(f"File {i} does not exists!")
             return

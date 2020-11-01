@@ -81,7 +81,7 @@ async def ytv_dl(c: TelePyroBot, m: Message):
         await m.edit_text(
             f"<code>Downloading Video...</code>\n\nUploader: {artist}\nDuration: {duration}\nTitle: {title}"
         )
-        dl_location = "/root/telepyrobot/downloads/%(title)s/"
+        dl_location = f"/root/telepyrobot/downloads/{title}/"
 
         # ytdlv_cmd = [
         #     "youtube-dl",  # Main command

@@ -28,7 +28,7 @@ __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 __help__ = f"""
 Plugin used to help you manage your **Google Drive**!
 
-`{COMMAND_HAND_LER}gdrive <file loaction>` or as a reply to message to upload file to your Google Drive and get it's link.
+`{COMMAND_HAND_LER}gdrive <file location>` or as a reply to message to upload file to your Google Drive and get it's link.
 `{COMMAND_HAND_LER}gdrive reset`: Reset the G Drive credentials.
 `{COMMAND_HAND_LER}gdrive setup`: To setup GDrive, only needed if reset grive credentials or setting-up first time.
 `{COMMAND_HAND_LER}gdrive search <query>`: To search a file in your GDrive.

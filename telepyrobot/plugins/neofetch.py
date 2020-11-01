@@ -42,7 +42,7 @@ async def neofetch_stats(c: TelePyroBot, m: Message):
     if len(OUTPUT) > MAX_MESSAGE_LENGTH:
         OUTPUT = clear_string(OUTPUT)  # Remove the html elements using regex
         with BytesIO(str.encode(OUTPUT)) as f:
-            f.name = "exec.txt"
+            f.name = "neofetch.txt"
             await m.reply_document(document=f, caption=cmd)
         await m.delete()
     else:

@@ -14,7 +14,7 @@ Generate a  hyperlink/permanent link for a profile.
 Usage:
 `{COMMAND_HAND_LER}mention <custom text> <username without @>`
 or
-`{COMMAND_HAND_LER}mention <custom text> <user id>`
+`{COMMAND_HAND_LER}mention <custom text> <user_id>`
 """
 
 

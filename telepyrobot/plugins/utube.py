@@ -6,10 +6,7 @@ from datetime import datetime
 from telepyrobot.__main__ import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
-from telepyrobot import COMMAND_HAND_LER, MAX_MESSAGE_LENGTH
-
-# from telepyrobot.utils.run_shell_cmnd import run_command
-from telepyrobot.utils.clear_string import clear_string
+from telepyrobot import COMMAND_HAND_LER
 from telepyrobot.utils.dl_helpers import progress_for_pyrogram
 
 # Ytdl Search
@@ -64,7 +61,7 @@ ytv_opts = {
     "verbose": True,
     "merge_output_format": "mkv",
     "geo_bypass": True,
-    "outtmpl": "/root/telepyrobot/downloads/%(title)s/%(title)s.%(ext)s",
+    "outtmpl": "/root/telepyrobot/downloads/youtube-videos/%(title)s/%(title)s.%(ext)s",
     "restrictfilenames": True,
     "writeautomaticsub": True,
     "writedescription": True,
@@ -81,36 +78,7 @@ async def ytv_dl(c: TelePyroBot, m: Message):
         await m.edit_text(
             f"<code>Downloading Video...</code>\n\nUploader: {artist}\nDuration: {duration}\nTitle: {title}"
         )
-        dl_location = f"/root/telepyrobot/downloads/{title}/"
-
-        # ytdlv_cmd = [
-        #     "youtube-dl",  # Main command
-        #     "-f",  # Format
-        #     "'(bestvideo[height>=720]+bestaudio/bestvideo+bestaudio)'",  # Best Video + best video
-        #     "-vcio",  # Verbose, Continue download, Ignore errors, output format
-        #     "'telepyrobot/downloads/%(title)s.%(ext)s'",  # Download Location
-        #     "--write-description",  # Write Description file, if available
-        #     "--write-auto-sub",  # Write auto subtitle file, if available
-        #     "--merge-output-format mkv",  # Use mkv format
-        #     link,  # Youtube link
-        # ]
-        # stdout, stderr = await run_command(ytdlv_cmd)
-
-        # OUTPUT += f"<b>stderr</b>: \n<code>{stderr}</code>\n\n"
-        # OUTPUT += f"<b>stdout</b>: \n<code>{stdout}</code>"
-
-        # if len(OUTPUT) > MAX_MESSAGE_LENGTH:
-        #     OUTPUT = clear_string(OUTPUT)
-        #     with BytesIO(str.encode(OUTPUT)) as f:
-        #         f.name = "youtube-dl.txt"
-        #         await m.reply_document(
-        #             document=f,
-        #             caption=link,
-        #         )
-        #     await m.delete()
-        # else:
-        #     await m.edit_text(OUTPUT)
-        # return
+        dl_location = f"/root/telepyrobot/downloads/youtube-videos/{title}/"
         try:
             with YoutubeDL(ytv_opts) as ydl:
                 ydl.download([link])  # Use link in list!
@@ -119,7 +87,6 @@ async def ytv_dl(c: TelePyroBot, m: Message):
             await m.reply_text(exc)
 
         if os.path.exists(dl_location):
-            print("uploading")
             files = os.listdir(temp_dir)
             files.sort()
             for file in files:

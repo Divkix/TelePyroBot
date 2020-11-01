@@ -94,7 +94,7 @@ async def ytv_dl(c: TelePyroBot, m: Message):
         for file in files:
             c_time = time.time()
             await m.reply_document(
-                document=file,
+                document=dl_location + file,
                 caption=f"Uploader: {artist}\nDuration: {duration}\nTitle: {title}\nLink: {link}",
                 progress=progress_for_pyrogram,
                 progress_args=(f"Uploading __{file}__...", m, c_time),

@@ -21,7 +21,7 @@ from telepyrobot import (
     TMP_DOWNLOAD_DIRECTORY,
 )
 import telepyrobot.db.gDrive_db as db
-from telepyrobot.utils.display_progress_dl_up import progress_for_pyrogram
+from telepyrobot.utils.dl_helpers import progress_for_pyrogram
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 

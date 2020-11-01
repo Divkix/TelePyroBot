@@ -19,7 +19,7 @@ from bs4 import BeautifulSoup
 from pyDownload import Downloader
 
 from telepyrobot import COMMAND_HAND_LER, LOGGER, TMP_DOWNLOAD_DIRECTORY
-from telepyrobot.utils.display_progress_dl_up import progress_for_pyrogram, humanbytes
+from telepyrobot.utils.dl_helpers import progress_for_pyrogram, humanbytes
 from telepyrobot.utils.check_if_thumb_exists import is_thumb_image_exists
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))

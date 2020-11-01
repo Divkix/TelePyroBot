@@ -52,23 +52,23 @@ def get_size_format(b, factor=1024, suffix="B"):
 async def list_directories(c: TelePyroBot, m: Message):
     if len(m.text.split()) == 1:
         location = os.path.abspath(".")
-        OUTPUT = f"Files in <code>/root/</code>:\n\n"
     elif len(m.text.split()) >= 2:
-        location = os.path.abspath(m.text.split(None, 1)[1])
-        OUTPUT = f"Files in <code>{location}</code>:\n\n"
+        location = m.text.split(None, 1)[1]
+
+    OUTPUT = f"Files in <code>{os.path.abspath(location)}</code>:\n\n"
 
     files = os.listdir(location)
     files.sort()  # Sort the files
 
     for file in files:
-        OUTPUT += f"<code>{file}</code> ({get_directory_size(file)})\n"
+        OUTPUT += f"<code>{file}</code> ({get_directory_size(os.path.abspath(file))})\n"
 
     if len(OUTPUT) > MAX_MESSAGE_LENGTH:
         OUTPUT = clear_string(OUTPUT)  # Remove the html elements using regex
         with BytesIO(str.encode(OUTPUT)) as f:
             f.name = "ls.txt"
             await m.reply_document(
-                document=f, caption=f"{location} ({get_directory_size(location)})"
+                document=f, caption=f"{location} ({get_directory_size(os.path.abspath(location))})"
             )
         await m.delete()
     else:

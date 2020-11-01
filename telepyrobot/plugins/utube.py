@@ -78,7 +78,9 @@ async def ytv_dl(c: TelePyroBot, m: Message):
         await m.edit_text(
             f"<code>Downloading Video...</code>\n\n<b>Uploader:</b> {artist}\n<b>Duration:</b> {duration}\n<b>Title:</b> {title}"
         )
-        dl_location = f"/root/telepyrobot/downloads/youtube-videos/{title}/"
+        dl_location = f"/root/telepyrobot/downloads/youtube-videos/{title}/".replace(
+            "&", "_"
+        ).replace(" ", "_")
         try:
             with YoutubeDL(ytv_opts) as ydl:
                 ydl.download([link])  # Use link in list!

@@ -16,52 +16,23 @@ List the directories of the server.
 `{COMMAND_HAND_LER}ls <directory name>`: List all the files in the directory.
 """
 
-"""
-def get_size_recursive(directory):
-    total = 0
-    try:
-        LOGGER.info("[+] Getting the size of", directory)
-        for entry in os.scandir(directory):
-            if entry.is_file():
-                # if it's a file, use stat() function
-                total += entry.stat().st_size
-            elif entry.is_dir():
-                # if it's a directory, recursively call this function
-                total += get_size_recursive(entry.path)
-    except NotADirectoryError:
-        # if `directory` isn't a directory, get the file size then
-        return os.path.getsize(directory)
-    except PermissionError:
-        # if for whatever reason we can't open the folder, return 0
-        return 0
-    return total
-
-def get_directory_size(location):
-    size = get_size_recursive(location)
-    return get_size_format(size)
-
-def get_size_format(b, factor=1024, suffix="B"):
-    for unit in ["", "K", "M", "G", "T", "P", "E", "Z"]:
-        if b < factor:
-            return f"{b:.2f}{unit}{suffix}"
-        b /= factor
-    return f"{b:.2f}Y{suffix}"
-"""
-
 @TelePyroBot.on_message(filters.command("ls", COMMAND_HAND_LER) & filters.me)
 async def list_directories(c: TelePyroBot, m: Message):
     if len(m.text.split()) == 1:
-        location = os.path.abspath(".")
+        location = "."
     elif len(m.text.split()) >= 2:
         location = m.text.split(None, 1)[1]
 
-    OUTPUT = f"Files in <code>{os.path.abspath(location)}</code>:\n\n"
+    location = os.path.abspath(location)
+    if not location.endswith("/"):
+        location += "/"
+    OUTPUT = f"Files in <code>{location}</code>:\n\n"
 
     files = os.listdir(location)
     files.sort()  # Sort the files
 
     for file in files:
-        OUTPUT += f"<code>{file}</code> ({get_directory_size(os.path.abspath(file))})\n"
+        OUTPUT += f"<code>{file}</code> ({get_directory_size(os.path.abspath(location+file))})\n"
 
     if len(OUTPUT) > MAX_MESSAGE_LENGTH:
         OUTPUT = clear_string(OUTPUT)  # Remove the html elements using regex

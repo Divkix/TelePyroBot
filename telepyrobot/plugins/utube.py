@@ -142,19 +142,18 @@ async def ytv_dl(c: TelePyroBot, m: Message):
         for file in files:
             c_time = time.time()
             if file.endswith(".mkv"):
-                await m.reply_video(
-                    video=dl_location + file,
-                    caption=f"Uploader: {artist}\nDuration: {duration}\nTitle: {title}\nLink: {link}",
-                    progress=progress_for_pyrogram,
-                    # supports_streaming=True,
-                    progress_args=(f"Uploading <i>{file}</i>...", m, c_time),
-                )
-            else:
                 await m.reply_document(
                     document=dl_location + file,
-                    progress=progress_for_pyrogram,
+                    caption=f"<b>Uploader:</b> <code>{artist}</code>\n<b>Duration:</b> <code>{duration}</code>\n<b>Title:</b> <code>{title}</code>\n<b>Link:</b> {link}",
+                    progress=progress_for_pyrogram,,
                     progress_args=(f"Uploading <i>{file}</i>...", m, c_time),
                 )
+                continue
+            await m.reply_document(
+                document=dl_location + file,
+                progress=progress_for_pyrogram,
+                progress_args=(f"Uploading <i>{file}</i>...", m, c_time),
+            )
         await m.delete()
     return
 

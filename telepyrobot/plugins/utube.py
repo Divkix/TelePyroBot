@@ -84,9 +84,9 @@ async def GetPlaylistInfo(link):
         infoSearched = ydl.extract_info(link)
     title = infoSearched["title"]
     artist = infoSearched["uploader"]
-    vid = infoSearched["id"]
+    pid = infoSearched["id"]
     entries = infoSearched["entries"]
-    return artist, title, vid, entries
+    return artist, title, pid, entries
 
 
 async def GetVidInfo(link):
@@ -116,7 +116,7 @@ async def ytv_dl(c: TelePyroBot, m: Message):
         await m.edit_text(
             (
                 f"<i>Downloading Video...</i>\n\n"
-                f"<b>ID:</b> <code>{mid}</code>\n"
+                f"<b>ID:</b> <code>{vid}</code>\n"
                 f"<b>Uploader:</b> <code>{artist}</code>\n"
                 f"<b>Duration:</b> <code>{duration}</code>\n"
                 f"<b>Title:</b> <code>{title}</code>"
@@ -228,7 +228,7 @@ async def ytp_dl(c: TelePyroBot, m: Message):
 
         for p in entries:
             ytp_opts["outtmpl"] = (
-                "/root/telepyrobot/cache/ytp/" + str(vid) + "/%(title)s.%(ext)s"
+                "/root/telepyrobot/cache/ytp/" + str(pid) + "/%(title)s.%(ext)s"
             )  # vid = Playlist ID
             try:
                 url = p["webpage_url"]

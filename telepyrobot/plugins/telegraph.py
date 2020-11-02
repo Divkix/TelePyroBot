@@ -60,3 +60,4 @@ async def telegraph(c: TelePyroBot, m: Message):
         )
     finally:
         os.remove(download_location)
+    return

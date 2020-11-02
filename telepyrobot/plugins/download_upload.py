@@ -25,7 +25,8 @@ from telepyrobot.utils.check_if_thumb_exists import is_thumb_image_exists
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
-Download Telegram Media
+Download files using Telegram!
+
 Syntax: `{COMMAND_HAND_LER}dl` / `{COMMAND_HAND_LER}download` <link> or as a reply to media
 Use '|' along with command to set a custom filename for downloaded file,
 Works only on replied media messages!
@@ -155,7 +156,8 @@ async def upload_as_document(c: TelePyroBot, m: Message):
             )
             end_t = datetime.now()
             ms = (end_t - start_t).seconds
-            await sm.edit(f"**Uploaded in {ms} seconds**")
+            await sm.delete()
+            await m.reply_text(f"**Uploaded in {ms} seconds**")
         else:
             await sm.edit("404: media not found")
     else:
@@ -183,13 +185,14 @@ async def covid(c: TelePyroBot, m: Message):
             required_file_name = temp_dir + file
             thumb_image_path = await is_thumb_image_exists(required_file_name)
             doc_caption = os.path.basename(required_file_name)
-            LOGGER.info(f"Uploading {required_file_name} from {temp_dir} to Telegram.")
+            LOGGER.info(
+                f"Uploading <i>{required_file_name}</i> from {temp_dir} to Telegram."
+            )
             await c.send_document(
                 chat_id=m.chat.id,
                 document=required_file_name,
                 thumb=thumb_image_path,
                 caption=doc_caption,
-                parse_mode="html",
                 disable_notification=True,
                 progress=progress_for_pyrogram,
                 progress_args=(
@@ -201,6 +204,8 @@ async def covid(c: TelePyroBot, m: Message):
     else:
         await sm.edit("Directory Not Found.")
         return
-    await sm.edit(f"Uploaded all files from Directory `{temp_dir}`")
+    await sm.delete()
     await m.delete()
+    await m.reply_text(f"Uploaded all files from Directory `{temp_dir}`")
+    LOGGER.info("Uploaded all files!")
     return

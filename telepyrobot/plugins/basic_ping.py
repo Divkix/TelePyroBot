@@ -143,7 +143,7 @@ async def jsonify(c: TelePyroBot, m: Message):
     except Exception as e:
         OUTPUT = clear_string(the_real_message)  # Remove the html elements using regex
         with BytesIO(str.encode(OUTPUT)) as f:
-            f.name = "json.text"
+            f.name = "json.txt"
             await m.reply_document(document=f, caption=str(e))
         await m.delete()
     return

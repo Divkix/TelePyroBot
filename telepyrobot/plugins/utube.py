@@ -273,7 +273,7 @@ async def ytp_dl(c: TelePyroBot, m: Message):
 
         output = f"Playlist Downloaded to <code>{dl_location}</code> ({get_directory_size(os.path.abspath(dl_location))})\n\n"
         for file in files:
-            output += f"• <code>{file}</code>\n ({get_directory_size(os.path.abspath(dl_location+file))})\n"
+            output += f"• <code>{file}</code>\n ({get_directory_size(os.path.abspath(file))})\n"
 
         output += f"\nTo upload, use <code>{COMMAND_HAND_LER}batchup {dl_location}</code> to upload all contents of this folder!"
 

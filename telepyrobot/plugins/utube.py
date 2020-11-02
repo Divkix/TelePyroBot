@@ -3,9 +3,9 @@ import time
 import traceback
 from datetime import datetime
 from telepyrobot.__main__ import TelePyroBot
-from pyrogram import filters
+from pyrogram import filters, errors
 from pyrogram.types import Message
-from telepyrobot import COMMAND_HAND_LER
+from telepyrobot import COMMAND_HAND_LER, MAX_MESSAGE_LENGTH
 from telepyrobot.utils.dl_helpers import progress_for_pyrogram
 from youtube_dl import YoutubeDL
 
@@ -33,6 +33,17 @@ ytv_opts = {
     "merge_output_format": "mkv",
     "geo_bypass": True,
     "outtmpl": "/root/telepyrobot/cache/ytv/%(id)s/%(title)s.%(ext)s",
+    "restrictfilenames": True,
+    "writeautomaticsub": True,
+    "writedescription": True,
+    "format": "(bestvideo[height>=720]+bestaudio/bestvideo+bestaudio)",
+}
+
+ytp_opts = {
+    "verbose": True,
+    "merge_output_format": "mkv",
+    "geo_bypass": True,
+    "outtmpl": "/root/telepyrobot/cache/ytp/%(id)s/%(title)s.%(ext)s",
     "restrictfilenames": True,
     "writeautomaticsub": True,
     "writedescription": True,
@@ -216,29 +227,33 @@ async def ytp_dl(c: TelePyroBot, m: Message):
             "<b>Uploader:</b> {uploader}\n"
             "<b>Duration:</b> {duration}"
         )
+        Errorss = ""
 
         for p in entries:
             try:
                 lk = p["webpage_url"]
-                with YoutubeDL(ytv_opts) as ydl:
+                with YoutubeDL(ytp_opts) as ydl:
                     ydl.download([lk])  # Use link in list!
                 print(f"Downloaded {p}!")
                 num += 1
                 title = p["title"]
                 uploader = p["uploader"]
                 duration = await time_length(p["duration"])
-                await m.edit_text(
-                    Download_Text.format(
-                        num=num,
-                        entries=len(entries),
-                        title=title,
-                        uploader=uploader,
-                        duration=duration,
+                try:
+                    await m.edit_text(
+                        Download_Text.format(
+                            num=num,
+                            entries=len(entries),
+                            title=title,
+                            uploader=uploader,
+                            duration=duration,
+                        )
                     )
-                )
+                except errors.MessageNotModified:
+                    pass
             except Exception:
                 exc = traceback.format_exc()
-                await m.reply_text(exc)
+                Errorss += exc + "\n"
 
         files = os.listdir(dl_location)
         files.sort()
@@ -246,9 +261,19 @@ async def ytp_dl(c: TelePyroBot, m: Message):
         for i in files:
             output += f"{dl_location+i}\n"
         await m.edit_text(output)
+        if len(Errorss) > MAX_MESSAGE_LENGTH:
+            with BytesIO(str.encode(Errorss)) as f:
+                f.name = "ytp_errors.txt"
+                await m.reply_document(
+                    document=f,
+                    caption=f"YouTube-dl Playlist Errors",
+                )
+        else:
+            await m.reply_text(OUTPUT)
     return
 
 
+"""
 @TelePyroBot.on_message(filters.command("ytpu", COMMAND_HAND_LER) & filters.me)
 async def ytpu_dl(c: TelePyroBot, m: Message):
     link = m.text.split(None, 1)[1]
@@ -271,22 +296,25 @@ async def ytpu_dl(c: TelePyroBot, m: Message):
         for p in entries:
             try:
                 lk = p["webpage_url"]
-                with YoutubeDL(ytv_opts) as ydl:
+                with YoutubeDL(ytp_opts) as ydl:
                     ydl.download([lk])  # Use link in list!
                 print(f"Downloaded {p}!")
                 num += 1
                 title = p["title"]
                 uploader = p["uploader"]
                 duration = await time_length(p["duration"])
-                await m.edit_text(
-                    Download_Text.format(
-                        num=num,
-                        entries=len(entries),
-                        title=title,
-                        uploader=uploader,
-                        duration=duration,
+                try:
+                    await m.edit_text(
+                        Download_Text.format(
+                            num=num,
+                            entries=len(entries),
+                            title=title,
+                            uploader=uploader,
+                            duration=duration,
+                        )
                     )
-                )
+                except errors.MessageNotModified:
+                    pass
             except Exception:
                 exc = traceback.format_exc()
                 await m.reply_text(exc)
@@ -310,3 +338,4 @@ async def ytpu_dl(c: TelePyroBot, m: Message):
                 )
         await m.delete()
     return
+    """

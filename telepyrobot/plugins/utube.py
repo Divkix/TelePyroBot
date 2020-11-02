@@ -146,7 +146,7 @@ async def ytv_dl(c: TelePyroBot, m: Message):
                     video=dl_location + file,
                     caption=f"Uploader: {artist}\nDuration: {duration}\nTitle: {title}\nLink: {link}",
                     progress=progress_for_pyrogram,
-                    supports_streaming=True,
+                    # supports_streaming=True,
                     progress_args=(f"Uploading <i>{file}</i>...", m, c_time),
                 )
             else:

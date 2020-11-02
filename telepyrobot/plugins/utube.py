@@ -4,7 +4,7 @@ import math
 import time
 import traceback
 from datetime import datetime
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters, errors
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, MAX_MESSAGE_LENGTH

@@ -1,4 +1,4 @@
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram.types import Message
 import asyncio
 

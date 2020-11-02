@@ -5,7 +5,7 @@ import time
 import shutil
 from datetime import datetime
 from pySmartDL import SmartDL
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters, errors
 from pyrogram.types import Message
 import json

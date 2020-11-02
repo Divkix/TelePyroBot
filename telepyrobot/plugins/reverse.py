@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from typing import Tuple, Optional
 from os.path import basename
 import asyncio
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, LOGGER

@@ -2,7 +2,7 @@ import time
 import os
 from io import BytesIO
 from platform import python_version
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters, __version__
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, OWNER_NAME, UB_VERSION, OFFICIAL_UPSTREAM_REPO

@@ -3,7 +3,7 @@ import os
 import git
 import shutil
 import heroku3
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot.utils.cust_p_filters import sudo_filter

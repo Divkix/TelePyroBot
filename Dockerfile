@@ -70,10 +70,6 @@ RUN apt update && apt upgrade -y && \
     unzip \
     libopus0 \
     libopus-dev \
-    p7zip-full \
-    p7zip-rar \
-    zip \
-    unzip \
     less \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives /tmp
 

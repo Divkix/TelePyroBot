@@ -2,7 +2,7 @@ import os
 import time
 import asyncio
 from datetime import datetime
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message, ChatPermissions
 from telepyrobot import (

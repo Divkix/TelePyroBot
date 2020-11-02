@@ -2,7 +2,7 @@ import io
 import os
 import asyncio
 from random import randint, uniform
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER

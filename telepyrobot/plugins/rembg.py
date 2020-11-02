@@ -2,7 +2,7 @@ import os
 from asyncio import sleep
 import shutil
 from removebg import RemoveBg
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, REMBG_API_KEY

@@ -1,4 +1,4 @@
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from telepyrobot.utils.pyrohelpers import ReplyCheck
 from pyrogram import filters
 from pyrogram.types import Message

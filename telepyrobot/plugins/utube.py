@@ -98,7 +98,7 @@ async def ytv_dl(c: TelePyroBot, m: Message):
             link
         )  # Get information about video!
         await m.edit_text(
-            f"<code>Downloading Video...</code>\n\n<b>ID:</b>{vid}\n<b>Uploader:</b> {artist}\n<b>Duration:</b> {duration}\n<b>Title:</b> {title}"
+            f"<i>Downloading Video...</i>\n\n<b>ID:</b> <code>{mid}</code>\n<b>Uploader:</b> <code>{artist}</code>\n<b>Duration:</b> <code>{duration}</code>\n<b>Title:</b> <code>{title}</code>"
         )
         dl_location = f"/root/telepyrobot/cache/ytv/{vid}/"
         try:
@@ -127,6 +127,7 @@ async def ytv_dl(c: TelePyroBot, m: Message):
                     progress=progress_for_pyrogram,
                     progress_args=(f"Uploading __{file}__...", m, c_time),
                 )
+        await m.delete()
     return
 
 
@@ -139,7 +140,7 @@ async def yta_dl(c: TelePyroBot, m: Message):
             link
         )  # Get information about video!
         await m.edit_text(
-            f"<code>Downloading Music...</code>\n\n<b>ID:</b>{mid}\n<b>Uploader:</b> {artist}\n<b>Duration:</b> {duration}\n<b>Title:</b> {title}"
+            f"<i>Downloading Music...</i>\n\n<b>ID:</b> <code>{mid}</code>\n<b>Uploader:</b> <code>{artist}</code>\n<b>Duration:</b> <code>{duration}</code>\n<b>Title:</b> <code>{title}</code>"
         )
         dl_location = f"/root/telepyrobot/cache/yta/{mid}/"
         try:
@@ -164,4 +165,5 @@ async def yta_dl(c: TelePyroBot, m: Message):
                 progress=progress_for_pyrogram,
                 progress_args=("Uploading...", m, c_time),
             )
+        await m.delete()
     return

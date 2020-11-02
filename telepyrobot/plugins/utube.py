@@ -84,11 +84,12 @@ async def GetVidInfo(link):
         infoSearched = ydl.extract_info(link)
 
     duration = await time_length(infoSearched["duration"])
+    time = infoSearched["duration"]
     title = infoSearched["title"]
     link_video = infoSearched["webpage_url"]
     artist = infoSearched["uploader"]
     vid = infoSearched["id"]
-    return artist, duration, title, vid
+    return artist, duration, time, title, vid
 
 
 @TelePyroBot.on_message(filters.command("ytv", COMMAND_HAND_LER) & filters.me)
@@ -96,11 +97,11 @@ async def ytv_dl(c: TelePyroBot, m: Message):
     link = m.text.split(None, 1)[1]
     if "youtube.com" or "youtu.be" in link:
         await m.edit_text("<i>Getting Video Information...</i>")
-        artist, duration, title, vid = await GetVidInfo(
+        artist, duration, time, title, vid = await GetVidInfo(
             link
         )  # Get information about video!
         await m.edit_text(
-            f"<code>Downloading Video...</code>\n\n<b>ID:</b>{vid}<b>Uploader:</b> {artist}\n<b>Duration:</b> {duration}\n<b>Title:</b> {title}"
+            f"<code>Downloading Video...</code>\n\n<b>ID:</b>{vid}\n<b>Uploader:</b> {artist}\n<b>Duration:</b> {duration}\n<b>Title:</b> {title}"
         )
         dl_location = f"/root/telepyrobot/cache/ytv/{vid}/"
         try:
@@ -137,7 +138,7 @@ async def yta_dl(c: TelePyroBot, m: Message):
     link = m.text.split(None, 1)[1]
     if "youtube.com" or "youtu.be" in link:
         await m.edit_text("<i>Getting Video Information...</i>")
-        artist, duration, title, mid = await GetVidInfo(
+        artist, duration, time, title, mid = await GetVidInfo(
             link
         )  # Get information about video!
         await m.edit_text(
@@ -157,7 +158,7 @@ async def yta_dl(c: TelePyroBot, m: Message):
             audio=dl_location,
             title=title,
             performer=artist,
-            duration=int(duration),
+            duration=int(time),
             caption=f"Downloaded using @TelePyroBot Userbot",
             progress=progress_for_pyrogram,
             progress_args=(f"Uploading __{file}__...", m, c_time),

@@ -223,6 +223,7 @@ async def ytp_dl(c: TelePyroBot, m: Message):
             "<b>Duration:</b> {duration}"
         )
         Ers = "Errors while Downloading:\n\n"
+        total_vids = len(entries)
 
         for p in entries:
             ytp_opts["outtmpl"] = (
@@ -237,10 +238,12 @@ async def ytp_dl(c: TelePyroBot, m: Message):
                 title = p["title"]
                 uploader = p["uploader"]
                 duration = await time_length(p["duration"])
-                percentage = num / len(entries) * 100  # Percentage
+                percentage = (num / total_vids) * 100  # Percentage
                 progress_str = "<b>[{0}{1}]</b>\n<b>Progress:</b> <i>{2}%</i>".format(
-                    "".join(["●" for i in range(math.floor(percentage / 5))]),
-                    "".join(["○" for i in range(20 - math.floor(percentage / 5))]),
+                    "".join(["●" for i in range(num)]),
+                    "".join(
+                        ["○" for i in range(total_vids - num]
+                    ),
                     round(percentage, 2),
                 )
                 try:

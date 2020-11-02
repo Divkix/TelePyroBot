@@ -1,4 +1,5 @@
 import os
+import math
 import time
 import traceback
 from datetime import datetime
@@ -16,10 +17,9 @@ __help__ = f"""
 Youtube Downloader using youtube-dl Python Library!
 
 **Commands:**
-`{COMMAND_HAND_LER}ytv <link>`: Download Video from YouTube and then upload it.
-`{COMMAND_HAND_LER}yta <link>`: Download Audio from YouTube and then upload it.
+`{COMMAND_HAND_LER}ytv <link>`: Download Video from YouTube and then upload it to telegram.
+`{COMMAND_HAND_LER}yta <link>`: Download Audio from YouTube and then upload it to telegram.
 `{COMMAND_HAND_LER}ytp <link>`: Download Playlist from YouTube.
-`{COMMAND_HAND_LER}ytpu <link>`: Download Playlist from YouTube and then upload it.
 """
 
 ydl_search_opts = {
@@ -43,8 +43,8 @@ ytv_opts = {
 ytp_opts = {
     "verbose": True,
     "merge_output_format": "mkv",
+    # outtmpl key updated later!
     "geo_bypass": True,
-    "outtmpl": "/root/telepyrobot/cache/ytp/{}/{}.{}",
     "restrictfilenames": True,
     "writeautomaticsub": True,
     "writedescription": True,
@@ -140,13 +140,13 @@ async def ytv_dl(c: TelePyroBot, m: Message):
                     caption=f"Uploader: {artist}\nDuration: {duration}\nTitle: {title}\nLink: {link}",
                     progress=progress_for_pyrogram,
                     supports_streaming=True,
-                    progress_args=(f"Uploading __{file}__...", m, c_time),
+                    progress_args=(f"Uploading <i>{file}</i>...", m, c_time),
                 )
             else:
                 await m.reply_document(
                     document=dl_location + file,
                     progress=progress_for_pyrogram,
-                    progress_args=(f"Uploading __{file}__...", m, c_time),
+                    progress_args=(f"Uploading <i>{file}</i>...", m, c_time),
                 )
         await m.delete()
     return
@@ -192,7 +192,7 @@ async def yta_dl(c: TelePyroBot, m: Message):
                 title=title,
                 performer=artist,
                 duration=int(timeS),
-                caption=f"Downloaded using @TelePyroBot Userbot",
+                caption=title,
                 progress=progress_for_pyrogram,
                 progress_args=(f"Uploading <i>{title}</i> ...", m, c_time),
             )
@@ -217,7 +217,7 @@ async def ytp_dl(c: TelePyroBot, m: Message):
         num = 0  # To show download number
 
         Download_Text = (
-            "<b>Downloading Video:</b> {num}/{entries}\n"
+            "<b>Progress:</b>\n{progress}\n"
             "<b>Title:</b> {title}\n"
             "<b>Uploader:</b> {uploader}\n"
             "<b>Duration:</b> {duration}"
@@ -237,10 +237,16 @@ async def ytp_dl(c: TelePyroBot, m: Message):
                 title = p["title"]
                 uploader = p["uploader"]
                 duration = await time_length(p["duration"])
+                percentage = num / len(entries) * 100  # Percentage
+                progress_str = "<b>[{0}{1}]</b>\n<b>Progress:</b> <i>{2}%</i>".format(
+                    "".join(["●" for i in range(math.floor(percentage / 5))]),
+                    "".join(["○" for i in range(20 - math.floor(percentage / 5))]),
+                    round(percentage, 2),
+                )
                 try:
                     await m.edit_text(
                         Download_Text.format(
-                            num=num,
+                            progress=progress_str,
                             entries=len(entries),
                             title=title,
                             uploader=uploader,

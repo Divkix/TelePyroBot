@@ -231,7 +231,7 @@ async def ytp_dl(c: TelePyroBot, m: Message):
 
         for p in entries:
             ytp_opts["outtmpl"] = (
-                "/root/telepyrobot/cache/ytp/" + vid + "/%(title)s.%(ext)s"
+                "/root/telepyrobot/cache/ytp/" + str(vid) + "/%(title)s.%(ext)s"
             )
             try:
                 lk = p["webpage_url"]

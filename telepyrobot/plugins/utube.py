@@ -147,16 +147,16 @@ async def yta_dl(c: TelePyroBot, m: Message):
         try:
             with YoutubeDL(yta_opts) as ydl:
                 ydl.download([link])  # Use link in list!
-                print("Downloaded!")
+                print("Downloaded Music...!")
         except Exception:
             exc = traceback.format_exc()
             await m.reply_text(exc)
 
         c_time = time.time()
         await m.reply_audio(
-            audio=location + file,
-            title=str(title),
-            performer=str(artist),
+            audio=dl_location,
+            title=title,
+            performer=artist,
             duration=int(duration),
             caption=f"Downloaded using @TelePyroBot Userbot",
             progress=progress_for_pyrogram,

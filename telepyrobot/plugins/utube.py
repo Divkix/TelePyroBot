@@ -94,12 +94,11 @@ async def GetPlaylistInfo(link):
         infoSearched = ydl.extract_info(link)
 
     title = infoSearched["title"]
-    link_playlist = infoSearched["webpage_url"]
     artist = infoSearched["uploader"]
     vid = infoSearched["id"]
     entries = infoSearched["entries"]
 
-    return artist, title, vid, entries, link_playlist
+    return artist, title, vid, entries
 
 
 async def GetVidInfo(link):
@@ -214,7 +213,7 @@ async def ytp_dl(c: TelePyroBot, m: Message):
     link = m.text.split(None, 1)[1]
     if "youtube.com" or "youtu.be" in link:
         await m.edit_text("<i>Getting Playlist Information...</i>")
-        artist, title, vid, entries, link_playlist = await GetPlaylistInfo(
+        artist, title, vid, entries = await GetPlaylistInfo(
             link
         )  # Get information about video!
 
@@ -276,69 +275,67 @@ async def ytp_dl(c: TelePyroBot, m: Message):
     return
 
 
-"""
-@TelePyroBot.on_message(filters.command("ytpu", COMMAND_HAND_LER) & filters.me)
-async def ytpu_dl(c: TelePyroBot, m: Message):
-    link = m.text.split(None, 1)[1]
-    if "youtube.com" or "youtu.be" in link:
-        await m.edit_text("<i>Getting Playlist Information...</i>")
-        artist, title, vid, entries, link_playlist = await GetPlaylistInfo(
-            link
-        )  # Get information about video!
+# @TelePyroBot.on_message(filters.command("ytpu", COMMAND_HAND_LER) & filters.me)
+# async def ytpu_dl(c: TelePyroBot, m: Message):
+#     link = m.text.split(None, 1)[1]
+#     if "youtube.com" or "youtu.be" in link:
+#         await m.edit_text("<i>Getting Playlist Information...</i>")
+#         artist, title, vid, entries, link_playlist = await GetPlaylistInfo(
+#             link
+#         )  # Get information about video!
 
-        dl_location = f"/root/telepyrobot/cache/ytp/{vid}/"
-        num = 1
+#         dl_location = f"/root/telepyrobot/cache/ytp/{vid}/"
+#         num = 1
 
-        Download_Text = (
-            "<b>Downloading Video:</b> {num}/{entries}\n"
-            "<b>Title:</b> {title}\n"
-            "<b>Uploader:</b> {uploader}\n"
-            "<b>Duration:</b> {duration}"
-        )
+#         Download_Text = (
+#             "<b>Downloading Video:</b> {num}/{entries}\n"
+#             "<b>Title:</b> {title}\n"
+#             "<b>Uploader:</b> {uploader}\n"
+#             "<b>Duration:</b> {duration}"
+#         )
 
-        for p in entries:
-            try:
-                lk = p["webpage_url"]
-                with YoutubeDL(ytp_opts) as ydl:
-                    ydl.download([lk])  # Use link in list!
-                print(f"Downloaded {p}!")
-                num += 1
-                title = p["title"]
-                uploader = p["uploader"]
-                duration = await time_length(p["duration"])
-                try:
-                    await m.edit_text(
-                        Download_Text.format(
-                            num=num,
-                            entries=len(entries),
-                            title=title,
-                            uploader=uploader,
-                            duration=duration,
-                        )
-                    )
-                except errors.MessageNotModified:
-                    pass
-            except Exception:
-                exc = traceback.format_exc()
-                await m.reply_text(exc)
+#         for p in entries:
+#             try:
+#                 lk = p["webpage_url"]
+#                 with YoutubeDL(ytp_opts) as ydl:
+#                     ydl.download([lk])  # Use link in list!
+#                 print(f"Downloaded {p}!")
+#                 num += 1
+#                 title = p["title"]
+#                 uploader = p["uploader"]
+#                 duration = await time_length(p["duration"])
+#                 try:
+#                     await m.edit_text(
+#                         Download_Text.format(
+#                             num=num,
+#                             entries=len(entries),
+#                             title=title,
+#                             uploader=uploader,
+#                             duration=duration,
+#                         )
+#                     )
+#                 except errors.MessageNotModified:
+#                     pass
+#             except Exception:
+#                 exc = traceback.format_exc()
+#                 await m.reply_text(exc)
 
-        files = os.listdir(dl_location)
-        files.sort()
-        for file in files:
-            c_time = time.time()
-            if file.endswith(".mkv"):
-                await m.reply_video(
-                    document=dl_location + file,
-                    progress=progress_for_pyrogram,
-                    supports_streaming=True,
-                    progress_args=(f"Uploading __{file}__...", m, c_time),
-                )
-            else:
-                await m.reply_document(
-                    document=dl_location + file,
-                    progress=progress_for_pyrogram,
-                    progress_args=(f"Uploading __{file}__...", m, c_time),
-                )
-        await m.delete()
-    return
-    """
+#         files = os.listdir(dl_location)
+#         files.sort()
+#         for file in files:
+#             c_time = time.time()
+#             if file.endswith(".mkv"):
+#                 await m.reply_video(
+#                     document=dl_location + file,
+#                     progress=progress_for_pyrogram,
+#                     supports_streaming=True,
+#                     progress_args=(f"Uploading __{file}__...", m, c_time),
+#                 )
+#             else:
+#                 await m.reply_document(
+#                     document=dl_location + file,
+#                     progress=progress_for_pyrogram,
+#                     progress_args=(f"Uploading __{file}__...", m, c_time),
+#                 )
+#         await m.delete()
+#     return

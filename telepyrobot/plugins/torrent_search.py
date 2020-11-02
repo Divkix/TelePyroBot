@@ -26,7 +26,7 @@ async def tor_search(c: TelePyroBot, m: Message):
     await m.edit_text("`Please wait, fetching results...`")
     query = m.text.split(None, 1)[1]
     response = requests.get(
-        f"https://sjprojectsapi.herokuapp.com/torrent/?query={query}"
+        f"https://api.sumanjay.cf/torrent/?query=ubuntu{query}"
     )
     ts = json.loads(response.text)
     if not ts == response.json():
@@ -46,9 +46,15 @@ async def tor_search(c: TelePyroBot, m: Message):
             break
 
     OUTPUT = clear_string(listdata)  # Remove the html elements using regex
-    with BytesIO(str.encode(OUTPUT)) as f:
-        f.name = "ls.txt"
-        await m.reply_document(
-            document=f, caption=f"Here are the results for the query: {query}"
-        )
-    await m.delete()
+    try:
+        with BytesIO(str.encode(OUTPUT)) as f:
+            f.name = "torrent_search.txt"
+            await m.reply_document(
+                document=f, caption=f"Here are the results for the query: {query}"
+            )
+        await m.delete()
+    except ValueError:
+        await m.edit_text("Could not fetch enough torrents!")
+    except Exception as ef:
+        await m.edit_text(ef)
+    return

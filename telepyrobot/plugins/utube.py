@@ -15,8 +15,10 @@ __help__ = f"""
 Youtube Downloader using youtube-dl Python Library!
 
 **Commands:**
-`{COMMAND_HAND_LER}ytv <link>`: Download Video from YouTube and then upload it!
-`{COMMAND_HAND_LER}yta <link>`: Download Audio from YouTube and then upload it!
+`{COMMAND_HAND_LER}ytv <link>`: Download Video from YouTube and then upload it.
+`{COMMAND_HAND_LER}yta <link>`: Download Audio from YouTube and then upload it.
+`{COMMAND_HAND_LER}ytp <link>`: Download Playlist from YouTube.
+`{COMMAND_HAND_LER}ytpu <link>`: Download Playlist from YouTube and then upload it.
 """
 
 ydl_search_opts = {
@@ -143,7 +145,7 @@ async def ytv_dl(c: TelePyroBot, m: Message):
                     progress_args=(f"Uploading __{file}__...", m, c_time),
                 )
             else:
-                await m.reply_video(
+                await m.reply_document(
                     document=dl_location + file,
                     progress=progress_for_pyrogram,
                     progress_args=(f"Uploading __{file}__...", m, c_time),
@@ -240,6 +242,57 @@ async def ytp_dl(c: TelePyroBot, m: Message):
 
         files = os.listdir(dl_location)
         files.sort()
+        output = "Playlist Downloaded!\n\n"
+        for i in files:
+            output += f"{dl_location+i}\n"
+        await m.edit_text(output)
+    return
+
+
+@TelePyroBot.on_message(filters.command("ytpu", COMMAND_HAND_LER) & filters.me)
+async def ytpu_dl(c: TelePyroBot, m: Message):
+    link = m.text.split(None, 1)[1]
+    if "youtube.com" or "youtu.be" in link:
+        await m.edit_text("<i>Getting Playlist Information...</i>")
+        artist, duration, title, vid, entries = await GetPlaylistInfo(
+            link
+        )  # Get information about video!
+
+        dl_location = f"/root/telepyrobot/cache/ytp/{vid}/"
+        num = 1
+
+        Download_Text = (
+            "<b>Downloading Video:</b> {num}/{entries}\n"
+            "<b>Title:</b> {title}\n"
+            "<b>Uploader:</b> {uploader}\n"
+            "<b>Duration:</b> {duration}"
+        )
+
+        for p in entries:
+            try:
+                lk = p["webpage_url"]
+                with YoutubeDL(ytv_opts) as ydl:
+                    ydl.download([lk])  # Use link in list!
+                print(f"Downloaded {p}!")
+                num += 1
+                title = p["title"]
+                uploader = p["uploader"]
+                duration = await time_length(p["duration"])
+                await m.edit_text(
+                    Download_Text.format(
+                        num=num,
+                        entries=len(entries),
+                        title=title,
+                        uploader=uploader,
+                        duration=duration,
+                    )
+                )
+            except Exception:
+                exc = traceback.format_exc()
+                await m.reply_text(exc)
+
+        files = os.listdir(dl_location)
+        files.sort()
         for file in files:
             c_time = time.time()
             if file.endswith(".mkv"):
@@ -250,7 +303,7 @@ async def ytp_dl(c: TelePyroBot, m: Message):
                     progress_args=(f"Uploading __{file}__...", m, c_time),
                 )
             else:
-                await m.reply_video(
+                await m.reply_document(
                     document=dl_location + file,
                     progress=progress_for_pyrogram,
                     progress_args=(f"Uploading __{file}__...", m, c_time),

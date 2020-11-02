@@ -44,6 +44,7 @@ yta_opts = {
     "verbose": True,
     "writethumbnail": True,
     "geo_bypass": True,
+    "restrictfilenames": True,
     "outtmpl": "/root/telepyrobot/cache/yta/%(id)s/%(title)s.%(ext)s",
     "extractaudio": True,
     "audioformat": "mp3",
@@ -78,6 +79,7 @@ async def time_length(seconds):
 
 
 async def GetVidInfo(link):
+
     with YoutubeDL(ydl_search_opts) as ydl:
         infoSearched = ydl.extract_info(link)
 
@@ -150,8 +152,6 @@ async def yta_dl(c: TelePyroBot, m: Message):
             exc = traceback.format_exc()
             await m.reply_text(exc)
 
-        files = os.listdir(dl_location)
-        files.sort()
         c_time = time.time()
         await m.reply_audio(
             audio=location + file,

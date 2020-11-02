@@ -9,8 +9,10 @@ from telepyrobot import COMMAND_HAND_LER
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
-Easily Check CAS ban of a user!
-`{COMMAND_HAND_LER}zip <folder>` to the zip the folder.
+Zip/Unzip operations using your Userbot!
+
+`{COMMAND_HAND_LER}zip <folder>` to zip the folder.
+`{COMMAND_HAND_LER}unzip <file>` to unzip the file.
 """
 
 

@@ -61,6 +61,12 @@ yta_opts = {
     "extractaudio": True,
     "audioformat": "mp3",
     "format": "(bestaudio[ext=m4a]/bestaudio)",
+    # Embed Thumbnail
+    'postprocessors': [
+            {'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'mp3',
+            'preferredquality': '192'},
+            {'key': 'EmbedThumbnail',},]
 }
 
 
@@ -207,7 +213,7 @@ async def ytp_dl(c: TelePyroBot, m: Message):
     if "youtube.com" or "youtu.be" in link:
         await m.edit_text("<i>Getting Playlist Information...</i>")
         try:
-            artist, title, vid, entries = await GetPlaylistInfo(
+            artist, title, pid, entries = await GetPlaylistInfo(
                 link
             )  # Get information about video!
         except utils.DownloadError:

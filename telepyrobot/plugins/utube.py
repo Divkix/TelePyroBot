@@ -218,7 +218,7 @@ async def ytp_dl(c: TelePyroBot, m: Message):
         num = 0  # To show download number
 
         Download_Text = (
-            "<b>Progress:</b>\n{progress}\n"
+            "<b>Downloading Playlist ({numbytotal}))</b>\n{progress}\n"
             "<b>Title:</b> {title}\n"
             "<b>Uploader:</b> {uploader}\n"
             "<b>Duration:</b> {duration}"
@@ -248,6 +248,7 @@ async def ytp_dl(c: TelePyroBot, m: Message):
                 try:
                     await m.edit_text(
                         Download_Text.format(
+                            numbytotal=f"{num}/{total}",
                             progress=progress_str,
                             entries=total_vids,
                             title=title,

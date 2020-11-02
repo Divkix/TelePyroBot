@@ -48,7 +48,7 @@ async def zipit(c: TelePyroBot, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("unzip", COMMAND_HAND_LER) & filters.me)
-async def zipit(c: TelePyroBot, m: Message):
+async def unzipit(c: TelePyroBot, m: Message):
     if (m.command) == 1:
         await m.edit_text("Please enter path to zip file which you want to extract!")
         return

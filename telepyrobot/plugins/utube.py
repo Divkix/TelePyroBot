@@ -39,6 +39,17 @@ ytv_opts = {
     "format": "(bestvideo[height>=720]+bestaudio/bestvideo+bestaudio)",
 }
 
+ytp_opts = {
+    "verbose": True,
+    "merge_output_format": "mkv",
+    "geo_bypass": True,
+    "outtmpl": "/root/telepyrobot/cache/ytp/{}/{}.{}",
+    "restrictfilenames": True,
+    "writeautomaticsub": True,
+    "writedescription": True,
+    "format": "(bestvideo[height>=720]+bestaudio/bestvideo+bestaudio)",
+}
+
 yta_opts = {
     "verbose": True,
     "writethumbnail": True,
@@ -219,18 +230,9 @@ async def ytp_dl(c: TelePyroBot, m: Message):
         Errorss = ""
 
         for p in entries:
-            ytp_opts = {
-                "verbose": True,
-                "merge_output_format": "mkv",
-                "geo_bypass": True,
-                "outtmpl": "/root/telepyrobot/cache/ytp/{}/{}.{}".format(
-                    vid, p["title"], "mkv"
-                ),
-                "restrictfilenames": True,
-                "writeautomaticsub": True,
-                "writedescription": True,
-                "format": "(bestvideo[height>=720]+bestaudio/bestvideo+bestaudio)",
-            }
+            ytp_opts["outtmpl"] = (
+                "/root/telepyrobot/cache/ytp/" + vid + "/%(title)s.%(ext)s"
+            )
             try:
                 lk = p["webpage_url"]
                 with YoutubeDL(ytp_opts) as ydl:

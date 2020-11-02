@@ -83,12 +83,12 @@ async def GetPlaylistInfo(link):
         infoSearched = ydl.extract_info(link)
 
     title = infoSearched["title"]
-    link_video = infoSearched["webpage_url"]
+    link_playlist = infoSearched["webpage_url"]
     artist = infoSearched["uploader"]
     vid = infoSearched["id"]
     entries = infoSearched["entries"]
 
-    return artist, duration, title, vid, entries
+    return artist, title, vid, entries, link_playlist
 
 
 async def GetVidInfo(link):
@@ -203,7 +203,7 @@ async def ytp_dl(c: TelePyroBot, m: Message):
     link = m.text.split(None, 1)[1]
     if "youtube.com" or "youtu.be" in link:
         await m.edit_text("<i>Getting Playlist Information...</i>")
-        artist, duration, title, vid, entries = await GetPlaylistInfo(
+        artist, title, vid, entries, link_playlist = await GetPlaylistInfo(
             link
         )  # Get information about video!
 
@@ -254,7 +254,7 @@ async def ytpu_dl(c: TelePyroBot, m: Message):
     link = m.text.split(None, 1)[1]
     if "youtube.com" or "youtu.be" in link:
         await m.edit_text("<i>Getting Playlist Information...</i>")
-        artist, duration, title, vid, entries = await GetPlaylistInfo(
+        artist, title, vid, entries, link_playlist = await GetPlaylistInfo(
             link
         )  # Get information about video!
 

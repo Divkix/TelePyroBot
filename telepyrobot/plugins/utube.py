@@ -7,7 +7,7 @@ from pyrogram import filters, errors
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, MAX_MESSAGE_LENGTH
 from telepyrobot.utils.dl_helpers import progress_for_pyrogram
-from youtube_dl import YoutubeDL
+from youtube_dl import YoutubeDL, utils
 from telepyrobot.utils.check_size import get_directory_size
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -60,16 +60,6 @@ yta_opts = {
     "extractaudio": True,
     "audioformat": "mp3",
     "format": "(bestaudio[ext=m4a]/bestaudio)",
-    "postprocessors": [
-        {
-            "key": "FFmpegExtractAudio",
-            "preferredcodec": "mp3",
-            "preferredquality": "192",
-        },
-        {
-            "key": "EmbedThumbnail",
-        },
-    ],
 }
 
 
@@ -85,35 +75,28 @@ async def time_length(seconds):
         time_song = "%02d:%02d" % (minutes, seconds)
     else:
         time_song = "%02d" % (seconds)
-
     return time_song
 
 
 async def GetPlaylistInfo(link):
-
     with YoutubeDL(ydl_search_opts) as ydl:
         infoSearched = ydl.extract_info(link)
-
     title = infoSearched["title"]
     artist = infoSearched["uploader"]
     vid = infoSearched["id"]
     entries = infoSearched["entries"]
-
     return artist, title, vid, entries
 
 
 async def GetVidInfo(link):
-
     with YoutubeDL(ydl_search_opts) as ydl:
         infoSearched = ydl.extract_info(link)
-
     duration = await time_length(infoSearched["duration"])
     timeS = infoSearched["duration"]
     title = infoSearched["title"]
     link_video = infoSearched["webpage_url"]
     artist = infoSearched["uploader"]
     vid = infoSearched["id"]
-
     return artist, duration, timeS, title, vid
 
 
@@ -122,9 +105,13 @@ async def ytv_dl(c: TelePyroBot, m: Message):
     link = m.text.split(None, 1)[1]
     if "youtube.com" or "youtu.be" in link:
         await m.edit_text("<i>Getting Video Information...</i>")
-        artist, duration, timeS, title, vid = await GetVidInfo(
-            link
-        )  # Get information about video!
+        try:
+            artist, duration, timeS, title, vid = await GetVidInfo(
+                link
+            )  # Get information about video!
+        except utils.DownloadError:
+            await m.edit_text("Could not extract video data, please try agin later!")
+            return
         await m.edit_text(
             (
                 f"<i>Downloading Video...</i>\n\n"
@@ -170,9 +157,13 @@ async def yta_dl(c: TelePyroBot, m: Message):
     link = m.text.split(None, 1)[1]
     if "youtube.com" or "youtu.be" in link:
         await m.edit_text("<i>Getting Music Information...</i>")
-        artist, duration, timeS, title, mid = await GetVidInfo(
-            link
-        )  # Get information about video!
+        try:
+            artist, duration, timeS, title, mid = await GetVidInfo(
+                link
+            )  # Get information about video!
+        except utils.DownloadError:
+            await m.edit_text("Could not extract video data, please try agin later!")
+            return
         await m.edit_text(
             (
                 f"<i>Downloading Music...</i>\n\n"
@@ -203,7 +194,7 @@ async def yta_dl(c: TelePyroBot, m: Message):
                 duration=int(timeS),
                 caption=f"Downloaded using @TelePyroBot Userbot",
                 progress=progress_for_pyrogram,
-                progress_args=("Uploading...", m, c_time),
+                progress_args=(f"Uploading <i>{title}</i> ...", m, c_time),
             )
         await m.delete()
     return
@@ -214,9 +205,13 @@ async def ytp_dl(c: TelePyroBot, m: Message):
     link = m.text.split(None, 1)[1]
     if "youtube.com" or "youtu.be" in link:
         await m.edit_text("<i>Getting Playlist Information...</i>")
-        artist, title, vid, entries = await GetPlaylistInfo(
-            link
-        )  # Get information about video!
+        try:
+            artist, title, vid, entries = await GetPlaylistInfo(
+                link
+            )  # Get information about video!
+        except utils.DownloadError:
+            await m.edit_text("Could not extract video data, please try agin later!")
+            return
 
         dl_location = f"/root/telepyrobot/cache/ytp/{vid}/"
         num = 0  # To show download number

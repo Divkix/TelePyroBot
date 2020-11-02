@@ -74,8 +74,8 @@ RUN apt update && apt upgrade -y && \
     p7zip-rar \
     zip \
     unzip \
-    less
-# && rm -rf /var/lib/apt/lists /var/cache/apt/archives /tmp
+    less \
+    && rm -rf /var/lib/apt/lists /var/cache/apt/archives /tmp
 
 RUN pip3 install --upgrade pip setuptools
 

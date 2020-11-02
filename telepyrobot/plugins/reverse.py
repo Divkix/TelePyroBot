@@ -19,7 +19,7 @@ This module will help you Reverse Search Media
 `{COMMAND_HAND_LER} reverse <reply to a media>`
 Reverse search any supported media by: Google
 """
-screen_shot = "telepyrobot/downloads/"
+screen_shot = "telepyrobot/cache/"
 
 
 async def run_cmd(cmd: str) -> Tuple[str, str, int, int]:

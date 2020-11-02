@@ -26,11 +26,10 @@ __help__ = f"""
 `{COMMAND_HAND_LER}megaimport <url>`: Download file from mega url to your account.
 """
 
-mega, megaC = None, None
-
+megaC = None
+mega = Mega()
 
 try:
-    mega = Mega()
     if MEGANZ_EMAIL and MEGANZ_PASSWORD:
         megaC = mega.login(MEGANZ_EMAIL, MEGANZ_PASSWORD)
     else:

@@ -18,7 +18,7 @@ __help__ = f"""
 )
 async def upload_as_document(c: TelePyroBot, m: Message):
     await m.edit_text("`Collecting Whois Info.. Hang on!`")
-    user_id, user_first_name = await extract_user(c, m)
+    user_id, user_first_name = await extract_user(m)
     if user_id is not None:
         from_user = await c.get_users(user_id)
         message_out_str = (

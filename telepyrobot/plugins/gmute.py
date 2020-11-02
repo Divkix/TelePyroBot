@@ -24,7 +24,7 @@ They will not be able to speak until you ungmute them!
 @TelePyroBot.on_message(filters.command("gmute", COMMAND_HAND_LER) & filters.me)
 async def start_gmute(c: TelePyroBot, m: Message):
     await m.edit_text("`Putting duct tape...`")
-    user_id, user_first_name = await extract_user(c, m)
+    user_id, user_first_name = await extract_user(m)
     if db.is_gmuted(user_id):
         await m.edit_text("`This user is already gmuted!`")
         return
@@ -46,7 +46,7 @@ async def start_gmute(c: TelePyroBot, m: Message):
 @TelePyroBot.on_message(filters.command("ungmute", COMMAND_HAND_LER) & filters.me)
 async def end_gmute(c: TelePyroBot, m: Message):
     await m.edit_text("`Removing duct tape...`")
-    user_id, user_first_name = await extract_user(c, m)
+    user_id, user_first_name = await extract_user(m)
 
     if not db.is_gmuted(user_id):
         await m.edit_text("`This user is not gmuted!`")

@@ -75,7 +75,7 @@ async def eval(c: TelePyroBot, m: Message):
             f.name = "eval.txt"
             await m.reply_document(
                 document=f,
-                caption=cmd,
+                caption=f"<code>{cmd}</code>",
             )
         await status_m.delete()
     else:
@@ -124,7 +124,7 @@ async def execution(c: TelePyroBot, m: Message):
             f.name = "exec.txt"
             await m.reply_document(
                 document=f,
-                caption=cmd,
+                caption=f"<code>{cmd}</code>",
             )
     else:
         await m.reply_text(OUTPUT)

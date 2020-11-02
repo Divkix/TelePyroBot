@@ -19,10 +19,13 @@ List the directories of the server.
 
 @TelePyroBot.on_message(filters.command("ls", COMMAND_HAND_LER) & filters.me)
 async def list_directories(c: TelePyroBot, m: Message):
+
     if len(m.text.split()) == 1:
         location = "."
     elif len(m.text.split()) >= 2:
         location = m.text.split(None, 1)[1]
+
+    await m.edit_text("Fetching files...")
 
     location = os.path.abspath(location)
     if not location.endswith("/"):

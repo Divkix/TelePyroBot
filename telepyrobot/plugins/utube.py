@@ -75,6 +75,20 @@ async def time_length(seconds):
     return time_song
 
 
+async def GetPlaylistInfo(link):
+
+    with YoutubeDL(ydl_search_opts) as ydl:
+        infoSearched = ydl.extract_info(link)
+
+    title = infoSearched["title"]
+    link_video = infoSearched["webpage_url"]
+    artist = infoSearched["uploader"]
+    vid = infoSearched["id"]
+    entries = infoSearched["entries"]
+
+    return artist, duration, title, vid, entries
+
+
 async def GetVidInfo(link):
 
     with YoutubeDL(ydl_search_opts) as ydl:
@@ -86,6 +100,7 @@ async def GetVidInfo(link):
     link_video = infoSearched["webpage_url"]
     artist = infoSearched["uploader"]
     vid = infoSearched["id"]
+
     return artist, duration, timeS, title, vid
 
 
@@ -98,7 +113,13 @@ async def ytv_dl(c: TelePyroBot, m: Message):
             link
         )  # Get information about video!
         await m.edit_text(
-            f"<i>Downloading Video...</i>\n\n<b>ID:</b> <code>{mid}</code>\n<b>Uploader:</b> <code>{artist}</code>\n<b>Duration:</b> <code>{duration}</code>\n<b>Title:</b> <code>{title}</code>"
+            (
+                f"<i>Downloading Video...</i>\n\n"
+                f"<b>ID:</b> <code>{mid}</code>\n"
+                f"<b>Uploader:</b> <code>{artist}</code>\n"
+                f"<b>Duration:</b> <code>{duration}</code>\n"
+                f"<b>Title:</b> <code>{title}</code>"
+            )
         )
         dl_location = f"/root/telepyrobot/cache/ytv/{vid}/"
         try:
@@ -140,7 +161,13 @@ async def yta_dl(c: TelePyroBot, m: Message):
             link
         )  # Get information about video!
         await m.edit_text(
-            f"<i>Downloading Music...</i>\n\n<b>ID:</b> <code>{mid}</code>\n<b>Uploader:</b> <code>{artist}</code>\n<b>Duration:</b> <code>{duration}</code>\n<b>Title:</b> <code>{title}</code>"
+            (
+                f"<i>Downloading Music...</i>\n\n"
+                f"<b>ID:</b> <code>{mid}</code>\n"
+                f"<b>Uploader:</b> <code>{artist}</code>\n"
+                f"<b>Duration:</b> <code>{duration}</code>\n"
+                f"<b>Title:</b> <code>{title}</code>"
+            )
         )
         dl_location = f"/root/telepyrobot/cache/yta/{mid}/"
         try:
@@ -165,5 +192,68 @@ async def yta_dl(c: TelePyroBot, m: Message):
                 progress=progress_for_pyrogram,
                 progress_args=("Uploading...", m, c_time),
             )
+        await m.delete()
+    return
+
+
+@TelePyroBot.on_message(filters.command("ytp", COMMAND_HAND_LER) & filters.me)
+async def ytp_dl(c: TelePyroBot, m: Message):
+    link = m.text.split(None, 1)[1]
+    if "youtube.com" or "youtu.be" in link:
+        await m.edit_text("<i>Getting Playlist Information...</i>")
+        artist, duration, title, vid, entries = await GetPlaylistInfo(
+            link
+        )  # Get information about video!
+
+        dl_location = f"/root/telepyrobot/cache/ytp/{vid}/"
+        num = 1
+
+        Download_Text = (
+            "<b>Downloading Video:</b> {num}/{entries}\n"
+            "<b>Title:</b> {title}\n"
+            "<b>Uploader:</b> {uploader}\n"
+            "<b>Duration:</b> {duration}"
+        )
+
+        for p in entries:
+            try:
+                lk = p["webpage_url"]
+                with YoutubeDL(ytv_opts) as ydl:
+                    ydl.download([lk])  # Use link in list!
+                print(f"Downloaded {p}!")
+                num += 1
+                title = p["title"]
+                uploader = p["uploader"]
+                duration = await time_length(p["duration"])
+                await m.edit_text(
+                    Download_Text.format(
+                        num=num,
+                        entries=len(entries),
+                        title=title,
+                        uploader=uploader,
+                        duration=duration,
+                    )
+                )
+            except Exception:
+                exc = traceback.format_exc()
+                await m.reply_text(exc)
+
+        files = os.listdir(dl_location)
+        files.sort()
+        for file in files:
+            c_time = time.time()
+            if file.endswith(".mkv"):
+                await m.reply_video(
+                    document=dl_location + file,
+                    progress=progress_for_pyrogram,
+                    supports_streaming=True,
+                    progress_args=(f"Uploading __{file}__...", m, c_time),
+                )
+            else:
+                await m.reply_video(
+                    document=dl_location + file,
+                    progress=progress_for_pyrogram,
+                    progress_args=(f"Uploading __{file}__...", m, c_time),
+                )
         await m.delete()
     return

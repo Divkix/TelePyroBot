@@ -37,7 +37,7 @@ async def promote_usr(c: TelePyroBot, m: Message):
     if not is_admin:
         return
         return
-    user_id, user_first_name = await extract_user(c, m)
+    user_id, user_first_name = await extract_user(m)
     try:
         await m.chat.promote_member(
             user_id=user_id,
@@ -76,7 +76,7 @@ async def demote_usr(c: TelePyroBot, m: Message):
     if not is_admin:
         return
         return
-    user_id, user_first_name = await extract_user(c, m)
+    user_id, user_first_name = await extract_user(m)
     try:
         await m.chat.promote_member(
             user_id=user_id,
@@ -113,7 +113,7 @@ async def ban_usr(c: TelePyroBot, m: Message):
     is_admin = await admin_check(c, m)
     if not is_admin:
         return
-    user_id, user_first_name = await extract_user(c, m)
+    user_id, user_first_name = await extract_user(m)
     if m.reply_to_message:
         await c.delete_messages(m.chat.id, m.reply_to_message.message_id)
     try:
@@ -148,7 +148,7 @@ async def restrict_usr(c: TelePyroBot, m: Message):
         await asyncio.sleep(2)
         await m.delete()
         return
-    user_id, user_first_name = await extract_user(c, m)
+    user_id, user_first_name = await extract_user(m)
     try:
         await m.chat.restrict_member(user_id=user_id, permisssions=ChatPermissions())
         if str(user_id).lower().startswith("@"):
@@ -178,7 +178,7 @@ async def unrestrict_usr(c: TelePyroBot, m: Message):
     if not is_admin:
         return
         return
-    user_id, user_first_name = await extract_user(c, m)
+    user_id, user_first_name = await extract_user(m)
     try:
         await m.chat.unban_member(user_id)
         if str(user_id).lower().startswith("@"):

@@ -8,6 +8,7 @@ from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, MAX_MESSAGE_LENGTH
 from telepyrobot.utils.dl_helpers import progress_for_pyrogram
 from youtube_dl import YoutubeDL
+from telepyrobot.utils.check_size import get_directory_size
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -218,7 +219,7 @@ async def ytp_dl(c: TelePyroBot, m: Message):
         )  # Get information about video!
 
         dl_location = f"/root/telepyrobot/cache/ytp/{vid}/"
-        num = 1
+        num = 0  # To show download number
 
         Download_Text = (
             "<b>Downloading Video:</b> {num}/{entries}\n"
@@ -226,16 +227,16 @@ async def ytp_dl(c: TelePyroBot, m: Message):
             "<b>Uploader:</b> {uploader}\n"
             "<b>Duration:</b> {duration}"
         )
-        Errorss = ""
+        Ers = "Errors while Downloading:\n\n"
 
         for p in entries:
             ytp_opts["outtmpl"] = (
                 "/root/telepyrobot/cache/ytp/" + str(vid) + "/%(title)s.%(ext)s"
-            )
+            )  # vid = Playlist ID
             try:
-                lk = p["webpage_url"]
+                url = p["webpage_url"]
                 with YoutubeDL(ytp_opts) as ydl:
-                    ydl.download([lk])  # Use link in list!
+                    ydl.download([url])  # Use link in list!
                 print(f"Downloaded {p}!")
                 num += 1
                 title = p["title"]
@@ -251,27 +252,29 @@ async def ytp_dl(c: TelePyroBot, m: Message):
                             duration=duration,
                         )
                     )
-                except errors.MessageNotModified:
+                except errors.MessageNotModified:  # SHould not happen, but still!
                     pass
             except Exception:
                 exc = traceback.format_exc()
-                Errorss += exc + "\n"
+                Ers += exc + "\n"
 
         files = os.listdir(dl_location)
         files.sort()
-        output = "Playlist Downloaded!\n\n"
-        for i in files:
-            output += f"{dl_location+i}\n"
+
+        output = f"Playlist Downloaded to <code>{dl_location}</code> ({get_directory_size(os.path.abspath(dl_location))})\n\n"
+        for file in files:
+            output += f"• <code>{file}</code>\n ({get_directory_size(os.path.abspath(dl_location+file))})\n"
+
+        output += f"\nTo upload, use <code>{COMMAND_HAND_LER}batchup {dl_location}</code> to upload all contents of this folder!"
+
         await m.edit_text(output)
-        if len(Errorss) > MAX_MESSAGE_LENGTH:
-            with BytesIO(str.encode(Errorss)) as f:
+        if not Ers.endswith("Downloading:\n\n"):
+            with BytesIO(str.encode(Ers)) as f:
                 f.name = "ytp_errors.txt"
                 await m.reply_document(
                     document=f,
-                    caption=f"YouTube-dl Playlist Errors",
+                    caption=f"Download Errors!",
                 )
-        else:
-            await m.reply_text(OUTPUT)
     return
 
 

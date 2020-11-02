@@ -1,6 +1,5 @@
 import os
 import time
-import asyncio
 import traceback
 from datetime import datetime
 from telepyrobot.__main__ import TelePyroBot
@@ -8,8 +7,6 @@ from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 from telepyrobot.utils.dl_helpers import progress_for_pyrogram
-
-# Ytdl Search
 from youtube_dl import YoutubeDL
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -142,7 +139,7 @@ async def yta_dl(c: TelePyroBot, m: Message):
             link
         )  # Get information about video!
         await m.edit_text(
-            f"<code>Downloading Video...</code>\n\n<b>ID:</b>{mid}<b>Uploader:</b> {artist}\n<b>Duration:</b> {duration}\n<b>Title:</b> {title}"
+            f"<code>Downloading Video...</code>\n\n<b>ID:</b>{mid}\n<b>Uploader:</b> {artist}\n<b>Duration:</b> {duration}\n<b>Title:</b> {title}"
         )
         dl_location = f"/root/telepyrobot/cache/yta/{mid}/{title}.mp3"
         try:
@@ -161,6 +158,6 @@ async def yta_dl(c: TelePyroBot, m: Message):
             duration=int(timeS),
             caption=f"Downloaded using @TelePyroBot Userbot",
             progress=progress_for_pyrogram,
-            progress_args=(f"Uploading __{file}__...", m, c_time),
+            progress_args=("Uploading...", m, c_time),
         )
     return

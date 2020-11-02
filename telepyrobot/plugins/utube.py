@@ -42,17 +42,22 @@ ytv_opts = {
 
 yta_opts = {
     "verbose": True,
-    'writethumbnail': True,
+    "writethumbnail": True,
     "geo_bypass": True,
     "outtmpl": "/root/telepyrobot/cache/yta/%(id)s/%(title)s.%(ext)s",
     "extractaudio": True,
     "audioformat": "mp3",
     "format": "(bestaudio[ext=m4a]/bestaudio)",
-    'postprocessors': [
-            {'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
-            'preferredquality': '192'},
-            {'key': 'EmbedThumbnail',},]}
+    "postprocessors": [
+        {
+            "key": "FFmpegExtractAudio",
+            "preferredcodec": "mp3",
+            "preferredquality": "192",
+        },
+        {
+            "key": "EmbedThumbnail",
+        },
+    ],
 }
 
 
@@ -156,5 +161,5 @@ async def yta_dl(c: TelePyroBot, m: Message):
             caption=f"Downloaded using @TelePyroBot Userbot",
             progress=progress_for_pyrogram,
             progress_args=(f"Uploading __{file}__...", m, c_time),
-    )
+        )
     return

@@ -241,16 +241,14 @@ async def ytp_dl(c: TelePyroBot, m: Message):
                 percentage = (num / total_vids) * 100  # Percentage
                 progress_str = "<b>[{0}{1}]</b>\n<b>Progress:</b> <i>{2}%</i>".format(
                     "".join(["●" for i in range(num)]),
-                    "".join(
-                        ["○" for i in range(total_vids - num]
-                    ),
+                    "".join(["○" for i in range(total_vids - num)]),
                     round(percentage, 2),
                 )
                 try:
                     await m.edit_text(
                         Download_Text.format(
                             progress=progress_str,
-                            entries=len(entries),
+                            entries=total_vids,
                             title=title,
                             uploader=uploader,
                             duration=duration,

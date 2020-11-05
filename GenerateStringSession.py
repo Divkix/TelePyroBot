@@ -12,7 +12,7 @@ except ModuleNotFoundError:
 async def main(api_id, api_hash):
     """ Generate String Session for the current Memory Session"""
     async with Client(":memory:", api_id=api_id, api_hash=api_hash) as app:
-        print(app.export_session_string())
+        print(await app.export_session_string())
 
 
 if __name__ == "__main__":

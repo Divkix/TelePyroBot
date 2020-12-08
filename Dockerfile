@@ -70,6 +70,7 @@ RUN apt update && apt upgrade -y && \
     unzip \
     libopus0 \
     libopus-dev \
+    less \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives /tmp
 
 RUN pip3 install --upgrade pip setuptools

@@ -1,10 +1,12 @@
 import os
-from telepyrobot.__main__ import TelePyroBot
+from io import BytesIO
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 from telepyrobot.utils.admin_check import admin_check
 from telepyrobot.db import my_chats_db as db
+from telepyrobot.utils.clear_string import clear_string
 
 MESSAGE_RECOUNTER = 0
 
@@ -32,26 +34,23 @@ async def updatemychats(c: TelePyroBot, m: Message):
 
 @TelePyroBot.on_message(filters.me & filters.command("chatlist", COMMAND_HAND_LER))
 async def get_chat(c: TelePyroBot, m: Message):
-    await m.edit("`Exporting Chatlist...`")
+    await m.edit_text("`Exporting Chatlist...`")
     all_chats = db.get_all_chats()
     chatfile = "<---List of chats that you joined--->\n\n"
     u = 0
     for chat in all_chats:
         u += 1
         if str(chat.chat_username) != "None":
-            chatfile += "[{}] {} - ({}): @{}\n".format(
-                u, chat.chat_name, chat.chat_id, chat.chat_username
+            chatfile += (
+                f"[{u}] {chat.chat_name} - ({chat.chat_id}): @{chat.chat_username}\n"
             )
         else:
-            chatfile += "[{}] {} - ({})\n".format(u, chat.chat_name, chat.chat_id)
-    chatlist_file = "telepyrobot/cache/chatlist.txt"
-    with open(chatlist_file, "w", encoding="utf-8") as f:
-        f.write(str(chatfile))
-        f.close()
+            chatfile += f"[{u}] {chat.chat_name} - ({chat.chat_id})\n"
 
-    await c.send_document(
-        "self", document=chatlist_file, caption="Here is the chat list that you joined."
-    )
-    await m.edit("`Chat list exported to saved messages.`")
-    os.remove(chatlist_file)
+    with BytesIO(str.encode(chatfile)) as f:
+        f.name = "chatlist.txt"
+        await c.send_document(
+            "self", document=f, caption="Here is the chat list that you joined."
+        )
+    await m.edit_text("`Chat list exported to saved messages.`")
     return

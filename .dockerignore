@@ -1,5 +1,6 @@
 .git/
 .gitignore
+.github/
 GenerateStringSession.py
 *.md
 string-requirements.txt

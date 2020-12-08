@@ -1,25 +1,26 @@
 import aiohttp
 import json
 import os
+from io import BytesIO
 from urllib.parse import urlparse
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, TMP_DOWNLOAD_DIRECTORY
+from telepyrobot.utils.clear_string import clear_string
 import os
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
 `{COMMAND_HAND_LER}paste`: as a reply to text message to paste it to nekobin.
-
-`{COMMAND_HAND_LER}paste <nekobin>`/<deldog>/<dogbin>: to use a specific service for paste.
+`{COMMAND_HAND_LER}paste nekobin`/deldog/dogbin: to use a specific service for paste.
 """
 
 
 @TelePyroBot.on_message(filters.command("paste", COMMAND_HAND_LER))
 async def paste_bin(c: TelePyroBot, m: Message):
-    await m.edit("`Pasting...`")
+    await m.edit_text("`Pasting...`")
     downloaded_file_name = None
 
     if m.reply_to_message and m.reply_to_message.media:
@@ -38,11 +39,11 @@ async def paste_bin(c: TelePyroBot, m: Message):
     elif m.reply_to_message:
         downloaded_file_name = m.reply_to_message.text.html
     else:
-        await m.edit("What do you want to Paste?")
+        await m.edit_text("What do you want to Paste?")
         return
 
     if downloaded_file_name is None:
-        await m.edit("What do you want to Paste?")
+        await m.edit_text("What do you want to Paste?")
         return
 
     json_paste_data = {"content": downloaded_file_name}
@@ -56,7 +57,7 @@ async def paste_bin(c: TelePyroBot, m: Message):
 
     default_paste = "nekobin"
     if len(m.text.split()) == 2:
-        default_paste = m.text.split(" ", 1)[1]
+        default_paste = m.text.split(None, 1)[1]
 
     paste_store_url = paste_bin_store_s.get(default_paste, paste_bin_store_s["nekobin"])
     paste_store_base_url_rp = urlparse(paste_store_url)
@@ -73,7 +74,7 @@ async def paste_bin(c: TelePyroBot, m: Message):
     required_url = json.dumps(t_w_attempt, sort_keys=True, indent=4) + "\n\n #ERROR"
     if t_w_attempt is not None:
         required_url = paste_store_base_url + "/" + t_w_attempt
-    await m.edit(
+    await m.edit_text(
         f"**Pasted to {default_paste}**:\n{required_url}", disable_web_page_preview=True
     )
 

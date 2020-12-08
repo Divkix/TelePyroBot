@@ -1,5 +1,5 @@
 import os
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
@@ -17,8 +17,8 @@ __help__ = f"""
     filters.command(["whois", "info"], COMMAND_HAND_LER) & filters.me
 )
 async def upload_as_document(c: TelePyroBot, m: Message):
-    await m.edit("`Collecting Whois Info.. Hang on!`")
-    user_id, user_first_name = await extract_user(c, m)
+    await m.edit_text("`Collecting Whois Info.. Hang on!`")
+    user_id, user_first_name = await extract_user(m)
     if user_id is not None:
         from_user = await c.get_users(user_id)
         message_out_str = (
@@ -34,7 +34,7 @@ async def upload_as_document(c: TelePyroBot, m: Message):
         message_out_str += f"    <b>Username:</b> @{from_user.username}\n"
         message_out_str += f"    <b>User ID:</b> <code>{from_user.id}</code>\n"
         message_out_str += f"    <b>Permanent Link To Profile:</b> {mention_markdown(from_user.first_name, from_user.id)}"
-        await m.edit(message_out_str)
+        await m.edit_text(message_out_str)
     else:
-        await m.edit("`**Error:**\nCannot find user or error, please check logs!`")
+        await m.edit_text("`**Error:**\nCannot find user or error, please check logs!`")
     return

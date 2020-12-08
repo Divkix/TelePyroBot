@@ -2,12 +2,11 @@ import os
 import time
 import asyncio
 from datetime import datetime
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message, ChatPermissions
 from telepyrobot import (
     COMMAND_HAND_LER,
-    TG_MAX_SELECT_LEN,
     PRIVATE_GROUP_ID,
     OWNER_ID,
     OWNER_NAME,
@@ -49,11 +48,11 @@ async def lock_perm(c: TelePyroBot, m: Message):
     pin = ""
     perm = ""
 
-    lock_type = m.text.split(" ", 1)[1]
+    lock_type = m.text.split(None, 1)[1]
     chat_id = m.chat.id
 
     if not lock_type:
-        await m.edit("`I Can't Lock Nothing! (－‸ლ)`")
+        await m.edit_text("`I Can't Lock Nothing! (－‸ლ)`")
         await asyncio.sleep(5)
         await m.delete()
         return
@@ -75,7 +74,7 @@ async def lock_perm(c: TelePyroBot, m: Message):
     if lock_type == "all":
         try:
             await c.set_chat_permissions(chat_id, ChatPermissions())
-            await m.edit(text="**🔒 Locked all permission from this Chat!**")
+            await m.edit_text(text="**🔒 Locked all permission from this Chat!**")
             await asyncio.sleep(5)
             await m.delete()
             await c.send_message(
@@ -86,7 +85,7 @@ async def lock_perm(c: TelePyroBot, m: Message):
             )
 
         except Exception as e_f:
-            await m.edit(
+            await m.edit_text(
                 f"`I don't have permission to do that ＞︿＜`\n\n**ERROR:** `{e_f}`"
             )
             await asyncio.sleep(5)
@@ -139,7 +138,7 @@ async def lock_perm(c: TelePyroBot, m: Message):
         perm = "pin"
 
     else:
-        await m.edit("`Invalid Lock Type! ¯\_(ツ)_/¯`")
+        await m.edit_text("`Invalid Lock Type! ¯\_(ツ)_/¯`")
         await asyncio.sleep(5)
         await m.delete()
         return
@@ -162,7 +161,7 @@ async def lock_perm(c: TelePyroBot, m: Message):
             ),
         )
 
-        await m.edit(text=f"**🔒 Locked {perm} for this chat!**")
+        await m.edit_text(text=f"**🔒 Locked {perm} for this chat!**")
         await asyncio.sleep(5)
         await m.delete()
         await c.send_message(
@@ -173,7 +172,7 @@ async def lock_perm(c: TelePyroBot, m: Message):
         )
 
     except Exception as e_f:
-        await m.edit(
+        await m.edit_text(
             text=r"`i don't have permission to do that ＞︿＜`\n\n" f"**ERROR:** `{e_f}`"
         )
         await asyncio.sleep(5)
@@ -196,11 +195,11 @@ async def unlock_perm(c: TelePyroBot, m: Message):
     upin = ""
     uperm = ""
 
-    unlock_type = m.text.split(" ", 1)[1]
+    unlock_type = m.text.split(None, 1)[1]
     chat_id = m.chat.id
 
     if not unlock_type:
-        await m.edit(text=r"`I Can't Unlock Nothing! (－‸ლ)`")
+        await m.edit_text(text=r"`I Can't Unlock Nothing! (－‸ლ)`")
         await asyncio.sleep(5)
         await m.delete()
         return
@@ -238,7 +237,7 @@ async def unlock_perm(c: TelePyroBot, m: Message):
                 ),
             )
 
-            await m.edit("**🔓 Unlocked all permission from this Chat!**")
+            await m.edit_text("**🔓 Unlocked all permission from this Chat!**")
             await asyncio.sleep(5)
             await m.delete()
             await c.send_message(
@@ -249,7 +248,7 @@ async def unlock_perm(c: TelePyroBot, m: Message):
             )
 
         except Exception as e_f:
-            await m.edit(
+            await m.edit_text(
                 f"`I don't have permission to do that ＞︿＜`\n\n**ERROR:** `{e_f}`"
             )
             await asyncio.sleep(5)
@@ -301,7 +300,7 @@ async def unlock_perm(c: TelePyroBot, m: Message):
         uperm = "pin"
 
     else:
-        await m.edit("`Invalid Unlock Type! ¯\_(ツ)_/¯`")
+        await m.edit_text("`Invalid Unlock Type! ¯\_(ツ)_/¯`")
         await asyncio.sleep(5)
         await m.delete()
         return
@@ -324,7 +323,7 @@ async def unlock_perm(c: TelePyroBot, m: Message):
             ),
         )
 
-        await m.edit(f"**🔓 Unlocked {uperm} for this chat!**")
+        await m.edit_text(f"**🔓 Unlocked {uperm} for this chat!**")
         await asyncio.sleep(5)
         await m.delete()
         await c.send_message(
@@ -335,7 +334,9 @@ async def unlock_perm(c: TelePyroBot, m: Message):
         )
 
     except Exception as e_f:
-        await m.edit(f"`I don't have permission to do that ＞︿＜`\n\n**ERROR:** `{e_f}`")
+        await m.edit_text(
+            f"`I don't have permission to do that ＞︿＜`\n\n**ERROR:** `{e_f}`"
+        )
     return
 
 
@@ -354,7 +355,7 @@ async def view_perm(c: TelePyroBot, m: Message):
     vinvite = ""
     vpin = ""
 
-    await m.edit("`Checking group permissions... Hang on!! ⏳`")
+    await m.edit_text("`Checking group permissions... Hang on!! ⏳`")
 
     v_perm = await c.get_chat(m.chat.id)
 
@@ -391,13 +392,13 @@ async def view_perm(c: TelePyroBot, m: Message):
             permission_view_str += f"<b>👥 Invite Users:</b> {vinvite}\n"
             permission_view_str += f"<b>📌 Pin Messages:</b> {vpin}\n"
 
-            await m.edit(permission_view_str)
+            await m.edit_text(permission_view_str)
             await c.send_message(
                 PRIVATE_GROUP_ID,
-                "#VPERM\n\nCHAT: `{}` (`{}`)".format(m.chat.title, m.chat.id),
+                f"#VPERM\n\nCHAT: `{m.chat.title}` (`{m.chat.id}`)",
             )
 
         except Exception as e_f:
-            await m.edit(f"`Something went wrong!` 🤔\n\n**ERROR:** `{e_f}`")
+            await m.edit_text(f"`Something went wrong!` 🤔\n\n**ERROR:** `{e_f}`")
 
     return

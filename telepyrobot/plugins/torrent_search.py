@@ -1,11 +1,13 @@
 import requests
 import json
+from io import BytesIO
 import asyncio
 import os
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, TMP_DOWNLOAD_DIRECTORY
+from telepyrobot.utils.clear_string import clear_string
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -19,16 +21,16 @@ Get Magnet Links of any search query.
 @TelePyroBot.on_message(filters.command("tsearch", COMMAND_HAND_LER) & filters.me)
 async def tor_search(c: TelePyroBot, m: Message):
     if len(m.command) == 1:
-        await m.edit("`Check help on how to use this command`")
+        await m.edit_text("`Check help on how to use this command`")
         return
-    await m.edit("`Please wait, fetching results...`")
-    query = m.text.split(" ", 1)[1]
+    await m.edit_text("`Please wait, fetching results...`")
+    query = m.text.split(None, 1)[1]
     response = requests.get(
-        f"https://sjprojectsapi.herokuapp.com/torrent/?query={query}"
+        f"https://api.sumanjay.cf/torrent/?query=ubuntu{query}"
     )
     ts = json.loads(response.text)
     if not ts == response.json():
-        await m.edit("**Some error occured**\n`Try Again Later`")
+        await m.edit_text("**Some error occured**\n`Try Again Later`")
         return
     listdata = ""
     run = 0
@@ -43,13 +45,16 @@ async def tor_search(c: TelePyroBot, m: Message):
         except:
             break
 
-    tsfileloc = f"{TMP_DOWNLOAD_DIRECTORY}torrent_search.txt"
-    caption = f"Here are the results for the query: {query}"
-    with open(tsfileloc, "w+", encoding="utf8") as out_file:
-        out_file.write(str(listdata))
-        out_file.close()
-    await m.reply_document(
-        document=tsfileloc, caption=caption, disable_notification=True
-    )
-    os.remove(tsfileloc)
-    await m.delete()
+    OUTPUT = clear_string(listdata)  # Remove the html elements using regex
+    try:
+        with BytesIO(str.encode(OUTPUT)) as f:
+            f.name = "torrent_search.txt"
+            await m.reply_document(
+                document=f, caption=f"Here are the results for the query: {query}"
+            )
+        await m.delete()
+    except ValueError:
+        await m.edit_text("Could not fetch enough torrents!")
+    except Exception as ef:
+        await m.edit_text(ef)
+    return

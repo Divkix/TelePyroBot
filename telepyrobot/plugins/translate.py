@@ -1,5 +1,5 @@
 from googletrans import Translator
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 import os
@@ -23,7 +23,7 @@ Reply a message to translate that.
 async def translate(c: TelePyroBot, m: Message):
     if m.reply_to_message and (m.reply_to_message.text or m.reply_to_message.caption):
         if len(m.text.split()) == 1:
-            await m.edit("Usage: Reply to a message, then `tr <lang>`")
+            await m.edit_text("Usage: Reply to a message, then `tr <lang>`")
             return
         target = m.text.split()[1]
         if m.reply_to_message.text:
@@ -34,11 +34,11 @@ async def translate(c: TelePyroBot, m: Message):
         try:
             tekstr = trl.translate(text, dest=target)
         except ValueError as err:
-            await m.edit(f"Error: `{str(err)}`")
+            await m.edit_text(f"Error: `{str(err)}`")
             return
     else:
         if len(m.text.split()) <= 2:
-            await m.edit("Usage: `tr <lang> <text>`")
+            await m.edit_text("Usage: `tr <lang> <text>`")
             return
         target = m.text.split(None, 2)[1]
         text = m.text.split(None, 2)[2]
@@ -46,8 +46,10 @@ async def translate(c: TelePyroBot, m: Message):
         try:
             tekstr = trl.translate(text, dest=target)
         except ValueError as err:
-            await m.edit("Error: `{}`".format(str(err)))
+            await m.edit_text(f"Error: `{str(err)}`")
             return
 
-    await m.edit(f"Translated from `{detectlang.lang}` to `{target}`:\n`{tekstr.text}`")
+    await m.edit_text(
+        f"Translated from `{detectlang.lang}` to `{target}`:\n`{tekstr.text}`"
+    )
     return

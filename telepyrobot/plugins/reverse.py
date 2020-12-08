@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from typing import Tuple, Optional
 from os.path import basename
 import asyncio
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, LOGGER
@@ -19,7 +19,7 @@ This module will help you Reverse Search Media
 `{COMMAND_HAND_LER} reverse <reply to a media>`
 Reverse search any supported media by: Google
 """
-screen_shot = "telepyrobot/downloads/"
+screen_shot = "telepyrobot/cache/"
 
 
 async def run_cmd(cmd: str) -> Tuple[str, str, int, int]:
@@ -51,30 +51,30 @@ async def take_screen_shot(
 
 @TelePyroBot.on_message(filters.command("reverse", COMMAND_HAND_LER) & filters.me)
 async def google_rs(c: TelePyroBot, m: Message):
-    await m.edit("`Searching...`")
+    await m.edit_text("`Searching...`")
     start = datetime.now()
     out_str = "`Reply to an image`"
     if m.reply_to_message:
         message_ = m.reply_to_message
         if message_.sticker and message_.sticker.file_name.endswith(".tgs"):
-            await m.edit("<b><i>Currently Not supported!</b></i>")
+            await m.edit_text("<b><i>Currently Not supported!</b></i>")
             return
         if message_.photo or message_.animation or message_.sticker:
             dis_loc = await c.download_media(message=message_)
         if message_.animation or message_.video:
-            """await m.edit("`Converting this Gif`")
+            """await m.edit_text("`Converting this Gif`")
             img_file = os.path.join(screen_shot, "grs.jpg")
             await take_screen_shot(dis_loc, 0, img_file)
             if not os.path.lexists(img_file):
-                await m.edit("`Something went wrong in Conversion`")
+                await m.edit_text("`Something went wrong in Conversion`")
                 await asyncio.sleep(5)
                 await m.delete()"""
-            await m.edit("<i>Currently not supported!</i>")
+            await m.edit_text("<i>Currently not supported!</i>")
             return
             dis_loc = img_file
         base_url = "http://www.google.com"
         if dis_loc:
-            search_url = "{}/searchbyimage/upload".format(base_url)
+            search_url = f"{base_url}/searchbyimage/upload"
             multipart = {
                 "encoded_image": (dis_loc, open(dis_loc, "rb")),
                 "image_content": "",
@@ -87,7 +87,7 @@ async def google_rs(c: TelePyroBot, m: Message):
         else:
             await m.delete()
             return
-        await m.edit("`Found Google Results...`")
+        await m.edit_text("`Found Google Results...`")
         headers = {
             "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0"
         }
@@ -105,4 +105,4 @@ async def google_rs(c: TelePyroBot, m: Message):
 
 Reverse search by: @TelePyroBot
 """
-    await m.edit(out_str, parse_mode="HTML", disable_web_page_preview=True)
+    await m.edit_text(out_str, parse_mode="HTML", disable_web_page_preview=True)

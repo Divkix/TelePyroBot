@@ -1,6 +1,6 @@
 import pyfiglet
 import os
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
@@ -34,20 +34,20 @@ async def figlet_font(c: TelePyroBot, m: Message):
         "bulb": "bulbhead",
         "digi": "digital",
     }
-    input_str = m.text.split(" ", 1)[1]
+    input_str = m.text.split(None, 1)[1]
     if "|" in input_str:
         text, font_style = input_str.split("|", maxsplit=1)
     elif input_str is not None:
         font_style = None
         text = input_str
     else:
-        await m.edit("`Please add some text to figlet`")
+        await m.edit_text("`Please add some text to figlet`")
         return
     if font_style is not None:
         try:
             font = CMD_FIG[font_style]
         except KeyError:
-            await m.edit("`Font not available`")
+            await m.edit_text("`Font not available`")
             return
         result = pyfiglet.figlet_format(text, font=font)
     else:

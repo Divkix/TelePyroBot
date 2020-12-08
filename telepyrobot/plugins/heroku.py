@@ -4,7 +4,7 @@ import heroku3
 import asyncio
 import math
 from telepyrobot import COMMAND_HAND_LER, HEROKU_API_KEY, HEROKU_APP_NAME
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 
@@ -30,13 +30,13 @@ useragent = (
 @TelePyroBot.on_message(filters.command("restart", COMMAND_HAND_LER) & filters.me)
 async def restart(c: TelePyroBot, m: Message):
     if (HEROKU_API_KEY or HEROKU_APP_NAME) is None:
-        await m.edit(
+        await m.edit_text(
             "Please add `HEROKU_APP_NAME` or `HEROKU_API_KEY` in your Config Vars or file."
         )
         return
     heroku_conn = heroku3.from_key(HEROKU_API_KEY)
     telepyrobot_app = heroku_conn.apps()[HEROKU_APP_NAME]
-    await m.edit("Restarted...!")
+    await m.edit_text("Restarted...!")
     telepyrobot_app.restart()
     return
 
@@ -97,11 +97,11 @@ async def dynostats(c: TelePyroBot, m: Message):
 @TelePyroBot.on_message(filters.command("vars", COMMAND_HAND_LER) & filters.me)
 async def hetoku_vars(c: TelePyroBot, m: Message):
     if (HEROKU_API_KEY or HEROKU_APP_NAME) is None:
-        await m.edit(
+        await m.edit_text(
             "Please add `HEROKU_APP_NAME` or `HEROKU_API_KEY` in your Config Vars or file."
         )
         return
-    await m.edit("**__Fetching all vars from Heroku__**")
+    await m.edit_text("**__Fetching all vars from Heroku__**")
     heroku_conn = heroku3.from_key(HEROKU_API_KEY)
     telepyrobot_app = heroku_conn.apps()[HEROKU_APP_NAME]
     config = telepyrobot_app.config()
@@ -114,5 +114,5 @@ async def hetoku_vars(c: TelePyroBot, m: Message):
         msg += f"**{num}**: `{i}`\n"
 
     msg += f"\n**Total <u>{num}</u> Vars are setup!**"
-    await m.edit(msg)
+    await m.edit_text(msg)
     return

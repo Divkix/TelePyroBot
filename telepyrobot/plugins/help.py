@@ -1,5 +1,5 @@
 import os
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
@@ -26,22 +26,22 @@ async def list_plugins(c: TelePyroBot, m: Message):
         mods += f"`{plug}`\n"
         mod_num += 1
     all_plugins = f"<b><u>{mod_num}</u> Modules Currently Loaded:</b>\n\n" + mods
-    await m.edit(all_plugins)
+    await m.edit_text(all_plugins)
     return
 
 
 @TelePyroBot.on_message(filters.command("help", COMMAND_HAND_LER) & filters.me)
 async def help_me(c: TelePyroBot, m: Message):
     if len(m.command) == 1:
-        await m.edit(HELP_DEFAULT)
+        await m.edit_text(HELP_DEFAULT)
     elif len(m.command) == 2:
-        module_name = m.text.split(" ", 1)[1]
+        module_name = m.text.split(None, 1)[1]
         try:
             HELP = f"**Help for __{module_name}__**\n\n" + HELP_COMMANDS[module_name]
             await m.reply_text(HELP, parse_mode="md", disable_web_page_preview=True)
             await m.delete()
         except Exception as ef:
-            await m.edit(f"<b>Error:</b>\n\n{ef}")
+            await m.edit_text(f"<b>Error:</b>\n\n{ef}")
     else:
-        await m.edit(f"Use `{COMMAND_HAND_LER}help` to view help")
+        await m.edit_text(f"Use `{COMMAND_HAND_LER}help` to view help")
     return

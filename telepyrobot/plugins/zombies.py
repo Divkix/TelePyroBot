@@ -1,4 +1,4 @@
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, PRIVATE_GROUP_ID
@@ -22,20 +22,20 @@ Then this module is for you!
 
 @TelePyroBot.on_message(filters.command("zombies", COMMAND_HAND_LER) & filters.me)
 async def zombies_clean(c: TelePyroBot, m: Message):
-    if len(m.text.split(" ")) != 2:
-        await m.edit("`Counting deleted accounts!!!`")
+    if len(m.text.split()) != 2:
+        await m.edit_text("`Counting deleted accounts!!!`")
         del_users = []
         async for x in c.iter_chat_members(chat_id=m.chat.id):
             if x.user.is_deleted:
                 del_users.append(x.user.id)
         if del_users:
-            await m.edit(
+            await m.edit_text(
                 f"`Found {len(del_users)} deleted accounts!` **__Use__** `{COMMAND_HAND_LER}zombies clean` __**to remove them from group**__"
             )
         else:
-            await m.edit("`No deleted accounts found!\nGroup is clean as Hell!`")
-    elif len(m.text.split(" ")) == 2 and m.text.split(" ", 1)[1] == "clean":
-        await m.edit("`Cleaning deleted accounts....`")
+            await m.edit_text("`No deleted accounts found!\nGroup is clean as Hell!`")
+    elif len(m.text.split()) == 2 and m.text.split(None, 1)[1] == "clean":
+        await m.edit_text("`Cleaning deleted accounts....`")
         del_users = []
         u = 0
         async for x in c.iter_chat_members(chat_id=m.chat.id):
@@ -50,13 +50,13 @@ async def zombies_clean(c: TelePyroBot, m: Message):
                         await asyncio.sleep(0.1)
                     except:
                         pass
-        await m.edit(f"**Done Cleaning Group ✅**\n`Removed {u} deleted accounts`")
+        await m.edit_text(f"**Done Cleaning Group ✅**\n`Removed {u} deleted accounts`")
         await c.send_message(
             PRIVATE_GROUP_ID,
             f"#ZOMBIES\n\nCleaned {len(del_users)} accounts from **{m.chat.title}** - `{m.chat.id}`",
         )
     else:
-        await m.edit(
+        await m.edit_text(
             f"__Check__ `{COMMAND_HAND_LER}help zombies` __to see how it works!__"
         )
     return

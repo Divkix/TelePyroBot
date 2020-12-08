@@ -1,15 +1,18 @@
 import io
+from io import BytesIO
 import os
 import sys
 import traceback
 import time
 import asyncio
 import requests
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import MAX_MESSAGE_LENGTH, COMMAND_HAND_LER
 from telepyrobot.utils.cust_p_filters import sudo_filter
+from telepyrobot.utils.clear_string import clear_string
+
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -28,7 +31,7 @@ Get IP Address of userbot server.
 @TelePyroBot.on_message(filters.command(["eval", "py"], COMMAND_HAND_LER) & sudo_filter)
 async def eval(c: TelePyroBot, m: Message):
     status_m = await m.reply_text("`Processing...`")
-    cmd = m.text.split(" ", maxsplit=1)[1]
+    cmd = m.text.split(None, 1)[1]
 
     reply_to_id = m.message_id
     if m.reply_to_message:
@@ -67,19 +70,17 @@ async def eval(c: TelePyroBot, m: Message):
     )
 
     if len(final_output) > MAX_MESSAGE_LENGTH:
-        with open("eval.text", "w+", encoding="utf8") as out_file:
-            out_file.write(str(final_output))
-            out_file.close()
-        await m.reply_document(
-            document="eval.text",
-            caption=cmd,
-            disable_notification=True,
-            reply_to_message_id=reply_to_id,
-        )
-        os.remove("eval.text")
+        OUTPUT = clear_string(OUTPUT)
+        with BytesIO(str.encode(OUTPUT)) as f:
+            f.name = "eval.txt"
+            await m.reply_document(
+                document=f,
+                caption=f"<code>{cmd}</code>",
+            )
         await status_m.delete()
     else:
         await status_m.edit(final_output)
+    await m.delete()
     return
 
 
@@ -93,7 +94,8 @@ async def aexec(code, c, m):
 
 @TelePyroBot.on_message(filters.command(["exec", "sh"], COMMAND_HAND_LER) & sudo_filter)
 async def execution(c: TelePyroBot, m: Message):
-    cmd = m.text.split(" ", maxsplit=1)[1]
+    await m.edit_text("Processing...")
+    cmd = m.text.split(None, 1)[1]
 
     reply_to_id = m.message_id
     if m.reply_to_message:
@@ -117,18 +119,16 @@ async def execution(c: TelePyroBot, m: Message):
     OUTPUT += f"<b>stdout</b>: \n<code>{o}</code>"
 
     if len(OUTPUT) > MAX_MESSAGE_LENGTH:
-        with open("exec.txt", "w+", encoding="utf8") as out_file:
-            out_file.write(str(OUTPUT))
-            out_file.close()
-        await m.reply_document(
-            document="exec.txt",
-            caption=cmd,
-            disable_notification=True,
-            reply_to_message_id=reply_to_id,
-        )
-        os.remove("exec.txt")
+        OUTPUT = clear_string(OUTPUT)
+        with BytesIO(str.encode(OUTPUT)) as f:
+            f.name = "exec.txt"
+            await m.reply_document(
+                document=f,
+                caption=f"<code>{cmd}</code>",
+            )
     else:
         await m.reply_text(OUTPUT)
+    await m.delete()
     return
 
 

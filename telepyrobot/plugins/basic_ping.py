@@ -1,11 +1,13 @@
 import time
 import os
+from io import BytesIO
 from platform import python_version
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters, __version__
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER, OWNER_NAME, UB_VERSION, OFFICIAL_UPSTREAM_REPO
 from pyrogram.raw.all import layer
+from telepyrobot.utils.clear_string import clear_string
 
 # -- Constants -- #
 ALIVE_TEXT = (
@@ -27,7 +29,7 @@ REPO = (
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
-Basic commands of userbot!
+Basic Commands of Userbot!
 
 `{COMMAND_HAND_LER}alive` / start: Check if bot is alive or not.
 `{COMMAND_HAND_LER}ping`: Get pinged.
@@ -57,15 +59,15 @@ async def check_alive(c: TelePyroBot, m: Message):
 @TelePyroBot.on_message(filters.command("ping", COMMAND_HAND_LER) & filters.me)
 async def ping(c: TelePyroBot, m: Message):
     start_t = time.time()
-    rm = await m.edit("Pinging...")
+    rm = await m.edit_text("Pinging...")
     end_t = time.time()
     time_taken_s = (end_t - start_t) * 1000
-    await m.edit(f"**Pong!**\n`{time_taken_s:.3f}` ms")
+    await m.edit_text(f"**Pong!**\n`{time_taken_s:.3f}` ms")
 
 
 @TelePyroBot.on_message(filters.command("repo", COMMAND_HAND_LER) & filters.me)
 async def repo(c: TelePyroBot, m: Message):
-    await m.edit(REPO, disable_web_page_preview=True)
+    await m.edit_text(REPO, disable_web_page_preview=True)
 
 
 @TelePyroBot.on_message(filters.command("id", COMMAND_HAND_LER) & filters.me)
@@ -116,15 +118,15 @@ async def get_id(c: TelePyroBot, m: Message):
                 username = rep.from_user.username
 
     if user_id:
-        await m.edit(
+        await m.edit_text(
             "User Short Info:\n\n**User ID:** `{}`\n**Name:** `{}`\n**Username:** @{}".format(
                 user_id, user_name, username
             )
         )
     elif file_id:
-        await m.edit("**File's ID:** `{}`".format(file_id))
+        await m.edit_text(f"**File's ID:** `{file_id}`")
     else:
-        await m.edit("**This Chat's ID:** `{}`".format(m.chat.id))
+        await m.edit_text(f"**This Chat's ID:** `{m.chat.id}`")
 
 
 @TelePyroBot.on_message(filters.command("json", COMMAND_HAND_LER) & filters.me)
@@ -139,13 +141,9 @@ async def jsonify(c: TelePyroBot, m: Message):
     try:
         await m.reply_text(f"<code>{the_real_message}</code>")
     except Exception as e:
-        with open("json.text", "w+", encoding="utf8") as out_file:
-            out_file.write(str(the_real_message))
-            out_file.close()
-        await m.reply_document(
-            document="json.text",
-            caption=str(e),
-            disable_notification=True,
-            reply_to_message_id=reply_to_id,
-        )
-        os.remove("json.text")
+        OUTPUT = clear_string(the_real_message)  # Remove the html elements using regex
+        with BytesIO(str.encode(OUTPUT)) as f:
+            f.name = "json.txt"
+            await m.reply_document(document=f, caption=str(e))
+        await m.delete()
+    return

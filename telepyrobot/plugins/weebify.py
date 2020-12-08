@@ -1,5 +1,5 @@
 import os
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
@@ -72,7 +72,7 @@ weebyfont = [
 @TelePyroBot.on_message(filters.command("weebify", COMMAND_HAND_LER) & filters.me)
 async def weebify(c: TelePyroBot, m: Message):
     if len(m.command) >= 2:
-        args = m.text.split(" ", 1)[1]
+        args = m.text.split(None, 1)[1]
     if m.reply_to_message and len(m.command) == 1:
         args = m.reply_to_message.text
     if not args:
@@ -83,5 +83,5 @@ async def weebify(c: TelePyroBot, m: Message):
         if normiecharacter in normiefont:
             weebycharacter = weebyfont[normiefont.index(normiecharacter)]
             string = string.replace(normiecharacter, weebycharacter)
-    await m.edit(f"**Weebified String:**\n`{string}`")
+    await m.edit_text(f"**Weebified String:**\n`{string}`")
     return

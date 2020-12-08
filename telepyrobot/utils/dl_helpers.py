@@ -1,5 +1,6 @@
 import math
 import time
+from pyrogram.errors import MessageNotModified, FloodWait
 
 
 async def progress_for_pyrogram(current, total, ud_type, message, start):
@@ -27,12 +28,11 @@ async def progress_for_pyrogram(current, total, ud_type, message, start):
             humanbytes(current),
             humanbytes(total),
             humanbytes(speed),
-            # elapsed_time if elapsed_time != '' else "0 s",
             estimated_total_time if estimated_total_time != "" else "0 s",
         )
         try:
-            await m.edit("{}\n {}".format(ud_type, tmp))
-        except:
+            await message.edit(f"{ud_type}\n {tmp}")
+        except (MessageNotModified, FloodWait):
             pass
 
 

@@ -9,7 +9,7 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 from mimetypes import guess_type
 from oauth2client.client import OAuth2WebServerFlow
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import (
@@ -21,14 +21,14 @@ from telepyrobot import (
     TMP_DOWNLOAD_DIRECTORY,
 )
 import telepyrobot.db.gDrive_db as db
-from telepyrobot.utils.display_progress_dl_up import progress_for_pyrogram
+from telepyrobot.utils.dl_helpers import progress_for_pyrogram
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
 Plugin used to help you manage your **Google Drive**!
 
-`{COMMAND_HAND_LER}gdrive <file loaction>` or as a reply to message to upload file to your Google Drive and get it's link.
+`{COMMAND_HAND_LER}gdrive <file location>` or as a reply to message to upload file to your Google Drive and get it's link.
 `{COMMAND_HAND_LER}gdrive reset`: Reset the G Drive credentials.
 `{COMMAND_HAND_LER}gdrive setup`: To setup GDrive, only needed if reset grive credentials or setting-up first time.
 `{COMMAND_HAND_LER}gdrive search <query>`: To search a file in your GDrive.
@@ -56,7 +56,7 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
             await status_m.edit_text(text="cleared saved credentials")
         elif current_recvd_command == "confirm":
             if len(m.command) == 3:
-                await AskUserToVisitLinkAndGiveCode(status_message, m.command[2])
+                await AskUserToVisitLinkAndGiveCode(status_m, m.command[2])
             else:
                 await status_m.edit_text(text="please give auth_code correctly")
         elif current_recvd_command == "search":
@@ -104,7 +104,7 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
                             await status_m.edit_text("invalid file path provided?")
                             return
                         gDrive_file_id = await gDrive_upload_file(
-                            creds, upload_file_name, status_message
+                            creds, upload_file_name, status_m
                         )
                         reply_message_text = ""
                         if gDrive_file_id is not None:
@@ -128,7 +128,7 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
                             progress=progress_for_pyrogram,
                             progress_args=(
                                 "`Trying to download to Local Storage...`",
-                                status_message,
+                                status_mes,
                                 c_time,
                             ),
                         )
@@ -139,7 +139,7 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
                             await m.edit_text("invalid file path provided?")
                             return
                         gDrive_file_id = await gDrive_upload_file(
-                            creds, the_real_download_location, status_message
+                            creds, the_real_download_location, status_m
                         )
                         reply_message_text = ""
                         if gDrive_file_id is not None:
@@ -221,7 +221,7 @@ async def AskUserToVisitLinkAndGiveCode(message, code):
 async def search_g_drive(creds, search_query):
     service = build("drive", "v3", credentials=creds, cache_discovery=False)
     #
-    query = "name contains '{}'".format(search_query)
+    query = f"name contains '{search_query}'"
     page_token = None
     results = (
         service.files()

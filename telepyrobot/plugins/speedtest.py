@@ -1,4 +1,4 @@
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
@@ -12,16 +12,18 @@ __help__ = f"""
 """
 
 
-@TelePyroBot.on_message(filters.command("speedtest", COMMAND_HAND_LER) & filters.me)
+@TelePyroBot.on_message(
+    filters.command(["speedtest", "speed"], COMMAND_HAND_LER) & filters.me
+)
 async def listbots(c: TelePyroBot, m: Message):
-    await m.edit("`Running speed test . . .`")
+    await m.edit_text("`Running speed test . . .`")
     test = Speedtest()
     test.get_best_server()
     test.download()
     test.upload()
     test.results.share()
     result = test.results.dict()
-    await m.edit(
+    await m.edit_text(
         "**Started at:** "
         f"`{result['timestamp']}`\n\n"
         "**Download:** "

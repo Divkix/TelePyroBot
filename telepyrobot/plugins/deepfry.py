@@ -2,7 +2,7 @@ import io
 import os
 import asyncio
 from random import randint, uniform
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
@@ -24,7 +24,7 @@ Burn media files and make them look sick!
 @TelePyroBot.on_message(filters.command("deepfry", COMMAND_HAND_LER) & filters.me)
 async def do_deepfry(c: TelePyroBot, m: Message):
     try:
-        frycount = int(m.text.split(" ", 1)[1])
+        frycount = int(m.text.split(None, 1)[1])
         if frycount < 1:
             frycount = 1
     except IndexError:
@@ -34,17 +34,17 @@ async def do_deepfry(c: TelePyroBot, m: Message):
         reply_message = m.reply_to_message
         data = await check_media(reply_message)
     else:
-        await m.edit("`Reply to an image or sticker to deep fry it!`")
+        await m.edit_text("`Reply to an image or sticker to deep fry it!`")
         return
 
     # download last photo (highres) as byte array
-    await m.edit("`Downloading media...`")
+    await m.edit_text("`Downloading media...`")
     image = io.BytesIO()
     image = await c.download_media(data)
     image = Image.open(image)
 
     await asyncio.sleep(3)
-    await m.edit("`Deep frying media...`")
+    await m.edit_text("`Deep frying media...`")
     for _ in range(frycount):
         image = await deepfry(image)
 

@@ -1,11 +1,14 @@
-from telepyrobot.__main__ import TelePyroBot
+from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message
 from telepyrobot import COMMAND_HAND_LER
 from telepyrobot.utils.pyrohelpers import ReplyCheck
 from requests import post
 import shutil
+import urllib
 import os
+from io import BytesIO
+from telepyrobot.utils.clear_string import clear_string
 from time import sleep
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -27,13 +30,15 @@ async def carbon_api(c: TelePyroBot, m: Message):
     cmd = m.command
     if m.reply_to_message:
         r = m.reply_to_message
-        json["code"] = r.text
+        json["code"] = urllib.parse.quote(r)
         await m.edit_text("`Carbonizing code...`")
     elif len(cmd) >= 2:
-        r = m.text.split(" ", 1)[1]
-        json["code"] = r
+        r = m.text.split(None, 1)[1]
+        json["code"] = urllib.parse.quote(r)
     else:
-        await m.edit(f"Usage: `{COMMAND_HAND_LER}carbon` <reply to a code or text>")
+        await m.edit_text(
+            f"Usage: `{COMMAND_HAND_LER}carbon` <reply to a code or text>"
+        )
     json["language"] = CARBON_LANG
     apiUrl = "http://carbonnowsh.herokuapp.com"
     r = post(apiUrl, json=json, stream=True)
@@ -51,7 +56,7 @@ async def carbon_api(c: TelePyroBot, m: Message):
         )
         await m.delete()
     else:
-        await m.edit("Image Couldn't be retreived")
+        await m.edit_text("Image Couldn't be retreived")
         await m.delete()
     os.remove(filename)
     return

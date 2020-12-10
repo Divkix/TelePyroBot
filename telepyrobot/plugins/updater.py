@@ -48,7 +48,7 @@ async def initial_git(repo):
     os.rename("requirements.txt", "telepyrobot-old/requirements.txt")
     os.rename("string-requirements.txt", "telepyrobot-old/string-requirements.txt")
     os.rename("heroku.yml", "telepyrobot-old/heroku.yml")
-    update = repo.create_remote("master", REPOSITORY)
+    update = repo.create_remote("master", OFFICIAL_UPSTREAM_REPO)
     update.pull("master")
     os.rename("telepyrobot-old/telepyrobot/config.py", "telepyrobot/sample_config.py")
     shutil.rmtree("telepyrobot/session/")
@@ -96,13 +96,13 @@ async def updater(c: TelePyroBot, m: Message):
             return
 
     brname = repo.active_branch.name
-    if brname not in OFFICIAL_BRANCH:
+    if brname not in ['master', 'beta']:
         await m.edit_text(
             f"**[UPDATER]:** Looks like you are using your own custom branch ({brname}). in that case, Updater is unable to identify which branch is to be merged. please checkout to any official branch",
         )
         return
     try:
-        repo.create_remote("upstream", REPOSITORY)
+        repo.create_remote("upstream", OFFICIAL_UPSTREAM_REPO)
     except BaseException:
         pass
 

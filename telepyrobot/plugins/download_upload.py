@@ -125,10 +125,12 @@ async def down_load_media(c: TelePyroBot, m: Message):
                 )
         except Exception:
             exc = traceback.format_exc()
-            await m.edit_text(f"Failed Download!\n{exc}")
+            await m.edit_text(f"<b>Failed Download!</b>\n{exc}")
             return
     else:
-        await sm.edit("`Reply to a Telegram Media, to download it to local server.`")
+        await sm.edit(
+            "<code>Reply to a Telegram Media, to download it to local server.</code>"
+        )
     await m.delete()
     return
 
@@ -206,6 +208,6 @@ async def covid(c: TelePyroBot, m: Message):
         return
     await sm.delete()
     await m.delete()
-    await m.reply_text(f"Uploaded all files from Directory `{temp_dir}`")
+    await m.reply_text(f"Uploaded all files from Directory: <code>{temp_dir}</code>")
     LOGGER.info("Uploaded all files!")
     return

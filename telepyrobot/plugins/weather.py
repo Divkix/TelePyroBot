@@ -34,3 +34,4 @@ async def weather(c: TelePyroBot, m: Message):
         return
     weather = f"<code>{escape(a.text)}</code>"
     await m.edit_text(weather, parse_mode="html")
+    return

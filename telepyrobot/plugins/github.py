@@ -8,10 +8,10 @@ import os
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
-Get information about a Github Account
+Get information about a Github Account.
 
 **Usage:**
-`{COMMAND_HAND_LER}github <github username>`
+`{COMMAND_HAND_LER}github <GitHub username>`
 """
 
 

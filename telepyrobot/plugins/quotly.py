@@ -6,8 +6,6 @@ from telepyrobot import COMMAND_HAND_LER
 import random
 import time
 
-p = 0
-
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
 __help__ = f"""
@@ -20,6 +18,7 @@ Does not work on images!
 
 @TelePyroBot.on_message(filters.command("qbot", COMMAND_HAND_LER) & filters.me)
 async def quotly(c: TelePyroBot, m: Message):
+    p = 0
     if not m.reply_to_message:
         await m.edit_text("Reply to any users text message")
         return

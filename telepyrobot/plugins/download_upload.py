@@ -32,10 +32,10 @@ Use '|' along with command to set a custom filename for downloaded file,
 Works only on replied media messages!
 
 Upload Media to Telegram
-Syntax: `{COMMAND_HAND_LER}upload <file location>`
+Syntax: `{COMMAND_HAND_LER}upload <file>`
 
 Upload files of a directory to Telegram
-Usage: `{COMMAND_HAND_LER}batchup <directory location>`
+Usage: `{COMMAND_HAND_LER}batchup <directory>`
 
 The command will upload all files from the directory location to the current Telegram Chat.
 """
@@ -182,7 +182,10 @@ async def covid(c: TelePyroBot, m: Message):
     if os.path.exists(temp_dir):
         files = os.listdir(temp_dir)
         files.sort()
+        total_files = len(files)
+        file_no = 0
         for file in files:
+            file_no += 1
             c_time = time.time()
             required_file_name = temp_dir + file
             thumb_image_path = await is_thumb_image_exists(required_file_name)
@@ -198,7 +201,7 @@ async def covid(c: TelePyroBot, m: Message):
                 disable_notification=True,
                 progress=progress_for_pyrogram,
                 progress_args=(
-                    f"Trying to upload __{file}__",
+                    f"Uploading file {file_no} of {total_files}\nFilename: <i>{file}</i>",
                     sm,
                     c_time,
                 ),

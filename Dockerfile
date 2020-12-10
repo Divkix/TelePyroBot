@@ -4,20 +4,11 @@ ENV PIP_NO_CACHE_DIR 1
 
 RUN sed -i.bak 's/us-west-2\.ec2\.//' /etc/apt/sources.list
 
-COPY . /root
-
-WORKDIR /root
-
 # Add Extra Repositories
-RUN apt update && apt upgrade -y && apt install software-properties-common -y
-RUN add-apt-repository main 
-RUN add-apt-repository contrib
-RUN add-apt-repository non-free
-
+RUN apt update && apt upgrade -y
 
 # Installing Required Packages
-RUN apt update && apt upgrade -y && \
-    apt install --no-install-recommends -y \
+RUN apt install --no-install-recommends -y \
     debian-keyring \
     debian-archive-keyring \
     bash \
@@ -77,6 +68,10 @@ RUN apt update && apt upgrade -y && \
 RUN rm -rf '/var/lib/apt/lists' '/var/cache/apt/archives' '/tmp'
 
 RUN pip3 install --upgrade pip setuptools
+
+COPY . /root
+
+WORKDIR /root
 
 RUN pip install --upgrade -r requirements.txt
 

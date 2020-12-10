@@ -50,9 +50,8 @@ async def initial_git(repo):
     os.rename("heroku.yml", "telepyrobot-old/heroku.yml")
     update = repo.create_remote("master", REPOSITORY)
     update.pull("master")
-    os.rename("telepyrobot-old/telepyrobot/config.py", "telepyrobot/config.py")
+    os.rename("telepyrobot-old/telepyrobot/config.py", "telepyrobot/sample_config.py")
     shutil.rmtree("telepyrobot/session/")
-    os.rename("telepyrobot-old/telepyrobot/session/", "telepyrobot/session/")
 
 
 @TelePyroBot.on_message(filters.command("update", COMMAND_HAND_LER) & sudo_filter)
@@ -91,7 +90,7 @@ async def updater(c: TelePyroBot, m: Message):
             await m.edit_text("Successfully Updated!\nBot is restarting...")
             await m.send_message(
                 PRIVATE_GROUP_ID,
-                "-> **WARNING**: Bot has been created a new git and sync to latest version, your old files is in nana-old",
+                "-> **WARNING**: Bot has been created a new git and sync to latest version, your old files is in telepyrobot-old",
             )
             await restart_all()
             return
@@ -124,7 +123,7 @@ async def updater(c: TelePyroBot, m: Message):
                 return
             await m.edit_text("Successfully Updated!\nBot is restarting...")
             await m.reply_text(
-                "-> **WARNING**: Bot has been created a new git and sync to latest version, your old files is in nana-old"
+                "-> **WARNING**: Bot has been created a new git and sync to latest version, your old files is in telepyrobot-old"
             )
             await restart_all()
             return
@@ -165,9 +164,9 @@ async def updater(c: TelePyroBot, m: Message):
             await m.reply_text("Successfully Updated!\nBot is restarting...")
         except GitCommandError:
             repo.git.reset("--hard")
-            repo.git.clean("-fd", "nana/modules/")
-            repo.git.clean("-fd", "nana/assistant/")
-            repo.git.clean("-fd", "nana/helpers/")
+            repo.git.clean("-fd", "telepyrobot/modules/")
+            repo.git.clean("-fd", "telepyrobot/utils/")
+            repo.git.clean("-fd", "telepyrobot/db/")
             await m.reply_text("Successfully Updated!\nBot is restarting...")
         await m.send_message(PRIVATE_GROUP_ID, changelog)
         await restart_all()

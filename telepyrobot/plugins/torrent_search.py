@@ -25,9 +25,7 @@ async def tor_search(c: TelePyroBot, m: Message):
         return
     await m.edit_text("`Please wait, fetching results...`")
     query = m.text.split(None, 1)[1]
-    response = requests.get(
-        f"https://api.sumanjay.cf/torrent/?query=ubuntu{query}"
-    )
+    response = requests.get(f"https://api.sumanjay.cf/torrent/?query=ubuntu{query}")
     ts = json.loads(response.text)
     if not ts == response.json():
         await m.edit_text("**Some error occured**\n`Try Again Later`")

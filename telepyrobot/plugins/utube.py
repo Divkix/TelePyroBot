@@ -62,11 +62,16 @@ yta_opts = {
     "audioformat": "mp3",
     "format": "(bestaudio[ext=m4a]/bestaudio)",
     # Embed Thumbnail
-    'postprocessors': [
-            {'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
-            'preferredquality': '192'},
-            {'key': 'EmbedThumbnail',},]
+    "postprocessors": [
+        {
+            "key": "FFmpegExtractAudio",
+            "preferredcodec": "mp3",
+            "preferredquality": "192",
+        },
+        {
+            "key": "EmbedThumbnail",
+        },
+    ],
 }
 
 

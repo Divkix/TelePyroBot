@@ -72,12 +72,12 @@ async def updater(c: TelePyroBot, m: Message):
         return
 
     if initial:
-        if len(message.text.split()) != 2:
+        if len(m.text.split()) != 2:
             await m.edit_text(
                 "Your git workdir is missing!\nI need to repair it!\nJust do `update now` to repair and update!",
             )
             return
-        elif len(message.text.split()) == 2 and message.text.split()[1] == "now":
+        elif len(m.text.split()) == 2 and m.text.split()[1] == "now":
             try:
                 await initial_git(repo)
             except Exception as err:
@@ -138,7 +138,7 @@ async def updater(c: TelePyroBot, m: Message):
         await m.edit_text(f"TelePyroBot is up-to-date with branch **{brname}**\n")
         return
 
-    if len(message.text.split()) != 2:
+    if len(m.text.split()) != 2:
         changelog_str = (
             f"To update latest changelog, do\n-> `update now`\n\n**New UPDATE available for [{brname}]:\n"
             f"\nCHANGELOG:**\n`{changelog}` "
@@ -148,16 +148,16 @@ async def updater(c: TelePyroBot, m: Message):
             with open("telepyrobot/cache/output.txt", "w+") as file:
                 file.write(changelog_str)
             await client.send_document(
-                message.chat.id,
+                m.chat.id,
                 "telepyrobot/cache/output.txt",
-                reply_to_message_id=message.message_id,
+                reply_to_message_id=m.message_id,
                 caption="`Changelog file`",
             )
             os.remove("telepyrobot/cache/output.txt")
         else:
             await m.reply_text(changelog_str)
         return
-    elif len(message.text.split()) == 2 and message.text.split()[1] == "now":
+    elif len(m.text.split()) == 2 and m.text.split()[1] == "now":
         await m.reply_text("`New update found, updating...`")
         try:
             upstream.pull(brname)

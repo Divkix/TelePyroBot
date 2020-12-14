@@ -201,7 +201,7 @@ async def g_drive_setup(m):
         await m.edit_text(text="`Setup Done Already!`")
 
 
-async def AskUserToVisitLinkAndGiveCode(message, code):
+async def AskUserToVisitLinkAndGiveCode(m, code):
     creds = None
     global flow
     if flow is None:
@@ -248,7 +248,7 @@ async def search_g_drive(creds, search_query):
     return message_string
 
 
-async def gDrive_upload_file(creds, file_path, message):
+async def gDrive_upload_file(creds, file_path, m):
     service = build("drive", "v3", credentials=creds, cache_discovery=False)
     mime_type = guess_type(file_path)[0]
     mime_type = mime_type if mime_type else "text/plain"

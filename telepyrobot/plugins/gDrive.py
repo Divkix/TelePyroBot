@@ -28,7 +28,7 @@ __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 __help__ = f"""
 Plugin used to help you manage your **Google Drive**!
 
-`{COMMAND_HAND_LER}gdrive <file location>` or as a reply to message to upload file to your Google Drive and get it's link.
+`{COMMAND_HAND_LER}gdrive upload <file location>` or as a reply to message to upload file to your Google Drive and get it's link.
 `{COMMAND_HAND_LER}gdrive reset`: Reset the G Drive credentials.
 `{COMMAND_HAND_LER}gdrive setup`: To setup GDrive, only needed if reset grive credentials or setting-up first time.
 `{COMMAND_HAND_LER}gdrive search <query>`: To search a file in your GDrive.
@@ -47,6 +47,9 @@ flow = None
 @TelePyroBot.on_message(filters.command("gdrive", COMMAND_HAND_LER) & filters.me)
 async def g_drive_commands(c: TelePyroBot, m: Message):
     status_m = await m.reply_text("...")
+    if len(m.command) == 1:
+        await status_m.edit_text(f"Check <code>{COMMAND_HAND_LER}help gdrive</code> to ceck help on how to use command!")
+        return
     if len(m.command) > 1:
         current_recvd_command = m.command[1]
         if current_recvd_command == "setup":
@@ -128,7 +131,7 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
                             progress=progress_for_pyrogram,
                             progress_args=(
                                 "`Trying to download to Local Storage...`",
-                                status_mes,
+                                status_m,
                                 c_time,
                             ),
                         )
@@ -161,7 +164,7 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
                 else:
                     await status_m.edit_text(
                         "<b>Invalid credentials!</b>\n"
-                        f"<i>Use</i> <code>{COMMAND_HAND_LER}gdrive reset</code> <i>to clear saved credentials</i>"
+                        f"Use <code>{COMMAND_HAND_LER}gdrive reset</code> to clear saved credentials"
                     )
                     return
             else:
@@ -172,6 +175,7 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
         await status_m.edit_text(
             text=f"__Check__ `{COMMAND_HAND_LER}help gdrive` __on how to use the plugin__"
         )
+    return
 
 
 async def g_drive_setup(m):
@@ -258,7 +262,7 @@ async def gDrive_upload_file(creds, file_path, m):
     file_name = os.path.basename(file_path)
     body = {
         "name": file_name,
-        "description": "Uploaded using TelePyroBot gDrive",
+        "description": "Uploaded using TelePyroBot gDrive plugin!",
         "mimeType": mime_type,
     }
     u_file_obj = service.files().create(body=body, media_body=media_body)
@@ -274,7 +278,7 @@ async def gDrive_upload_file(creds, file_path, m):
                 round(percentage, 2),
             )
             current_message = (
-                f"uploading to gDrive\nFile Name: {file_name}\n{progress_str}"
+                f"Uploading to gDrive\nFile Name: {file_name}\n{progress_str}"
             )
             if display_message != current_message:
                 try:

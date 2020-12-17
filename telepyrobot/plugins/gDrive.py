@@ -113,6 +113,7 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
 async def upload_file(c: TelePyroBot, m: Message):
     creds = db.get_credential(m.from_user.id)
     folder_id = db.get_parent_id(m.from_user.id)
+    LOGGER.info(f"Folder ID: {folder_id}")
     status_m = await m.reply_text("<i>Checking...!</i>")
 
     if not creds or not creds.invalid:
@@ -271,7 +272,7 @@ async def search_g_drive(creds, search_query):
     return message_string
 
 
-async def gDrive_upload_file(creds, file_path, m, parent_id=None):
+async def gDrive_upload_file(creds, file_path, m, parent_id='root'):
     service = build("drive", "v3", credentials=creds, cache_discovery=False)
     mime_type = guess_type(file_path)[0]
     mime_type = mime_type if mime_type else "text/plain"
@@ -285,7 +286,7 @@ async def gDrive_upload_file(creds, file_path, m, parent_id=None):
         "mimeType": mime_type,
     }
     if parent_id is not None:
-        body["parents"]: [parent_id]
+        body["parents"] = [parent_id]
     u_file_obj = service.files().create(body=body, media_body=media_body)
     response = None
     display_message = ""

@@ -8,6 +8,7 @@ import time
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 from mimetypes import guess_type
+from telepyrobot.utils.cust_p_filters import sudo_filter
 from oauth2client.client import OAuth2WebServerFlow
 from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters
@@ -61,9 +62,11 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
             return
         if current_recvd_command == "setup":
             await g_drive_setup(m)
+            return
         elif current_recvd_command == "reset":
             db.clear_credential(m.from_user.id)
-            await status_m.edit_text(text="cleared saved credentials")
+            await status_m.edit_text(text="Cleared Saved credentials and folder ID!")
+            return
         elif current_recvd_command == "confirm":
             if len(m.command) == 3:
                 await AskUserToVisitLinkAndGiveCode(status_m, m.command[2])
@@ -102,91 +105,93 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
                     text=f"<i>Please run</i> <code>{COMMAND_HAND_LER}gdrive setup</code> <i>first</i>",
                     parse_mode="html",
                 )
-        elif current_recvd_command == "upload":
-            creds = db.get_credential(m.from_user.id)
+    return
 
-            folder_id = db.get_parent_id(m.from_user.id)
 
-            if not creds or not creds.invalid:
-                if creds and creds.refresh_token:
-                    creds.refresh(get_new_http_instance())
-                    db.set_credential(m.from_user.id, creds)
-                    if len(m.command) > 2:
-                        upload_file_name = " ".join(m.command[2:])
-                        if not os.path.exists(upload_file_name):
-                            await status_m.edit_text("invalid file path provided?")
-                            return
-                        gDrive_file_id = await gDrive_upload_file(
-                            creds, upload_file_name, status_m, parent_id=folder_id
-                        )
-                        reply_message_text = ""
-                        if gDrive_file_id is not None:
-                            reply_message_text += "Uploaded to <a href='"
-                            reply_message_text += "https://drive.google.com/open?id="
-                            reply_message_text += gDrive_file_id
-                            reply_message_text += "'>" + gDrive_file_id + "</a>"
-                        else:
-                            reply_message_text += "failed to upload.. check logs?"
-                        await status_m.edit_text(
-                            text=reply_message_text, disable_web_page_preview=True
-                        )
-                    elif m.reply_to_message is not None:
-                        if not os.path.isdir(TMP_DOWNLOAD_DIRECTORY):
-                            os.makedirs(TMP_DOWNLOAD_DIRECTORY)
-                        download_location = TMP_DOWNLOAD_DIRECTORY
-                        c_time = time.time()
-                        the_real_download_location = await c.download_media(
-                            message=m.reply_to_message,
-                            file_name=download_location,
-                            progress=progress_for_pyrogram,
-                            progress_args=(
-                                "`Trying to download to Local Storage...`",
-                                status_m,
-                                c_time,
-                            ),
-                        )
-                        await status_m.edit(
-                            f"<b>Downloaded to</b> <code>{the_real_download_location}</code>"
-                        )
-                        if not os.path.exists(the_real_download_location):
-                            await m.edit_text("invalid file path provided?")
-                            return
-                        gDrive_file_id = await gDrive_upload_file(
-                            creds,
-                            the_real_download_location,
-                            status_m,
-                            parent_id=folder_id,
-                        )
-                        reply_message_text = ""
-                        if gDrive_file_id is not None:
-                            reply_message_text += "Uploaded to <a href='"
-                            reply_message_text += "https://drive.google.com/open?id="
-                            reply_message_text += gDrive_file_id
-                            reply_message_text += "'>" + gDrive_file_id + "</a>"
-                        else:
-                            reply_message_text += "<b><i>Failed to upload...</b><i>\n<i>Please check Logs</i>"
-                        os.remove(the_real_download_location)
-                        await status_m.edit_text(
-                            text=reply_message_text, disable_web_page_preview=True
-                        )
-                    else:
-                        await status_m.edit_text(
-                            "<b>Syntax:</b>\n"
-                            f"<code>{COMMAND_HAND_LER}gdrive upload (file name)</code>"
-                        )
-                else:
-                    await status_m.edit_text(
-                        "<b>Invalid credentials!</b>\n"
-                        f"Use <code>{COMMAND_HAND_LER}gdrive reset</code> to clear saved credentials"
-                    )
+@TelePyroBot.on_message(filters.command("ugdrive", COMMAND_HAND_LER) & sudo_filter)
+async def upload_file(c: TelePyroBot, m: Message):
+    creds = db.get_credential(m.from_user.id)
+    folder_id = db.get_parent_id(m.from_user.id)
+    status_m = awaitm.reply_text("<i>Checking...!</i>")
+
+    if not creds or not creds.invalid:
+        if creds and creds.refresh_token:
+            creds.refresh(get_new_http_instance())
+            db.set_credential(m.from_user.id, creds)
+            if len(m.command) > 2:
+                upload_file_name = " ".join(m.command[1:])
+                if not os.path.exists(upload_file_name):
+                    await status_m.edit_text("invalid file path provided?")
                     return
+                gDrive_file_id = await gDrive_upload_file(
+                    creds, upload_file_name, status_m, parent_id=folder_id
+                )
+                reply_message_text = ""
+                if gDrive_file_id is not None:
+                    reply_message_text += "Uploaded to <a href='"
+                    reply_message_text += "https://drive.google.com/open?id="
+                    reply_message_text += gDrive_file_id
+                    reply_message_text += "'>" + gDrive_file_id + "</a>"
+                else:
+                    reply_message_text += "failed to upload.. check logs?"
+                await status_m.edit_text(
+                    text=reply_message_text, disable_web_page_preview=True
+                )
+            elif m.reply_to_message is not None:
+                if not os.path.isdir(TMP_DOWNLOAD_DIRECTORY):
+                    os.makedirs(TMP_DOWNLOAD_DIRECTORY)
+                download_location = TMP_DOWNLOAD_DIRECTORY
+                c_time = time.time()
+                the_real_download_location = await c.download_media(
+                    message=m.reply_to_message,
+                    file_name=download_location,
+                    progress=progress_for_pyrogram,
+                    progress_args=(
+                        "`Trying to download to Local Storage...`",
+                        status_m,
+                        c_time,
+                    ),
+                )
+                await status_m.edit(
+                    f"<b>Downloaded to</b> <code>{the_real_download_location}</code>"
+                )
+                if not os.path.exists(the_real_download_location):
+                    await m.edit_text("invalid file path provided?")
+                    return
+                gDrive_file_id = await gDrive_upload_file(
+                    creds,
+                    the_real_download_location,
+                    status_m,
+                    parent_id=folder_id,
+                )
+                reply_message_text = ""
+                if gDrive_file_id is not None:
+                    reply_message_text += "Uploaded to <a href='"
+                    reply_message_text += "https://drive.google.com/open?id="
+                    reply_message_text += gDrive_file_id
+                    reply_message_text += "'>" + gDrive_file_id + "</a>"
+                else:
+                    reply_message_text += (
+                        "<b><i>Failed to upload...</b><i>\n<i>Please check Logs</i>"
+                    )
+                os.remove(the_real_download_location)
+                await status_m.edit_text(
+                    text=reply_message_text, disable_web_page_preview=True
+                )
             else:
                 await status_m.edit_text(
-                    text=f"<i>Please run</i> <code>{COMMAND_HAND_LER}gdrive setup</code> <i>first</i>"
+                    "<b>Syntax:</b>\n"
+                    f"<code>{COMMAND_HAND_LER}gdrive upload (file name)</code>"
                 )
+        else:
+            await status_m.edit_text(
+                "<b>Invalid credentials!</b>\n"
+                f"Use <code>{COMMAND_HAND_LER}gdrive reset</code> to clear saved credentials"
+            )
+            return
     else:
         await status_m.edit_text(
-            text=f"__Check__ `{COMMAND_HAND_LER}help gdrive` __on how to use the plugin__"
+            text=f"<i>Please run</i> <code>{COMMAND_HAND_LER}gdrive setup</code> <i>first</i>"
         )
     return
 

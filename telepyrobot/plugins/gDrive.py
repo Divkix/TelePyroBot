@@ -112,7 +112,7 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
 async def upload_file(c: TelePyroBot, m: Message):
     creds = db.get_credential(m.from_user.id)
     folder_id = db.get_parent_id(m.from_user.id)
-    status_m = awaitm.reply_text("<i>Checking...!</i>")
+    status_m = await m.reply_text("<i>Checking...!</i>")
 
     if not creds or not creds.invalid:
         if creds and creds.refresh_token:

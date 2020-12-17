@@ -57,7 +57,7 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
     if len(m.command) > 1:
         current_recvd_command = m.command[1]
         if current_recvd_command == "folder":
-            db.set_parent_id(m.text.split()[2])
+            db.set_parent_id(m.from_user.id, m.text.split()[2])
             await m.reply_text(f"Set folder ID to {db.get_parent_id}")
             return
         if current_recvd_command == "setup":

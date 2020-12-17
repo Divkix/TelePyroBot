@@ -56,9 +56,8 @@ def get_credential(chat_id):
 def get_parent_id(chat_id):
     with INSERTION_LOCK:
         saved_cred = SESSION.query(gDriveCreds).get(chat_id)
-        creds = None
-        if saved_cred is not None:
-            parent_id = saved_cred.parent_id
+        if saved_cred:
+            parent_id = saved_cred.parent_id if saved_cred.parent_id else "root"
         return parent_id
 
 

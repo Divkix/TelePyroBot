@@ -286,7 +286,7 @@ async def gDrive_upload_file(creds, file_path, m, parent_id="root"):
     }
     if parent_id != "root":
         body["parents"] = [parent_id]
-    u_file_obj = service.files().create(body=body, media_body=media_body)
+    u_file_obj = service.files().create(body=body, media_body=media_body, supportsTeamDrives=True)
     response = None
     display_message = ""
     while response is None:

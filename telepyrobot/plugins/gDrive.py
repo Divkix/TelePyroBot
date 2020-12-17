@@ -49,10 +49,14 @@ flow = None
 async def g_drive_commands(c: TelePyroBot, m: Message):
     status_m = await m.reply_text("...")
     if len(m.command) == 1:
-        await status_m.edit_text(f"Check <code>{COMMAND_HAND_LER}help gdrive</code> to ceck help on how to use command!")
+        await status_m.edit_text(
+            f"Check <code>{COMMAND_HAND_LER}help gdrive</code> to ceck help on how to use command!"
+        )
         return
     if len(m.command) > 1:
         current_recvd_command = m.command[1]
+        if current_recvd_command == folder:
+            db.set_parent_id(m.text.split()[2])
         if current_recvd_command == "setup":
             await g_drive_setup(m)
         elif current_recvd_command == "reset":
@@ -98,11 +102,9 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
                 )
         elif current_recvd_command == "upload":
             creds = db.get_credential(m.from_user.id)
-            if len(m.text.split('|')) == 2:
-                folder_id = m.text.split('|')[-1].replace(' ', '')
-            else:
-                folder_id = 'root'
-                
+
+            folder_id = db.get_parent_id(m.from_user.id)
+
             if not creds or not creds.invalid:
                 if creds and creds.refresh_token:
                     creds.refresh(get_new_http_instance())
@@ -148,7 +150,10 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
                             await m.edit_text("invalid file path provided?")
                             return
                         gDrive_file_id = await gDrive_upload_file(
-                            creds, the_real_download_location, status_m, parent_id=folder_id
+                            creds,
+                            the_real_download_location,
+                            status_m,
+                            parent_id=folder_id,
                         )
                         reply_message_text = ""
                         if gDrive_file_id is not None:
@@ -258,7 +263,7 @@ async def search_g_drive(creds, search_query):
     return message_string
 
 
-async def gDrive_upload_file(creds, file_path, m, parent_id):
+async def gDrive_upload_file(creds, file_path, m, parent_id=None):
     service = build("drive", "v3", credentials=creds, cache_discovery=False)
     mime_type = guess_type(file_path)[0]
     mime_type = mime_type if mime_type else "text/plain"
@@ -270,8 +275,9 @@ async def gDrive_upload_file(creds, file_path, m, parent_id):
         "name": file_name,
         "description": "Uploaded using TelePyroBot gDrive plugin!",
         "mimeType": mime_type,
-        "parents": [parent_id]
     }
+    if parent_id is not None:
+        body["parents"]: [parent_id]
     u_file_obj = service.files().create(body=body, media_body=media_body)
     response = None
     display_message = ""

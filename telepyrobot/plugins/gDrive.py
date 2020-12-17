@@ -244,8 +244,7 @@ async def AskUserToVisitLinkAndGiveCode(m, code):
 
 async def search_g_drive(creds, search_query):
     service = build("drive", "v3", credentials=creds, cache_discovery=False)
-    #
-    query = f"name contains '{search_query}'"
+    query = f"Name contains '{search_query}'"
     page_token = None
     results = (
         service.files()
@@ -272,7 +271,7 @@ async def search_g_drive(creds, search_query):
     return message_string
 
 
-async def gDrive_upload_file(creds, file_path, m, parent_id='root'):
+async def gDrive_upload_file(creds, file_path, m, parent_id="root"):
     service = build("drive", "v3", credentials=creds, cache_discovery=False)
     mime_type = guess_type(file_path)[0]
     mime_type = mime_type if mime_type else "text/plain"
@@ -285,7 +284,7 @@ async def gDrive_upload_file(creds, file_path, m, parent_id='root'):
         "description": "Uploaded using TelePyroBot gDrive plugin!",
         "mimeType": mime_type,
     }
-    if parent_id is not None:
+    if parent_id != "root":
         body["parents"] = [parent_id]
     u_file_obj = service.files().create(body=body, media_body=media_body)
     response = None

@@ -56,12 +56,12 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
             f"Check <code>{COMMAND_HAND_LER}help gdrive</code> to ceck help on how to use command!"
         )
         return
-    elif len(m.text.split()) > 1:
-        current_recvd_command = m.text.split(None, 1)[1]
+    elif len(m.command) > 1:
+        current_recvd_command = m.command[1]  # m.text.split(None, 1)[1]
         if current_recvd_command == "folder":
-            db.set_parent_id(m.from_user.id, m.text.split()[2])
-            LOGGER.info(f"Folder ID: {m.text.split()[2]}")
-            await m.reply_text(f"Set folder ID to {db.get_parent_id()}")
+            db.set_parent_id(m.from_user.id, m.command[2])
+            LOGGER.info(f"Folder ID: {db.get_parent_id(m.from_user.id)}")
+            await m.reply_text(f"Set folder ID to {db.get_parent_id(m.from_user.id)}")
             return
         elif current_recvd_command == "setup":
             await g_drive_setup(m)
@@ -71,7 +71,7 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
             await status_m.edit_text(text="Cleared Saved credentials and folder ID!")
             return
         elif current_recvd_command == "confirm":
-            if len(m.text.split()) == 3:
+            if len(m.command) == 3:
                 await AskUserToVisitLinkAndGiveCode(status_m, m.text.split[2])
             else:
                 await status_m.edit_text(text="please give auth_code correctly")
@@ -82,8 +82,8 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
                     creds.refresh(get_new_http_instance())
                     db.set_credential(m.from_user.id, creds)
 
-                    if len(m.text.split()) > 2:
-                        search_query = " ".join(m.text.split()[-1])
+                    if len(m.command) > 2:
+                        search_query = " ".join(m.command[2:])
                         message_string = "<b>gDrive <i>Search Query</i></b>:"
                         message_string += f"<code>{search_query}</code>\n\n"
                         message_string += "<i>Results</i>:\n"

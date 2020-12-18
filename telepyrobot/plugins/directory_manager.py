@@ -1,5 +1,6 @@
 import os
 from io import BytesIO
+import asyncio
 from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters
 from pyrogram.types import Message

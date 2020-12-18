@@ -6,6 +6,7 @@ import httplib2
 import os
 import time
 import re
+import shutil
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 from mimetypes import guess_type
@@ -200,6 +201,7 @@ async def upload_file(c: TelePyroBot, m: Message):
                         reply_message_text += "https://drive.google.com/open?id="
                         reply_message_text += gDrive_file_id
                         reply_message_text += "'>" + gDrive_file_id + "</a>"
+                        shutil.rmtree(upload_file_name)  # Delete Uploaded file
                     else:
                         reply_message_text += "failed to upload.. check logs?"
                     await status_m.edit_text(

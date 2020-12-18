@@ -37,12 +37,10 @@ def set_parent_id(chat_id, parent_id="root"):
         saved_cred = SESSION.query(gDriveCreds).get(chat_id)
         if not saved_cred:
             saved_cred = gDriveCreds(chat_id)
-            saved_cred.parent_id = parent_id
-            SESSION.add(saved_cred)
-        else:
-            saved_cred.parent_id = parent_id
-            SESSION.commit()
 
+        saved_cred.parent_id = parent_id
+
+        SESSION.add(saved_cred)
         SESSION.commit()
 
 

@@ -1,6 +1,6 @@
 import asyncio
 import io
-import json
+import traceback
 import math
 import httplib2
 import os
@@ -202,11 +202,8 @@ async def upload_file(c: TelePyroBot, m: Message):
                     )
                     return
             except Exception as ef:
-                LOGGER.error(ef)
-                exc_type, exc_obj, exc_tb = sys.exc_info()
-                LOGGER.error(
-                    f"exc_type: `{exc_type}`\nexc_obj: `{exc_obj}`\nexc_tb:`{exc_tb}`"
-                )
+                err = traceback.format_exc()
+                LOGGER.error(err)
                 await status_m.edit_text("Error Occured!!\nCheck Logs!")
             else:
                 await status_m.edit_text(

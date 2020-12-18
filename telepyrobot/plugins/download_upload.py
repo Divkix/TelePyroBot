@@ -20,6 +20,7 @@ from pyDownload import Downloader
 
 from telepyrobot import COMMAND_HAND_LER, LOGGER, TMP_DOWNLOAD_DIRECTORY
 from telepyrobot.utils.dl_helpers import progress_for_pyrogram, humanbytes
+from telepyrobot.utils.download_file import download_http
 from telepyrobot.utils.check_if_thumb_exists import is_thumb_image_exists
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
@@ -68,61 +69,7 @@ async def down_load_media(c: TelePyroBot, m: Message):
             return
     elif len(m.command) > 1:
         try:
-            start_t = datetime.now()
-            the_url_parts = " ".join(m.command[1:])
-            url = the_url_parts.strip()
-            custom_file_name = os.path.basename(url)
-            if "|" in the_url_parts:
-                url, custom_file_name = the_url_parts.split("|")
-                url = url.strip()
-                custom_file_name = custom_file_name.strip()
-            download_file_path = os.path.join(TMP_DOWNLOAD_DIRECTORY, custom_file_name)
-            downloader = SmartDL(url, download_file_path, progress_bar=False)
-            downloader.start(blocking=False)
-            c_time = time.time()
-            while not downloader.isFinished():
-                total_length = downloader.filesize if downloader.filesize else None
-                downloaded = downloader.get_dl_size()
-                display_message = ""
-                now = time.time()
-                diff = now - c_time
-                percentage = downloader.get_progress() * 100
-                speed = downloader.get_speed(human=True)
-                elapsed_time = round(diff) * 1000
-                progress_str = "**[{0}{1}]**\n**Progress:** __{2}%__".format(
-                    "".join(["●" for i in range(math.floor(percentage / 5))]),
-                    "".join(["○" for i in range(20 - math.floor(percentage / 5))]),
-                    round(percentage, 2),
-                )
-                estimated_total_time = downloader.get_eta(human=True)
-                try:
-                    current_message = f"__**Trying to download...**__\n"
-                    current_message += f"**URL:** `{url}`\n"
-                    current_message += f"**File Name:** `{custom_file_name}`\n"
-                    current_message += f"{progress_str}\n"
-                    current_message += (
-                        f"__{humanbytes(downloaded)} of {humanbytes(total_length)}__\n"
-                    )
-                    current_message += f"**Speed:** __{speed}__\n"
-                    current_message += f"**ETA:** __{estimated_total_time}__"
-                    if round(diff % 10.00) == 0 and current_message != display_message:
-                        await sm.edit(
-                            disable_web_page_preview=True, text=current_message
-                        )
-                        display_message = current_message
-                        await asyncio.sleep(10)
-                except errors.MessageNotModified:  # Don't log error if Message is not modified
-                    pass
-                except Exception as e:
-                    LOGGER.info(str(e))
-                    pass
-            if os.path.exists(download_file_path):
-                end_t = datetime.now()
-                ms = (end_t - start_t).seconds
-                await sm.edit(
-                    f"Downloaded to <code>{download_file_path}</code> in <u>{ms}</u> seconds.\nDownload Speed: {round((total_length/ms), 2)}",
-                    parse_mode="html",
-                )
+            await download_http(m, sm)
         except Exception:
             exc = traceback.format_exc()
             await m.edit_text(f"<b>Failed Download!</b>\n{exc}")

@@ -23,6 +23,7 @@ from telepyrobot import (
 )
 import telepyrobot.db.gDrive_db as db
 from telepyrobot.utils.dl_helpers import progress_for_pyrogram
+from telepyrobot.utils.download_file import download_http
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -120,70 +121,91 @@ async def upload_file(c: TelePyroBot, m: Message):
         if creds and creds.refresh_token:
             creds.refresh(get_new_http_instance())
             db.set_credential(m.from_user.id, creds)
-            if len(m.text.split()) > 2:
-                upload_file_name = m.text.split(maxsplit=1)[1]
-                if not os.path.exists(upload_file_name):
-                    await status_m.edit_text("invalid file path provided?")
-                    return
-                gDrive_file_id = await gDrive_upload_file(
-                    creds, upload_file_name, status_m, parent_id=folder_id
-                )
-                reply_message_text = ""
-                if gDrive_file_id is not None:
-                    reply_message_text += "Uploaded to <a href='"
-                    reply_message_text += "https://drive.google.com/open?id="
-                    reply_message_text += gDrive_file_id
-                    reply_message_text += "'>" + gDrive_file_id + "</a>"
-                else:
-                    reply_message_text += "failed to upload.. check logs?"
-                await status_m.edit_text(
-                    text=reply_message_text, disable_web_page_preview=True
-                )
-            elif m.reply_to_message is not None:
-                if not os.path.isdir(TMP_DOWNLOAD_DIRECTORY):
-                    os.makedirs(TMP_DOWNLOAD_DIRECTORY)
-                download_location = TMP_DOWNLOAD_DIRECTORY
-                c_time = time.time()
-                the_real_download_location = await c.download_media(
-                    message=m.reply_to_message,
-                    file_name=download_location,
-                    progress=progress_for_pyrogram,
-                    progress_args=(
-                        "`Trying to download to Local Storage...`",
-                        status_m,
-                        c_time,
-                    ),
-                )
-                await status_m.edit(
-                    f"<b>Downloaded to</b> <code>{the_real_download_location}</code>"
-                )
-                if not os.path.exists(the_real_download_location):
-                    await m.edit_text("invalid file path provided?")
-                    return
-                gDrive_file_id = await gDrive_upload_file(
-                    creds,
-                    the_real_download_location,
-                    status_m,
-                    parent_id=folder_id,
-                )
-                reply_message_text = ""
-                if gDrive_file_id is not None:
-                    reply_message_text += "Uploaded to <a href='"
-                    reply_message_text += "https://drive.google.com/open?id="
-                    reply_message_text += gDrive_file_id
-                    reply_message_text += "'>" + gDrive_file_id + "</a>"
-                else:
-                    reply_message_text += (
-                        "<b><i>Failed to upload...</b><i>\n<i>Please check Logs</i>"
+            try:
+                if len(m.text.split()) > 2:
+                    upload_file_name = m.text.split(maxsplit=1)[1]
+                    if not os.path.exists(upload_file_name):
+                        await status_m.edit_text("invalid file path provided?")
+                        return
+                    gDrive_file_id = await gDrive_upload_file(
+                        creds, upload_file_name, status_m, parent_id=folder_id
                     )
-                os.remove(the_real_download_location)
-                await status_m.edit_text(
-                    text=reply_message_text, disable_web_page_preview=True
-                )
+                    reply_message_text = ""
+                    if gDrive_file_id is not None:
+                        reply_message_text += "Uploaded to <a href='"
+                        reply_message_text += "https://drive.google.com/open?id="
+                        reply_message_text += gDrive_file_id
+                        reply_message_text += "'>" + gDrive_file_id + "</a>"
+                    else:
+                        reply_message_text += "failed to upload.. check logs?"
+                    await status_m.edit_text(
+                        text=reply_message_text, disable_web_page_preview=True
+                    )
+                elif m.reply_to_message is not None:
+                    if not os.path.isdir(TMP_DOWNLOAD_DIRECTORY):
+                        os.makedirs(TMP_DOWNLOAD_DIRECTORY)
+                    download_location = TMP_DOWNLOAD_DIRECTORY
+                    c_time = time.time()
+                    the_real_download_location = await c.download_media(
+                        message=m.reply_to_message,
+                        file_name=download_location,
+                        progress=progress_for_pyrogram,
+                        progress_args=(
+                            "`Trying to download to Local Storage...`",
+                            status_m,
+                            c_time,
+                        ),
+                    )
+                    await status_m.edit(
+                        f"<b>Downloaded to</b> <code>{the_real_download_location}</code>"
+                    )
+                    if not os.path.exists(the_real_download_location):
+                        await m.edit_text("invalid file path provided?")
+                        return
+                    gDrive_file_id = await gDrive_upload_file(
+                        creds,
+                        the_real_download_location,
+                        status_m,
+                        parent_id=folder_id,
+                    )
+                    reply_message_text = ""
+                    if gDrive_file_id is not None:
+                        reply_message_text += "Uploaded to <a href='"
+                        reply_message_text += "https://drive.google.com/open?id="
+                        reply_message_text += gDrive_file_id
+                        reply_message_text += "'>" + gDrive_file_id + "</a>"
+                    else:
+                        reply_message_text += (
+                            "<b><i>Failed to upload...</b><i>\n<i>Please check Logs</i>"
+                        )
+                    os.remove(the_real_download_location)
+                    await status_m.edit_text(
+                        text=reply_message_text, disable_web_page_preview=True
+                    )
+                elif re.match("(http(|s):\/\/)", m.text.split(maxsplit=1)[1])[1]:
+                    location = await download_http(m, status_m)
+                    upload_file_name = location.split("/")[-1]
+                    gDrive_file_id = await gDrive_upload_file(
+                        creds, upload_file_name, status_m, parent_id=folder_id
+                    )
+                    reply_message_text = ""
+                    if gDrive_file_id is not None:
+                        reply_message_text += "Uploaded to <a href='"
+                        reply_message_text += "https://drive.google.com/open?id="
+                        reply_message_text += gDrive_file_id
+                        reply_message_text += "'>" + gDrive_file_id + "</a>"
+                    else:
+                        reply_message_text += "failed to upload.. check logs?"
+                    await status_m.edit_text(
+                        text=reply_message_text, disable_web_page_preview=True
+                    )
+                    return
+            except Exception as ef:
+                LOGGER.error(ef)
             else:
                 await status_m.edit_text(
                     "<b>Syntax:</b>\n"
-                    f"<code>{COMMAND_HAND_LER}gdrive upload (file name)</code>"
+                    f"<code>{COMMAND_HAND_LER}ugdrive (file name)</code>"
                 )
         else:
             await status_m.edit_text(

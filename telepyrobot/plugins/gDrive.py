@@ -191,7 +191,7 @@ async def upload_file(c: TelePyroBot, m: Message):
                 elif m.text.split(None, 1)[1].startswith("http://") or m.text.split(
                     None, 1
                 )[1].startswith("https://"):
-                    location = await download_http(m, status_m)
+                    upload_file_name = await download_http(m, status_m)
                     gDrive_file_id = await gDrive_upload_file(
                         creds, upload_file_name, status_m, parent_id=folder_id
                     )

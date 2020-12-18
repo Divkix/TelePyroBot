@@ -1,6 +1,8 @@
 import asyncio
 import math
 import os
+import shutil
+import urllib.parse
 import time
 from datetime import datetime
 from pySmartDL import SmartDL
@@ -62,10 +64,12 @@ async def download_http(m, status_message):
             LOGGER.info(str(e))
             pass
     if os.path.exists(download_file_path):
+        new_file_name = urllib.parse.unquote(download_file_path)
+        shutil.move(download_file_path, new_file_name)
         end_t = datetime.now()
         ms = (end_t - start_t).seconds
         await status_message.edit(
-            f"Downloaded to <code>{download_file_path}</code> in <u>{ms}</u> seconds.\nDownload Speed: {humanbytes(total_length)}/s",
+            f"Downloaded to <code>{new_file_name}</code> in <u>{ms}</u> seconds.\nDownload Speed: {humanbytes(total_length)}/s",
             parse_mode="html",
         )
-        return download_file_path
+        return new_file_name

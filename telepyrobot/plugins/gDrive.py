@@ -29,7 +29,7 @@ __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 __help__ = f"""
 Plugin used to help you manage your **Google Drive**!
 
-`{COMMAND_HAND_LER}gdrive upload <file location>` or as a reply to message to upload file to your Google Drive and get it's link.
+`{COMMAND_HAND_LER}ugdrive <file location>` or as a reply to message to upload file to your Google Drive and get it's link.
 `{COMMAND_HAND_LER}gdrive folder <folder id>` to set file uploads specific folder
 `{COMMAND_HAND_LER}gdrive reset`: Reset the G Drive credentials.
 `{COMMAND_HAND_LER}gdrive setup`: To setup GDrive, only needed if reset grive credentials or setting-up first time.
@@ -49,17 +49,17 @@ flow = None
 @TelePyroBot.on_message(filters.command("gdrive", COMMAND_HAND_LER) & filters.me)
 async def g_drive_commands(c: TelePyroBot, m: Message):
     status_m = await m.reply_text("...")
-    if len(m.command) == 1:
+    if len(m.text.split()) == 1:
         await status_m.edit_text(
             f"Check <code>{COMMAND_HAND_LER}help gdrive</code> to ceck help on how to use command!"
         )
         return
-    if len(m.command) > 1:
-        current_recvd_command = m.command[1]
+    if len(m.text.split()) > 1:
+        current_recvd_command = m.text.split(maxsplit=1)[1]
         if current_recvd_command == "folder":
             db.set_parent_id(m.from_user.id, m.text.split()[2])
             LOGGER.info(f"Folder ID: {m.text.split()[2]}")
-            await m.reply_text(f"Set folder ID to {db.get_parent_id}")
+            await m.reply_text(f"Set folder ID to {db.get_parent_id()}")
             return
         if current_recvd_command == "setup":
             await g_drive_setup(m)
@@ -69,8 +69,8 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
             await status_m.edit_text(text="Cleared Saved credentials and folder ID!")
             return
         elif current_recvd_command == "confirm":
-            if len(m.command) == 3:
-                await AskUserToVisitLinkAndGiveCode(status_m, m.command[2])
+            if len(m.text.split()) == 3:
+                await AskUserToVisitLinkAndGiveCode(status_m, m.text.split[2])
             else:
                 await status_m.edit_text(text="please give auth_code correctly")
         elif current_recvd_command == "search":
@@ -80,8 +80,8 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
                     creds.refresh(get_new_http_instance())
                     db.set_credential(m.from_user.id, creds)
 
-                    if len(m.command) > 2:
-                        search_query = " ".join(m.command[2:])
+                    if len(m.text.split()) > 2:
+                        search_query = " ".join(m.text.split()[-1])
                         message_string = "<b>gDrive <i>Search Query</i></b>:"
                         message_string += f"<code>{search_query}</code>\n\n"
                         message_string += "<i>Results</i>:\n"
@@ -120,8 +120,8 @@ async def upload_file(c: TelePyroBot, m: Message):
         if creds and creds.refresh_token:
             creds.refresh(get_new_http_instance())
             db.set_credential(m.from_user.id, creds)
-            if len(m.command) > 2:
-                upload_file_name = " ".join(m.command[1:])
+            if len(m.text.split()) > 2:
+                upload_file_name = m.text.split(maxsplit=1)[1]
                 if not os.path.exists(upload_file_name):
                     await status_m.edit_text("invalid file path provided?")
                     return
@@ -286,7 +286,7 @@ async def gDrive_upload_file(creds, file_path, m, parent_id="root"):
     }
     if parent_id != "root":
         body["parents"] = [parent_id]
-    u_file_obj = service.files().create(body=body, media_body=media_body, supportsTeamDrives=True)
+    u_file_obj = service.files().create(body=body, media_body=media_body)
     response = None
     display_message = ""
     while response is None:

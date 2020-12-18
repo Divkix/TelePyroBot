@@ -56,7 +56,7 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
             f"Check <code>{COMMAND_HAND_LER}help gdrive</code> to ceck help on how to use command!"
         )
         return
-    if len(m.text.split()) > 1:
+    elif len(m.text.split()) > 1:
         current_recvd_command = m.text.split(None, 1)[1]
         if current_recvd_command == "folder":
             db.set_parent_id(m.from_user.id, m.text.split()[2])

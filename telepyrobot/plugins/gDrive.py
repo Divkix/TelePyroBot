@@ -123,9 +123,10 @@ async def upload_file(c: TelePyroBot, m: Message):
             creds.refresh(get_new_http_instance())
             db.set_credential(m.from_user.id, creds)
             try:
-                if len(m.text.split()) == 2 and m.text.split(None, 1)[1] not in (
-                    "http://",
-                    "https://",
+                if (
+                    len(m.text.split()) == 2
+                    and not m.text.split(None, 1)[1].startswith("http://")
+                    and not m.text.split(None, 1)[1].startswith("https://")
                 ):
                     upload_file_name = m.text.split(None, 1)[1]
                     if not os.path.exists(upload_file_name):

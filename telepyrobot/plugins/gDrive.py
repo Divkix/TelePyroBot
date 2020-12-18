@@ -63,7 +63,7 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
             LOGGER.info(f"Folder ID: {m.text.split()[2]}")
             await m.reply_text(f"Set folder ID to {db.get_parent_id()}")
             return
-        if current_recvd_command == "setup":
+        elif current_recvd_command == "setup":
             await g_drive_setup(m)
             return
         elif current_recvd_command == "reset":

@@ -2,15 +2,12 @@ import asyncio
 import math
 import os
 import time
-import shutil
+import re
 from datetime import datetime
 from pySmartDL import SmartDL
 from telepyrobot.setclient import TelePyroBot
 from pyrogram import filters, errors
 from pyrogram.types import Message
-import json
-import logging
-import re
 import urllib.parse
 from random import choice
 

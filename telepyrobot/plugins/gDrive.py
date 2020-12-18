@@ -5,6 +5,7 @@ import math
 import httplib2
 import os
 import time
+import re
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 from mimetypes import guess_type

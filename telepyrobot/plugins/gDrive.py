@@ -57,7 +57,7 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
         )
         return
     if len(m.text.split()) > 1:
-        current_recvd_command = m.text.split(maxsplit=1)[1]
+        current_recvd_command = m.text.split(None, 1)[1]
         if current_recvd_command == "folder":
             db.set_parent_id(m.from_user.id, m.text.split()[2])
             LOGGER.info(f"Folder ID: {m.text.split()[2]}")
@@ -124,7 +124,7 @@ async def upload_file(c: TelePyroBot, m: Message):
             db.set_credential(m.from_user.id, creds)
             try:
                 if len(m.text.split()) > 2:
-                    upload_file_name = m.text.split(maxsplit=1)[1]
+                    upload_file_name = m.text.split(None, 1)[1]
                     if not os.path.exists(upload_file_name):
                         await status_m.edit_text("invalid file path provided?")
                         return
@@ -183,7 +183,8 @@ async def upload_file(c: TelePyroBot, m: Message):
                     await status_m.edit_text(
                         text=reply_message_text, disable_web_page_preview=True
                     )
-                elif re.match("(http(|s):\/\/)", m.text.split(maxsplit=1)[1])[1]:
+                # elif re.match("(http(|s):\/\/)", m.text.split(None, 1)[1])[1]:
+                elif m.text.split(None, 1)[1] in ("http://", "https://"):
                     location = await download_http(m, status_m)
                     upload_file_name = location.split("/")[-1]
                     gDrive_file_id = await gDrive_upload_file(

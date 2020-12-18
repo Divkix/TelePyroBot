@@ -205,15 +205,16 @@ async def upload_file(c: TelePyroBot, m: Message):
                         text=reply_message_text, disable_web_page_preview=True
                     )
                     return
+                else:
+                    await status_m.edit_text(
+                        "<b>Syntax:</b>\n"
+                        f"<code>{COMMAND_HAND_LER}ugdrive (file name)</code>"
+                    )
+                    return
             except Exception as ef:
                 err = traceback.format_exc()
                 LOGGER.error(err)
                 await status_m.edit_text("Error Occured!!\nCheck Logs!")
-            else:
-                await status_m.edit_text(
-                    "<b>Syntax:</b>\n"
-                    f"<code>{COMMAND_HAND_LER}ugdrive (file name)</code>"
-                )
         else:
             await status_m.edit_text(
                 "<b>Invalid credentials!</b>\n"

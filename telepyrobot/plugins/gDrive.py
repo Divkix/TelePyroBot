@@ -32,7 +32,9 @@ __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 __help__ = f"""
 Plugin used to help you manage your **Google Drive**!
 
-`{COMMAND_HAND_LER}ugdrive <file location>` or as a reply to message to upload file to your Google Drive and get it's link.
+`{COMMAND_HAND_LER}ugdrive <file location>` or as a reply to message or direct link \
+    to upload file to your Google Drive and get it's link.
+`{COMMAND_HAND_LER}ugdrivelist <links seperated by '|'>`: Download all files and upload to folder!
 `{COMMAND_HAND_LER}gdrive folder <folder id>` to set file uploads specific folder
 `{COMMAND_HAND_LER}gdrive reset`: Reset the G Drive credentials.
 `{COMMAND_HAND_LER}gdrive setup`: To setup GDrive, only needed if reset grive credentials or setting-up first time.
@@ -195,6 +197,62 @@ async def upload_file(c: TelePyroBot, m: Message):
                         shutil.rmtree(upload_file_name)  # Delete Uploaded file
                     else:
                         reply_message_text += "failed to upload.. check logs?"
+                    await status_m.edit_text(
+                        text=reply_message_text, disable_web_page_preview=True
+                    )
+                    return
+                else:
+                    await status_m.edit_text(
+                        "<b>Syntax:</b>\n"
+                        f"<code>{COMMAND_HAND_LER}ugdrive (file name)</code>"
+                    )
+                    return
+            except Exception as ef:
+                err = traceback.format_exc()
+                LOGGER.error(err)
+                await status_m.edit_text("Error Occured!!\nCheck Logs!")
+        else:
+            await status_m.edit_text(
+                "<b>Invalid credentials!</b>\n"
+                f"Use <code>{COMMAND_HAND_LER}gdrive reset</code> to clear saved credentials"
+            )
+            return
+    else:
+        await status_m.edit_text(
+            text=f"<i>Please run</i> <code>{COMMAND_HAND_LER}gdrive setup</code> <i>first</i>"
+        )
+    return
+
+
+@TelePyroBot.on_message(filters.command("ugdrivelist", COMMAND_HAND_LER) & sudo_filter)
+async def upload_file(c: TelePyroBot, m: Message):
+    creds = db.get_credential(m.from_user.id)
+    folder_id = db.get_parent_id(m.from_user.id)
+    LOGGER.info(f"Folder ID: {folder_id}")
+    status_m = await m.reply_text("<i>Checking...!</i>")
+
+    if not creds or not creds.invalid:
+        if creds and creds.refresh_token:
+            creds.refresh(get_new_http_instance())
+            db.set_credential(m.from_user.id, creds)
+            try:
+                if m.text.split(None, 1)[1]:
+                    list_files = m.text.split(None, 1)[1].split("|")
+                    ids = {}
+                    for ifile in list_files:
+                        upload_file_name = await download_http(m, status_m)
+                        gDrive_file_id = await gDrive_upload_file(
+                            creds, upload_file_name, status_m, parent_id=folder_id
+                        )
+                        if gDrive_file_id is not None:
+                            filename = upload_file_name.split("/")[-1]
+                            ids[filename] = gDrive_file_id
+                            shutil.rmtree(upload_file_name)  # Delete Uploaded file
+                        else:
+                            ids[filename] = "Failed!!"
+                    reply_message_text = ''
+                    for key, value in ids.keys():
+                        reply_message_text += f"Filename: {}\n -> {value}"
                     await status_m.edit_text(
                         text=reply_message_text, disable_web_page_preview=True
                     )

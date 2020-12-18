@@ -14,6 +14,7 @@ List the directories of the server.
 
 `{COMMAND_HAND_LER}ls`: List files in ./ directory
 `{COMMAND_HAND_LER}ls <directory name>`: List all the files in the directory.
+`{COMMAND_HAND_LER}cleardl`: Remove all files from download folder.
 """
 
 
@@ -57,4 +58,18 @@ async def list_directories(c: TelePyroBot, m: Message):
             return
         await m.edit_text(OUTPUT)
 
+    return
+
+
+@TelePyroBot.on_message(filters.command("cleardl", COMMAND_HAND_LER) & filters.me)
+async def clear_downloads(c: TelePyroBot, m: Message):
+
+    cmd = "rm -rf telepyrobot/downloads/*"
+
+    process = await asyncio.create_subprocess_shell(
+        cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+    )
+
+    stdout, stderr = await process.communicate()
+    await m.edit_text("Cleared Downloads Folder!")
     return

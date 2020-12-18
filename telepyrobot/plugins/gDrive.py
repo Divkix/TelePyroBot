@@ -137,10 +137,7 @@ async def upload_file(c: TelePyroBot, m: Message):
                     )
                     reply_message_text = ""
                     if gDrive_file_id is not None:
-                        reply_message_text += "Uploaded to <a href='"
-                        reply_message_text += "https://drive.google.com/open?id="
-                        reply_message_text += gDrive_file_id
-                        reply_message_text += "'>" + gDrive_file_id + "</a>"
+                        reply_message_text += f"Uploaded to <a href='https://drive.google.com/open?id={gDrive_file_id}'>{upload_file_name.split('/')[-1]}</a>"
                     else:
                         reply_message_text += "failed to upload.. check logs?"
                     await status_m.edit_text(
@@ -175,10 +172,7 @@ async def upload_file(c: TelePyroBot, m: Message):
                     )
                     reply_message_text = ""
                     if gDrive_file_id is not None:
-                        reply_message_text += "Uploaded to <a href='"
-                        reply_message_text += "https://drive.google.com/open?id="
-                        reply_message_text += gDrive_file_id
-                        reply_message_text += "'>" + gDrive_file_id + "</a>"
+                        reply_message_text += f"Uploaded to <a href='https://drive.google.com/open?id={gDrive_file_id}'>{the_real_download_location.split('/')[-1]}</a>"
                     else:
                         reply_message_text += (
                             "<b><i>Failed to upload...</b><i>\n<i>Please check Logs</i>"
@@ -197,10 +191,7 @@ async def upload_file(c: TelePyroBot, m: Message):
                     )
                     reply_message_text = ""
                     if gDrive_file_id is not None:
-                        reply_message_text += "Uploaded to <a href='"
-                        reply_message_text += "https://drive.google.com/open?id="
-                        reply_message_text += gDrive_file_id
-                        reply_message_text += "'>" + gDrive_file_id + "</a>"
+                        reply_message_text += f"Uploaded to <a href='https://drive.google.com/open?id={gDrive_file_id}'>{upload_file_name.split('/')[-1]}</a>"
                         shutil.rmtree(upload_file_name)  # Delete Uploaded file
                     else:
                         reply_message_text += "failed to upload.. check logs?"

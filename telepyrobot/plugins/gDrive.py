@@ -225,7 +225,7 @@ async def upload_file(c: TelePyroBot, m: Message):
 
 
 @TelePyroBot.on_message(filters.command("ugdrivelist", COMMAND_HAND_LER) & sudo_filter)
-async def upload_file(c: TelePyroBot, m: Message):
+async def upload_list(c: TelePyroBot, m: Message):
     creds = db.get_credential(m.from_user.id)
     folder_id = db.get_parent_id(m.from_user.id)
     LOGGER.info(f"Folder ID: {folder_id}")

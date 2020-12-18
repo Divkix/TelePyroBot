@@ -45,7 +45,9 @@ async def download_http(m, status_message):
         try:
             current_message = f"__**Trying to download...**__\n"
             current_message += f"**URL:** `{url}`\n"
-            current_message += f"**File Name:** `{custom_file_name}`\n"
+            current_message += (
+                f"**File Name:** `{urllib.parse.unquote(custom_file_name)}`\n"
+            )
             current_message += f"{progress_str}\n"
             current_message += (
                 f"__{humanbytes(downloaded)} of {humanbytes(total_length)}__\n"

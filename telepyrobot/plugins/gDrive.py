@@ -250,9 +250,11 @@ async def upload_file(c: TelePyroBot, m: Message):
                             shutil.rmtree(upload_file_name)  # Delete Uploaded file
                         else:
                             ids[filename] = "Failed!!"
-                    reply_message_text = ''
+                    reply_message_text = ""
                     for key, value in ids.keys():
-                        reply_message_text += f"Filename: {}\n -> {value}"
+                        reply_message_text += (
+                            f"<b>Filename:</b> <code>{key}</code>\n <b>--></b> {value}"
+                        )
                     await status_m.edit_text(
                         text=reply_message_text, disable_web_page_preview=True
                     )
@@ -260,7 +262,7 @@ async def upload_file(c: TelePyroBot, m: Message):
                 else:
                     await status_m.edit_text(
                         "<b>Syntax:</b>\n"
-                        f"<code>{COMMAND_HAND_LER}ugdrive (file name)</code>"
+                        f"<code>{COMMAND_HAND_LER}ugdrivelist (file name)</code>"
                     )
                     return
             except Exception as ef:

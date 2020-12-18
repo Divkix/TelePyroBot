@@ -65,14 +65,13 @@ async def g_drive_commands(c: TelePyroBot, m: Message):
             return
         elif current_recvd_command == "setup":
             await g_drive_setup(m)
-            return
         elif current_recvd_command == "reset":
             db.clear_credential(m.from_user.id)
-            await status_m.edit_text(text="Cleared Saved credentials and folder ID!")
+            await status_m.edit_text(text="Cleared saved credentials!")
             return
         elif current_recvd_command == "confirm":
             if len(m.command) == 3:
-                await AskUserToVisitLinkAndGiveCode(status_m, m.text.split[2])
+                await AskUserToVisitLinkAndGiveCode(status_m, m.command[2])
             else:
                 await status_m.edit_text(text="please give auth_code correctly")
         elif current_recvd_command == "search":

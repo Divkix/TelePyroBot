@@ -71,7 +71,7 @@ async def download_http(m, status_message):
         end_t = datetime.now()
         ms = (end_t - start_t).seconds
         await status_message.edit(
-            f"Downloaded to <code>{new_file_name}</code> in <u>{ms}</u> seconds.\nDownload Speed: {round((humanbytes(total_length)/ms), 2)}/s",
+            f"Downloaded to <code>{new_file_name}</code> in <u>{ms}</u> seconds.\nDownload Speed: {round((humanbytes(total_length/ms)), 2)}/s",
             parse_mode="html",
         )
         return new_file_name

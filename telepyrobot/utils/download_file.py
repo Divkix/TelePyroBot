@@ -80,8 +80,8 @@ async def download_http_msg(m, status_message):
 
 async def download_http_link(status_message, dlurl):
     start_t = datetime.now()
-    url = the_url_parts.strip()
-    custom_file_name = dlurl.split("/")[-1]
+    dlurl = dlurl.split()
+    custom_file_name = dlurl.split("/")[-1].strip()
     download_file_path = os.path.join(TMP_DOWNLOAD_DIRECTORY, custom_file_name)
     downloader = SmartDL(dlurl, download_file_path, progress_bar=False)
     downloader.start(blocking=False)

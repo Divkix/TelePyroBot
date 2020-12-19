@@ -96,7 +96,7 @@ async def updater(c: TelePyroBot, m: Message):
             return
 
     brname = repo.active_branch.name
-    if brname not in ['master', 'beta']:
+    if brname not in ["master", "beta"]:
         await m.edit_text(
             f"**[UPDATER]:** Looks like you are using your own custom branch ({brname}). in that case, Updater is unable to identify which branch is to be merged. please checkout to any official branch",
         )

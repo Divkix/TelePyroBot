@@ -25,7 +25,7 @@ from telepyrobot import (
 )
 import telepyrobot.db.gDrive_db as db
 from telepyrobot.utils.dl_helpers import progress_for_pyrogram
-from telepyrobot.utils.download_file import download_http
+from telepyrobot.utils.download_file import download_http, download_http_link
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 
@@ -187,13 +187,13 @@ async def upload_file(c: TelePyroBot, m: Message):
                 elif m.text.split(None, 1)[1].startswith("http://") or m.text.split(
                     None, 1
                 )[1].startswith("https://"):
-                    upload_file_name = await download_http(m, status_m)
+                    upload_file_name = await download_http_msg(m, status_m)
                     gDrive_file_id = await gDrive_upload_file(
                         creds, upload_file_name, status_m, parent_id=folder_id
                     )
                     reply_message_text = ""
                     if gDrive_file_id is not None:
-                        reply_message_text += f"Uploaded to <a href='https://drive.google.com/open?id={gDrive_file_id}'>{upload_file_name.split('/')[-1]}</a>"
+                        reply_message_text += f"<b>Filename:</b> <code>{upload_file_name.split('/')[-1]}</code>\n --> https://drive.google.com/open?id={gDrive_file_id}"
                         os.remove(upload_file_name)  # Delete Uploaded file
                     else:
                         reply_message_text += "failed to upload.. check logs?"
@@ -239,22 +239,29 @@ async def upload_list(c: TelePyroBot, m: Message):
                 if m.text.split(None, 1)[1]:
                     list_files = m.text.split(None, 1)[1].split("|")
                     ids = {}
-                    for ifile in list_files:
-                        upload_file_name = await download_http(m, status_m)
+                    for ilink in list_files:
+                        upload_file_name = await download_http_link(status_m, ilink)
+                        if upload_file_name is None:
+                            ids[filename] = "Failed!!"
+                            pass
                         gDrive_file_id = await gDrive_upload_file(
                             creds, upload_file_name, status_m, parent_id=folder_id
                         )
                         if gDrive_file_id is not None:
                             filename = upload_file_name.split("/")[-1]
-                            ids[filename] = gDrive_file_id
+                            ids[
+                                filename
+                            ] = f"https://drive.google.com/open?id={gDrive_file_id}"
                             shutil.rmtree(upload_file_name)  # Delete Uploaded file
                         else:
                             ids[filename] = "Failed!!"
+
                     reply_message_text = ""
-                    for key, value in ids.keys():
+                    for key, value in ids.items():
                         reply_message_text += (
                             f"<b>Filename:</b> <code>{key}</code>\n <b>--></b> {value}"
                         )
+
                     await status_m.edit_text(
                         text=reply_message_text, disable_web_page_preview=True
                     )

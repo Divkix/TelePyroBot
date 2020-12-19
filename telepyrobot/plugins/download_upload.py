@@ -67,7 +67,7 @@ async def down_load_media(c: TelePyroBot, m: Message):
             return
     elif len(m.command) > 1:
         try:
-            await download_http(m, sm)
+            await download_http_msg(m, sm)
         except Exception:
             exc = traceback.format_exc()
             await m.edit_text(f"<b>Failed Download!</b>\n{exc}")

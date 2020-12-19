@@ -126,7 +126,7 @@ async def upload_file(c: TelePyroBot, m: Message):
             db.set_credential(m.from_user.id, creds)
             try:
                 if (
-                    len(m.text.split()) == 2
+                    len(m.text.split()) >= 2
                     and not m.text.split(None, 1)[1].startswith("http://")
                     and not m.text.split(None, 1)[1].startswith("https://")
                 ):

@@ -240,7 +240,7 @@ async def upload_list(c: TelePyroBot, m: Message):
                     list_files = m.text.split(None, 1)[1].split("|")
                     ids = {}
                     for ilink in list_files:
-                        LOGGER.info(ilink)
+                        LOGGER.info(ilink, type(ilink))
                         upload_file_name = await download_http_link(status_m, ilink)
                         if upload_file_name is None:
                             ids[filename] = "Failed!!"

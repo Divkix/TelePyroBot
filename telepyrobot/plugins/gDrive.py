@@ -25,7 +25,7 @@ from telepyrobot import (
 )
 import telepyrobot.db.gDrive_db as db
 from telepyrobot.utils.dl_helpers import progress_for_pyrogram
-from telepyrobot.utils.download_file import download_http, download_http_link
+from telepyrobot.utils.download_file import download_http_msg, download_http_link
 
 __PLUGIN__ = os.path.basename(__file__.replace(".py", ""))
 

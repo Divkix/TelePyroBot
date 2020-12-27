@@ -70,7 +70,7 @@ async def eval(c: TelePyroBot, m: Message):
     )
 
     if len(final_output) > MAX_MESSAGE_LENGTH:
-        OUTPUT = clear_string(OUTPUT)
+        OUTPUT = clear_string(final_output)
         with BytesIO(str.encode(OUTPUT)) as f:
             f.name = "eval.txt"
             await m.reply_document(
